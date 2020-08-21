@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState } from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import { useRecoilState } from 'recoil';
@@ -29,7 +29,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
   const [messages, setMessages] = useRecoilState<any>(messagesState);
   const [newMessages, setNewMessages] = useRecoilState<any>(newMessagesState);
 
-  const handleTyping = (text: any) => {
+  const handleTyping = (text: string) => {
     setText(text);
   };
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import gql from 'graphql-tag';
 import moment from 'moment';
 import { isObject } from 'util';
@@ -19,14 +19,12 @@ interface MessagesProps {
   messages: Message[];
   subscribeToMore: any;
   refetch: any;
-  client: any;
 }
 
 const Messages: React.FC<MessagesProps> = ({
   messages,
   subscribeToMore,
   refetch,
-  client,
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -63,11 +61,19 @@ const Messages: React.FC<MessagesProps> = ({
     let image;
     if (user === 'roli') {
       image = (
-        <img className="avatar" src="https://placeimg.com/50/50/people?1" />
+        <img
+          className="avatar"
+          alt="avatar"
+          src="https://placeimg.com/50/50/people?1"
+        />
       );
     } else {
       image = (
-        <img className="avatar" src="https://placeimg.com/50/50/people?2" />
+        <img
+          className="avatar"
+          alt="avatar"
+          src="https://placeimg.com/50/50/people?2"
+        />
       );
     }
     return image;

@@ -3,7 +3,6 @@ import gql from 'graphql-tag';
 import Chat from './Chat';
 import ChatInput from './ChatInput';
 import OnlineUsers from './OnlineUsers';
-import { ApolloClient } from '@apollo/client';
 
 const USER_IS_ONLINE = gql`
   mutation($userId: Int!) {
@@ -57,7 +56,7 @@ const ChatApp: React.FC<ChatAppProps> = ({ client }) => {
       <hr></hr>
       <OnlineUsers username={nameValue} userId={1} />
       <hr></hr>
-      <Chat client={client} nameValue={nameValue} />
+      <Chat nameValue={nameValue} />
       <ChatInput username={nameValue} userId={1} />
     </React.Fragment>
   );

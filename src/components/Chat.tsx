@@ -26,7 +26,6 @@ const GET_MESSAGES = gql`
 `;
 
 interface ChatProps {
-  client: any;
   nameValue: string;
   username?: string;
 }
@@ -170,7 +169,6 @@ const Chat: React.FC<ChatProps> = (props) => {
                 messages={messages}
                 subscribeToMore={subscribeToMore}
                 refetch={refetchData}
-                client={props.client}
               />
             </React.Fragment>
           );

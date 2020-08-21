@@ -1,5 +1,5 @@
 import React from 'react';
-import { Subscription, SubscriptionResult } from 'react-apollo';
+import { Subscription } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const ONLINE_USERS = gql`
@@ -25,7 +25,7 @@ interface UserOnline {
 
 const OnlineUsers: React.FC<OnlineUsersProps> = () => {
   const subscriptionData = () => (
-    <Subscription<UserOnline, any> subscription={ONLINE_USERS}>
+    <Subscription<UserOnline> subscription={ONLINE_USERS}>
       {({ data, loading }) => {
         if (loading) {
           return null;
