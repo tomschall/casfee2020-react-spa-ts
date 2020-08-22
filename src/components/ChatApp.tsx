@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import gql from 'graphql-tag';
 import Chat from './Chat';
 import ChatInput from './ChatInput';
-import OnlineUsers from './OnlineUsers';
+import OnlineUser from './OnlineUser';
 
 const USER_IS_ONLINE = gql`
   mutation($userId: Int!) {
@@ -14,18 +14,18 @@ const USER_IS_ONLINE = gql`
 
 interface ChatAppProps {
   client: any;
+  username: string;
+  userId: number;
 }
 
-const ChatApp: React.FC<ChatAppProps> = ({ client }) => {
-  const [nameValue, setNameValue] = useState<any>();
-
+const ChatApp: React.FC<ChatAppProps> = ({ client, username, userId }) => {
   useEffect(() => {
     console.log('ChickenFestChat did mount');
     const interval = setInterval(async () => {
       await client.mutate({
         mutation: USER_IS_ONLINE,
         variables: {
-          userId: 3,
+          userId,
         },
       });
     }, 2000);
@@ -36,28 +36,12 @@ const ChatApp: React.FC<ChatAppProps> = ({ client }) => {
     };
   }, []);
 
-  const handleNameChange = (event: any) => {
-    setNameValue(event.target.value);
-  };
-
-  const handleNameSubmit = (event: any) => {
-    event.preventDefault();
-  };
-
   return (
     <React.Fragment>
-      <form onSubmit={handleNameSubmit}>
-        <label>
-          Name:
-          <input type="text" value={nameValue} onChange={handleNameChange} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
+      <OnlineUser username={username} userId={userId} />
       <hr></hr>
-      <OnlineUsers username={nameValue} userId={1} />
-      <hr></hr>
-      <Chat nameValue={nameValue} />
-      <ChatInput username={nameValue} userId={1} />
+      <Chat />
+      <ChatInput username={username} userId={userId} />
     </React.Fragment>
   );
 };

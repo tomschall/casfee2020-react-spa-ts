@@ -15,13 +15,13 @@ const MESSAGE_CREATED = gql`
   }
 `;
 
-interface MessagesProps {
+interface MessageProps {
   messages: Message[];
   subscribeToMore: any;
   refetch: any;
 }
 
-const Messages: React.FC<MessagesProps> = ({
+const MessageList: React.FC<MessageProps> = ({
   messages,
   subscribeToMore,
   refetch,
@@ -101,4 +101,4 @@ const Messages: React.FC<MessagesProps> = ({
   );
 };
 
-export default Messages;
+export default MessageList;

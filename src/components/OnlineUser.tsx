@@ -11,7 +11,7 @@ const ONLINE_USERS = gql`
   }
 `;
 
-interface OnlineUsersProps {
+interface OnlineUserProps {
   username: string;
   userId: number;
 }
@@ -23,7 +23,7 @@ interface UserOnline {
   };
 }
 
-const OnlineUsers: React.FC<OnlineUsersProps> = () => {
+const OnlineUser: React.FC<OnlineUserProps> = () => {
   const subscriptionData = () => (
     <Subscription<UserOnline> subscription={ONLINE_USERS}>
       {({ data, loading }) => {
@@ -58,4 +58,4 @@ const OnlineUsers: React.FC<OnlineUsersProps> = () => {
   );
 };
 
-export default OnlineUsers;
+export default OnlineUser;

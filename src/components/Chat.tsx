@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { useRecoilState } from 'recoil';
 import { messagesState, newMessagesState } from '../atom.js';
-import Messages from './Messages';
+import MessageList from './MessageList';
 import { Message } from '../interfaces/message/message.interface';
 
 const GET_MESSAGES = gql`
@@ -26,7 +26,6 @@ const GET_MESSAGES = gql`
 `;
 
 interface ChatProps {
-  nameValue: string;
   username?: string;
 }
 
@@ -165,7 +164,7 @@ const Chat: React.FC<ChatProps> = (props) => {
 
           return (
             <React.Fragment>
-              <Messages
+              <MessageList
                 messages={messages}
                 subscribeToMore={subscribeToMore}
                 refetch={refetchData}

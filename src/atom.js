@@ -9,3 +9,10 @@ export const newMessagesState = atom({
   key: 'newMessagesState',
   default: [],
 });
+
+export const userState = atom({
+  key: 'userState',
+  default: {
+    isLoggedIn: false,
+  },
+});

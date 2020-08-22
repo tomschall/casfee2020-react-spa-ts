@@ -7,6 +7,7 @@ import { ApolloLink, split } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http';
 import { WebSocketLink } from 'apollo-link-ws';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { RecoilRoot } from 'recoil';
 
 import App from './App';
 
@@ -43,8 +44,11 @@ const client = new ApolloClient({
 });
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>,
+  <RecoilRoot>
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </RecoilRoot>,
+
   document.getElementById('root'),
 );
