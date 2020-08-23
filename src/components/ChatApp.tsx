@@ -40,7 +40,7 @@ const ChatApp: React.FC<ChatAppProps> = ({ client, username, userId }) => {
     <React.Fragment>
       <OnlineUser username={username} userId={userId} />
       <hr></hr>
-      <Chat />
+      <Chat username={username} userId={userId} />
       <ChatInput username={username} userId={userId} />
     </React.Fragment>
   );

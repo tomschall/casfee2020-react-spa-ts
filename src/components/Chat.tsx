@@ -4,6 +4,7 @@ import { Query } from 'react-apollo';
 import { useRecoilState } from 'recoil';
 import { messagesState, newMessagesState } from '../atom.js';
 import MessageList from './MessageList';
+import MessageSub from './MessageSub';
 import { Message } from '../interfaces/message/message.interface';
 
 const GET_MESSAGES = gql`
@@ -26,10 +27,11 @@ const GET_MESSAGES = gql`
 `;
 
 interface ChatProps {
-  username?: string;
+  username: string;
+  userId: number;
 }
 
-const Chat: React.FC<ChatProps> = (props) => {
+const Chat: React.FC<ChatProps> = ({ username, userId }) => {
   const [error, setError] = useState<Error | null>(null);
   const [refetchState, setRefetch] = useState<any>();
   const [bottom, setBottom] = useState<any>();
@@ -70,7 +72,7 @@ const Chat: React.FC<ChatProps> = (props) => {
     const newMessagesArr = [...newMessages];
     messages.forEach((m) => {
       // do not add new messages from self
-      if (m.username !== props.username) {
+      if (m.username !== username) {
         newMessagesArr.push(m);
       }
     });
@@ -148,7 +150,6 @@ const Chat: React.FC<ChatProps> = (props) => {
           }
 
           if (!refetchState) {
-            console.log('setRefetchState');
             setRefetch(() => refetch);
           }
 
@@ -163,16 +164,15 @@ const Chat: React.FC<ChatProps> = (props) => {
           }
 
           return (
-            <React.Fragment>
-              <MessageList
-                messages={messages}
-                subscribeToMore={subscribeToMore}
-                refetch={refetchData}
-              />
-            </React.Fragment>
+            <MessageSub
+              subscribeToMore={subscribeToMore}
+              refetch={refetchData}
+              username={username}
+            ></MessageSub>
           );
         }}
       </Query>
+      <MessageList messages={messages} />
     </React.Fragment>
   );
 };

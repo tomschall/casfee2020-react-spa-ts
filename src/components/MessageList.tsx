@@ -17,15 +17,9 @@ const MESSAGE_CREATED = gql`
 
 interface MessageProps {
   messages: Message[];
-  subscribeToMore: any;
-  refetch: any;
 }
 
-const MessageList: React.FC<MessageProps> = ({
-  messages,
-  subscribeToMore,
-  refetch,
-}) => {
+const MessageList: React.FC<MessageProps> = ({ messages }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -36,19 +30,9 @@ const MessageList: React.FC<MessageProps> = ({
 
   useEffect(() => {
     console.log('component did mount');
-    const unsubscribe = subscribeToMore({
-      document: MESSAGE_CREATED,
-      updateQuery: ({ subscriptionData }: any) => {
-        console.log('updateQuery', subscriptionData);
-        refetch();
-
-        return null;
-      },
-    });
 
     return function cleanup() {
       console.log('component did unmount');
-      unsubscribe();
     };
   }, []);
 
