@@ -66,18 +66,26 @@ const MessageList: React.FC<MessageProps> = ({ messages }) => {
   return (
     <div className="container">
       <div className="chat-container">
-        {messages.map((m) => {
-          return (
-            <div key={m.id} className="message">
-              {renderAvatar(m.username)}
+        {messages.length ? (
+          messages.map((m) => {
+            return (
+              <div key={m.id} className="message">
+                {renderAvatar(m.username)}
 
-              <div className="datetime">
-                {m.username}: <i>{moment(m.timestamp).fromNow()}</i>
+                <div className="datetime">
+                  {m.username}: <i>{moment(m.timestamp).fromNow()}</i>
+                </div>
+                <p>{m.text}</p>
               </div>
-              <p>{m.text}</p>
-            </div>
-          );
-        })}
+            );
+          })
+        ) : (
+          <div className="message">
+            <p>
+              Congratulations! You are the first user that can insert a message.
+            </p>
+          </div>
+        )}
       </div>
 
       <div ref={messagesEndRef} />

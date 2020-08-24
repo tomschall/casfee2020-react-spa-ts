@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 import { useRecoilState } from 'recoil';
-import { messagesState, newMessagesState } from '../atom.js';
+import {
+  messagesState,
+  newMessagesState,
+  refetchMessagesState,
+} from '../atom.js';
 import MessageList from './MessageList';
 import MessageSub from './MessageSub';
 import { Message } from '../interfaces/message/message.interface';
@@ -33,7 +37,7 @@ interface ChatProps {
 
 const Chat: React.FC<ChatProps> = ({ username, userId }) => {
   const [error, setError] = useState<Error | null>(null);
-  const [refetchState, setRefetch] = useState<any>();
+  const [refetchState, setRefetch] = useRecoilState<any>(refetchMessagesState);
   const [bottom, setBottom] = useState<any>();
   const [messages, setMessages] = useRecoilState<any>(messagesState);
   const [newMessages, setNewMessages] = useRecoilState<any>(newMessagesState);
@@ -87,9 +91,10 @@ const Chat: React.FC<ChatProps> = ({ username, userId }) => {
   };
 
   const refetchData = async () => {
-    console.log('hier');
+    console.log('refetchData');
     if (refetchState) {
       const resp = await refetchState(getLastReceivedVars());
+
       if (resp.data) {
         console.log('resp.data', resp.data);
         if (!isViewScrollable()) {
@@ -141,6 +146,10 @@ const Chat: React.FC<ChatProps> = ({ username, userId }) => {
           subscribeToMore: any;
           refetch: any;
         }) => {
+          if (!refetchState) {
+            setRefetch(() => refetch);
+          }
+
           if (!data) {
             return null;
           }
@@ -149,11 +158,7 @@ const Chat: React.FC<ChatProps> = ({ username, userId }) => {
             return null;
           }
 
-          if (!refetchState) {
-            setRefetch(() => refetch);
-          }
-
-          console.log('Query received Messages', data.message);
+          console.log('Query received Messages', data && data.message);
           console.log('Query received Messages', getLastReceivedVars());
 
           // load all messages to state in the beginning

@@ -27,7 +27,11 @@ const MessageSub: React.FC<MessageSubProps> = ({
     const unsubscribe = subscribeToMore({
       document: MESSAGE_CREATED,
       updateQuery: (prev: any, { subscriptionData }: any) => {
-        if (subscriptionData.data.message[0].username !== username) refetch();
+        if (
+          subscriptionData.data.message.length &&
+          subscriptionData.data.message[0].username !== username
+        )
+          refetch();
 
         return null;
       },

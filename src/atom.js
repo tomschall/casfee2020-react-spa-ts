@@ -16,3 +16,7 @@ export const userState = atom({
     isLoggedIn: false,
   },
 });
+
+export const refetchMessagesState = atom({
+  key: 'refetchMessagesState',
+});
