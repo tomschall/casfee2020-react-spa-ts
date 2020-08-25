@@ -35,20 +35,25 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
 
   const form = (sendMessage: (e: React.SyntheticEvent) => void) => {
     return (
-      <form onSubmit={sendMessage}>
-        <div>
-          <input
-            value={text}
-            autoFocus={true}
-            onChange={(e) => {
-              handleTyping(e.target.value);
-            }}
-            autoComplete="off"
-            placeholder="Chicken Fest"
-          />
-          <button onClick={sendMessage}>Send</button>
-        </div>
-      </form>
+      <React.Fragment>
+        <form onSubmit={sendMessage}>
+          <div>
+            <input
+              value={text}
+              autoFocus={true}
+              onChange={(e) => {
+                handleTyping(e.target.value);
+              }}
+              autoComplete="off"
+              placeholder="Chicken Fest"
+            />
+            <button onClick={sendMessage}>Send</button>
+          </div>
+        </form>
+        <br />
+        username: {props.username} <br />
+        userId: {props.userId}
+      </React.Fragment>
     );
   };
 

@@ -172,7 +172,6 @@ const Chat: React.FC<ChatProps> = ({ username, userId }) => {
             <MessageSub
               subscribeToMore={subscribeToMore}
               refetch={refetchData}
-              username={username}
             ></MessageSub>
           );
         }}

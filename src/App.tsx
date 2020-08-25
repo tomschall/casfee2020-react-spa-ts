@@ -63,12 +63,11 @@ const App: React.FC = () => {
               <option>select name</option>
               <option value="1">tom</option>
               <option value="3">roli</option>
+              <option value="15">hasura</option>
+              <option value="4">kimibimi</option>
             </select>
             <input type="submit" value="Submit" />
           </form>
-          <br />
-          username: {state.username} <br />
-          userId: {state.id}
         </React.Fragment>
       )}
     </div>
