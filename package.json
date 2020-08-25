@@ -10,6 +10,8 @@
 		"@types/node": "^12.0.0",
 		"@types/react": "^16.9.0",
 		"@types/react-dom": "^16.9.0",
+		"@types/react-router": "^5.1.8",
+		"@types/react-router-dom": "^5.1.5",
 		"apollo-boost": "^0.4.9",
 		"apollo-client-preset": "^1.0.8",
 		"apollo-link": "^1.2.14",

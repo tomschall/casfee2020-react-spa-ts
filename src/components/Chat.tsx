@@ -49,6 +49,7 @@ const Chat: React.FC<ChatProps> = ({ username, userId }) => {
 
     return function cleanup() {
       console.log('component Chat did unmount');
+      setRefetch(null);
     };
   }, []);
 
@@ -93,7 +94,7 @@ const Chat: React.FC<ChatProps> = ({ username, userId }) => {
   };
 
   const refetchData = async () => {
-    console.log('refetchData');
+    console.log('refetchData', refetchState);
     if (refetchState) {
       const resp = await refetchState(getLastReceivedVars());
 

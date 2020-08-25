@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { ApolloConsumer } from 'react-apollo';
 import gql from 'graphql-tag';
 import ChatApp from './components/ChatApp';
+import NotFound from './components/NotFound';
+import Header from './components/Header';
 import { useApolloClient } from '@apollo/react-hooks';
 import { useRecoilState } from 'recoil';
 import { userState } from './atom.js';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 const USER = gql`
   query($userId: Int!) {
@@ -47,11 +50,28 @@ const App: React.FC = () => {
         <ApolloConsumer>
           {(client) => {
             return (
-              <ChatApp
-                client={client}
-                username={state.username}
-                userId={state.userId}
-              />
+              <React.Fragment>
+                <Header />
+                <Switch>
+                  <Route
+                    exact
+                    path="/"
+                    render={(props) => (
+                      <ChatApp
+                        {...props}
+                        client={client}
+                        username={state.username}
+                        userId={state.userId}
+                      />
+                    )}
+                  />
+                  <Route
+                    exact
+                    path="/not-found"
+                    render={(props) => <NotFound />}
+                  />
+                </Switch>
+              </React.Fragment>
             );
           }}
         </ApolloConsumer>
