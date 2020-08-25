@@ -24,8 +24,10 @@ const GET_MESSAGES = gql`
     ) {
       id
       text
-      username
       timestamp
+      user {
+        username
+      }
     }
   }
 `;
@@ -76,7 +78,7 @@ const Chat: React.FC<ChatProps> = ({ username, userId }) => {
     const newMessagesArr = [...newMessages];
     messages.forEach((m) => {
       // do not add new messages from self
-      if (m.username !== username) {
+      if (m.user !== userId) {
         newMessagesArr.push(m);
       }
     });

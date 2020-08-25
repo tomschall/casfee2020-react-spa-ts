@@ -5,9 +5,11 @@ const MESSAGE_CREATED = gql`
   subscription {
     message(order_by: { id: desc }, limit: 1) {
       id
-      username
       text
       timestamp
+      user {
+        username
+      }
     }
   }
 `;

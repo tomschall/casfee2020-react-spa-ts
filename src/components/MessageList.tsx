@@ -8,7 +8,7 @@ const MESSAGE_CREATED = gql`
   subscription {
     message(order_by: { id: desc }, limit: 1) {
       id
-      username
+      user
       text
       timestamp
     }
@@ -37,7 +37,6 @@ const MessageList: React.FC<MessageProps> = ({ messages }) => {
   }, []);
 
   useEffect(() => {
-    console.log('update');
     scrollToBottom();
   });
 
@@ -70,10 +69,10 @@ const MessageList: React.FC<MessageProps> = ({ messages }) => {
           messages.map((m) => {
             return (
               <div key={m.id} className="message">
-                {renderAvatar(m.username)}
+                {renderAvatar(m.user)}
 
                 <div className="datetime">
-                  {m.username}: <i>{moment(m.timestamp).fromNow()}</i>
+                  {m.user.username}: <i>{moment(m.timestamp).fromNow()}</i>
                 </div>
                 <p>{m.text}</p>
               </div>

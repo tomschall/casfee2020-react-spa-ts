@@ -13,7 +13,9 @@ const INSERT_MESSAGE = gql`
         id
         timestamp
         text
-        username
+        user {
+          username
+        }
       }
     }
   }
@@ -69,7 +71,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
       mutation={INSERT_MESSAGE}
       variables={{
         message: {
-          username: props.username,
+          userId: props.userId,
           text: text,
         },
       }}
@@ -77,8 +79,9 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
         const message = {
           id: insert_message.data.insert_message.returning[0].id,
           timestamp: insert_message.data.insert_message.returning[0].timestamp,
-          username: insert_message.data.insert_message.returning[0].username,
+          userId: insert_message.data.insert_message.returning[0].userId,
           text: insert_message.data.insert_message.returning[0].text,
+          user: insert_message.data.insert_message.returning[0].user,
         };
         updateMessages(message);
       }}
