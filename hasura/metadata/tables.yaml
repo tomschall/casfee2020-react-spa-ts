@@ -1,0 +1,24 @@
+- table:
+    schema: public
+    name: message
+  object_relationships:
+  - name: user
+    using:
+      foreign_key_constraint_on: userId
+- table:
+    schema: public
+    name: user
+  array_relationships:
+  - name: messages
+    using:
+      foreign_key_constraint_on:
+        column: userId
+        table:
+          schema: public
+          name: message
+- table:
+    schema: public
+    name: user_online
+- table:
+    schema: public
+    name: user_typing
