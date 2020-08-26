@@ -20,3 +20,7 @@ export const userState = atom({
 export const refetchMessagesState = atom({
   key: 'refetchMessagesState',
 });
+
+export const atomChannelState = atom({
+  key: 'atomChannelState',
+});

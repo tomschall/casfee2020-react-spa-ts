@@ -1,24 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import gql from 'graphql-tag';
-import { Query } from 'react-apollo';
+import { Query, useApolloClient } from 'react-apollo';
 import { useRecoilState } from 'recoil';
 import {
   messagesState,
   newMessagesState,
   refetchMessagesState,
+  atomChannelState,
 } from '../atom.js';
 import MessageList from './MessageList';
 import MessageSub from './MessageSub';
 import { Message } from '../interfaces/message/message.interface';
+import { useParams } from 'react-router';
 
 const GET_MESSAGES = gql`
-  query($last_received_id: Int, $last_received_ts: timestamptz) {
+  query(
+    $last_received_id: Int
+    $last_received_ts: timestamptz
+    $channel: String
+  ) {
     message(
       order_by: { timestamp: asc }
       where: {
         _and: {
           id: { _neq: $last_received_id }
           timestamp: { _gte: $last_received_ts }
+          channel: { name: { _eq: $channel } }
         }
       }
     ) {
@@ -32,6 +39,15 @@ const GET_MESSAGES = gql`
   }
 `;
 
+const ROOM = gql`
+  query($channel: String) {
+    channel(where: { name: { _eq: $channel } }) {
+      name
+      id
+    }
+  }
+`;
+
 interface ChatProps {
   username: string;
   userId: number;
@@ -39,10 +55,13 @@ interface ChatProps {
 
 const Chat: React.FC<ChatProps> = ({ username, userId }) => {
   const [error, setError] = useState<Error | null>(null);
+  const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
   const [refetchState, setRefetch] = useRecoilState<any>(refetchMessagesState);
   const [bottom, setBottom] = useState<any>();
   const [messages, setMessages] = useRecoilState<any>(messagesState);
   const [newMessages, setNewMessages] = useRecoilState<any>(newMessagesState);
+
+  const client = useApolloClient();
 
   useEffect(() => {
     console.log('component Chat did mount');
@@ -53,6 +72,27 @@ const Chat: React.FC<ChatProps> = ({ username, userId }) => {
     };
   }, []);
 
+  let { channel } = useParams();
+  console.log('channelState', channelState);
+  if (channelState && channelState.name !== channel) {
+    setMessages([]);
+    setNewMessages([]);
+    console.log('set channel new and clear messages state - chat component');
+    (async () => {
+      console.log('channel use Effect chat', channel);
+      const channelObj = await client.query({
+        query: ROOM,
+        variables: {
+          channel,
+        },
+      });
+      console.log('channelObj', channelObj.data.channel[0]);
+      if (channelObj && channelObj.data && channelObj.data.channel) {
+        setChannel(channelObj.data.channel[0]);
+      }
+    })();
+  }
+
   // get appropriate query variables
   const getLastReceivedVars = () => {
     if (newMessages.length === 0) {
@@ -60,17 +100,20 @@ const Chat: React.FC<ChatProps> = ({ username, userId }) => {
         return {
           last_received_id: messages[messages.length - 1].id,
           last_received_ts: messages[messages.length - 1].timestamp,
+          channel,
         };
       } else {
         return {
           last_received_id: -1,
           last_received_ts: '2018-08-21T19:58:46.987552+00:00',
+          channel,
         };
       }
     } else {
       return {
         last_received_id: newMessages[newMessages.length - 1].id,
         last_received_ts: newMessages[newMessages.length - 1].timestamp,
+        channel,
       };
     }
   };
@@ -136,51 +179,58 @@ const Chat: React.FC<ChatProps> = ({ username, userId }) => {
   };
 
   return (
-    <React.Fragment>
-      <Query query={GET_MESSAGES} variables={getLastReceivedVars()}>
-        {({
-          data,
-          loading,
-          subscribeToMore,
-          refetch,
-        }: {
-          data: any;
-          loading: any;
-          subscribeToMore: any;
-          refetch: any;
-        }) => {
-          if (!refetchState) {
-            setRefetch(() => refetch);
-          }
+    <div>
+      {channelState && getLastReceivedVars() ? (
+        <React.Fragment>
+          <Query query={GET_MESSAGES} variables={getLastReceivedVars()}>
+            {({
+              data,
+              loading,
+              subscribeToMore,
+              refetch,
+            }: {
+              data: any;
+              loading: any;
+              subscribeToMore: any;
+              refetch: any;
+            }) => {
+              if (!refetchState) {
+                setRefetch(() => refetch);
+              }
 
-          if (!data) {
-            return null;
-          }
+              if (!data) {
+                return null;
+              }
 
-          if (loading) {
-            return null;
-          }
+              if (loading) {
+                return null;
+              }
 
-          console.log('Query received Messages', data && data.message);
-          console.log('Query received Messages', getLastReceivedVars());
+              console.log('Query received Messages', data && data.message);
+              console.log('Query received Messages', getLastReceivedVars());
 
-          // load all messages to state in the beginning
-          if (data.message.length !== 0) {
-            if (messages.length === 0) {
-              addOldMessages(data.message);
-            }
-          }
+              // load all messages to state in the beginning
+              if (data.message.length !== 0) {
+                if (messages.length === 0) {
+                  console.log('add old stuff');
+                  addOldMessages(data.message);
+                }
+              }
 
-          return (
-            <MessageSub
-              subscribeToMore={subscribeToMore}
-              refetch={refetchData}
-            ></MessageSub>
-          );
-        }}
-      </Query>
-      <MessageList messages={messages} />
-    </React.Fragment>
+              return (
+                <MessageSub
+                  subscribeToMore={subscribeToMore}
+                  refetch={refetchData}
+                ></MessageSub>
+              );
+            }}
+          </Query>
+          <MessageList messages={messages} />
+        </React.Fragment>
+      ) : (
+        ''
+      )}
+    </div>
   );
 };
 

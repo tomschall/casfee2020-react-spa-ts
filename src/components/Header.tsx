@@ -4,18 +4,18 @@ import { withRouter } from 'react-router';
 
 const Header: React.FC = () => {
   return (
-    <div className="flex pa1 justify-between nowrap orange">
-      <div className="flex flex-fixed black">
-        <div className="fw7 mr1">Hacker News</div>
-        <Link to="/" className="ml1 no-underline black">
-          Slack
+    <ul>
+      <li>
+        <Link to="/general" className="ml1 no-underline black">
+          General
         </Link>
-        <div className="ml1">|</div>
-        <Link to="/not-found" className="ml1 no-underline black">
-          submit
+      </li>
+      <li>
+        <Link to="/casfee20" className="ml1 no-underline black">
+          Casfee20
         </Link>
-      </div>
-    </div>
+      </li>
+    </ul>
   );
 };
 

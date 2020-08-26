@@ -1,7 +1,21 @@
 - table:
     schema: public
+    name: channel
+  array_relationships:
+  - name: messages
+    using:
+      foreign_key_constraint_on:
+        column: channelId
+        table:
+          schema: public
+          name: message
+- table:
+    schema: public
     name: message
   object_relationships:
+  - name: channel
+    using:
+      foreign_key_constraint_on: channelId
   - name: user
     using:
       foreign_key_constraint_on: userId

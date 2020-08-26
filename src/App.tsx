@@ -55,7 +55,7 @@ const App: React.FC = () => {
                 <Switch>
                   <Route
                     exact
-                    path="/"
+                    path="/:channel"
                     render={(props) => (
                       <ChatApp
                         {...props}
@@ -65,11 +65,13 @@ const App: React.FC = () => {
                       />
                     )}
                   />
+                  <Redirect from="/" exact to="/casfee20" />
                   <Route
                     exact
                     path="/not-found"
                     render={(props) => <NotFound />}
                   />
+                  <Redirect to="/not-found" />
                 </Switch>
               </React.Fragment>
             );

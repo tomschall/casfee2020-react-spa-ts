@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import { useRecoilState } from 'recoil';
-import { messagesState, newMessagesState } from '../atom.js';
+import { messagesState, newMessagesState, atomChannelState } from '../atom.js';
 import '../App.css';
 import { Message } from '../interfaces/message/message.interface.js';
+import { useParams } from 'react-router';
 
 const INSERT_MESSAGE = gql`
   mutation insert_message($message: message_insert_input!) {
@@ -15,6 +16,9 @@ const INSERT_MESSAGE = gql`
         text
         user {
           username
+        }
+        channel {
+          name
         }
       }
     }
@@ -30,6 +34,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
   const [text, setText] = useState('');
   const [messages, setMessages] = useRecoilState<any>(messagesState);
   const [newMessages, setNewMessages] = useRecoilState<any>(newMessagesState);
+  const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
 
   const handleTyping = (text: string) => {
     setText(text);
@@ -66,6 +71,8 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
     setNewMessages([]);
   };
 
+  console.log('channelState ChatInput', channelState);
+
   return (
     <Mutation
       mutation={INSERT_MESSAGE}
@@ -73,6 +80,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
         message: {
           userId: props.userId,
           text: text,
+          channelId: channelState?.id,
         },
       }}
       update={(data: any, insert_message: any) => {
@@ -82,7 +90,9 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
           userId: insert_message.data.insert_message.returning[0].userId,
           text: insert_message.data.insert_message.returning[0].text,
           user: insert_message.data.insert_message.returning[0].user,
+          channel: insert_message.data.insert_message.returning[0].channel,
         };
+        console.log('message', message);
         updateMessages(message);
       }}
     >
