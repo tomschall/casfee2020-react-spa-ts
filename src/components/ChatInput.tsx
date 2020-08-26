@@ -36,6 +36,9 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
   const [newMessages, setNewMessages] = useRecoilState<any>(newMessagesState);
   const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
 
+  let { channel } = useParams();
+  const chanObj = channelState.filter((c: any) => c.name === channel);
+
   const handleTyping = (text: string) => {
     setText(text);
   };
@@ -71,8 +74,6 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
     setNewMessages([]);
   };
 
-  console.log('channelState ChatInput', channelState);
-
   return (
     <Mutation
       mutation={INSERT_MESSAGE}
@@ -80,7 +81,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
         message: {
           userId: props.userId,
           text: text,
-          channelId: channelState?.id,
+          channelId: chanObj[0].id,
         },
       }}
       update={(data: any, insert_message: any) => {
@@ -92,7 +93,6 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
           user: insert_message.data.insert_message.returning[0].user,
           channel: insert_message.data.insert_message.returning[0].channel,
         };
-        console.log('message', message);
         updateMessages(message);
       }}
     >

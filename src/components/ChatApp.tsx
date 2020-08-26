@@ -16,8 +16,8 @@ const USER_IS_ONLINE = gql`
 `;
 
 const ROOM = gql`
-  query($channel: String) {
-    channel(where: { name: { _eq: $channel } }) {
+  query {
+    channel {
       name
       id
     }
@@ -49,13 +49,10 @@ const ChatApp: React.FC<ChatAppProps> = ({ client, username, userId }) => {
       console.log('channel use Effect chatapp', channel);
       const channelObj = await client.query({
         query: ROOM,
-        variables: {
-          channel,
-        },
       });
-      console.log('channelObj', channelObj.data.channel[0]);
+      console.log('channelObj aaa', channelObj.data.channel);
       if (channelObj && channelObj.data && channelObj.data.channel) {
-        setChannel(channelObj.data.channel[0]);
+        setChannel(channelObj.data.channel);
       }
     })();
 
@@ -67,10 +64,16 @@ const ChatApp: React.FC<ChatAppProps> = ({ client, username, userId }) => {
 
   return (
     <React.Fragment>
-      <OnlineUser username={username} userId={userId} />
-      <hr></hr>
-      <Chat username={username} userId={userId} />
-      <ChatInput username={username} userId={userId} />
+      {channelState ? (
+        <React.Fragment>
+          <OnlineUser username={username} userId={userId} />
+          <hr></hr>
+          <Chat username={username} userId={userId} />
+          <ChatInput username={username} userId={userId} />
+        </React.Fragment>
+      ) : (
+        ''
+      )}
     </React.Fragment>
   );
 };

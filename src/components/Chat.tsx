@@ -11,7 +11,7 @@ import {
 import MessageList from './MessageList';
 import MessageSub from './MessageSub';
 import { Message } from '../interfaces/message/message.interface';
-import { useParams } from 'react-router';
+import { useParams, useHistory } from 'react-router';
 
 const GET_MESSAGES = gql`
   query(
@@ -56,6 +56,7 @@ interface ChatProps {
 const Chat: React.FC<ChatProps> = ({ username, userId }) => {
   const [error, setError] = useState<Error | null>(null);
   const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
+  const [actualChannel, setActualChannel] = useState<any>();
   const [refetchState, setRefetch] = useRecoilState<any>(refetchMessagesState);
   const [bottom, setBottom] = useState<any>();
   const [messages, setMessages] = useRecoilState<any>(messagesState);
@@ -73,25 +74,21 @@ const Chat: React.FC<ChatProps> = ({ username, userId }) => {
   }, []);
 
   let { channel } = useParams();
-  console.log('channelState', channelState);
-  if (channelState && channelState.name !== channel) {
+
+  if (actualChannel !== channel) {
     setMessages([]);
     setNewMessages([]);
-    console.log('set channel new and clear messages state - chat component');
-    (async () => {
-      console.log('channel use Effect chat', channel);
-      const channelObj = await client.query({
-        query: ROOM,
-        variables: {
-          channel,
-        },
-      });
-      console.log('channelObj', channelObj.data.channel[0]);
-      if (channelObj && channelObj.data && channelObj.data.channel) {
-        setChannel(channelObj.data.channel[0]);
-      }
-    })();
+    setActualChannel(channel);
   }
+
+  console.log('channelState', channelState);
+
+  if (channelState) {
+    const chanObj = channelState.filter((c: any) => c.name === channel);
+    console.log('chanObj', chanObj);
+  }
+
+  if (!actualChannel) setActualChannel(channel);
 
   // get appropriate query variables
   const getLastReceivedVars = () => {
@@ -179,10 +176,14 @@ const Chat: React.FC<ChatProps> = ({ username, userId }) => {
   };
 
   return (
-    <div>
+    <React.Fragment>
       {channelState && getLastReceivedVars() ? (
         <React.Fragment>
-          <Query query={GET_MESSAGES} variables={getLastReceivedVars()}>
+          <Query
+            query={GET_MESSAGES}
+            variables={getLastReceivedVars()}
+            fetchPolicy="network-only"
+          >
             {({
               data,
               loading,
@@ -230,7 +231,7 @@ const Chat: React.FC<ChatProps> = ({ username, userId }) => {
       ) : (
         ''
       )}
-    </div>
+    </React.Fragment>
   );
 };
 
