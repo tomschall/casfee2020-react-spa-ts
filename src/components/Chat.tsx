@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import gql from 'graphql-tag';
 import { Query, useApolloClient } from 'react-apollo';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, selector, useRecoilStateLoadable } from 'recoil';
+
 import {
   messagesState,
   newMessagesState,
   refetchMessagesState,
   atomChannelState,
+  actualChannelState,
 } from '../atom.js';
 import MessageList from './MessageList';
 import MessageSub from './MessageSub';
@@ -47,7 +49,9 @@ interface ChatProps {
 const Chat: React.FC<ChatProps> = ({ username, userId }) => {
   const [error, setError] = useState<Error | null>(null);
   const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
-  const [actualChannel, setActualChannel] = useState<any>();
+  const [actualChannel, setActualChannel] = useRecoilState<any>(
+    actualChannelState,
+  );
   const [refetchState, setRefetch] = useRecoilState<any>(refetchMessagesState);
   const [bottom, setBottom] = useState<any>();
   const [messages, setMessages] = useRecoilState<any>(messagesState);
@@ -67,6 +71,20 @@ const Chat: React.FC<ChatProps> = ({ username, userId }) => {
   let { channel } = useParams();
 
   if (actualChannel !== channel) {
+    // const UpdateState = selector<any[]>({
+    //   key: 'updateState',
+    //   get: (opts: { get: any }) => {
+    //     const m = opts.get(messagesState);
+    //     const n = opts.get(newMessagesState);
+    //     const a = opts.get(actualChannelState);
+    //     return [m, n, a];
+    //   },
+    //   set: (opts: { get: any; set: any }, [m, n, a]: any) => {
+    //     opts.set(messagesState, []);
+    //     opts.set(newMessagesState, []);
+    //     opts.set(actualChannelState, []);
+    //   },
+    // });
     setMessages([]);
     setNewMessages([]);
     setActualChannel(channel);

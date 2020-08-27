@@ -46,11 +46,13 @@ const ChatApp: React.FC<ChatAppProps> = ({ client, username, userId }) => {
     }, 2000);
 
     (async () => {
-      console.log('channel use Effect chatapp', channel);
       const channelObj = await client.query({
         query: ROOM,
       });
-      console.log('channelObj aaa', channelObj.data.channel);
+      console.log(
+        'ChickenFestChat did mount channelObj aaa',
+        channelObj.data.channel,
+      );
       if (channelObj && channelObj.data && channelObj.data.channel) {
         setChannel(channelObj.data.channel);
       }

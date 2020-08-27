@@ -24,3 +24,7 @@ export const refetchMessagesState = atom({
 export const atomChannelState = atom({
   key: 'atomChannelState',
 });
+
+export const actualChannelState = atom({
+  key: 'actualChannelState',
+});
