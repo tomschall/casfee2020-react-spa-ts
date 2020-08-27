@@ -31,7 +31,8 @@ npm install --global hasura-cli
 Then run migration
 
 ```
-hasura migrate apply
+hasura migrate apply --endpoint <server-endpoint>
+hasura metadata apply --endpoint <server-endpoint>
 ```
 
 - [Fully working app](http://localhost:3000)
