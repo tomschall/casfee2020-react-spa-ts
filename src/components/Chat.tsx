@@ -39,15 +39,6 @@ const GET_MESSAGES = gql`
   }
 `;
 
-const ROOM = gql`
-  query($channel: String) {
-    channel(where: { name: { _eq: $channel } }) {
-      name
-      id
-    }
-  }
-`;
-
 interface ChatProps {
   username: string;
   userId: number;
@@ -134,11 +125,10 @@ const Chat: React.FC<ChatProps> = ({ username, userId }) => {
   };
 
   const refetchData = async () => {
-    console.log('refetchData', refetchState);
     if (refetchState) {
       const resp = await refetchState(getLastReceivedVars());
 
-      if (resp.data) {
+      if (resp.data && resp.data.message.length) {
         console.log('resp.data', resp.data);
         if (!isViewScrollable()) {
           console.log('is not scrollable');
@@ -177,60 +167,54 @@ const Chat: React.FC<ChatProps> = ({ username, userId }) => {
 
   return (
     <React.Fragment>
-      {channelState && getLastReceivedVars() ? (
-        <React.Fragment>
-          <Query
-            query={GET_MESSAGES}
-            variables={getLastReceivedVars()}
-            fetchPolicy="network-only"
-          >
-            {({
-              data,
-              loading,
-              subscribeToMore,
-              refetch,
-            }: {
-              data: any;
-              loading: any;
-              subscribeToMore: any;
-              refetch: any;
-            }) => {
-              if (!refetchState) {
-                setRefetch(() => refetch);
-              }
+      <Query
+        query={GET_MESSAGES}
+        variables={getLastReceivedVars()}
+        fetchPolicy="network-only"
+      >
+        {({
+          data,
+          loading,
+          subscribeToMore,
+          refetch,
+        }: {
+          data: any;
+          loading: any;
+          subscribeToMore: any;
+          refetch: any;
+        }) => {
+          if (!refetchState) {
+            setRefetch(() => refetch);
+          }
 
-              if (!data) {
-                return null;
-              }
+          if (!data) {
+            return null;
+          }
 
-              if (loading) {
-                return null;
-              }
+          if (loading) {
+            return null;
+          }
 
-              console.log('Query received Messages', data && data.message);
-              console.log('Query received Messages', getLastReceivedVars());
+          console.log('Query received Messages', data && data.message);
+          console.log('Query received Messages', getLastReceivedVars());
 
-              // load all messages to state in the beginning
-              if (data.message.length !== 0) {
-                if (messages.length === 0) {
-                  console.log('add old stuff');
-                  addOldMessages(data.message);
-                }
-              }
+          // load all messages to state in the beginning
+          if (data.message.length !== 0) {
+            if (messages.length === 0) {
+              console.log('add old stuff');
+              addOldMessages(data.message);
+            }
+          }
 
-              return (
-                <MessageSub
-                  subscribeToMore={subscribeToMore}
-                  refetch={refetchData}
-                ></MessageSub>
-              );
-            }}
-          </Query>
-          <MessageList messages={messages} />
-        </React.Fragment>
-      ) : (
-        ''
-      )}
+          return (
+            <MessageSub
+              subscribeToMore={subscribeToMore}
+              refetch={refetchData}
+            ></MessageSub>
+          );
+        }}
+      </Query>
+      <MessageList messages={messages} />
     </React.Fragment>
   );
 };
