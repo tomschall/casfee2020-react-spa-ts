@@ -10,8 +10,8 @@ import { userState } from './atom.js';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 const USER = gql`
-  query($userId: Int!) {
-    user(where: { id: { _eq: $userId } }) {
+  query($user_id: Int!) {
+    user(where: { id: { _eq: $user_id } }) {
       id
       username
     }
@@ -33,13 +33,13 @@ const App: React.FC = () => {
     const user = await client.query({
       query: USER,
       variables: {
-        userId: inputValue,
+        user_id: inputValue,
       },
     });
     const state = {
       isLoggedIn: true,
       username: user.data.user[0].username,
-      userId: user.data.user[0].id,
+      user_id: user.data.user[0].id,
     };
     setState(state);
   };
@@ -61,7 +61,7 @@ const App: React.FC = () => {
                         {...props}
                         client={client}
                         username={state.username}
-                        userId={state.userId}
+                        user_id={state.user_id}
                       />
                     )}
                   />

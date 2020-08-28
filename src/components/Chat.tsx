@@ -43,10 +43,10 @@ const GET_MESSAGES = gql`
 
 interface ChatProps {
   username: string;
-  userId: number;
+  user_id: number;
 }
 
-const Chat: React.FC<ChatProps> = ({ username, userId }) => {
+const Chat: React.FC<ChatProps> = ({ username, user_id }) => {
   const [error, setError] = useState<Error | null>(null);
   const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
   const [actualChannel, setActualChannel] = useRecoilState<any>(
@@ -128,7 +128,7 @@ const Chat: React.FC<ChatProps> = ({ username, userId }) => {
     const newMessagesArr = [...newMessages];
     messages.forEach((m) => {
       // do not add new messages from self
-      if (m.user !== userId) {
+      if (m.user !== user_id) {
         newMessagesArr.push(m);
       }
     });

@@ -13,7 +13,7 @@ const ONLINE_USERS = gql`
 
 interface OnlineUserProps {
   username: string;
-  userId: number;
+  user_id: number;
 }
 
 interface UserOnline {

@@ -8,8 +8,11 @@ import { useRecoilState } from 'recoil';
 import { atomChannelState } from '../atom.js';
 
 const USER_IS_ONLINE = gql`
-  mutation($userId: Int!) {
-    update_user(_set: { last_seen: "now()" }, where: { id: { _eq: $userId } }) {
+  mutation($user_id: Int!) {
+    update_user(
+      _set: { last_seen: "now()" }
+      where: { id: { _eq: $user_id } }
+    ) {
       affected_rows
     }
   }
@@ -27,10 +30,10 @@ const ROOM = gql`
 interface ChatAppProps {
   client: any;
   username: string;
-  userId: number;
+  user_id: number;
 }
 
-const ChatApp: React.FC<ChatAppProps> = ({ client, username, userId }) => {
+const ChatApp: React.FC<ChatAppProps> = ({ client, username, user_id }) => {
   const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
   let { channel } = useParams();
 
@@ -40,7 +43,7 @@ const ChatApp: React.FC<ChatAppProps> = ({ client, username, userId }) => {
       await client.mutate({
         mutation: USER_IS_ONLINE,
         variables: {
-          userId,
+          user_id,
         },
       });
     }, 2000);
@@ -68,10 +71,10 @@ const ChatApp: React.FC<ChatAppProps> = ({ client, username, userId }) => {
     <React.Fragment>
       {channelState ? (
         <React.Fragment>
-          <OnlineUser username={username} userId={userId} />
+          <OnlineUser username={username} user_id={user_id} />
           <hr></hr>
-          <Chat username={username} userId={userId} />
-          <ChatInput username={username} userId={userId} />
+          <Chat username={username} user_id={user_id} />
+          <ChatInput username={username} user_id={user_id} />
         </React.Fragment>
       ) : (
         ''

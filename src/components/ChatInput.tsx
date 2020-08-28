@@ -27,7 +27,7 @@ const INSERT_MESSAGE = gql`
 
 interface ChatInputProps {
   username: string;
-  userId: number;
+  user_id: number;
 }
 
 const ChatInput: React.FC<ChatInputProps> = (props) => {
@@ -62,7 +62,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
         </form>
         <br />
         username: {props.username} <br />
-        userId: {props.userId}
+        user_id: {props.user_id}
       </React.Fragment>
     );
   };
@@ -79,18 +79,18 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
       mutation={INSERT_MESSAGE}
       variables={{
         message: {
-          userId: props.userId,
+          user_id: props.user_id,
           text: text,
-          channelId: chanObj[0].id,
+          channel_id: chanObj[0].id,
         },
       }}
       update={(data: any, insert_message: any) => {
         const message = {
           id: insert_message.data.insert_message.returning[0].id,
           timestamp: insert_message.data.insert_message.returning[0].timestamp,
-          userId: insert_message.data.insert_message.returning[0].userId,
           text: insert_message.data.insert_message.returning[0].text,
           user: insert_message.data.insert_message.returning[0].user,
+          user_id: insert_message.data.insert_message.returning[0].user_id,
           channel: insert_message.data.insert_message.returning[0].channel,
         };
         updateMessages(message);
