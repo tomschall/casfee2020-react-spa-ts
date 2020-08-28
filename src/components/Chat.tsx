@@ -162,6 +162,7 @@ const Chat: React.FC<ChatProps> = ({ username, user_id }) => {
 
       if (
         resp.data.user_channels &&
+        resp.data.user_channels[0] &&
         resp.data.user_channels[0].channel.messages.length
       ) {
         console.log('resp.data', resp.data);
@@ -236,6 +237,8 @@ const Chat: React.FC<ChatProps> = ({ username, user_id }) => {
           // load all messages to state in the beginning
           if (
             data.user_channels &&
+            data.user_channels[0] &&
+            data.user_channels[0].channel.length &&
             data.user_channels[0].channel.messages.length !== 0
           ) {
             if (messages.length === 0) {

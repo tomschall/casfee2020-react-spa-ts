@@ -1,19 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import gql from 'graphql-tag';
 import moment from 'moment';
 import { isObject } from 'util';
 import { Message } from '../interfaces/message/message.interface';
-
-const MESSAGE_CREATED = gql`
-  subscription {
-    message(order_by: { id: desc }, limit: 1) {
-      id
-      user
-      text
-      timestamp
-    }
-  }
-`;
 
 interface MessageProps {
   messages: Message[];
@@ -65,26 +53,20 @@ const MessageList: React.FC<MessageProps> = ({ messages }) => {
   return (
     <div className="container">
       <div className="chat-container">
-        {messages.length ? (
-          messages.map((m) => {
-            return (
-              <div key={m.id} className="message">
-                {renderAvatar(m.user)}
+        {messages.length
+          ? messages.map((m) => {
+              return (
+                <div key={m.id} className="message">
+                  {renderAvatar(m.user)}
 
-                <div className="datetime">
-                  {m.user.username}: <i>{moment(m.timestamp).fromNow()}</i>
+                  <div className="datetime">
+                    {m.user.username}: <i>{moment(m.timestamp).fromNow()}</i>
+                  </div>
+                  <p>{m.text}</p>
                 </div>
-                <p>{m.text}</p>
-              </div>
-            );
-          })
-        ) : (
-          <div className="message">
-            <p>
-              Congratulations! You are the first user that can insert a message.
-            </p>
-          </div>
-        )}
+              );
+            })
+          : ''}
       </div>
 
       <div ref={messagesEndRef} />
