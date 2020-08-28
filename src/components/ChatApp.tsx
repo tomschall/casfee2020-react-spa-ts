@@ -3,9 +3,9 @@ import gql from 'graphql-tag';
 import Chat from './Chat';
 import ChatInput from './ChatInput';
 import OnlineUser from './OnlineUser';
-import { useParams } from 'react-router';
 import { useRecoilState } from 'recoil';
 import { atomChannelState } from '../atom.js';
+import { useParams } from 'react-router';
 
 const USER_IS_ONLINE = gql`
   mutation($user_id: Int!) {
@@ -31,10 +31,17 @@ interface ChatAppProps {
   client: any;
   username: string;
   user_id: number;
+  userState: any;
 }
 
-const ChatApp: React.FC<ChatAppProps> = ({ client, username, user_id }) => {
+const ChatApp: React.FC<ChatAppProps> = ({
+  client,
+  username,
+  user_id,
+  userState,
+}) => {
   const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
+
   let { channel } = useParams();
 
   useEffect(() => {
@@ -67,9 +74,13 @@ const ChatApp: React.FC<ChatAppProps> = ({ client, username, user_id }) => {
     };
   }, []);
 
+  const userIsMemberOfChannel = userState.user_channels?.filter(
+    (e: any) => e.channel.name == channel,
+  );
+
   return (
     <React.Fragment>
-      {channelState ? (
+      {channelState && userIsMemberOfChannel.length ? (
         <React.Fragment>
           <OnlineUser username={username} user_id={user_id} />
           <hr></hr>
@@ -77,7 +88,7 @@ const ChatApp: React.FC<ChatAppProps> = ({ client, username, user_id }) => {
           <ChatInput username={username} user_id={user_id} />
         </React.Fragment>
       ) : (
-        ''
+        'you have no membership for this channel'
       )}
     </React.Fragment>
   );

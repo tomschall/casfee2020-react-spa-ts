@@ -10,8 +10,8 @@ export const newMessagesState = atom({
   default: [],
 });
 
-export const userState = atom({
-  key: 'userState',
+export const recoilUserState = atom({
+  key: 'recoilUserState',
   default: {
     isLoggedIn: false,
   },

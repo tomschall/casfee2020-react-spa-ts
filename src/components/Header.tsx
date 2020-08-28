@@ -15,6 +15,11 @@ const Header: React.FC = () => {
           Casfee20
         </Link>
       </li>
+      <li>
+        <Link to="/projekt" className="ml1 no-underline black">
+          Projekt
+        </Link>
+      </li>
     </ul>
   );
 };

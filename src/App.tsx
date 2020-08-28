@@ -6,7 +6,7 @@ import NotFound from './components/NotFound';
 import Header from './components/Header';
 import { useApolloClient } from '@apollo/react-hooks';
 import { useRecoilState } from 'recoil';
-import { userState } from './atom.js';
+import { recoilUserState } from './atom.js';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 const USER = gql`
@@ -14,13 +14,23 @@ const USER = gql`
     user(where: { id: { _eq: $user_id } }) {
       id
       username
+      user_channels {
+        channel_id
+        channel {
+          name
+          is_private
+          messages {
+            id
+          }
+        }
+      }
     }
   }
 `;
 
 const App: React.FC = () => {
   const [inputValue, setInputValue] = useState<any>();
-  const [state, setState] = useRecoilState<any>(userState);
+  const [userState, setUserState] = useRecoilState<any>(recoilUserState);
 
   const client = useApolloClient();
 
@@ -36,17 +46,18 @@ const App: React.FC = () => {
         user_id: inputValue,
       },
     });
-    const state = {
+    const userState = {
       isLoggedIn: true,
       username: user.data.user[0].username,
       user_id: user.data.user[0].id,
+      user_channels: user.data.user[0].user_channels,
     };
-    setState(state);
+    setUserState(userState);
   };
 
   return (
     <div className="app">
-      {state.isLoggedIn ? (
+      {userState.isLoggedIn ? (
         <ApolloConsumer>
           {(client) => {
             return (
@@ -60,8 +71,9 @@ const App: React.FC = () => {
                       <ChatApp
                         {...props}
                         client={client}
-                        username={state.username}
-                        user_id={state.user_id}
+                        username={userState.username}
+                        user_id={userState.user_id}
+                        userState={userState}
                       />
                     )}
                   />
@@ -87,6 +99,7 @@ const App: React.FC = () => {
               <option value="3">roli</option>
               <option value="15">hasura</option>
               <option value="4">kimibimi</option>
+              <option value="6">kim</option>
             </select>
             <input type="submit" value="Submit" />
           </form>
