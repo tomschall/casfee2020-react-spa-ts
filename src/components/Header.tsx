@@ -6,19 +6,16 @@ const Header: React.FC = () => {
   return (
     <ul>
       <li>
-        <Link to="/general" className="ml1 no-underline black">
-          General
-        </Link>
+        <Link to="/general">General</Link>
       </li>
       <li>
-        <Link to="/casfee20" className="ml1 no-underline black">
-          Casfee20
-        </Link>
+        <Link to="/casfee20">Casfee20</Link>
       </li>
       <li>
-        <Link to="/projekt" className="ml1 no-underline black">
-          Projekt
-        </Link>
+        <Link to="/projekt">Projekt</Link>
+      </li>
+      <li>
+        <Link to="/bärbels-world">Bärbels-World</Link>
       </li>
     </ul>
   );
