@@ -19,33 +19,25 @@ const GET_MESSAGES = gql`
     $last_received_id: Int
     $last_received_ts: timestamptz
     $channel: String
-    $user_id: Int
   ) {
-    user_channels(
-      where: {
-        channel: { name: { _eq: $channel } }
-        _and: { user_id: { _eq: $user_id } }
-      }
-    ) {
-      channel {
-        messages(
-          order_by: { timestamp: asc }
-          where: {
-            _and: {
-              id: { _neq: $last_received_id }
-              timestamp: { _gte: $last_received_ts }
-            }
+    channel(where: { name: { _eq: $channel } }) {
+      messages(
+        order_by: { timestamp: asc }
+        where: {
+          _and: {
+            id: { _neq: $last_received_id }
+            timestamp: { _gte: $last_received_ts }
           }
-        ) {
-          id
-          text
-          timestamp
-          user {
-            username
-          }
-          channel {
-            name
-          }
+        }
+      ) {
+        id
+        text
+        timestamp
+        user {
+          username
+        }
+        channel {
+          name
         }
       }
     }
@@ -118,14 +110,12 @@ const Chat: React.FC<ChatProps> = ({ username, user_id }) => {
           last_received_id: messages[messages.length - 1].id,
           last_received_ts: messages[messages.length - 1].timestamp,
           channel,
-          user_id,
         };
       } else {
         return {
           last_received_id: -1,
           last_received_ts: '2018-08-21T19:58:46.987552+00:00',
           channel,
-          user_id,
         };
       }
     } else {
@@ -133,7 +123,6 @@ const Chat: React.FC<ChatProps> = ({ username, user_id }) => {
         last_received_id: newMessages[newMessages.length - 1].id,
         last_received_ts: newMessages[newMessages.length - 1].timestamp,
         channel,
-        user_id,
       };
     }
   };
@@ -161,21 +150,21 @@ const Chat: React.FC<ChatProps> = ({ username, user_id }) => {
       const resp = await refetchState(getLastReceivedVars());
 
       if (
-        resp.data.user_channels &&
-        resp.data.user_channels[0] &&
-        resp.data.user_channels[0].channel.messages.length
+        resp.data.channel &&
+        resp.data.channel[0] &&
+        resp.data.channel[0].messages.length !== 0
       ) {
         console.log('resp.data', resp.data);
         if (!isViewScrollable()) {
           console.log('is not scrollable');
-          addOldMessages(resp.data.user_channels[0].channel.messages);
+          addOldMessages(resp.data.channel[0].messages);
         } else {
           if (bottom) {
             console.log('this.state.bottom');
-            addOldMessages(resp.data.user_channels[0].channel.messages);
+            addOldMessages(resp.data.channel[0].messages);
           } else {
             console.log('!this.state.bottom');
-            addNewMessages(resp.data.user_channels[0].channel.messages);
+            addNewMessages(resp.data.channel[0].messages);
           }
         }
       }
@@ -236,14 +225,13 @@ const Chat: React.FC<ChatProps> = ({ username, user_id }) => {
 
           // load all messages to state in the beginning
           if (
-            data.user_channels &&
-            data.user_channels[0] &&
-            data.user_channels[0].channel.length &&
-            data.user_channels[0].channel.messages.length !== 0
+            data.channel &&
+            data.channel[0] &&
+            data.channel[0].messages.length !== 0
           ) {
             if (messages.length === 0) {
               console.log('add old stuff');
-              addOldMessages(data.user_channels[0].channel.messages);
+              addOldMessages(data.channel[0].messages);
             }
           }
 

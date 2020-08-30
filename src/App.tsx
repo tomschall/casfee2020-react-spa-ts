@@ -18,7 +18,6 @@ const USER = gql`
         channel_id
         channel {
           name
-          is_private
           messages {
             id
           }
@@ -96,10 +95,10 @@ const App: React.FC = () => {
             <select value={inputValue} onChange={handleNameChange}>
               <option>select name</option>
               <option value="1">tom</option>
-              <option value="3">roli</option>
-              <option value="15">hasura</option>
+              <option value="2">roli</option>
+              <option value="3">hasura</option>
               <option value="4">kimibimi</option>
-              <option value="6">kim</option>
+              <option value="5">kim</option>
             </select>
             <input type="submit" value="Submit" />
           </form>

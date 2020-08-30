@@ -1,6 +1,10 @@
 - table:
     schema: public
     name: channel
+  object_relationships:
+  - name: user
+    using:
+      foreign_key_constraint_on: owner_id
   array_relationships:
   - name: messages
     using:
@@ -9,6 +13,30 @@
         table:
           schema: public
           name: message
+  - name: user_channels
+    using:
+      foreign_key_constraint_on:
+        column: channel_id
+        table:
+          schema: public
+          name: user_channels
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - id
+      - name
+      - owner_id
+      filter:
+        _or:
+        - owner_id:
+            _eq: X-Hasura-User-Id
+        - user_channels:
+            user_id:
+              _eq: X-Hasura-User-Id
+        - owner_id:
+            _is_null: true
+      allow_aggregations: true
 - table:
     schema: public
     name: message
@@ -23,6 +51,13 @@
     schema: public
     name: user
   array_relationships:
+  - name: channels
+    using:
+      foreign_key_constraint_on:
+        column: owner_id
+        table:
+          schema: public
+          name: channel
   - name: messages
     using:
       foreign_key_constraint_on:
