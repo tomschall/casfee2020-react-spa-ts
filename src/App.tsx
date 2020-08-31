@@ -10,10 +10,11 @@ import { recoilUserState } from './atom.js';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 const USER = gql`
-  query($user_id: Int!) {
-    user(where: { id: { _eq: $user_id } }) {
+  query($user_id: String = "google-oauth2|107013031871730450250") {
+    user(where: { auth0_user_id: { _eq: $user_id } }) {
       id
       username
+      auth0_user_id
       user_channels {
         channel_id
         channel {
@@ -48,7 +49,7 @@ const App: React.FC = () => {
     const userState = {
       isLoggedIn: true,
       username: user.data.user[0].username,
-      user_id: user.data.user[0].id,
+      user_id: user.data.user[0].auth0_user_id,
       user_channels: user.data.user[0].user_channels,
     };
     setUserState(userState);
@@ -94,11 +95,15 @@ const App: React.FC = () => {
             <label>Name:</label>
             <select value={inputValue} onChange={handleNameChange}>
               <option>select name</option>
-              <option value="1">tom</option>
-              <option value="2">roli</option>
-              <option value="3">hasura</option>
-              <option value="4">kimibimi</option>
-              <option value="5">kim</option>
+              <option value="google-oauth2|107013031871730450250">tom</option>
+              <option value="google-oauth2|107013031871730454567">roli</option>
+              <option value="google-oauth2|107013031871730485763">
+                hasura
+              </option>
+              <option value="google-oauth2|107013031871730582945">
+                kimibimi
+              </option>
+              <option value="google-oauth2|107013031871730967352">kim</option>
             </select>
             <input type="submit" value="Submit" />
           </form>

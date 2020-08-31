@@ -8,10 +8,10 @@ import { atomChannelState } from '../atom.js';
 import { useParams } from 'react-router';
 
 const USER_IS_ONLINE = gql`
-  mutation($user_id: Int!) {
+  mutation($user_id: String) {
     update_user(
       _set: { last_seen: "now()" }
-      where: { id: { _eq: $user_id } }
+      where: { auth0_user_id: { _eq: $user_id } }
     ) {
       affected_rows
     }
@@ -30,7 +30,7 @@ const ROOM = gql`
 interface ChatAppProps {
   client: any;
   username: string;
-  user_id: number;
+  user_id: string;
   userState: any;
 }
 

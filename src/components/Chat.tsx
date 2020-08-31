@@ -46,7 +46,7 @@ const GET_MESSAGES = gql`
 
 interface ChatProps {
   username: string;
-  user_id: number;
+  user_id: string;
 }
 
 const Chat: React.FC<ChatProps> = ({ username, user_id }) => {

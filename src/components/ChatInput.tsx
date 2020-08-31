@@ -27,7 +27,7 @@ const INSERT_MESSAGE = gql`
 
 interface ChatInputProps {
   username: string;
-  user_id: number;
+  user_id: string;
 }
 
 const ChatInput: React.FC<ChatInputProps> = (props) => {
