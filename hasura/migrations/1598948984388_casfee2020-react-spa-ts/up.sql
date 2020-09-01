@@ -64,6 +64,8 @@ ALTER TABLE ONLY public.channel ALTER COLUMN id SET DEFAULT nextval('public.chan
 ALTER TABLE ONLY public.message ALTER COLUMN id SET DEFAULT nextval('public.message_id_seq'::regclass);
 ALTER TABLE ONLY public."user" ALTER COLUMN id SET DEFAULT nextval('public.user_id_seq'::regclass);
 ALTER TABLE ONLY public.channel
+    ADD CONSTRAINT channel_name_key UNIQUE (name);
+ALTER TABLE ONLY public.channel
     ADD CONSTRAINT channel_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.message
     ADD CONSTRAINT message_pkey PRIMARY KEY (id);

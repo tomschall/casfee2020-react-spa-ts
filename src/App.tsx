@@ -10,7 +10,7 @@ import { recoilUserState } from './atom.js';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 const USER = gql`
-  query($user_id: String = "google-oauth2|107013031871730450250") {
+  query($user_id: String) {
     user(where: { auth0_user_id: { _eq: $user_id } }) {
       id
       username

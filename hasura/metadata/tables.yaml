@@ -20,6 +20,22 @@
         table:
           schema: public
           name: user_channels
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        _or:
+        - owner_id:
+            _eq: X-Hasura-User-Id
+        - user_channels:
+            user_id:
+              _eq: X-Hasura-User-Id
+        - owner_id:
+            _is_null: true
+      columns:
+      - id
+      - name
+      - owner_id
   select_permissions:
   - role: user
     permission:
@@ -34,8 +50,6 @@
         - user_channels:
             user_id:
               _eq: X-Hasura-User-Id
-        - owner_id:
-            _is_null: true
       allow_aggregations: true
 - table:
     schema: public
@@ -47,6 +61,42 @@
   - name: user
     using:
       foreign_key_constraint_on: user_id
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        _and:
+        - channel:
+            owner_id:
+              _eq: X-Hasura-User-Id
+        - channel:
+            user_channels:
+              user_id:
+                _eq: X-Hasura-User-Id
+      columns:
+      - channel_id
+      - id
+      - text
+      - user_id
+      - timestamp
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - channel_id
+      - id
+      - text
+      - user_id
+      - timestamp
+      filter:
+        _and:
+        - channel:
+            owner_id:
+              _eq: X-Hasura-User-Id
+        - channel:
+            user_channels:
+              user_id:
+                _eq: X-Hasura-User-Id
 - table:
     schema: public
     name: user
@@ -72,6 +122,41 @@
         table:
           schema: public
           name: user_channels
+  insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      columns:
+      - id
+      - auth0_user_id
+      - username
+      - last_seen
+      - last_typed
+      backend_only: false
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - id
+      - username
+      - last_typed
+      - last_seen
+      - auth0_user_id
+      filter: {}
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - id
+      - auth0_user_id
+      - username
+      - last_seen
+      - last_typed
+      filter:
+        _and:
+        - auth0_user_id:
+            _eq: X-Hasura-User-Id
+      check: null
 - table:
     schema: public
     name: user_channels
@@ -82,9 +167,47 @@
   - name: user
     using:
       foreign_key_constraint_on: user_id
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        channel:
+          owner_id:
+            _eq: X-Hasura-User-Id
+      columns:
+      - channel_id
+      - user_id
+      backend_only: false
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - channel_id
+      - user_id
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
 - table:
     schema: public
     name: user_online
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - id
+      - username
+      - last_typed
+      - last_seen
+      filter: {}
 - table:
     schema: public
     name: user_typing
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - id
+      - username
+      - last_typed
+      - last_seen
+      filter: {}
