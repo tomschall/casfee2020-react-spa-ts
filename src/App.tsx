@@ -77,13 +77,15 @@ const App: React.FC = () => {
     setUserState(userState);
   };
 
-  setUser();
+  useEffect(() => {
+    if (isAuthenticated) setUser();
+  }, [isAuthenticated]);
 
   console.log('ia', isAuthenticated);
 
   return (
     <div className="app">
-      {isAuthenticated ? (
+      {isAuthenticated && localStorage.getItem('token') !== '' ? (
         <React.Fragment>
           <Header />
           <Switch>

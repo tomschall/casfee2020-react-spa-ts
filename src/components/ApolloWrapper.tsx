@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
@@ -11,25 +11,35 @@ import { atomTokenState } from '../atom.js';
 import { split, from } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 
-const ApolloWrapper: React.FC<any> = ({ children }) => {
-  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
-  const [bearerToken, setBearerToken] = useRecoilState<any>(atomTokenState);
+const ApolloWrapper: React.FC = ({ children }) => {
+  const [bearerToken, setBearerToken] = useState('');
+  const [testState, setTestState] = useState('');
 
-  console.log('ApolloWrapper');
+  const { getAccessTokenSilently, isLoading, isAuthenticated } = useAuth0();
 
   useEffect(() => {
     console.log('useEffect');
-    const getToken = async () => {
-      const token = isAuthenticated ? await getAccessTokenSilently() : '';
-      console.log('token', token);
-      if (token.length) {
-        console.log('settoken');
-        setBearerToken(token);
+    // get access token
+    const getAccessToken = async () => {
+      // getTokenSilently() returns a promise
+      try {
+        const token = await getAccessTokenSilently();
         localStorage.setItem('token', token);
+      } catch (e) {
+        console.log(e);
       }
     };
-    getToken();
-  }, [getAccessTokenSilently, isAuthenticated]);
+    getAccessToken();
+  }, [isAuthenticated]);
+
+  console.log('ApolloWrapper');
+
+  if (isLoading) {
+    return <React.Fragment>"Loading..."</React.Fragment>;
+  }
+
+  if (isAuthenticated && !localStorage.getItem('token'))
+    return <React.Fragment>"..."</React.Fragment>;
 
   const httpLink = new HttpLink({
     uri: 'http://localhost:8080/v1/graphql',
@@ -47,16 +57,23 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
     },
   });
 
-  const authLink = setContext((_, { headers, ...rest }) => {
-    if (!localStorage.getItem('token')) return { headers };
-    console.log('bearerToken', bearerToken);
-    return {
-      ...rest,
-      headers: {
-        ...headers,
-        authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    };
+  const authLink = setContext((_, { headers }) => {
+    const token = localStorage.getItem('token');
+    //console.log('localStorage.getItem', localStorage.getItem('token'));
+    if (token) {
+      return {
+        headers: {
+          ...headers,
+          authorization: `Bearer ${token}`,
+        },
+      };
+    } else {
+      return {
+        headers: {
+          ...headers,
+        },
+      };
+    }
   });
 
   /* Set up local cache */
