@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import gql from 'graphql-tag';
+import { gql, useMutation } from '@apollo/client';
 import Chat from './Chat';
 import ChatInput from './ChatInput';
 import OnlineUser from './OnlineUser';
@@ -7,6 +7,7 @@ import { useRecoilState } from 'recoil';
 import { atomChannelState } from '../atom.js';
 import { useParams } from 'react-router';
 import LogoutButton from './LogoutButton';
+import { useApolloClient } from 'react-apollo';
 
 const USER_IS_ONLINE = gql`
   mutation($user_id: String) {
@@ -29,26 +30,22 @@ const ROOM = gql`
 `;
 
 interface ChatAppProps {
-  client: any;
   username: string;
   user_id: string;
   userState: any;
 }
 
-const ChatApp: React.FC<ChatAppProps> = ({
-  client,
-  username,
-  user_id,
-  userState,
-}) => {
+const ChatApp: React.FC<ChatAppProps> = ({ username, user_id, userState }) => {
   const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
 
   let { channel } = useParams();
 
+  const client = useApolloClient();
+
   useEffect(() => {
     console.log('ChickenFestChat did mount');
     const interval = setInterval(async () => {
-      await client.mutate({
+      client.mutate({
         mutation: USER_IS_ONLINE,
         variables: {
           user_id,
@@ -77,13 +74,15 @@ const ChatApp: React.FC<ChatAppProps> = ({
 
   console.log('channelState', channelState);
 
-  // const userIsMemberOfChannel = userState.user_channels?.filter(
-  //   (e: any) => e.channel.name == channel,
-  // );
+  const userIsMemberOfChannel = userState.user_channels?.filter(
+    (e: any) => e.channel.name == channel,
+  );
+
+  console.log('userIsMemberOfChannel[0]', userIsMemberOfChannel);
 
   return (
     <React.Fragment>
-      {channelState ? (
+      {channelState && userIsMemberOfChannel[0]?.channel?.name === channel ? (
         <React.Fragment>
           <LogoutButton />
           <OnlineUser username={username} user_id={user_id} />

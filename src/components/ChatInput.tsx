@@ -81,7 +81,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
         message: {
           user_id: props.user_id,
           text: text,
-          channel_id: chanObj[0].id,
+          channel_id: chanObj[0]?.id,
         },
       }}
       update={(data: any, insert_message: any) => {

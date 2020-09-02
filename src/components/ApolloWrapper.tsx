@@ -15,6 +15,8 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [bearerToken, setBearerToken] = useRecoilState<any>(atomTokenState);
 
+  console.log('ApolloWrapper');
+
   useEffect(() => {
     console.log('useEffect');
     const getToken = async () => {
@@ -49,6 +51,7 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
     if (!localStorage.getItem('token')) return { headers };
     console.log('bearerToken', bearerToken);
     return {
+      ...rest,
       headers: {
         ...headers,
         authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -58,8 +61,6 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
 
   /* Set up local cache */
   const cache = new InMemoryCache();
-
-  console.log('authLink', authLink);
 
   interface Definintion {
     kind: string;

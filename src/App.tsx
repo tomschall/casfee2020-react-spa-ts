@@ -84,37 +84,26 @@ const App: React.FC = () => {
   return (
     <div className="app">
       {isAuthenticated ? (
-        <ApolloConsumer>
-          {(client) => {
-            return (
-              <React.Fragment>
-                <Header />
-                <Switch>
-                  <Route
-                    exact
-                    path="/:channel"
-                    render={(props) => (
-                      <ChatApp
-                        {...props}
-                        client={client}
-                        username={userState.username}
-                        user_id={userState.user_id}
-                        userState={userState}
-                      />
-                    )}
-                  />
-                  <Redirect from="/" exact to="/general" />
-                  <Route
-                    exact
-                    path="/not-found"
-                    render={(props) => <NotFound />}
-                  />
-                  <Redirect to="/not-found" />
-                </Switch>
-              </React.Fragment>
-            );
-          }}
-        </ApolloConsumer>
+        <React.Fragment>
+          <Header />
+          <Switch>
+            <Route
+              exact
+              path="/:channel"
+              render={(props) => (
+                <ChatApp
+                  {...props}
+                  username={userState.username}
+                  user_id={userState.user_id}
+                  userState={userState}
+                />
+              )}
+            />
+            <Redirect from="/" exact to="/general" />
+            <Route exact path="/not-found" render={(props) => <NotFound />} />
+            <Redirect to="/not-found" />
+          </Switch>
+        </React.Fragment>
       ) : (
         <React.Fragment>
           <LoginButton />
