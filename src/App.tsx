@@ -38,11 +38,9 @@ const App: React.FC = () => {
 
   const client = useApolloClient();
 
-  useEffect(() => {
-    setUser();
-  }, []);
-
   const setUser = async () => {
+    if (!isAuthenticated) return;
+
     const getUserFromToken = (token: any) => {
       if (token) {
         try {
@@ -78,6 +76,8 @@ const App: React.FC = () => {
     console.log('user', user);
     setUserState(userState);
   };
+
+  setUser();
 
   console.log('ia', isAuthenticated);
 

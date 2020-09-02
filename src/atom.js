@@ -28,3 +28,7 @@ export const atomChannelState = atom({
 export const actualChannelState = atom({
   key: 'actualChannelState',
 });
+
+export const atomTokenState = atom({
+  key: 'atomTokenState',
+});

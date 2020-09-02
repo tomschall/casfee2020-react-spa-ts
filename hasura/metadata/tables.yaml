@@ -65,7 +65,7 @@
   - role: user
     permission:
       check:
-        _and:
+        _or:
         - channel:
             owner_id:
               _eq: X-Hasura-User-Id
@@ -89,7 +89,7 @@
       - user_id
       - timestamp
       filter:
-        _and:
+        _or:
         - channel:
             owner_id:
               _eq: X-Hasura-User-Id
