@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ApolloConsumer } from 'react-apollo';
 import gql from 'graphql-tag';
 import ChatApp from './components/ChatApp';
 import NotFound from './components/NotFound';
+import LoginButton from './components/LoginButton';
 import Header from './components/Header';
 import { useApolloClient } from '@apollo/react-hooks';
 import { useRecoilState } from 'recoil';
 import { recoilUserState } from './atom.js';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const USER = gql`
   query($user_id: String) {
@@ -32,32 +34,56 @@ const App: React.FC = () => {
   const [inputValue, setInputValue] = useState<any>();
   const [userState, setUserState] = useRecoilState<any>(recoilUserState);
 
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
+
   const client = useApolloClient();
 
-  const handleNameChange = (event: any) => {
-    setInputValue(event.target.value);
-  };
+  useEffect(() => {
+    setUser();
+  }, []);
 
-  const handleNameSubmit = async (event: any) => {
-    event.preventDefault();
+  const setUser = async () => {
+    const getUserFromToken = (token: any) => {
+      if (token) {
+        try {
+          return JSON.parse(atob(token.split('.')[1]));
+        } catch (error) {
+          // ignore
+        }
+      }
+      return null;
+    };
+
+    const userFromTokenObj = getUserFromToken(localStorage.getItem('token'));
+    const userFromToken =
+      userFromTokenObj['https://hasura.io/jwt/claims']['x-hasura-user-id'];
+    console.log(
+      'userfromtoken',
+      userFromTokenObj['https://hasura.io/jwt/claims']['x-hasura-user-id'],
+    );
+
     const user = await client.query({
       query: USER,
       variables: {
-        user_id: inputValue,
+        user_id: userFromToken ? userFromToken : '',
       },
     });
+
     const userState = {
       isLoggedIn: true,
       username: user.data.user[0].username,
       user_id: user.data.user[0].auth0_user_id,
       user_channels: user.data.user[0].user_channels,
     };
+    console.log('user', user);
     setUserState(userState);
   };
 
+  console.log('ia', isAuthenticated);
+
   return (
     <div className="app">
-      {userState.isLoggedIn ? (
+      {isAuthenticated ? (
         <ApolloConsumer>
           {(client) => {
             return (
@@ -77,7 +103,7 @@ const App: React.FC = () => {
                       />
                     )}
                   />
-                  <Redirect from="/" exact to="/casfee20" />
+                  <Redirect from="/" exact to="/general" />
                   <Route
                     exact
                     path="/not-found"
@@ -91,22 +117,7 @@ const App: React.FC = () => {
         </ApolloConsumer>
       ) : (
         <React.Fragment>
-          <form onSubmit={handleNameSubmit}>
-            <label>Name:</label>
-            <select value={inputValue} onChange={handleNameChange}>
-              <option>select name</option>
-              <option value="google-oauth2|107013031871730450250">tom</option>
-              <option value="google-oauth2|107013031871730454567">roli</option>
-              <option value="google-oauth2|107013031871730485763">
-                hasura
-              </option>
-              <option value="google-oauth2|107013031871730582945">
-                kimibimi
-              </option>
-              <option value="google-oauth2|107013031871730967352">kim</option>
-            </select>
-            <input type="submit" value="Submit" />
-          </form>
+          <LoginButton />
         </React.Fragment>
       )}
     </div>

@@ -6,6 +6,7 @@ import OnlineUser from './OnlineUser';
 import { useRecoilState } from 'recoil';
 import { atomChannelState } from '../atom.js';
 import { useParams } from 'react-router';
+import LogoutButton from './LogoutButton';
 
 const USER_IS_ONLINE = gql`
   mutation($user_id: String) {
@@ -74,14 +75,17 @@ const ChatApp: React.FC<ChatAppProps> = ({
     };
   }, []);
 
-  const userIsMemberOfChannel = userState.user_channels?.filter(
-    (e: any) => e.channel.name == channel,
-  );
+  console.log('channelState', channelState);
+
+  // const userIsMemberOfChannel = userState.user_channels?.filter(
+  //   (e: any) => e.channel.name == channel,
+  // );
 
   return (
     <React.Fragment>
-      {channelState && userIsMemberOfChannel.length ? (
+      {channelState ? (
         <React.Fragment>
+          <LogoutButton />
           <OnlineUser username={username} user_id={user_id} />
           <hr></hr>
           <Chat username={username} user_id={user_id} />
