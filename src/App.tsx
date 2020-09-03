@@ -10,6 +10,7 @@ import { useRecoilState } from 'recoil';
 import { recoilUserState } from './atom.js';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
+import LogoutButton from './components/LogoutButton';
 
 const USER = gql`
   query($user_id: String) {
@@ -78,34 +79,44 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    if (isAuthenticated) setUser();
-  }, [isAuthenticated]);
+    if (isAuthenticated)
+      setTimeout(() => {
+        setUser();
+      }, 2000);
+  }, [isAuthenticated, localStorage]);
 
   console.log('ia', isAuthenticated);
 
+  const renderChat = () => {
+    return (
+      <React.Fragment>
+        <Header />
+        <Switch>
+          <Route
+            exact
+            path="/:channel"
+            render={(props) => (
+              <ChatApp
+                {...props}
+                username={userState.username}
+                user_id={userState.user_id}
+                userState={userState}
+              />
+            )}
+          />
+          <Redirect from="/" exact to="/general" />
+          <Route exact path="/not-found" render={(props) => <NotFound />} />
+          <Redirect to="/not-found" />
+        </Switch>
+        <LogoutButton />
+      </React.Fragment>
+    );
+  };
+
   return (
     <div className="app">
-      {isAuthenticated && localStorage.getItem('token') !== '' ? (
-        <React.Fragment>
-          <Header />
-          <Switch>
-            <Route
-              exact
-              path="/:channel"
-              render={(props) => (
-                <ChatApp
-                  {...props}
-                  username={userState.username}
-                  user_id={userState.user_id}
-                  userState={userState}
-                />
-              )}
-            />
-            <Redirect from="/" exact to="/general" />
-            <Route exact path="/not-found" render={(props) => <NotFound />} />
-            <Redirect to="/not-found" />
-          </Switch>
-        </React.Fragment>
+      {isAuthenticated ? (
+        renderChat()
       ) : (
         <React.Fragment>
           <LoginButton />

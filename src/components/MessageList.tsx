@@ -17,14 +17,6 @@ const MessageList: React.FC<MessageProps> = ({ messages }) => {
   };
 
   useEffect(() => {
-    console.log('component did mount');
-
-    return function cleanup() {
-      console.log('component did unmount');
-    };
-  }, []);
-
-  useEffect(() => {
     scrollToBottom();
   });
 
