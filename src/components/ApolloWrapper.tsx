@@ -3,21 +3,13 @@ import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { WebSocketLink } from 'apollo-link-ws';
-import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import { setContext } from 'apollo-link-context';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useRecoilState } from 'recoil';
-import { atomTokenState } from '../atom.js';
 import { split, from } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
-import { CachePersistor } from 'apollo-cache-persist';
-import { PersistentStorage, PersistedData } from 'apollo-cache-persist/types';
-import { persistCache } from 'apollo-cache-persist';
 
 const ApolloWrapper: any = ({ children }: any) => {
-  const [bearerToken, setBearerToken] = useState('');
-  const [testState, setTestState] = useState('');
-
   const { getAccessTokenSilently, isLoading, isAuthenticated } = useAuth0();
 
   useEffect(() => {

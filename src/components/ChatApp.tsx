@@ -4,7 +4,7 @@ import Chat from './Chat';
 import ChatInput from './ChatInput';
 import OnlineUser from './OnlineUser';
 import { useRecoilState } from 'recoil';
-import { atomChannelState } from '../atom.js';
+import { atomChannelState, recoilUserState } from '../atom.js';
 import { useParams } from 'react-router';
 import LogoutButton from './LogoutButton';
 import { useApolloClient } from 'react-apollo';
@@ -29,16 +29,14 @@ const ROOM = gql`
   }
 `;
 
-interface ChatAppProps {
-  username: string;
-  user_id: string;
-  userState: any;
-}
-
-const ChatApp: React.FC<ChatAppProps> = ({ username, user_id, userState }) => {
+const ChatApp: React.FC = () => {
   const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
+  const [userState, setUserState] = useRecoilState<any>(recoilUserState);
 
   let { channel } = useParams();
+
+  const username = userState.username;
+  const user_id = userState.user_id;
 
   const client = useApolloClient();
 
@@ -47,9 +45,7 @@ const ChatApp: React.FC<ChatAppProps> = ({ username, user_id, userState }) => {
     const interval = setInterval(async () => {
       client.mutate({
         mutation: USER_IS_ONLINE,
-        variables: {
-          user_id,
-        },
+        variables: { user_id },
       });
     }, 2000);
 
@@ -72,13 +68,9 @@ const ChatApp: React.FC<ChatAppProps> = ({ username, user_id, userState }) => {
     };
   }, []);
 
-  console.log('channelState', channelState);
-
   const userIsMemberOfChannel = userState.user_channels?.filter(
     (e: any) => e.channel.name == channel,
   );
-
-  console.log('userIsMemberOfChannel[0]', userIsMemberOfChannel);
 
   return (
     <React.Fragment>

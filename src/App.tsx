@@ -5,6 +5,8 @@ import ChatApp from './components/ChatApp';
 import NotFound from './components/NotFound';
 import LoginButton from './components/LoginButton';
 import Header from './components/Header';
+import PrivateRoute from './components/PrivateRoute';
+import Loading from './components/Loading';
 import { useApolloClient } from '@apollo/react-hooks';
 import { useRecoilState } from 'recoil';
 import { recoilUserState } from './atom.js';
@@ -92,18 +94,7 @@ const App: React.FC = () => {
       <React.Fragment>
         <Header />
         <Switch>
-          <Route
-            exact
-            path="/:channel"
-            render={(props) => (
-              <ChatApp
-                {...props}
-                username={userState.username}
-                user_id={userState.user_id}
-                userState={userState}
-              />
-            )}
-          />
+          <PrivateRoute path="/:channel" component={ChatApp} />
           <Redirect from="/" exact to="/general" />
           <Route exact path="/not-found" render={(props) => <NotFound />} />
           <Redirect to="/not-found" />
