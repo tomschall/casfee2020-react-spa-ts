@@ -8,30 +8,30 @@ import { setContext } from 'apollo-link-context';
 import { useAuth0 } from '@auth0/auth0-react';
 import { split, from } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
+import { useRecoilState } from 'recoil';
+import { recoilForceUpdateState } from '../atom.js';
 
 const ApolloWrapper: any = ({ children }: any) => {
   const { getAccessTokenSilently, isLoading, isAuthenticated } = useAuth0();
 
-  useEffect(() => {
-    console.log('useEffect');
-    // get access token
+  console.log('isAuthenticated', isAuthenticated);
+
+  let token = localStorage.getItem('token');
+
+  if (!token) {
     const getAccessToken = async () => {
       // getTokenSilently() returns a promise
       try {
-        const token = await getAccessTokenSilently();
+        token = await getAccessTokenSilently();
         localStorage.setItem('token', token);
       } catch (e) {
         console.log(e);
       }
     };
     getAccessToken();
-  }, [isAuthenticated]);
+  }
 
   console.log('ApolloWrapper');
-
-  if (isLoading) {
-    return <React.Fragment>"Loading..."</React.Fragment>;
-  }
 
   const httpLink = new HttpLink({
     uri: 'http://localhost:8080/v1/graphql',
@@ -50,7 +50,6 @@ const ApolloWrapper: any = ({ children }: any) => {
   });
 
   const authLink = setContext((_, { headers }) => {
-    const token = localStorage.getItem('token');
     //console.log('localStorage.getItem', localStorage.getItem('token'));
     if (token) {
       return {

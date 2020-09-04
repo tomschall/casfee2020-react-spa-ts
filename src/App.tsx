@@ -7,6 +7,7 @@ import LoginButton from './components/LoginButton';
 import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
 import Loading from './components/Loading';
+import Home from './components/Home';
 import { useApolloClient } from '@apollo/react-hooks';
 import { useRecoilState } from 'recoil';
 import { recoilUserState } from './atom.js';
@@ -37,13 +38,10 @@ const App: React.FC = () => {
   const [inputValue, setInputValue] = useState<any>();
   const [userState, setUserState] = useRecoilState<any>(recoilUserState);
 
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
-
   const client = useApolloClient();
+  const { isAuthenticated, loginWithRedirect, isLoading, user } = useAuth0();
 
   const setUser = async () => {
-    if (!isAuthenticated) return;
-
     const getUserFromToken = (token: any) => {
       if (token) {
         try {
@@ -56,63 +54,69 @@ const App: React.FC = () => {
     };
 
     const userFromTokenObj = getUserFromToken(localStorage.getItem('token'));
-    const userFromToken =
-      userFromTokenObj['https://hasura.io/jwt/claims']['x-hasura-user-id'];
-    console.log(
-      'userfromtoken',
-      userFromTokenObj['https://hasura.io/jwt/claims']['x-hasura-user-id'],
-    );
+    if (userFromTokenObj && userFromTokenObj['https://hasura.io/jwt/claims']) {
+      const userFromToken =
+        userFromTokenObj['https://hasura.io/jwt/claims']['x-hasura-user-id'];
+      console.log(
+        'userfromtoken',
+        userFromTokenObj['https://hasura.io/jwt/claims']['x-hasura-user-id'],
+      );
 
-    const user = await client.query({
-      query: USER,
-      variables: {
-        user_id: userFromToken ? userFromToken : '',
-      },
-    });
+      const user = await client.query({
+        query: USER,
+        variables: {
+          user_id: userFromToken ? userFromToken : '',
+        },
+      });
 
-    const userState = {
-      isLoggedIn: true,
-      username: user.data.user[0].username,
-      user_id: user.data.user[0].auth0_user_id,
-      user_channels: user.data.user[0].user_channels,
-    };
-    console.log('user', user);
-    setUserState(userState);
+      const userState = {
+        isLoggedIn: true,
+        username: user.data.user[0].username,
+        user_id: user.data.user[0].auth0_user_id,
+        user_channels: user.data.user[0].user_channels,
+      };
+      console.log('user', user);
+      setUserState(userState);
+    }
   };
 
   useEffect(() => {
-    if (isAuthenticated)
-      setTimeout(() => {
-        setUser();
-      }, 2000);
-  }, [isAuthenticated, localStorage]);
+    console.log('use effect app isLoading', isLoading);
+    console.log('use effect app isAuthenticated', isAuthenticated);
 
-  console.log('ia', isAuthenticated);
+    if (isAuthenticated && !isLoading) setUser();
+  }, [isAuthenticated, isLoading]);
 
-  const renderChat = () => {
+  if (isLoading) {
     return (
       <React.Fragment>
-        <Header />
-        <Switch>
-          <PrivateRoute path="/:channel" component={ChatApp} />
-          <Redirect from="/" exact to="/general" />
-          <Route exact path="/not-found" render={(props) => <NotFound />} />
-          <Redirect to="/not-found" />
-        </Switch>
-        <LogoutButton />
+        <Loading />
       </React.Fragment>
     );
-  };
+  }
+
+  console.log('ia', isAuthenticated);
+  console.log('user', user);
 
   return (
     <div className="app">
-      {isAuthenticated ? (
-        renderChat()
-      ) : (
-        <React.Fragment>
+      <React.Fragment>
+        {isAuthenticated && !isLoading ? (
+          <React.Fragment>
+            <Header />
+            <LogoutButton />
+          </React.Fragment>
+        ) : (
           <LoginButton />
-        </React.Fragment>
-      )}
+        )}
+        <Switch>
+          <Redirect exact from="/" to="/home" />
+          <Route exact path="/home" component={Home} />
+          <PrivateRoute path="/channel/:channel" component={ChatApp} />
+          <Route exact path="/not-found" render={(props) => NotFound} />
+          <Redirect to="/not-found" />
+        </Switch>
+      </React.Fragment>
     </div>
   );
 };

@@ -26,9 +26,13 @@ interface UserOnline {
 const OnlineUser: React.FC<OnlineUserProps> = () => {
   const subscriptionData = () => (
     <Subscription<UserOnline> subscription={ONLINE_USERS}>
-      {({ data, loading }) => {
+      {({ data, loading, error }) => {
         if (loading) {
           return null;
+        }
+
+        if (error) {
+          console.log('error Online User', error);
         }
 
         return (

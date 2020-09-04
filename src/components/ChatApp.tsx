@@ -78,7 +78,6 @@ const ChatApp: React.FC = () => {
       userIsMemberOfChannel &&
       userIsMemberOfChannel[0]?.channel?.name === channel ? (
         <React.Fragment>
-          <LogoutButton />
           <OnlineUser username={username} user_id={user_id} />
           <hr></hr>
           <Chat username={username} user_id={user_id} />

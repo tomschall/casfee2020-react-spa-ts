@@ -32,3 +32,7 @@ export const actualChannelState = atom({
 export const atomTokenState = atom({
   key: 'atomTokenState',
 });
+
+export const recoilForceUpdateState = atom({
+  key: 'recoilForceUpdateState',
+});
