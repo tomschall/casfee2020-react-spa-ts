@@ -50,21 +50,12 @@ const ApolloWrapper: any = ({ children }: any) => {
   });
 
   const authLink = setContext((_, { headers }) => {
-    //console.log('localStorage.getItem', localStorage.getItem('token'));
-    if (token) {
-      return {
-        headers: {
-          ...headers,
-          authorization: `Bearer ${token}`,
-        },
-      };
-    } else {
-      return {
-        headers: {
-          ...headers,
-        },
-      };
-    }
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : '',
+      },
+    };
   });
 
   /* Set up local cache */

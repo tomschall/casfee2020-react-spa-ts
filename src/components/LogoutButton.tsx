@@ -9,7 +9,7 @@ function LogoutButton() {
       <button
         onClick={() => {
           logout({
-            returnTo: 'http://localhost:3000',
+            returnTo: 'https://63b13d523d99.ngrok.io/',
           });
           window.localStorage.clear();
         }}
