@@ -22,7 +22,7 @@ ReactDOM.render(
   <Auth0Provider
     domain="tom-schall.eu.auth0.com"
     clientId="5grQYQ4dnRzUJ8wbP0EfBt5WNCIkQr33"
-    redirectUri="https://63b13d523d99.ngrok.io/dashboard"
+    redirectUri="http://localhost:3000/dashboard"
     onRedirectCallback={onRedirectCallback}
     audience="hasura"
   >

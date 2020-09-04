@@ -76,8 +76,6 @@ const App: React.FC = () => {
     //   }, 2000);
     //   localStorage.setItem('shouldLoad', 'false');
     // }
-
-    if (isAuthenticated && !isLoading) setUser();
   }, [isAuthenticated, isLoading]);
 
   if (isLoading) {
@@ -87,6 +85,8 @@ const App: React.FC = () => {
       </React.Fragment>
     );
   }
+
+  if (isAuthenticated && !isLoading && !userState.user_id) setUser();
 
   console.log('ia', isAuthenticated);
   console.log('user', user);
