@@ -16,77 +16,10 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import LogoutButton from './components/LogoutButton';
 
-const USER = gql`
-  query($user_id: String) {
-    user(where: { auth0_user_id: { _eq: $user_id } }) {
-      id
-      username
-      auth0_user_id
-      user_channels {
-        channel_id
-        channel {
-          name
-          messages {
-            id
-          }
-        }
-      }
-    }
-  }
-`;
-
 const App: React.FC = () => {
-  const [inputValue, setInputValue] = useState<any>();
   const [userState, setUserState] = useRecoilState<any>(recoilUserState);
 
-  const client = useApolloClient();
-  const { isAuthenticated, loginWithRedirect, isLoading, user } = useAuth0();
-
-  const setUser = async () => {
-    const userData = await client.query({
-      query: USER,
-      variables: {
-        user_id: user?.sub,
-      },
-    });
-
-    const userState = {
-      isLoggedIn: true,
-      username: userData.data.user[0].username,
-      user_id: userData.data.user[0].auth0_user_id,
-      user_channels: userData.data.user[0].user_channels,
-    };
-    console.log('user', user);
-    setUserState(userState);
-  };
-
-  useEffect(() => {
-    console.log('use effect app isLoading', isLoading);
-    console.log('use effect app isAuthenticated', isAuthenticated);
-
-    // let should = localStorage.getItem('shouldLoad');
-    // let shouldLoad;
-    // if (should !== null) shouldLoad = should;
-
-    // console.log('should', shouldLoad);
-
-    // if (shouldLoad === 'true') {
-    //   setTimeout(() => {
-    //     window.location.reload();
-    //   }, 2000);
-    //   localStorage.setItem('shouldLoad', 'false');
-    // }
-  }, [isAuthenticated, isLoading]);
-
-  if (isLoading) {
-    return (
-      <React.Fragment>
-        <Loading />
-      </React.Fragment>
-    );
-  }
-
-  if (isAuthenticated && !isLoading && !userState.user_id) setUser();
+  const { isAuthenticated, isLoading, user } = useAuth0();
 
   console.log('ia', isAuthenticated);
   console.log('user', user);

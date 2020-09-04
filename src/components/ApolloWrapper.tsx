@@ -6,32 +6,26 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { setContext } from 'apollo-link-context';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useRecoilState } from 'recoil';
+import { atomTokenState } from '../atom.js';
 import { split, from } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
-import { useRecoilState } from 'recoil';
-import { recoilForceUpdateState } from '../atom.js';
 
-const ApolloWrapper: any = ({ children }: any) => {
-  const { getAccessTokenSilently, isLoading, isAuthenticated } = useAuth0();
+const ApolloWrapper: React.FC<any> = ({ children }) => {
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const [bearerToken, setBearerToken] = useRecoilState<any>(atomTokenState);
 
-  console.log('isAuthenticated', isAuthenticated);
+  let token: any;
 
-  let token = localStorage.getItem('token');
-
-  if (!token) {
-    const getAccessToken = async () => {
-      // getTokenSilently() returns a promise
-      try {
-        token = await getAccessTokenSilently();
-        localStorage.setItem('token', token);
-      } catch (e) {
-        console.log(e);
-      }
+  useEffect(() => {
+    console.log('useEffect');
+    const getToken = async () => {
+      if (isAuthenticated) token = await getAccessTokenSilently();
+      console.log('token', token);
+      setBearerToken(token);
     };
-    getAccessToken();
-  }
-
-  console.log('ApolloWrapper');
+    getToken();
+  }, [getAccessTokenSilently, isAuthenticated]);
 
   const httpLink = new HttpLink({
     uri: 'http://localhost:8080/v1/graphql',
@@ -43,23 +37,27 @@ const ApolloWrapper: any = ({ children }: any) => {
       reconnect: true,
       connectionParams: {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${bearerToken}`,
         },
       },
     },
   });
 
-  const authLink = setContext((_, { headers }) => {
+  const authLink = setContext((_, { headers, ...rest }) => {
+    if (!bearerToken) return { headers: { ...headers } };
+    console.log('bearerToken', bearerToken);
     return {
       headers: {
         ...headers,
-        authorization: token ? `Bearer ${token}` : '',
+        authorization: `Bearer ${bearerToken}`,
       },
     };
   });
 
   /* Set up local cache */
   const cache = new InMemoryCache();
+
+  console.log('authLink', authLink);
 
   interface Definintion {
     kind: string;
@@ -81,16 +79,6 @@ const ApolloWrapper: any = ({ children }: any) => {
     link,
     cache,
   });
-
-  // const persistCacheWrapper = async () => {
-  //   /* Create persistor to handle persisting data from local storage on refresh, etc */
-  //   await persistCache({
-  //     cache,
-  //     storage: window.localStorage as PersistentStorage<
-  //       PersistedData<NormalizedCacheObject>
-  //     >,
-  //   });
-  // };
 
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };
