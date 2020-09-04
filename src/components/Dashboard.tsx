@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { recoilUserState } from '../atom.js';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useApolloClient } from '@apollo/react-hooks';
+import { useApolloClient, useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Loading from './Loading';
 
@@ -28,7 +28,30 @@ const USER = gql`
 const Dashboard: React.FC = () => {
   const [userState, setUserState] = useRecoilState<any>(recoilUserState);
   const { isAuthenticated, isLoading, user } = useAuth0();
-  const client = useApolloClient();
+
+  console.log('user', user);
+
+  const { data, error, loading } = useQuery(USER, {
+    variables: {
+      user_id: user?.sub,
+    },
+  });
+
+  if (error) return <React.Fragment>Error: {error}</React.Fragment>;
+
+  console.log('data', data);
+
+  if (isAuthenticated && data && !isLoading && !userState.user_id) {
+    let vars = {
+      isLoggedIn: true,
+      username: data.user[0].username,
+      user_id: data.user[0].auth0_user_id,
+      user_channels: data.user[0].user_channels,
+    };
+
+    console.log('userState', setUserState);
+    setUserState(vars);
+  }
 
   if (isLoading) {
     return (
@@ -37,30 +60,6 @@ const Dashboard: React.FC = () => {
       </React.Fragment>
     );
   }
-
-  const setUser = async () => {
-    const { data, errors } = await client.query({
-      query: USER,
-      variables: {
-        user_id: user?.sub,
-      },
-    });
-
-    if (errors) console.error('query error: ', errors);
-    console.log('data', data);
-
-    const userState = {
-      isLoggedIn: true,
-      username: data.user[0].username,
-      user_id: data.user[0].auth0_user_id,
-      user_channels: data.user[0].user_channels,
-    };
-
-    console.log('userState', userState);
-    setUserState(userState);
-  };
-
-  if (isAuthenticated && user && !isLoading && !userState.user_id) setUser();
 
   return (
     <div>
