@@ -95,7 +95,7 @@ const ChatApp: React.FC = (props) => {
           <OnlineUser username={username} user_id={user_id} />
           <hr></hr>
           <Chat username={username} user_id={user_id} />
-          <ChatInput username={username} user_id={user_id} /> ? (
+          <ChatInput username={username} user_id={user_id} />
         </React.Fragment>
       ) : (
         'you have no membership for this channel'
