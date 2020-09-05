@@ -7,7 +7,9 @@ import { useRecoilState } from 'recoil';
 import { atomChannelState, recoilUserState } from '../atom.js';
 import { useParams } from 'react-router';
 import LogoutButton from './LogoutButton';
-import { useApolloClient } from 'react-apollo';
+import { useApolloClient, useQuery, ApolloConsumer } from 'react-apollo';
+import { useAuth0 } from '@auth0/auth0-react';
+import { isUndefined } from 'util';
 
 const USER_IS_ONLINE = gql`
   mutation($user_id: String) {
@@ -29,11 +31,51 @@ const ROOM = gql`
   }
 `;
 
-const ChatApp: React.FC = () => {
+const USER = gql`
+  query($user_id: String) {
+    user(where: { auth0_user_id: { _eq: $user_id } }) {
+      id
+      username
+      auth0_user_id
+      user_channels {
+        channel_id
+        channel {
+          name
+          messages {
+            id
+          }
+        }
+      }
+    }
+  }
+`;
+
+const ChatApp: React.FC = (props) => {
   const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
   const [userState, setUserState] = useRecoilState<any>(recoilUserState);
+  const { isAuthenticated, isLoading, user } = useAuth0();
 
   let { channel } = useParams();
+
+  const { data, error, loading } = useQuery(USER, {
+    variables: {
+      user_id: user?.sub,
+    },
+  });
+
+  console.log('data Chatapp useQuery', data);
+
+  if (isAuthenticated && data && !isLoading && !userState.user_id) {
+    let vars = {
+      isLoggedIn: true,
+      username: data.user[0].username,
+      user_id: data.user[0].auth0_user_id,
+      user_channels: data.user[0].user_channels,
+    };
+
+    console.log('userState', setUserState);
+    setUserState(vars);
+  }
 
   const username = userState.username;
   const user_id = userState.user_id;
@@ -72,9 +114,12 @@ const ChatApp: React.FC = () => {
     (e: any) => e.channel.name == channel,
   );
 
+  if (error) return <React.Fragment>Error: {error}</React.Fragment>;
+
   return (
     <React.Fragment>
-      {channelState &&
+      {isAuthenticated &&
+      channelState &&
       userIsMemberOfChannel &&
       userIsMemberOfChannel[0]?.channel?.name === channel ? (
         <React.Fragment>

@@ -53,14 +53,6 @@ const Dashboard: React.FC = () => {
     setUserState(vars);
   }
 
-  if (isLoading) {
-    return (
-      <React.Fragment>
-        <Loading />
-      </React.Fragment>
-    );
-  }
-
   return (
     <div>
       <p>Dashboard Chicken Fest Chat</p>

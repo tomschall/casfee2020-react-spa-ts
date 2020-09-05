@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { ApolloConsumer } from 'react-apollo';
-import gql from 'graphql-tag';
+import React from 'react';
 import ChatApp from './components/ChatApp';
 import NotFound from './components/NotFound';
 import LoginButton from './components/LoginButton';
@@ -9,20 +7,27 @@ import PrivateRoute from './components/PrivateRoute';
 import Loading from './components/Loading';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
-import { useApolloClient } from '@apollo/react-hooks';
 import { useRecoilState } from 'recoil';
 import { recoilUserState } from './atom.js';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import LogoutButton from './components/LogoutButton';
 
-const App: React.FC = () => {
+const App: React.FC = (client) => {
   const [userState, setUserState] = useRecoilState<any>(recoilUserState);
 
   const { isAuthenticated, isLoading, user } = useAuth0();
 
+  if (isLoading) {
+    return (
+      <React.Fragment>
+        <Loading />
+      </React.Fragment>
+    );
+  }
+
   console.log('ia', isAuthenticated);
-  console.log('user', user);
+  console.log('user App ', user);
 
   return (
     <div className="app">

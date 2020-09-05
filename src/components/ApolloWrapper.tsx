@@ -20,12 +20,14 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
   useEffect(() => {
     console.log('useEffect');
     const getToken = async () => {
-      if (isAuthenticated) token = await getAccessTokenSilently();
-      console.log('token', token);
-      setBearerToken(token);
+      if (isAuthenticated) {
+        token = await getAccessTokenSilently();
+        console.log('set bearer token', token);
+        setBearerToken(token);
+      }
     };
     getToken();
-  }, [getAccessTokenSilently, isAuthenticated]);
+  }, [isAuthenticated]);
 
   const httpLink = new HttpLink({
     uri: 'http://localhost:8080/v1/graphql',
