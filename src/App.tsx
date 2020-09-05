@@ -14,6 +14,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import LogoutButton from './components/LogoutButton';
 
 const App: React.FC = (client) => {
+  console.log('client', client);
   const [userState, setUserState] = useRecoilState<any>(recoilUserState);
 
   const { isAuthenticated, isLoading, user } = useAuth0();

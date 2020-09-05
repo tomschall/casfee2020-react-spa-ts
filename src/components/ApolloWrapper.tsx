@@ -47,7 +47,7 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
 
   const authLink = setContext((_, { headers, ...rest }) => {
     if (!bearerToken) return { headers: { ...headers } };
-    console.log('bearerToken', bearerToken);
+    //console.log('bearerToken', bearerToken);
     return {
       headers: {
         ...headers,
@@ -61,7 +61,7 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
 
   console.log('authLink', authLink);
 
-  interface Definintion {
+  interface Definition {
     kind: string;
     operation?: string;
   }
@@ -69,7 +69,7 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
   const link = split(
     // split based on operation type
     ({ query }) => {
-      const { kind, operation }: Definintion = getMainDefinition(query);
+      const { kind, operation }: Definition = getMainDefinition(query);
       return kind === 'OperationDefinition' && operation === 'subscription';
     },
     wsLink,

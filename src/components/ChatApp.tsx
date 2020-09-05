@@ -3,6 +3,7 @@ import { gql, useMutation } from '@apollo/client';
 import Chat from './Chat';
 import ChatInput from './ChatInput';
 import OnlineUser from './OnlineUser';
+import IsOnline from './IsOnline';
 import { useRecoilState } from 'recoil';
 import { atomChannelState, recoilUserState } from '../atom.js';
 import { useParams } from 'react-router';
@@ -10,17 +11,6 @@ import LogoutButton from './LogoutButton';
 import { useApolloClient, useQuery, ApolloConsumer } from 'react-apollo';
 import { useAuth0 } from '@auth0/auth0-react';
 import { isUndefined } from 'util';
-
-const USER_IS_ONLINE = gql`
-  mutation($user_id: String) {
-    update_user(
-      _set: { last_seen: "now()" }
-      where: { auth0_user_id: { _eq: $user_id } }
-    ) {
-      affected_rows
-    }
-  }
-`;
 
 const ROOM = gql`
   query {
@@ -57,13 +47,22 @@ const ChatApp: React.FC = (props) => {
 
   let { channel } = useParams();
 
-  const { data, error, loading } = useQuery(USER, {
+  const { data, error, loading, client } = useQuery(USER, {
     variables: {
       user_id: user?.sub,
     },
   });
 
-  console.log('data Chatapp useQuery', data);
+  const channelObj = useQuery(ROOM);
+
+  if (
+    channelObj &&
+    channelObj.data &&
+    channelObj.data.channel &&
+    !channelState
+  ) {
+    setChannel(channelObj.data.channel);
+  }
 
   if (isAuthenticated && data && !isLoading && !userState.user_id) {
     let vars = {
@@ -73,42 +72,11 @@ const ChatApp: React.FC = (props) => {
       user_channels: data.user[0].user_channels,
     };
 
-    console.log('userState', setUserState);
     setUserState(vars);
   }
 
   const username = userState.username;
   const user_id = userState.user_id;
-
-  const client = useApolloClient();
-
-  useEffect(() => {
-    console.log('ChickenFestChat did mount');
-    const interval = setInterval(async () => {
-      client.mutate({
-        mutation: USER_IS_ONLINE,
-        variables: { user_id },
-      });
-    }, 2000);
-
-    (async () => {
-      const channelObj = await client.query({
-        query: ROOM,
-      });
-      console.log(
-        'ChickenFestChat did mount channelObj aaa',
-        channelObj.data.channel,
-      );
-      if (channelObj && channelObj.data && channelObj.data.channel) {
-        setChannel(channelObj.data.channel);
-      }
-    })();
-
-    return function cleanup() {
-      console.log('ChickenFestChat did unmount');
-      clearInterval(interval);
-    };
-  }, []);
 
   const userIsMemberOfChannel = userState.user_channels?.filter(
     (e: any) => e.channel.name == channel,
@@ -123,10 +91,11 @@ const ChatApp: React.FC = (props) => {
       userIsMemberOfChannel &&
       userIsMemberOfChannel[0]?.channel?.name === channel ? (
         <React.Fragment>
+          <IsOnline />
           <OnlineUser username={username} user_id={user_id} />
           <hr></hr>
           <Chat username={username} user_id={user_id} />
-          <ChatInput username={username} user_id={user_id} />
+          <ChatInput username={username} user_id={user_id} /> ? (
         </React.Fragment>
       ) : (
         'you have no membership for this channel'
