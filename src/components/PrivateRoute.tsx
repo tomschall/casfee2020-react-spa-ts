@@ -8,13 +8,13 @@ interface PrivateRouteProps {
   path: any;
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ component, ...path }) => {
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ component, ...args }) => {
   return (
     <Route
       component={withAuthenticationRequired(component, {
         onRedirecting: () => <Loading />,
       })}
-      {...path}
+      {...args}
     />
   );
 };

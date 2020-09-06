@@ -2,7 +2,7 @@ import React from 'react';
 import ChatApp from './components/ChatApp';
 import NotFound from './components/NotFound';
 import LoginButton from './components/LoginButton';
-import Header from './components/Header';
+import Sidebar from './components/Sidebar';
 import PrivateRoute from './components/PrivateRoute';
 import Loading from './components/Loading';
 import Home from './components/Home';
@@ -40,7 +40,7 @@ const App: React.FC = (client) => {
         )}
         {isAuthenticated && !isLoading ? (
           <React.Fragment>
-            <Header />
+            <Sidebar />
             <LogoutButton />
           </React.Fragment>
         ) : (
