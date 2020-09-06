@@ -20,8 +20,8 @@ const onRedirectCallback = (appState: any) => {
 
 ReactDOM.render(
   <Auth0Provider
-    domain="tom-schall.eu.auth0.com"
-    clientId="5grQYQ4dnRzUJ8wbP0EfBt5WNCIkQr33"
+    domain="dev-tb804vtm.eu.auth0.com"
+    clientId="58LyjIYXezRMmqC8LV5UHaCO5wNhqOoP"
     redirectUri="http://localhost:3000/dashboard"
     onRedirectCallback={onRedirectCallback}
     audience="hasura"
@@ -29,7 +29,9 @@ ReactDOM.render(
     <BrowserRouter>
       <RecoilRoot>
         <ApolloWrapper>
-          <App />
+          <React.Fragment>
+            <App />
+          </React.Fragment>
         </ApolloWrapper>
       </RecoilRoot>
     </BrowserRouter>

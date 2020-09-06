@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import moment from 'moment';
 import { isObject } from 'util';
 import { Message } from '../interfaces/message/message.interface';
+import ChannelThread from './ChannelThread';
 
 interface MessageProps {
   messages: Message[];
@@ -43,26 +44,25 @@ const MessageList: React.FC<MessageProps> = ({ messages }) => {
   };
 
   return (
-    <div className="container">
-      <div className="chat-container">
-        {messages.length
-          ? messages.map((m) => {
-              return (
-                <div key={m.id} className="message">
-                  {renderAvatar(m.user)}
+    <>
+      {messages.length
+        ? messages.map((m) => {
+            return (
+              <div key={m.id} className="message">
+                {renderAvatar(m.user)}
 
-                  <div className="datetime">
-                    {m.user.username}: <i>{moment(m.timestamp).fromNow()}</i>
-                  </div>
-                  <p>{m.text}</p>
+                <div className="datetime">
+                  {m.user.username}: <i>{moment(m.timestamp).fromNow()}</i>
                 </div>
-              );
-            })
-          : ''}
-      </div>
+                <p>{m.text}</p>
+                <ChannelThread />
+              </div>
+            );
+          })
+        : ''}
 
       <div ref={messagesEndRef} />
-    </div>
+    </>
   );
 };
 

@@ -7,6 +7,19 @@ import '../App.css';
 import { Message } from '../interfaces/message/message.interface.js';
 import { useParams } from 'react-router';
 
+import { Grid, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
+const useStyles = makeStyles((theme) => ({
+  messageInput: {
+    backgroundColor: 'transparent',
+    marginTop: theme.spacing(0),
+    width: '90%',
+  },
+}));
+
 const INSERT_MESSAGE = gql`
   mutation insert_message($message: message_insert_input!) {
     insert_message(objects: [$message]) {
@@ -35,6 +48,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
   const [messages, setMessages] = useRecoilState<any>(messagesState);
   const [newMessages, setNewMessages] = useRecoilState<any>(newMessagesState);
   const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
+  const classes = useStyles();
 
   let { channel } = useParams();
   const chanObj = channelState.filter((c: any) => c.name === channel);
@@ -45,10 +59,11 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
 
   const form = (sendMessage: (e: React.SyntheticEvent) => void) => {
     return (
-      <React.Fragment>
-        <form onSubmit={sendMessage}>
-          <div>
-            <input
+      <>
+        <form onSubmit={sendMessage} noValidate autoComplete="off">
+          <Grid item direction="row">
+            <TextField
+              className={classes.messageInput}
               value={text}
               autoFocus={true}
               onChange={(e) => {
@@ -56,14 +71,21 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
               }}
               autoComplete="off"
               placeholder="Chicken Fest"
+              id="standard-basic"
+              label="Message"
+              variant="outlined"
             />
-            <button onClick={sendMessage}>Send</button>
-          </div>
+            <Button
+              variant="contained"
+              size="large"
+              color="secondary"
+              onClick={sendMessage}
+            >
+              Send
+            </Button>
+          </Grid>
         </form>
-        <br />
-        username: {props.username} <br />
-        user_id: {props.user_id}
-      </React.Fragment>
+      </>
     );
   };
 
