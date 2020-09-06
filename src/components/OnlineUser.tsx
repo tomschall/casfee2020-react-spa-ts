@@ -1,12 +1,25 @@
-import React from 'react';
-import { Subscription } from 'react-apollo';
+import React, { useEffect } from 'react';
+import { Subscription, useMutation } from 'react-apollo';
 import gql from 'graphql-tag';
+import { useRecoilState } from 'recoil';
+import { recoilUserState } from '../atom';
 
 const ONLINE_USERS = gql`
   subscription {
     user_online(order_by: { username: asc }) {
       id
       username
+    }
+  }
+`;
+
+const USER_IS_ONLINE = gql`
+  mutation($user_id: String) {
+    update_user(
+      _set: { last_seen: "now()" }
+      where: { auth0_user_id: { _eq: $user_id } }
+    ) {
+      affected_rows
     }
   }
 `;
@@ -24,6 +37,19 @@ interface UserOnline {
 }
 
 const OnlineUser: React.FC<OnlineUserProps> = () => {
+  const [userState, setUserState] = useRecoilState<any>(recoilUserState);
+  const user_id = userState.user_id;
+
+  const [sendUserIsOnline, { data }] = useMutation(USER_IS_ONLINE, {
+    variables: { user_id },
+  });
+
+  useEffect(() => {
+    setInterval(() => {
+      sendUserIsOnline();
+    }, 2000);
+  }, []);
+
   const subscriptionData = () => (
     <Subscription<UserOnline> subscription={ONLINE_USERS}>
       {({ data, loading, error }) => {
