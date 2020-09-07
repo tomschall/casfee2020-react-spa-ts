@@ -7,7 +7,7 @@ import '../App.css';
 import { Message } from '../interfaces/message/message.interface.js';
 import { useParams } from 'react-router';
 
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, FormLabel } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -17,15 +17,15 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
   },
   messageInput: {
-    // width: '80%',
-    backgroundColor: '#2b0d3b',
+    flexGrow: 1,
     color: 'white',
-    multilineColor: {
-      color: 'white',
+    floatingLabelFocusStyle: {
+      color: theme.palette.secondary,
     },
   },
   messageButton: {
     marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(3),
   },
 }));
 
@@ -75,33 +75,41 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
           noValidate
           autoComplete="off"
         >
-          <TextField
-            className={classes.messageInput}
-            value={text}
-            autoFocus={true}
-            onChange={(e) => {
-              handleTyping(e.target.value);
-            }}
-            autoComplete="off"
-            placeholder="Chicken Fest"
-            id="standard-basic"
-            label="Message"
-            fullWidth
-            InputProps={{
-              classes: {
-                input: classes.messageInput,
-              },
-            }}
-          />
-          <Button
-            className={classes.messageButton}
-            variant="contained"
-            size="large"
-            color="secondary"
-            onClick={sendMessage}
-          >
-            Send
-          </Button>
+          <Grid container>
+            <Grid xs={10} className={classes.messageInput}>
+              <TextField
+                value={text}
+                autoFocus={true}
+                onChange={(e) => {
+                  handleTyping(e.target.value);
+                }}
+                autoComplete="off"
+                placeholder="Chicken Fest"
+                id="standard-basic"
+                label="Cackle your message here ..."
+                fullWidth
+                InputProps={{
+                  classes: {
+                    input: classes.messageInput,
+                  },
+                }}
+                InputLabelProps={{
+                  className: classes.messageInput,
+                }}
+              />
+            </Grid>
+            <Grid xs={2}>
+              <Button
+                className={classes.messageButton}
+                variant="contained"
+                size="large"
+                color="secondary"
+                onClick={sendMessage}
+              >
+                Send
+              </Button>
+            </Grid>
+          </Grid>
         </form>
       </>
     );
