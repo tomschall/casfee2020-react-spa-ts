@@ -22,7 +22,7 @@ ReactDOM.render(
   <Auth0Provider
     domain="dev-tb804vtm.eu.auth0.com"
     clientId="58LyjIYXezRMmqC8LV5UHaCO5wNhqOoP"
-    redirectUri="http://localhost:3000/dashboard"
+    redirectUri="http://localhost:3000/channel/general"
     onRedirectCallback={onRedirectCallback}
     audience="hasura"
   >

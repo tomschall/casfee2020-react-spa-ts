@@ -5,7 +5,7 @@ import {
   ThemeProvider,
   makeStyles,
 } from '@material-ui/core/styles';
-import { Grid, Typography, Paper, FormHelperText } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -1,12 +1,15 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import Button from '@material-ui/core/Button';
 
 function LogoutButton() {
   const { isAuthenticated, logout } = useAuth0();
 
   return (
     <React.Fragment>
-      <button
+      <Button
+        variant="contained"
+        color="secondary"
         onClick={() => {
           logout({
             returnTo: 'http://localhost:3000/',
@@ -15,7 +18,7 @@ function LogoutButton() {
         }}
       >
         Log Out
-      </button>
+      </Button>
     </React.Fragment>
   );
 }

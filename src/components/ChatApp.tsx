@@ -11,6 +11,7 @@ import LogoutButton from './LogoutButton';
 import { useApolloClient, useQuery, ApolloConsumer } from 'react-apollo';
 import { useAuth0 } from '@auth0/auth0-react';
 import { isUndefined } from 'util';
+
 import {
   createMuiTheme,
   ThemeProvider,
@@ -30,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
     },
     '*::-webkit-scrollbar-thumb': {
       backgroundColor: 'rgba(0,0,0,.1)',
-      // outline: '1px solid slategrey',
     },
   },
   root: {
@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '2rem',
   },
   messageList: {
+    marginTop: theme.spacing(2),
     overflowY: 'auto',
     overflowX: 'hidden',
     height: '80vh',
@@ -63,11 +64,6 @@ const useStyles = makeStyles((theme) => ({
   },
   extraBox: {
     backgroundColor: '#2b0d3b',
-  },
-  button: {
-    color: 'black',
-    fontSize: '2rem',
-    textAlign: 'center',
   },
   form: {
     backgroundColor: '#2b0d3b',

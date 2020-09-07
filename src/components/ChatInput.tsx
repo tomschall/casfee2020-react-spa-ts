@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
       color: 'white',
     },
   },
+  messageButton: {
+    marginTop: theme.spacing(3),
+  },
 }));
 
 const INSERT_MESSAGE = gql`
@@ -91,6 +94,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
             }}
           />
           <Button
+            className={classes.messageButton}
             variant="contained"
             size="large"
             color="secondary"
