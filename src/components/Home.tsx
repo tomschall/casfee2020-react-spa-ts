@@ -9,9 +9,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-    backgroundColor: '#eb4f34',
     height: '100vh',
     component: 'container',
+    backgroundColor: '#2b0d3b',
   },
   title: {
     color: '#fff',
@@ -22,6 +22,11 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '2rem',
     textAlign: 'center',
   },
+  logo: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 }));
 
 const Home: React.FC = () => {
@@ -30,6 +35,9 @@ const Home: React.FC = () => {
   return (
     <Grid container className={classes.root}>
       <Grid item>
+        <div className={classes.logo}>
+          <img src="/logo-chicken-chat.png" alt="Chicken Chat" />
+        </div>
         <Typography className={classes.title} variant="h2">
           Welcome to Chicken Chat
         </Typography>
