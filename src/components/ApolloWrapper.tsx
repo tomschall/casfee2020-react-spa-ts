@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
@@ -8,26 +8,24 @@ import { setContext } from 'apollo-link-context';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useRecoilState } from 'recoil';
 import { atomTokenState } from '../atom.js';
-import { split, from } from 'apollo-link';
+import { split } from 'apollo-link';
 import { getMainDefinition } from 'apollo-utilities';
 
 const ApolloWrapper: React.FC<any> = ({ children }) => {
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [bearerToken, setBearerToken] = useRecoilState<any>(atomTokenState);
 
-  let token: any;
-
   useEffect(() => {
     console.log('useEffect');
     const getToken = async () => {
       if (isAuthenticated) {
-        token = await getAccessTokenSilently();
+        let token = await getAccessTokenSilently();
         console.log('set bearer token', token);
         setBearerToken(token);
       }
     };
     getToken();
-  }, [isAuthenticated]);
+  }, [isAuthenticated, getAccessTokenSilently, setBearerToken]);
 
   const httpLink = new HttpLink({
     uri: 'http://localhost:8080/v1/graphql',

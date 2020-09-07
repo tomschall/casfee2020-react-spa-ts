@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { messagesState, newMessagesState, atomChannelState } from '../atom.js';
 import '../App.css';
 import { Message } from '../interfaces/message/message.interface.js';
 import { useParams } from 'react-router';
 
-import { Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -56,7 +55,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
   const [text, setText] = useState('');
   const [messages, setMessages] = useRecoilState<any>(messagesState);
   const [newMessages, setNewMessages] = useRecoilState<any>(newMessagesState);
-  const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
+  const channelState = useRecoilValue<any>(atomChannelState);
   const classes = useStyles();
 
   let { channel } = useParams();

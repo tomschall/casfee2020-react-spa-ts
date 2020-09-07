@@ -1,6 +1,6 @@
 import React from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
-import { Link, useParams } from 'react-router-dom';
+
+import { Link } from 'react-router-dom';
 import gql from 'graphql-tag';
 import { useQuery } from 'react-apollo';
 
@@ -17,11 +17,7 @@ const USER_CHANNELS = gql`
 `;
 
 const Sidebar: React.FC<any> = () => {
-  const { isAuthenticated, loginWithRedirect, user, isLoading } = useAuth0();
-
-  let { channel } = useParams();
-
-  const { data, error, loading, client } = useQuery(USER_CHANNELS);
+  const { data, loading } = useQuery(USER_CHANNELS);
 
   return (
     <React.Fragment>
@@ -29,7 +25,7 @@ const Sidebar: React.FC<any> = () => {
         {!loading && data && data.user_channels
           ? data.user_channels.map((data: any) => {
               return (
-                <li>
+                <li key={data.channel_id}>
                   <Link to={'/channel/' + data.channel.name}>
                     {data.channel.name}
                   </Link>

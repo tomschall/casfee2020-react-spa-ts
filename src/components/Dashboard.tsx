@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useRecoilState } from 'recoil';
 import { recoilUserState } from '../atom.js';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useApolloClient, useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import Loading from './Loading';
 
 const USER = gql`
   query($user_id: String) {
@@ -31,7 +30,7 @@ const Dashboard: React.FC = () => {
 
   console.log('user', user);
 
-  const { data, error, loading } = useQuery(USER, {
+  const { data, error } = useQuery(USER, {
     variables: {
       user_id: user?.sub,
     },

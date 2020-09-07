@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import gql from 'graphql-tag';
-import { Query, useApolloClient } from 'react-apollo';
-import { useRecoilState } from 'recoil';
+import { Query } from 'react-apollo';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   messagesState,
   newMessagesState,
@@ -50,8 +50,7 @@ interface ChatProps {
 }
 
 const Chat: React.FC<ChatProps> = ({ username, user_id }) => {
-  const [error, setError] = useState<Error | null>(null);
-  const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
+  const channelState = useRecoilValue<any>(atomChannelState);
   const [actualChannel, setActualChannel] = useRecoilState<any>(
     actualChannelState,
   );
@@ -60,38 +59,20 @@ const Chat: React.FC<ChatProps> = ({ username, user_id }) => {
   const [messages, setMessages] = useRecoilState<any>(messagesState);
   const [newMessages, setNewMessages] = useRecoilState<any>(newMessagesState);
 
-  const client = useApolloClient();
+  let { channel } = useParams();
 
   useEffect(() => {
     console.log('component Chat did mount');
+
+    setMessages([]);
+    setNewMessages([]);
+    setActualChannel(channel);
 
     return function cleanup() {
       console.log('component Chat did unmount');
       setRefetch(null);
     };
-  }, []);
-
-  let { channel } = useParams();
-
-  if (actualChannel !== channel) {
-    // const UpdateState = selector<any[]>({
-    //   key: 'updateState',
-    //   get: (opts: { get: any }) => {
-    //     const m = opts.get(messagesState);
-    //     const n = opts.get(newMessagesState);
-    //     const a = opts.get(actualChannelState);
-    //     return [m, n, a];
-    //   },
-    //   set: (opts: { get: any; set: any }, [m, n, a]: any) => {
-    //     opts.set(messagesState, []);
-    //     opts.set(newMessagesState, []);
-    //     opts.set(actualChannelState, []);
-    //   },
-    // });
-    setMessages([]);
-    setNewMessages([]);
-    setActualChannel(channel);
-  }
+  }, [setRefetch, setMessages, setNewMessages, setActualChannel, channel]);
 
   console.log('channelState', channelState);
 
@@ -99,8 +80,6 @@ const Chat: React.FC<ChatProps> = ({ username, user_id }) => {
     const chanObj = channelState.filter((c: any) => c.name === channel);
     console.log('chanObj', chanObj);
   }
-
-  if (!actualChannel) setActualChannel(channel);
 
   // get appropriate query variables
   const getLastReceivedVars = () => {
@@ -208,10 +187,6 @@ const Chat: React.FC<ChatProps> = ({ username, user_id }) => {
           subscribeToMore: any;
           refetch: any;
         }) => {
-          if (!refetchState) {
-            setRefetch(() => refetch);
-          }
-
           if (!data) {
             return null;
           }
@@ -235,10 +210,14 @@ const Chat: React.FC<ChatProps> = ({ username, user_id }) => {
             }
           }
 
+          if (!refetchState) {
+            setRefetch(() => refetch);
+          }
+
           return (
             <MessageSub
               subscribeToMore={subscribeToMore}
-              refetch={refetchData}
+              refetchData={refetchData}
             ></MessageSub>
           );
         }}

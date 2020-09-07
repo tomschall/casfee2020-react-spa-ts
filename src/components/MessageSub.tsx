@@ -16,18 +16,18 @@ const MESSAGE_CREATED = gql`
 
 interface MessageSubProps {
   subscribeToMore: any;
-  refetch: any;
+  refetchData: any;
 }
 
 const MessageSub: React.FC<MessageSubProps> = ({
   subscribeToMore,
-  refetch,
+  refetchData,
 }) => {
   useEffect(() => {
     const unsubscribe = subscribeToMore({
       document: MESSAGE_CREATED,
       updateQuery: (prev: any, { subscriptionData }: any) => {
-        refetch();
+        refetchData();
 
         return null;
       },
@@ -36,7 +36,7 @@ const MessageSub: React.FC<MessageSubProps> = ({
     return function cleanup() {
       unsubscribe();
     };
-  }, []);
+  }, [refetchData, subscribeToMore]);
 
   return null;
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { RecoilRoot } from 'recoil';
 import { BrowserRouter } from 'react-router-dom';
@@ -20,8 +20,8 @@ const onRedirectCallback = (appState: any) => {
 
 ReactDOM.render(
   <Auth0Provider
-    domain="dev-tb804vtm.eu.auth0.com"
-    clientId="58LyjIYXezRMmqC8LV5UHaCO5wNhqOoP"
+    domain="tom-schall.eu.auth0.com"
+    clientId="5grQYQ4dnRzUJ8wbP0EfBt5WNCIkQr33"
     redirectUri="http://localhost:3000/channel/general"
     onRedirectCallback={onRedirectCallback}
     audience="hasura"
