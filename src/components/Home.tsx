@@ -14,7 +14,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#2b0d3b',
   },
   title: {
-    color: '#fff',
+    color: '#9d2ed9',
+    fontSize: '2rem',
+    fontWeight: 700,
+    paddingTop: theme.spacing(5),
+    paddingBottom: theme.spacing(5),
     textTransform: 'uppercase',
   },
   button: {
