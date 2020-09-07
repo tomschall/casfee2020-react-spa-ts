@@ -16,7 +16,7 @@ const USER_CHANNELS = gql`
   }
 `;
 
-const Sidebar: React.FC<any> = () => {
+const AddChannel: React.FC<any> = () => {
   const { data, loading } = useQuery(USER_CHANNELS);
 
   return (
@@ -38,4 +38,4 @@ const Sidebar: React.FC<any> = () => {
   );
 };
 
-export default Sidebar;
+export default AddChannel;

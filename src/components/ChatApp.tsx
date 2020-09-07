@@ -3,7 +3,7 @@ import { gql } from '@apollo/client';
 import Chat from './Chat';
 import ChatInput from './ChatInput';
 import OnlineUser from './OnlineUser';
-import Sidebar from './Sidebar';
+import Sidebar from './sidebar/Sidebar';
 import { useRecoilState } from 'recoil';
 import { atomChannelState, recoilUserState } from '../atom.js';
 import { useParams } from 'react-router';
@@ -132,19 +132,20 @@ const ChatApp: React.FC = (props) => {
   const username = userState.username;
   const user_id = userState.user_id;
 
-  const userIsMemberOfChannel = userState.user_channels?.filter(
-    (e: any) => e.channel.name === channel,
-  );
+  console.log('userState', userState);
+
+  // const userIsMemberOfChannel = userState.user_channels?.filter(
+  //   (e: any) => e.channel.name === channel,
+  // );
 
   if (error) return <React.Fragment>Error: {error}</React.Fragment>;
 
   return (
     <>
-      {isAuthenticated &&
-      channelState &&
-      userState &&
-      userIsMemberOfChannel &&
-      userIsMemberOfChannel[0]?.channel?.name === channel ? (
+      {isAuthenticated && channelState && userState ? (
+        // userState &&
+        // userIsMemberOfChannel &&
+        // userIsMemberOfChannel[0]?.channel?.name === channel
         <div className={classes.root}>
           <Grid container spacing={3} className={classes.root}>
             <Grid item className={classes.sidebar} xs={2}>
