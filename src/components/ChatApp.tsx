@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
     overflowX: 'hidden',
   },
   sidebar: {
+    marginTop: theme.spacing(5),
     backgroundColor: '#2b0d3b',
   },
   title: {
@@ -46,22 +47,27 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     marginBottom: '2rem',
   },
+  logo: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   messageList: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(5),
     overflowY: 'auto',
     overflowX: 'hidden',
-    height: '80vh',
+    height: '70vh',
   },
   chatInput: {
     padding: theme.spacing(0),
     backgroundColor: '#2b0d3b',
-    height: '20vh',
+    // height: '20vh',
   },
   extraBox: {
-    backgroundColor: '#2b0d3b',
+    // backgroundColor: '#2b0d3b',
   },
   form: {
-    backgroundColor: '#2b0d3b',
+    // backgroundColor: '#2b0d3b',
   },
 }));
 
@@ -148,10 +154,9 @@ const ChatApp: React.FC = (props) => {
         <div className={classes.root}>
           <Grid container spacing={3} className={classes.root}>
             <Grid item className={classes.sidebar} xs={2}>
-              <Typography className={classes.title} variant="h2">
-                Chicken Chat
-              </Typography>
-              {userState.username}
+              <div className={classes.logo}>
+                <img src="/logo-chicken-chat.png" alt="Chicken Chat" />
+              </div>
               <OnlineUser username={username} user_id={user_id} />
               <LogoutButton />
               <Sidebar />
@@ -170,15 +175,11 @@ const ChatApp: React.FC = (props) => {
               EXTRABOX
             </Grid>
             <Grid container spacing={0} xs={12} className={classes.chatInput}>
-              <Grid item xs={2}>
-                Copyright
-              </Grid>
+              <Grid item xs={2}></Grid>
               <Grid item className={classes.form} xs={8}>
                 <ChatInput username={username} user_id={user_id} />
               </Grid>
-              <Grid item xs={2}>
-                EXTRABOX II
-              </Grid>
+              <Grid item xs={2}></Grid>
             </Grid>
           </Grid>
         </div>
