@@ -12,7 +12,12 @@ const LoginButton: React.FC<any> = () => {
 
   return (
     <>
-      <Button size="large" variant="contained" onClick={checkAndLogin}>
+      <Button
+        size="large"
+        variant="contained"
+        color="secondary"
+        onClick={checkAndLogin}
+      >
         Log in
       </Button>
     </>
