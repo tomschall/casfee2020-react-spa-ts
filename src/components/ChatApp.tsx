@@ -4,13 +4,13 @@ import Header from './Header';
 import Chat from './Chat';
 import ChatInput from './ChatInput';
 import OnlineUser from './OnlineUser';
+import Sidebar from './Sidebar';
 import { useRecoilState } from 'recoil';
 import { atomChannelState, recoilUserState } from '../atom.js';
 import { useParams } from 'react-router';
 import LogoutButton from './LogoutButton';
 import { useApolloClient, useQuery, ApolloConsumer } from 'react-apollo';
 import { useAuth0 } from '@auth0/auth0-react';
-import { isUndefined } from 'util';
 
 import {
   createMuiTheme,
@@ -159,7 +159,7 @@ const ChatApp: React.FC = (props) => {
               {userState.username}
               <OnlineUser username={username} user_id={user_id} />
               <LogoutButton />
-              <Header />
+              <Sidebar />
             </Grid>
             <Grid
               item
