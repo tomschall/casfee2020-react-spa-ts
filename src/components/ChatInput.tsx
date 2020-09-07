@@ -13,10 +13,16 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(3),
+  },
   messageInput: {
-    backgroundColor: 'transparent',
-    marginTop: theme.spacing(0),
-    width: '90%',
+    // width: '80%',
+    backgroundColor: '#2b0d3b',
+    color: 'white',
+    multilineColor: {
+      color: 'white',
+    },
   },
 }));
 
@@ -60,30 +66,38 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
   const form = (sendMessage: (e: React.SyntheticEvent) => void) => {
     return (
       <>
-        <form onSubmit={sendMessage} noValidate autoComplete="off">
-          <Grid item direction="row">
-            <TextField
-              className={classes.messageInput}
-              value={text}
-              autoFocus={true}
-              onChange={(e) => {
-                handleTyping(e.target.value);
-              }}
-              autoComplete="off"
-              placeholder="Chicken Fest"
-              id="standard-basic"
-              label="Message"
-              variant="outlined"
-            />
-            <Button
-              variant="contained"
-              size="large"
-              color="secondary"
-              onClick={sendMessage}
-            >
-              Send
-            </Button>
-          </Grid>
+        <form
+          className={classes.root}
+          onSubmit={sendMessage}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            className={classes.messageInput}
+            value={text}
+            autoFocus={true}
+            onChange={(e) => {
+              handleTyping(e.target.value);
+            }}
+            autoComplete="off"
+            placeholder="Chicken Fest"
+            id="standard-basic"
+            label="Message"
+            fullWidth
+            InputProps={{
+              classes: {
+                input: classes.messageInput,
+              },
+            }}
+          />
+          <Button
+            variant="contained"
+            size="large"
+            color="secondary"
+            onClick={sendMessage}
+          >
+            Send
+          </Button>
         </form>
       </>
     );

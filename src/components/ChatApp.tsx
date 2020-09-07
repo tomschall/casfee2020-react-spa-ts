@@ -16,46 +16,61 @@ import {
   ThemeProvider,
   makeStyles,
 } from '@material-ui/core/styles';
-import { Grid, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 
 // MUI STYLES
 const useStyles = makeStyles((theme) => ({
+  '@global': {
+    '*::-webkit-scrollbar': {
+      width: '1em',
+    },
+    '*::-webkit-scrollbar-track': {
+      '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)',
+    },
+    '*::-webkit-scrollbar-thumb': {
+      backgroundColor: 'rgba(0,0,0,.1)',
+      // outline: '1px solid slategrey',
+    },
+  },
   root: {
+    flexGrow: 1,
     margin: theme.spacing(0),
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    flexDirection: 'column',
-    backgroundColor: '#eb4f34',
+    backgroundColor: '#2b0d3b',
     height: '100vh',
-    component: 'container',
     color: 'white',
+    overflowX: 'hidden',
   },
   sidebar: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'flext-start',
-    flexDirection: 'column',
-    height: '100vh',
-    margin: theme.spacing(4),
+    backgroundColor: '#2b0d3b',
   },
   title: {
     color: '#fff',
+    fontSize: '1.5rem',
     textTransform: 'uppercase',
+    fontWeight: 700,
+    marginBottom: '2rem',
   },
   messageList: {
-    margin: theme.spacing(6),
-    color: '#fff',
-    backgroundColor: 'red',
-    textTransform: 'uppercase',
     overflowY: 'auto',
-    width: '80%',
+    overflowX: 'hidden',
     height: '80vh',
+  },
+  chatInput: {
+    padding: theme.spacing(0),
+    backgroundColor: '#2b0d3b',
+    height: '20vh',
+  },
+  extraBox: {
+    backgroundColor: '#2b0d3b',
   },
   button: {
     color: 'black',
     fontSize: '2rem',
     textAlign: 'center',
+  },
+  form: {
+    backgroundColor: '#2b0d3b',
   },
 }));
 
@@ -134,35 +149,52 @@ const ChatApp: React.FC = (props) => {
   if (error) return <React.Fragment>Error: {error}</React.Fragment>;
 
   return (
-    <React.Fragment>
+    <>
       {isAuthenticated &&
       channelState &&
       userIsMemberOfChannel &&
       userIsMemberOfChannel[0]?.channel?.name === channel ? (
-        <Grid container className={classes.root}>
-          <Grid item className={classes.sidebar}>
-            <Typography className={classes.title} variant="h2">
-              Chicken Chat
-            </Typography>
-            {userState.username}
-            <OnlineUser username={username} user_id={user_id} />
-            <LogoutButton />
-            <Header />
-          </Grid>
-          <Grid item direction="column">
-            <Grid item className={classes.messageList}>
-              <Chat username={username} user_id={user_id} />
+        <div className={classes.root}>
+          <Grid container spacing={3} className={classes.root}>
+            <Grid item className={classes.sidebar} xs={2}>
+              <Typography className={classes.title} variant="h2">
+                Chicken Chat
+              </Typography>
+              {userState.username}
+              <OnlineUser username={username} user_id={user_id} />
+              <LogoutButton />
+              <Header />
             </Grid>
-            <Grid item direction="row">
-              <ChatInput username={username} user_id={user_id} />
+            <Grid
+              item
+              direction="column"
+              xs={8}
+              className={classes.messageList}
+            >
+              <Typography variant="subtitle2">
+                <Chat username={username} user_id={user_id} />
+              </Typography>
+            </Grid>
+            <Grid item xs={2} className={classes.extraBox}>
+              EXTRABOX
+            </Grid>
+            <Grid container spacing={0} xs={12} className={classes.chatInput}>
+              <Grid item xs={2}>
+                Copyright
+              </Grid>
+              <Grid item className={classes.form} xs={8}>
+                <ChatInput username={username} user_id={user_id} />
+              </Grid>
+              <Grid item xs={2}>
+                EXTRABOX II
+              </Grid>
             </Grid>
           </Grid>
-          <Grid item>EXTRABOX</Grid>
-        </Grid>
+        </div>
       ) : (
         'you have no membership for this channel'
       )}
-    </React.Fragment>
+    </>
   );
 };
 
