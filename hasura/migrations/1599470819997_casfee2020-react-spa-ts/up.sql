@@ -11,6 +11,32 @@ CREATE SEQUENCE public.channel_id_seq
     NO MAXVALUE
     CACHE 1;
 ALTER SEQUENCE public.channel_id_seq OWNED BY public.channel.id;
+CREATE TABLE public.channel_thread (
+    id integer NOT NULL,
+    channel_id integer
+);
+CREATE SEQUENCE public.channel_thread_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE public.channel_thread_id_seq OWNED BY public.channel_thread.id;
+CREATE TABLE public.channel_thread_message (
+    id integer NOT NULL,
+    user_id text NOT NULL,
+    channel_thread_id integer NOT NULL,
+    channel_thread_message text
+);
+CREATE SEQUENCE public.channel_thread_message_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE public.channel_thread_message_id_seq OWNED BY public.channel_thread_message.id;
 CREATE TABLE public.message (
     id integer NOT NULL,
     text text NOT NULL,
@@ -61,12 +87,18 @@ CREATE VIEW public.user_typing AS
    FROM public."user"
   WHERE ("user".last_typed > (now() - '00:00:02'::interval));
 ALTER TABLE ONLY public.channel ALTER COLUMN id SET DEFAULT nextval('public.channel_id_seq'::regclass);
+ALTER TABLE ONLY public.channel_thread ALTER COLUMN id SET DEFAULT nextval('public.channel_thread_id_seq'::regclass);
+ALTER TABLE ONLY public.channel_thread_message ALTER COLUMN id SET DEFAULT nextval('public.channel_thread_message_id_seq'::regclass);
 ALTER TABLE ONLY public.message ALTER COLUMN id SET DEFAULT nextval('public.message_id_seq'::regclass);
 ALTER TABLE ONLY public."user" ALTER COLUMN id SET DEFAULT nextval('public.user_id_seq'::regclass);
 ALTER TABLE ONLY public.channel
     ADD CONSTRAINT channel_name_key UNIQUE (name);
 ALTER TABLE ONLY public.channel
     ADD CONSTRAINT channel_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.channel_thread_message
+    ADD CONSTRAINT channel_thread_message_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.channel_thread
+    ADD CONSTRAINT channel_thread_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.message
     ADD CONSTRAINT message_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public."user"
@@ -77,6 +109,12 @@ ALTER TABLE ONLY public."user"
     ADD CONSTRAINT user_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.channel
     ADD CONSTRAINT channel_owner_id_fkey FOREIGN KEY (owner_id) REFERENCES public."user"(auth0_user_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY public.channel_thread
+    ADD CONSTRAINT channel_thread_channel_id_fkey FOREIGN KEY (channel_id) REFERENCES public.channel(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY public.channel_thread_message
+    ADD CONSTRAINT channel_thread_message_channel_thread_id_fkey FOREIGN KEY (channel_thread_id) REFERENCES public.channel_thread(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY public.channel_thread_message
+    ADD CONSTRAINT channel_thread_message_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(auth0_user_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY public.message
     ADD CONSTRAINT "message_channelId_fkey" FOREIGN KEY (channel_id) REFERENCES public.channel(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY public.message

@@ -6,6 +6,13 @@
     using:
       foreign_key_constraint_on: owner_id
   array_relationships:
+  - name: channel_threads
+    using:
+      foreign_key_constraint_on:
+        column: channel_id
+        table:
+          schema: public
+          name: channel_thread
   - name: messages
     using:
       foreign_key_constraint_on:
@@ -51,6 +58,52 @@
             user_id:
               _eq: X-Hasura-User-Id
       allow_aggregations: true
+- table:
+    schema: public
+    name: channel_thread
+  object_relationships:
+  - name: channel
+    using:
+      foreign_key_constraint_on: channel_id
+  array_relationships:
+  - name: channel_thread_messages
+    using:
+      foreign_key_constraint_on:
+        column: channel_thread_id
+        table:
+          schema: public
+          name: channel_thread_message
+- table:
+    schema: public
+    name: channel_thread_message
+  object_relationships:
+  - name: channel_thread
+    using:
+      foreign_key_constraint_on: channel_thread_id
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+  insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      columns: []
+      backend_only: false
+  select_permissions:
+  - role: user
+    permission:
+      columns: []
+      filter: {}
+  update_permissions:
+  - role: user
+    permission:
+      columns: []
+      filter: {}
+      check: null
+  delete_permissions:
+  - role: user
+    permission:
+      filter: {}
 - table:
     schema: public
     name: message
