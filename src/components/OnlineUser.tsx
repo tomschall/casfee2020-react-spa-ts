@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Subscription, useMutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { recoilUserState } from '../atom';
 
 const ONLINE_USERS = gql`
@@ -37,10 +37,10 @@ interface UserOnline {
 }
 
 const OnlineUser: React.FC<OnlineUserProps> = () => {
-  const [userState, setUserState] = useRecoilState<any>(recoilUserState);
+  const userState = useRecoilValue<any>(recoilUserState);
   const user_id = userState.user_id;
 
-  const [sendUserIsOnline, { data }] = useMutation(USER_IS_ONLINE, {
+  const [sendUserIsOnline] = useMutation(USER_IS_ONLINE, {
     variables: { user_id },
   });
 
@@ -48,7 +48,7 @@ const OnlineUser: React.FC<OnlineUserProps> = () => {
     setInterval(() => {
       sendUserIsOnline();
     }, 2000);
-  }, []);
+  }, [sendUserIsOnline]);
 
   const subscriptionData = () => (
     <Subscription<UserOnline> subscription={ONLINE_USERS}>

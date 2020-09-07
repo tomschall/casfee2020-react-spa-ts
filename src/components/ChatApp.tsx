@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { gql, useMutation } from '@apollo/client';
-import Header from './Header';
+import React from 'react';
+import { gql } from '@apollo/client';
 import Chat from './Chat';
 import ChatInput from './ChatInput';
 import OnlineUser from './OnlineUser';
@@ -9,14 +8,10 @@ import { useRecoilState } from 'recoil';
 import { atomChannelState, recoilUserState } from '../atom.js';
 import { useParams } from 'react-router';
 import LogoutButton from './LogoutButton';
-import { useApolloClient, useQuery, ApolloConsumer } from 'react-apollo';
+import { useQuery } from 'react-apollo';
 import { useAuth0 } from '@auth0/auth0-react';
 
-import {
-  createMuiTheme,
-  ThemeProvider,
-  makeStyles,
-} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 
@@ -107,7 +102,7 @@ const ChatApp: React.FC = (props) => {
 
   let { channel } = useParams();
 
-  const { data, error, loading, client } = useQuery(USER, {
+  const { data, error } = useQuery(USER, {
     variables: {
       user_id: user?.sub,
     },
@@ -131,7 +126,6 @@ const ChatApp: React.FC = (props) => {
       user_id: data.user[0].auth0_user_id,
       user_channels: data.user[0].user_channels,
     };
-
     setUserState(vars);
   }
 
@@ -139,7 +133,7 @@ const ChatApp: React.FC = (props) => {
   const user_id = userState.user_id;
 
   const userIsMemberOfChannel = userState.user_channels?.filter(
-    (e: any) => e.channel.name == channel,
+    (e: any) => e.channel.name === channel,
   );
 
   if (error) return <React.Fragment>Error: {error}</React.Fragment>;
@@ -148,6 +142,7 @@ const ChatApp: React.FC = (props) => {
     <>
       {isAuthenticated &&
       channelState &&
+      userState &&
       userIsMemberOfChannel &&
       userIsMemberOfChannel[0]?.channel?.name === channel ? (
         <div className={classes.root}>

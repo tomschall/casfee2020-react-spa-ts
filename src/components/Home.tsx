@@ -1,10 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import LoginButton from './LoginButton';
-import {
-  createMuiTheme,
-  ThemeProvider,
-  makeStyles,
-} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({

@@ -5,14 +5,10 @@ import PrivateRoute from './components/PrivateRoute';
 import Loading from './components/Loading';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
-import { useRecoilState } from 'recoil';
-import { recoilUserState } from './atom.js';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const App: React.FC = (client) => {
-  const [userState, setUserState] = useRecoilState<any>(recoilUserState);
-
   const { isAuthenticated, isLoading, user } = useAuth0();
 
   if (isLoading) {
