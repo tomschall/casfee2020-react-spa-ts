@@ -6,6 +6,7 @@ import { messagesState, newMessagesState, atomChannelState } from '../atom.js';
 import '../App.css';
 import { Message } from '../interfaces/message/message.interface.js';
 import { useParams } from 'react-router';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import { Grid, Typography, FormLabel } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -58,6 +59,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
   const [newMessages, setNewMessages] = useRecoilState<any>(newMessagesState);
   const channelState = useRecoilValue<any>(atomChannelState);
   const classes = useStyles();
+  const { user } = useAuth0();
 
   let { channel } = useParams();
   const chanObj = channelState.filter((c: any) => c.name === channel);
@@ -111,6 +113,9 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
             </Grid>
           </Grid>
         </form>
+        {user?.nickname}
+        <br />
+        {user?.sub}
       </>
     );
   };

@@ -41,6 +41,7 @@
     permission:
       columns:
       - id
+      - is_private
       - name
       - owner_id
       filter:
@@ -151,6 +152,7 @@
       - last_seen
       - auth0_user_id
       filter: {}
+      allow_aggregations: true
   update_permissions:
   - role: user
     permission:

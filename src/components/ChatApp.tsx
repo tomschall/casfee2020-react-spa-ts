@@ -77,6 +77,8 @@ const ROOM = gql`
     channel {
       name
       id
+      is_private
+      owner_id
     }
   }
 `;
@@ -88,12 +90,10 @@ const USER = gql`
       username
       auth0_user_id
       user_channels {
-        channel_id
         channel {
           name
-          messages {
-            id
-          }
+          id
+          is_private
         }
       }
     }
@@ -140,21 +140,30 @@ const ChatApp: React.FC = (props) => {
 
   console.log('userState', userState);
 
-  // const userIsMemberOfChannel = userState.user_channels?.filter(
-  //   (e: any) => e.channel.name === channel,
-  // );
+  const userIsMemberOfChannel = userState.user_channels?.filter(
+    (e: any) => e.channel.name === channel,
+  );
+
+  const userChannel = channelState?.filter((e: any) => e.name === channel);
+
+  console.log('userIsMemberOfChannel', userIsMemberOfChannel);
+  console.log('channelState', channelState);
+  console.log('userChannel', userChannel);
 
   if (error) return <React.Fragment>Error: {error}</React.Fragment>;
 
   return (
     <>
-      {isAuthenticated && channelState && userState ? (
-        // userState &&
-        // userIsMemberOfChannel &&
-        // userIsMemberOfChannel[0]?.channel?.name === channel
+      {isAuthenticated &&
+      channelState &&
+      userState &&
+      ((userIsMemberOfChannel &&
+        userIsMemberOfChannel[0]?.channel.name === channel) ||
+        (userChannel && userChannel[0]?.is_private === false) ||
+        (userChannel && userChannel[0]?.owner_id === userState.user_id)) ? (
         <div className={classes.root}>
           <Grid container spacing={3} className={classes.root}>
-            <Grid item className={classes.sidebar} xs={2}>
+            <Grid item className={classes.sidebar} xs={3}>
               <div className={classes.logo}>
                 <img src="/logo-chicken-chat.png" alt="Chicken Chat" />
               </div>
