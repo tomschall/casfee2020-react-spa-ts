@@ -1,0 +1,1 @@
+CREATE TABLE "public"."channel_thread"("id" serial NOT NULL, "channel_id" integer NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("channel_id") REFERENCES "public"."channel"("id") ON UPDATE restrict ON DELETE restrict);

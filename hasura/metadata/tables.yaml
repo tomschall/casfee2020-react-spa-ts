@@ -56,6 +56,22 @@
       allow_aggregations: true
 - table:
     schema: public
+    name: channel_poll
+  object_relationships:
+  - name: channel
+    using:
+      foreign_key_constraint_on: channel_id
+  - name: poll_question
+    using:
+      foreign_key_constraint_on: poll_questions
+- table:
+    schema: public
+    name: channel_thread
+- table:
+    schema: public
+    name: channel_thread_message
+- table:
+    schema: public
     name: message
   object_relationships:
   - name: channel
@@ -106,6 +122,31 @@
         - channel:
             is_private:
               _eq: false
+- table:
+    schema: public
+    name: poll_anwers
+  object_relationships:
+  - name: poll_question
+    using:
+      foreign_key_constraint_on: question_id
+- table:
+    schema: public
+    name: poll_questions
+  array_relationships:
+  - name: channel_polls
+    using:
+      foreign_key_constraint_on:
+        column: poll_questions
+        table:
+          schema: public
+          name: channel_poll
+  - name: poll_anwers
+    using:
+      foreign_key_constraint_on:
+        column: question_id
+        table:
+          schema: public
+          name: poll_anwers
 - table:
     schema: public
     name: user
