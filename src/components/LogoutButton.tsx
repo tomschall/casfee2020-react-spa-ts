@@ -12,7 +12,7 @@ function LogoutButton() {
         color="secondary"
         onClick={() => {
           logout({
-            returnTo: 'http://localhost:3000/',
+            returnTo: process.env.REACT_APP_AUTH0_LOGOUT_URL,
           });
           window.localStorage.clear();
         }}

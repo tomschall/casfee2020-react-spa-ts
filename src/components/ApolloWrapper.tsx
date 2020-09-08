@@ -28,11 +28,11 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
   }, [isAuthenticated, getAccessTokenSilently, setBearerToken]);
 
   const httpLink = new HttpLink({
-    uri: 'http://localhost:8080/v1/graphql',
+    uri: process.env.REACT_APP_HTTP_BACKEND_LINK,
   });
 
   const wsLink = new WebSocketLink({
-    uri: 'ws://localhost:8080/v1/graphql',
+    uri: process.env.REACT_APP_WS_BACKEND_LINK || '',
     options: {
       reconnect: true,
       connectionParams: {

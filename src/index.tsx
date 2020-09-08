@@ -18,13 +18,18 @@ const onRedirectCallback = (appState: any) => {
   );
 };
 
+const domain: string = process.env.REACT_APP_AUTH0_DOMAIN || '';
+const clientId: string = process.env.REACT_APP_AUTH0_CLIENT_ID || '';
+const redirectUri: string = process.env.REACT_APP_AUTH0_REDIRECT_URI || '';
+const audience: string = process.env.REACT_APP_AUTH0_AUDIENCE || '';
+
 ReactDOM.render(
   <Auth0Provider
-    domain="tom-schall.eu.auth0.com"
-    clientId="5grQYQ4dnRzUJ8wbP0EfBt5WNCIkQr33"
-    redirectUri="http://localhost:3000/channel/general"
+    domain={domain}
+    clientId={clientId}
+    redirectUri={redirectUri}
     onRedirectCallback={onRedirectCallback}
-    audience="hasura"
+    audience={audience}
   >
     <BrowserRouter>
       <RecoilRoot>
