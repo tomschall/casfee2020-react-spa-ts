@@ -1,7 +1,8 @@
 CREATE TABLE public.channel (
     id integer NOT NULL,
     name text NOT NULL,
-    owner_id text
+    owner_id text,
+    is_private boolean
 );
 CREATE SEQUENCE public.channel_id_seq
     AS integer
@@ -11,9 +12,22 @@ CREATE SEQUENCE public.channel_id_seq
     NO MAXVALUE
     CACHE 1;
 ALTER SEQUENCE public.channel_id_seq OWNED BY public.channel.id;
+CREATE TABLE public.channel_poll (
+    id integer NOT NULL,
+    channel_id integer NOT NULL,
+    poll_questions integer NOT NULL
+);
+CREATE SEQUENCE public.channel_poll_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE public.channel_poll_id_seq OWNED BY public.channel_poll.id;
 CREATE TABLE public.channel_thread (
     id integer NOT NULL,
-    channel_id integer
+    channel_id integer NOT NULL
 );
 CREATE SEQUENCE public.channel_thread_id_seq
     AS integer
@@ -27,7 +41,7 @@ CREATE TABLE public.channel_thread_message (
     id integer NOT NULL,
     user_id text NOT NULL,
     channel_thread_id integer NOT NULL,
-    channel_thread_message text
+    message text NOT NULL
 );
 CREATE SEQUENCE public.channel_thread_message_id_seq
     AS integer
@@ -52,6 +66,39 @@ CREATE SEQUENCE public.message_id_seq
     NO MAXVALUE
     CACHE 1;
 ALTER SEQUENCE public.message_id_seq OWNED BY public.message.id;
+CREATE TABLE public.poll_anwers (
+    id integer NOT NULL,
+    text text NOT NULL,
+    votes integer DEFAULT 0 NOT NULL,
+    question_id integer NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    user_id text NOT NULL
+);
+CREATE SEQUENCE public.poll_anwers_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE public.poll_anwers_id_seq OWNED BY public.poll_anwers.id;
+CREATE TABLE public.poll_questions (
+    id integer NOT NULL,
+    text text NOT NULL,
+    created_at timestamp with time zone NOT NULL,
+    updated_at timestamp with time zone NOT NULL,
+    owner_id text NOT NULL,
+    is_active boolean NOT NULL
+);
+CREATE SEQUENCE public.poll_questions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE public.poll_questions_id_seq OWNED BY public.poll_questions.id;
 CREATE TABLE public."user" (
     id integer NOT NULL,
     username text NOT NULL,
@@ -87,20 +134,29 @@ CREATE VIEW public.user_typing AS
    FROM public."user"
   WHERE ("user".last_typed > (now() - '00:00:02'::interval));
 ALTER TABLE ONLY public.channel ALTER COLUMN id SET DEFAULT nextval('public.channel_id_seq'::regclass);
+ALTER TABLE ONLY public.channel_poll ALTER COLUMN id SET DEFAULT nextval('public.channel_poll_id_seq'::regclass);
 ALTER TABLE ONLY public.channel_thread ALTER COLUMN id SET DEFAULT nextval('public.channel_thread_id_seq'::regclass);
 ALTER TABLE ONLY public.channel_thread_message ALTER COLUMN id SET DEFAULT nextval('public.channel_thread_message_id_seq'::regclass);
 ALTER TABLE ONLY public.message ALTER COLUMN id SET DEFAULT nextval('public.message_id_seq'::regclass);
+ALTER TABLE ONLY public.poll_anwers ALTER COLUMN id SET DEFAULT nextval('public.poll_anwers_id_seq'::regclass);
+ALTER TABLE ONLY public.poll_questions ALTER COLUMN id SET DEFAULT nextval('public.poll_questions_id_seq'::regclass);
 ALTER TABLE ONLY public."user" ALTER COLUMN id SET DEFAULT nextval('public.user_id_seq'::regclass);
 ALTER TABLE ONLY public.channel
     ADD CONSTRAINT channel_name_key UNIQUE (name);
 ALTER TABLE ONLY public.channel
     ADD CONSTRAINT channel_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.channel_poll
+    ADD CONSTRAINT channel_poll_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.channel_thread_message
     ADD CONSTRAINT channel_thread_message_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.channel_thread
     ADD CONSTRAINT channel_thread_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.message
     ADD CONSTRAINT message_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.poll_anwers
+    ADD CONSTRAINT poll_anwers_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.poll_questions
+    ADD CONSTRAINT poll_questions_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public."user"
     ADD CONSTRAINT user_auth0_user_id_key UNIQUE (auth0_user_id);
 ALTER TABLE ONLY public.user_channels
@@ -109,6 +165,10 @@ ALTER TABLE ONLY public."user"
     ADD CONSTRAINT user_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.channel
     ADD CONSTRAINT channel_owner_id_fkey FOREIGN KEY (owner_id) REFERENCES public."user"(auth0_user_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY public.channel_poll
+    ADD CONSTRAINT channel_poll_channel_id_fkey FOREIGN KEY (channel_id) REFERENCES public.channel(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY public.channel_poll
+    ADD CONSTRAINT channel_poll_poll_questions_fkey FOREIGN KEY (poll_questions) REFERENCES public.poll_questions(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY public.channel_thread
     ADD CONSTRAINT channel_thread_channel_id_fkey FOREIGN KEY (channel_id) REFERENCES public.channel(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY public.channel_thread_message
@@ -119,6 +179,8 @@ ALTER TABLE ONLY public.message
     ADD CONSTRAINT "message_channelId_fkey" FOREIGN KEY (channel_id) REFERENCES public.channel(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY public.message
     ADD CONSTRAINT message_user_id_fkey FOREIGN KEY (user_id) REFERENCES public."user"(auth0_user_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE ONLY public.poll_anwers
+    ADD CONSTRAINT poll_anwers_question_id_fkey FOREIGN KEY (question_id) REFERENCES public.poll_questions(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY public.user_channels
     ADD CONSTRAINT user_channels_channel_id_fkey FOREIGN KEY (channel_id) REFERENCES public.channel(id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 ALTER TABLE ONLY public.user_channels

@@ -1,1 +1,0 @@
-CREATE TABLE "public"."poll_anwers"("id" serial NOT NULL, "text" text NOT NULL, "votes" integer NOT NULL DEFAULT 0, "question_id" integer NOT NULL, "created_at" timestamptz NOT NULL, "updated_at" timestamptz NOT NULL, "user_id" text NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("question_id") REFERENCES "public"."poll_questions"("id") ON UPDATE restrict ON DELETE restrict);
