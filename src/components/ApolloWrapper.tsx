@@ -25,7 +25,7 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
       }
     };
     getToken();
-  }, [isAuthenticated, getAccessTokenSilently, setBearerToken]);
+  }, [isAuthenticated, getAccessTokenSilently]);
 
   const httpLink = new HttpLink({
     uri: process.env.REACT_APP_HTTP_BACKEND_LINK,

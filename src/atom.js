@@ -36,3 +36,7 @@ export const atomTokenState = atom({
 export const recoilForceUpdateState = atom({
   key: 'recoilForceUpdateState',
 });
+
+export const channelModalOpenState = atom({
+  key: 'channelModalOpenState',
+});

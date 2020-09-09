@@ -36,7 +36,7 @@ const MessageSub: React.FC<MessageSubProps> = ({
     return function cleanup() {
       unsubscribe();
     };
-  }, [refetchData, subscribeToMore]);
+  }, []);
 
   return null;
 };

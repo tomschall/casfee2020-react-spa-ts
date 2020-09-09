@@ -14,6 +14,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
+import AddChannel from './sidebar/AddChannel';
 
 // MUI STYLES
 const useStyles = makeStyles((theme) => ({
@@ -169,6 +170,7 @@ const ChatApp: React.FC = (props) => {
               </div>
               <OnlineUser username={username} user_id={user_id} />
               <LogoutButton />
+              <AddChannel />
               <Sidebar />
             </Grid>
             <Grid

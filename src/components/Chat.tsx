@@ -72,7 +72,7 @@ const Chat: React.FC<ChatProps> = ({ username, user_id }) => {
       console.log('component Chat did unmount');
       setRefetch(null);
     };
-  }, [setRefetch, setMessages, setNewMessages, setActualChannel, channel]);
+  }, []);
 
   console.log('channelState', channelState);
 

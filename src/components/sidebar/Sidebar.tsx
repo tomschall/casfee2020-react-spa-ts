@@ -14,7 +14,7 @@ const CHANNELS = gql`
 `;
 
 const Sidebar: React.FC<any> = () => {
-  const { data, loading } = useQuery(CHANNELS);
+  const { data, loading, subscribeToMore } = useQuery(CHANNELS);
 
   return (
     <React.Fragment>

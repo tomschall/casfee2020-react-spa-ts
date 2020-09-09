@@ -48,7 +48,7 @@ const OnlineUser: React.FC<OnlineUserProps> = () => {
     setInterval(() => {
       sendUserIsOnline();
     }, 2000);
-  }, [sendUserIsOnline]);
+  }, []);
 
   const subscriptionData = () => (
     <Subscription<UserOnline> subscription={ONLINE_USERS}>
