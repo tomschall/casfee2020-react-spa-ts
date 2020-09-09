@@ -3,8 +3,12 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 
 import { useRecoilState } from 'recoil';
-import { channelModalOpenState, recoilUserState } from '../../atom.js';
-import { useMutation } from 'react-apollo';
+import {
+  channelModalOpenState,
+  recoilUserState,
+  atomChannelState,
+} from '../../atom.js';
+import { useMutation, useQuery } from 'react-apollo';
 import gql from 'graphql-tag';
 
 const ADD_CHANNEL = gql`
@@ -60,24 +64,43 @@ const ChannelModal: React.FC<any> = (props) => {
     channelModalOpenState,
   );
 
+  const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
+
   const [userState, setUserState] = useRecoilState<any>(recoilUserState);
 
-  const [sendUpdateChannel, { data, error }] = useMutation(ADD_CHANNEL, {
-    variables: {
-      owner_id: userState.user_id,
-      name: formValue,
-      is_private: false,
+  const [sendUpdateChannel, { data, error, loading }] = useMutation(
+    ADD_CHANNEL,
+    {
+      variables: {
+        owner_id: userState.user_id,
+        name: formValue,
+        is_private: false,
+      },
     },
-  });
+  );
 
   if (error) {
     console.log("you can't use this name...", error);
   }
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
-    console.log('add channel', userState);
-    sendUpdateChannel();
+
+    const resp = await sendUpdateChannel();
+    if (resp && resp.data) {
+      console.log('resp.data', resp.data);
+      console.log('handleSubmit', channelState);
+      setChannel((oldChannelList: any) => [
+        ...oldChannelList,
+        {
+          id: resp.data.insert_channel.returning[0].id,
+          name: resp.data.insert_channel.returning[0].name,
+          is_private: resp.data.insert_channel.returning[0].is_private,
+          owner_id: resp.data.insert_channel.returning[0].owner_id,
+        },
+      ]);
+    }
+
     setChannelModalOpen(false);
   };
 
