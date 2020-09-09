@@ -1,20 +1,15 @@
 import React from 'react';
-import { gql } from '@apollo/client';
 import Chat from './Chat';
 import ChatInput from './ChatInput';
-import OnlineUser from './OnlineUser';
-import Sidebar from './sidebar/Sidebar';
 import { useRecoilState } from 'recoil';
 import { atomChannelState, recoilUserState } from '../atom.js';
 import { useParams } from 'react-router';
-import LogoutButton from './LogoutButton';
 import { useQuery } from 'react-apollo';
 import { useAuth0 } from '@auth0/auth0-react';
-
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import AddChannel from './sidebar/AddChannel';
+import { ROOM, USER } from '../data/queries';
 
 // MUI STYLES
 const useStyles = makeStyles((theme) => ({
@@ -29,18 +24,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: 'rgba(0,0,0,.1)',
     },
   },
-  root: {
-    flexGrow: 1,
-    margin: theme.spacing(0),
-    backgroundColor: '#2b0d3b',
-    height: '100vh',
-    color: 'white',
-    overflowX: 'hidden',
-  },
-  sidebar: {
-    marginTop: theme.spacing(5),
-    backgroundColor: '#2b0d3b',
-  },
+
   title: {
     color: '#fff',
     fontSize: '1.5rem',
@@ -48,11 +32,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     marginBottom: '2rem',
   },
-  logo: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
   messageList: {
     marginTop: theme.spacing(5),
     overflowY: 'auto',
@@ -71,35 +51,6 @@ const useStyles = makeStyles((theme) => ({
     // backgroundColor: '#2b0d3b',
   },
 }));
-
-// APPOLO QUERYs
-const ROOM = gql`
-  query {
-    channel {
-      name
-      id
-      is_private
-      owner_id
-    }
-  }
-`;
-
-const USER = gql`
-  query($user_id: String) {
-    user(where: { auth0_user_id: { _eq: $user_id } }) {
-      id
-      username
-      auth0_user_id
-      user_channels {
-        channel {
-          name
-          id
-          is_private
-        }
-      }
-    }
-  }
-`;
 
 const ChatApp: React.FC = (props) => {
   const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
@@ -147,10 +98,6 @@ const ChatApp: React.FC = (props) => {
 
   const userChannel = channelState?.filter((e: any) => e.name === channel);
 
-  console.log('userIsMemberOfChannel', userIsMemberOfChannel);
-  console.log('channelState', channelState);
-  console.log('userChannel', userChannel);
-
   if (error) return <React.Fragment>Error: {error}</React.Fragment>;
 
   return (
@@ -162,39 +109,23 @@ const ChatApp: React.FC = (props) => {
         userIsMemberOfChannel[0]?.channel.name === channel) ||
         (userChannel && userChannel[0]?.is_private === false) ||
         (userChannel && userChannel[0]?.owner_id === userState.user_id)) ? (
-        <div className={classes.root}>
-          <Grid container spacing={3} className={classes.root}>
-            <Grid item className={classes.sidebar} xs={3}>
-              <div className={classes.logo}>
-                <img src="/logo-chicken-chat.png" alt="Chicken Chat" />
-              </div>
-              <OnlineUser username={username} user_id={user_id} />
-              <LogoutButton />
-              <AddChannel />
-              <Sidebar />
-            </Grid>
-            <Grid
-              item
-              direction="column"
-              xs={8}
-              className={classes.messageList}
-            >
-              <Typography variant="subtitle2">
-                <Chat username={username} user_id={user_id} />
-              </Typography>
-            </Grid>
-            <Grid item xs={2} className={classes.extraBox}>
-              EXTRABOX
-            </Grid>
-            <Grid container spacing={0} xs={12} className={classes.chatInput}>
-              <Grid item xs={2}></Grid>
-              <Grid item className={classes.form} xs={8}>
-                <ChatInput username={username} user_id={user_id} />
-              </Grid>
-              <Grid item xs={2}></Grid>
-            </Grid>
+        <React.Fragment>
+          <Grid item direction="column" xs={8} className={classes.messageList}>
+            <Typography variant="subtitle2">
+              <Chat username={username} user_id={user_id} />
+            </Typography>
           </Grid>
-        </div>
+          <Grid item xs={2} className={classes.extraBox}>
+            EXTRABOX
+          </Grid>
+          <Grid container spacing={0} xs={12} className={classes.chatInput}>
+            <Grid item xs={2}></Grid>
+            <Grid item className={classes.form} xs={8}>
+              <ChatInput username={username} user_id={user_id} />
+            </Grid>
+            <Grid item xs={2}></Grid>
+          </Grid>
+        </React.Fragment>
       ) : (
         'you have no membership for this channel'
       )}

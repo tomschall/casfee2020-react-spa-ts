@@ -1,28 +1,9 @@
 import React, { useEffect } from 'react';
 import { Subscription, useMutation } from 'react-apollo';
-import gql from 'graphql-tag';
 import { useRecoilValue } from 'recoil';
 import { recoilUserState } from '../atom';
-
-const ONLINE_USERS = gql`
-  subscription {
-    user_online(order_by: { username: asc }) {
-      id
-      username
-    }
-  }
-`;
-
-const USER_IS_ONLINE = gql`
-  mutation($user_id: String) {
-    update_user(
-      _set: { last_seen: "now()" }
-      where: { auth0_user_id: { _eq: $user_id } }
-    ) {
-      affected_rows
-    }
-  }
-`;
+import { ONLINE_USERS } from '../data/subscriptions';
+import { USER_IS_ONLINE } from '../data/mutations';
 
 interface OnlineUserProps {
   username: string;

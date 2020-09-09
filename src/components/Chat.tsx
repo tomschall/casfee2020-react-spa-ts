@@ -13,36 +13,7 @@ import MessageList from './MessageList';
 import MessageSub from './MessageSub';
 import { Message } from '../interfaces/message/message.interface';
 import { useParams } from 'react-router';
-
-const GET_MESSAGES = gql`
-  query(
-    $last_received_id: Int
-    $last_received_ts: timestamptz
-    $channel: String
-  ) {
-    channel(where: { name: { _eq: $channel } }) {
-      messages(
-        order_by: { timestamp: asc }
-        where: {
-          _and: {
-            id: { _neq: $last_received_id }
-            timestamp: { _gte: $last_received_ts }
-          }
-        }
-      ) {
-        id
-        text
-        timestamp
-        user {
-          username
-        }
-        channel {
-          name
-        }
-      }
-    }
-  }
-`;
+import { GET_MESSAGES } from '../data/queries';
 
 interface ChatProps {
   username: string;

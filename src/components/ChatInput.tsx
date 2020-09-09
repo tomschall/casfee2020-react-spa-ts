@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { messagesState, newMessagesState, atomChannelState } from '../atom.js';
 import '../App.css';
 import { Message } from '../interfaces/message/message.interface.js';
 import { useParams } from 'react-router';
 import { useAuth0 } from '@auth0/auth0-react';
+import { INSERT_MESSAGE } from '../data/mutations';
 
-import { Grid, Typography, FormLabel } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -29,24 +29,6 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(3),
   },
 }));
-
-const INSERT_MESSAGE = gql`
-  mutation insert_message($message: message_insert_input!) {
-    insert_message(objects: [$message]) {
-      returning {
-        id
-        timestamp
-        text
-        user {
-          username
-        }
-        channel {
-          name
-        }
-      }
-    }
-  }
-`;
 
 interface ChatInputProps {
   username: string;
