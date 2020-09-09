@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import gql from 'graphql-tag';
 import { useQuery, useMutation } from 'react-apollo';
 import { Button, Menu, MenuItem, styled } from '@material-ui/core';
-import ChannelModal from './ChannelModal';
+import AddChannelModal from './AddChannelModal';
 import { useRecoilState } from 'recoil';
 import { channelModalOpenState } from '../../atom.js';
 
@@ -57,7 +57,7 @@ const AddChannel: React.FC<any> = () => {
       >
         <MenuItem onClick={handleOpen}>Add Channel</MenuItem>
         <MenuItem onClick={handleClose}>Close</MenuItem>
-        <ChannelModal />
+        <AddChannelModal />
       </SidebarMenu>
     </React.Fragment>
   );

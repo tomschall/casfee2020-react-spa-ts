@@ -16,7 +16,7 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
   const [bearerToken, setBearerToken] = useRecoilState<any>(atomTokenState);
 
   useEffect(() => {
-    console.log('useEffect');
+    console.log('apollowrapper useEffect');
     const getToken = async () => {
       if (isAuthenticated) {
         let token = await getAccessTokenSilently();
@@ -56,8 +56,6 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
 
   /* Set up local cache */
   const cache = new InMemoryCache();
-
-  console.log('authLink', authLink);
 
   interface Definition {
     kind: string;

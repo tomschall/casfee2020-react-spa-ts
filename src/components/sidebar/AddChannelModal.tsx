@@ -8,23 +8,8 @@ import {
   recoilUserState,
   atomChannelState,
 } from '../../atom.js';
-import { useMutation, useQuery } from 'react-apollo';
-import gql from 'graphql-tag';
-
-const ADD_CHANNEL = gql`
-  mutation($name: String, $owner_id: String, $is_private: Boolean) {
-    insert_channel(
-      objects: { name: $name, owner_id: $owner_id, is_private: $is_private }
-    ) {
-      returning {
-        id
-        name
-        owner_id
-        is_private
-      }
-    }
-  }
-`;
+import { useMutation } from 'react-apollo';
+import { ADD_CHANNEL, INSERT_MESSAGE } from '../../data/mutations';
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -54,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const ChannelModal: React.FC<any> = (props) => {
+const AddChannelModal: React.FC<any> = (props) => {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
@@ -79,6 +64,10 @@ const ChannelModal: React.FC<any> = (props) => {
     },
   );
 
+  const [sendUpdateMessage, { data: sendUpdateMessageData }] = useMutation(
+    INSERT_MESSAGE,
+  );
+
   if (error) {
     console.log("you can't use this name...", error);
   }
@@ -90,17 +79,27 @@ const ChannelModal: React.FC<any> = (props) => {
     if (resp && resp.data) {
       console.log('resp.data', resp.data);
       console.log('handleSubmit', channelState);
-      setChannel((oldChannelList: any) => [
-        ...oldChannelList,
-        {
-          id: resp.data.insert_channel.returning[0].id,
-          name: resp.data.insert_channel.returning[0].name,
-          is_private: resp.data.insert_channel.returning[0].is_private,
-          owner_id: resp.data.insert_channel.returning[0].owner_id,
-        },
-      ]);
-    }
 
+      const newChannel = {
+        id: resp.data.insert_channel.returning[0].id,
+        name: resp.data.insert_channel.returning[0].name,
+        is_private: resp.data.insert_channel.returning[0].is_private,
+        owner_id: resp.data.insert_channel.returning[0].owner_id,
+      };
+      setChannel((oldChannelList: any) => [...oldChannelList, newChannel]);
+
+      sendUpdateMessage({
+        variables: {
+          message: {
+            user_id: userState.user_id,
+            text:
+              'Willkommen im Channel ' +
+              resp.data.insert_channel.returning[0].name,
+            channel_id: resp.data.insert_channel.returning[0].id,
+          },
+        },
+      });
+    }
     setChannelModalOpen(false);
   };
 
@@ -144,4 +143,4 @@ const ChannelModal: React.FC<any> = (props) => {
   );
 };
 
-export default ChannelModal;
+export default AddChannelModal;

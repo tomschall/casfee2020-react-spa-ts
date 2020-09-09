@@ -28,3 +28,18 @@ export const USER_IS_ONLINE = gql`
     }
   }
 `;
+
+export const ADD_CHANNEL = gql`
+  mutation($name: String, $owner_id: String, $is_private: Boolean) {
+    insert_channel(
+      objects: { name: $name, owner_id: $owner_id, is_private: $is_private }
+    ) {
+      returning {
+        id
+        name
+        owner_id
+        is_private
+      }
+    }
+  }
+`;
