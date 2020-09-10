@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-
-import gql from 'graphql-tag';
-import { useQuery, useMutation } from 'react-apollo';
-import { Button, Menu, MenuItem, styled } from '@material-ui/core';
 import AddChannelModal from './AddChannelModal';
 import { useRecoilState } from 'recoil';
 import { channelModalOpenState } from '../../atom.js';
+import { Button, Menu, MenuItem, styled } from '@material-ui/core';
 
 const SidebarMenuButton = styled(Button)({
   border: 0,

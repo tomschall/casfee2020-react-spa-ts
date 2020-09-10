@@ -63,19 +63,6 @@ const App: React.FC = (client) => {
     );
   }
 
-  const renderSwitch = () => {
-    return (
-      <Switch>
-        <Redirect exact from="/" to="/home" />
-        <Route path="/home" component={Home} />
-        <PrivateRoute path="/channel/:channel" component={ChatApp} />
-        <PrivateRoute path="/dashboard" component={Dashboard} />
-        <Route exact path="/not-found" render={(props) => NotFound} />
-        <Redirect to="/not-found" />
-      </Switch>
-    );
-  };
-
   console.log('ia', isAuthenticated);
   console.log('user App ', user);
 
@@ -96,10 +83,23 @@ const App: React.FC = (client) => {
               <AddChannel />
               <Sidebar />
             </Grid>
-            <>{renderSwitch()}</>
+            <Switch>
+              <Redirect exact from="/" to="/channel/general" />
+              <PrivateRoute path="/channel/:channel" component={ChatApp} />
+              <PrivateRoute path="/dashboard" component={Dashboard} />
+              <Route exact path="/not-found" render={(props) => NotFound} />
+              <Redirect to="/not-found" />
+            </Switch>
           </Grid>
         ) : (
-          <>{renderSwitch()}</>
+          <Switch>
+            <Redirect exact from="/" to="/home" />
+            <Route path="/home" component={Home} />
+            <PrivateRoute path="/channel/:channel" component={ChatApp} />
+            <PrivateRoute path="/dashboard" component={Dashboard} />
+            <Route exact path="/not-found" render={(props) => NotFound} />
+            <Redirect to="/not-found" />
+          </Switch>
         )}
       </div>
     </div>

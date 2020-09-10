@@ -74,12 +74,10 @@ const AddChannelModal: React.FC<any> = (props) => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
+    if (formValue === '') return;
 
     const resp = await sendUpdateChannel();
     if (resp && resp.data) {
-      console.log('resp.data', resp.data);
-      console.log('handleSubmit', channelState);
-
       const newChannel = {
         id: resp.data.insert_channel.returning[0].id,
         name: resp.data.insert_channel.returning[0].name,
