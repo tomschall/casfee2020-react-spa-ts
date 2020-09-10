@@ -71,7 +71,7 @@ const App: React.FC = (client) => {
       <div className={classes.root}>
         {isAuthenticated ? (
           <Grid container spacing={3} className={classes.root}>
-            <Grid item className={classes.sidebar} xs={3}>
+            <Grid item className={classes.sidebar} xs={2}>
               <div className={classes.logo}>
                 <img src="/logo-chicken-chat.png" alt="Chicken Chat" />
               </div>
@@ -85,6 +85,7 @@ const App: React.FC = (client) => {
             </Grid>
             <Switch>
               <Redirect exact from="/" to="/channel/general" />
+              <Redirect exact from="/channel" to="/channel/general" />
               <PrivateRoute path="/channel/:channel" component={ChatApp} />
               <PrivateRoute path="/dashboard" component={Dashboard} />
               <Route exact path="/not-found" render={(props) => NotFound} />

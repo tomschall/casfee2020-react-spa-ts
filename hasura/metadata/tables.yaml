@@ -87,6 +87,13 @@
         table:
           schema: public
           name: channel_thread_message
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - id
+      - message_id
+      filter: {}
 - table:
     schema: public
     name: channel_thread_message
@@ -97,6 +104,15 @@
   - name: user
     using:
       foreign_key_constraint_on: user_id
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - channel_thread_id
+      - id
+      - message
+      - user_id
+      filter: {}
 - table:
     schema: public
     name: message

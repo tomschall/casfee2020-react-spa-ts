@@ -1,6 +1,7 @@
 import React from 'react';
 import Chat from './Chat';
 import ChatInput from './ChatInput';
+import ChannelTreadSidebar from './ChannelThreadSidebar';
 import { useRecoilState } from 'recoil';
 import { atomChannelState, recoilUserState } from '../atom.js';
 import { useParams } from 'react-router';
@@ -116,7 +117,7 @@ const ChatApp: React.FC = (props) => {
             </Typography>
           </Grid>
           <Grid item xs={2} className={classes.extraBox}>
-            EXTRABOX
+            <ChannelTreadSidebar />
           </Grid>
           <Grid container spacing={0} xs={12} className={classes.chatInput}>
             <Grid item xs={2}></Grid>

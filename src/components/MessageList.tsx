@@ -55,7 +55,10 @@ const MessageList: React.FC<MessageProps> = ({ messages }) => {
                   {m.user.username}: <i>{moment(m.timestamp).fromNow()}</i>
                 </div>
                 <p>{m.text}</p>
-                <ChannelThread />
+                <ChannelThread
+                  message={m.id}
+                  channel_threads={m.channel_threads}
+                />
               </div>
             );
           })

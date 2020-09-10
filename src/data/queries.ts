@@ -25,6 +25,9 @@ export const GET_MESSAGES = gql`
         channel {
           name
         }
+        channel_threads {
+          id
+        }
       }
     }
   }

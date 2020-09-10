@@ -41,3 +41,7 @@ export const channelModalOpenState = atom({
   key: 'channelModalOpenState',
   default: false,
 });
+
+export const testState = atom({
+  key: 'testState',
+});

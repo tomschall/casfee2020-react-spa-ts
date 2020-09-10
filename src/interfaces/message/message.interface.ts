@@ -5,4 +5,5 @@ export interface Message {
   timestamp: Date;
   user?: any;
   channel?: any;
+  channel_threads?: any;
 }
