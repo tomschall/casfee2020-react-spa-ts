@@ -39,4 +39,5 @@ export const recoilForceUpdateState = atom({
 
 export const channelModalOpenState = atom({
   key: 'channelModalOpenState',
+  default: false,
 });

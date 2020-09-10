@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 
@@ -39,19 +40,17 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const AddChannelModal: React.FC<any> = (props) => {
+const AddChannelModal: React.FC<any> = () => {
   const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
   const [formValue, setFormValue] = useState('');
+  const history = useHistory();
 
+  const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
+  const [userState, setUserState] = useRecoilState<any>(recoilUserState);
   const [channelModalOpen, setChannelModalOpen] = useRecoilState<any>(
     channelModalOpenState,
   );
-
-  const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
-
-  const [userState, setUserState] = useRecoilState<any>(recoilUserState);
 
   const [sendUpdateChannel, { data, error, loading }] = useMutation(
     ADD_CHANNEL,
@@ -90,15 +89,15 @@ const AddChannelModal: React.FC<any> = (props) => {
         variables: {
           message: {
             user_id: userState.user_id,
-            text:
-              'Willkommen im Channel ' +
-              resp.data.insert_channel.returning[0].name,
+            text: 'joined ' + resp.data.insert_channel.returning[0].name,
             channel_id: resp.data.insert_channel.returning[0].id,
           },
         },
+      }).then(() => {
+        setChannelModalOpen(false);
+        history.push(resp.data.insert_channel.returning[0].name);
       });
     }
-    setChannelModalOpen(false);
   };
 
   const handleChange = (event: any) => {
