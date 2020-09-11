@@ -1,26 +1,80 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useRecoilState } from 'recoil';
-import { testState } from '../atom.js';
+import { testState, recoilChannelThreadMessages } from '../atom.js';
 
-const ChannelThread: React.FC<any> = (props) => {
+import { useQuery } from 'react-apollo';
+import gql from 'graphql-tag';
+import ThreadMessages from './ThreadMessages';
+
+const CHANNEL_THREAD = gql`
+  query($message_id: Int) {
+    channel_thread(
+      where: { message_id: { _eq: $message_id } }
+      order_by: { message: {} }
+    ) {
+      channel_thread_messages(order_by: { id: asc }) {
+        id
+        message
+        user {
+          username
+          id
+        }
+      }
+    }
+  }
+`;
+
+const CHANNEL_THREAD_SUBSCRIPTION = gql`
+  subscription {
+    channel_thread_message(limit: 1, order_by: { id: desc }) {
+      id
+      message
+      user {
+        id
+        username
+      }
+    }
+  }
+`;
+
+const ChannelThread: React.FC = (props) => {
   const { isAuthenticated, loginWithRedirect } = useAuth0();
   const [recoilTestState, setTestState] = useRecoilState<any>(testState);
+  const [channelThreadMessages, setChannelThreadMessages] = useRecoilState<any>(
+    recoilChannelThreadMessages,
+  );
 
-  const checkAndLogin = () => {
-    loginWithRedirect();
-  };
+  console.log('recoilTestState', recoilTestState);
 
-  const renderMessages = () => {
-    console.log('props message', props.message);
-    console.log('props channel_threads', props.channel_threads);
-    setTestState(props.message);
-  };
+  useEffect(() => {
+    console.log('component ChannelThread did mount');
+
+    return function cleanup() {
+      console.log('component ChannelThread did unmount');
+
+      setTestState(null);
+    };
+  }, []);
+
+  const { subscribeToMore, data, loading } = useQuery(CHANNEL_THREAD, {
+    variables: { message_id: recoilTestState },
+  });
+
+  if (!channelThreadMessages && data && data.channel_thread) {
+    console.log('unsubscribe', data);
+    setChannelThreadMessages(data.channel_thread[0].channel_thread_messages);
+  }
+
+  console.log('data ChannelThread', data);
+  console.log('channelThreadMessages', channelThreadMessages);
 
   return (
-    <React.Fragment>
-      <a onClick={renderMessages}>Reply</a>
-    </React.Fragment>
+    <ThreadMessages
+      {...data}
+      subscribeToMore={subscribeToMore}
+      message_id={recoilTestState}
+    />
   );
 };
 

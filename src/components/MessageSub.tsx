@@ -15,6 +15,7 @@ const MessageSub: React.FC<MessageSubProps> = ({
       document: MESSAGE_CREATED,
       updateQuery: (prev: any, { subscriptionData }: any) => {
         refetchData();
+        console.log('refetch');
 
         return null;
       },

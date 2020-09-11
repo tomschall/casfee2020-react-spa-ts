@@ -1,9 +1,9 @@
 import React from 'react';
 import Chat from './Chat';
 import ChatInput from './ChatInput';
-import ChannelTreadSidebar from './ChannelThreadSidebar';
+import ChannelTread from './ChannelThread';
 import { useRecoilState } from 'recoil';
-import { atomChannelState, recoilUserState } from '../atom.js';
+import { atomChannelState, recoilUserState, testState } from '../atom.js';
 import { useParams } from 'react-router';
 import { useQuery } from 'react-apollo';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
 const ChatApp: React.FC = (props) => {
   const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
   const [userState, setUserState] = useRecoilState<any>(recoilUserState);
+  const [recoilTestState, setTestState] = useRecoilState<any>(testState);
   const { isAuthenticated, isLoading, user } = useAuth0();
   const classes = useStyles();
 
@@ -117,7 +118,7 @@ const ChatApp: React.FC = (props) => {
             </Typography>
           </Grid>
           <Grid item xs={2} className={classes.extraBox}>
-            <ChannelTreadSidebar />
+            {recoilTestState ? <ChannelTread /> : ''}
           </Grid>
           <Grid container spacing={0} xs={12} className={classes.chatInput}>
             <Grid item xs={2}></Grid>

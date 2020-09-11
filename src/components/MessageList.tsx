@@ -3,6 +3,8 @@ import moment from 'moment';
 import { isObject } from 'util';
 import { Message } from '../interfaces/message/message.interface';
 import ChannelThread from './ChannelThread';
+import { useRecoilState } from 'recoil';
+import { testState, recoilChannelThreadMessages } from '../atom.js';
 
 interface MessageProps {
   messages: Message[];
@@ -10,6 +12,10 @@ interface MessageProps {
 
 const MessageList: React.FC<MessageProps> = ({ messages }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [recoilTestState, setTestState] = useRecoilState<any>(testState);
+  const [channelThreadMessages, setChannelThreadMessages] = useRecoilState<any>(
+    recoilChannelThreadMessages,
+  );
 
   const scrollToBottom = () => {
     if (isObject(messagesEndRef) && messagesEndRef.current !== null) {
@@ -43,6 +49,12 @@ const MessageList: React.FC<MessageProps> = ({ messages }) => {
     return image;
   };
 
+  const renderChannelThreadSidebar = (id: number) => {
+    console.log('renderChannelThread', id);
+    setChannelThreadMessages([]);
+    setTestState(id);
+  };
+
   return (
     <>
       {messages.length
@@ -55,10 +67,7 @@ const MessageList: React.FC<MessageProps> = ({ messages }) => {
                   {m.user.username}: <i>{moment(m.timestamp).fromNow()}</i>
                 </div>
                 <p>{m.text}</p>
-                <ChannelThread
-                  message={m.id}
-                  channel_threads={m.channel_threads}
-                />
+                <a onClick={() => renderChannelThreadSidebar(m.id)}>reply</a>
               </div>
             );
           })

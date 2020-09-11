@@ -45,3 +45,7 @@ export const channelModalOpenState = atom({
 export const testState = atom({
   key: 'testState',
 });
+
+export const recoilChannelThreadMessages = atom({
+  key: 'recoilChannelThreadMessages',
+});
