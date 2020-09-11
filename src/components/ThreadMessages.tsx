@@ -1,24 +1,6 @@
 import React, { useEffect } from 'react';
-
 import gql from 'graphql-tag';
-import { useRecoilState } from 'recoil';
-import { testState, recoilChannelThreadMessages } from '../atom.js';
 
-// const CHANNEL_THREAD_SUBSCRIPTION = gql`
-//   subscription($message_id: Int) {
-//     channel_thread_message(
-//       order_by: { id: desc }
-//       where: { channel_thread: { message_id: { _eq: $message_id } } }
-//     ) {
-//       id
-//       message
-//       user {
-//         id
-//         username
-//       }
-//     }
-//   }
-// `;
 const CHANNEL_THREAD_SUBSCRIPTION = gql`
   subscription($message_id: Int, $id: Int) {
     channel_thread_message(
@@ -50,8 +32,7 @@ const ThreadMessages: React.SFC<ThreadMessagesProps> = ({
   data,
 }) => {
   useEffect(() => {
-    console.log('useEffect ThreadMessages');
-
+    console.log('component ThreadMessages did mount');
     const unsubscribe = subscribeToMore({
       document: CHANNEL_THREAD_SUBSCRIPTION,
       variables: {
@@ -59,11 +40,6 @@ const ThreadMessages: React.SFC<ThreadMessagesProps> = ({
         id: sessionStorage.getItem('thread_message_last_id'),
       },
       updateQuery: (prev: any, { subscriptionData }: any) => {
-        console.log(
-          'session storage id updateQuery before',
-          sessionStorage.getItem('thread_message_last_id'),
-        );
-        console.log('updateQuery');
         if (!subscriptionData.data.channel_thread_message[0]) return prev;
         sessionStorage.setItem(
           'thread_message_last_id',
@@ -71,17 +47,8 @@ const ThreadMessages: React.SFC<ThreadMessagesProps> = ({
             subscriptionData.data.channel_thread_message.length - 1
           ].id,
         );
-        console.log(
-          'session storage id updateQuery after',
-          sessionStorage.getItem('thread_message_last_id'),
-        );
 
-        console.log('prev', prev);
-        console.log('subscriptionData', subscriptionData);
-
-        let obj;
-
-        obj = Object.assign({}, prev, {
+        return Object.assign({}, prev, {
           channel_thread: [
             {
               channel_thread_messages: [
@@ -91,11 +58,6 @@ const ThreadMessages: React.SFC<ThreadMessagesProps> = ({
             },
           ],
         });
-
-        console.log('obj', obj);
-        //sessionStorage.setItem('thread_message_last_id');
-
-        return obj;
       },
     });
 

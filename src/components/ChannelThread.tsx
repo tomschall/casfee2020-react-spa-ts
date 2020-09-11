@@ -39,13 +39,7 @@ const CHANNEL_THREAD_SUBSCRIPTION = gql`
 `;
 
 const ChannelThread: React.FC = (props) => {
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
   const [recoilTestState, setTestState] = useRecoilState<any>(testState);
-  const [channelThreadMessages, setChannelThreadMessages] = useRecoilState<any>(
-    recoilChannelThreadMessages,
-  );
-
-  console.log('recoilTestState', recoilTestState);
 
   useEffect(() => {
     console.log('component ChannelThread did mount');
@@ -62,8 +56,6 @@ const ChannelThread: React.FC = (props) => {
   });
 
   if (loading) return <React.Fragment></React.Fragment>;
-
-  console.log('data ChannelThread', data);
 
   return (
     <ThreadMessages
