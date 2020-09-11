@@ -52,10 +52,8 @@ const MessageList: React.FC<MessageProps> = ({ messages }) => {
   const renderChannelThreadSidebar = (id: number) => {
     console.log('renderChannelThread', id);
 
-    console.log('setCHannelThreadMessages');
-    setChannelThreadMessages([]);
-
     setTestState(id);
+    sessionStorage.removeItem('thread_message_last_id');
   };
 
   return (

@@ -61,22 +61,13 @@ const ChannelThread: React.FC = (props) => {
     variables: { message_id: recoilTestState },
   });
 
-  if (
-    channelThreadMessages.length === 0 &&
-    data &&
-    data.channel_thread &&
-    data.channel_thread[0]
-  ) {
-    console.log('ChannelThread setChannelThreadMessages', data);
-    setChannelThreadMessages(data.channel_thread[0].channel_thread_messages);
-  }
+  if (loading) return <React.Fragment></React.Fragment>;
 
   console.log('data ChannelThread', data);
-  console.log('channelThreadMessages', channelThreadMessages);
 
   return (
     <ThreadMessages
-      {...data}
+      data={data}
       subscribeToMore={subscribeToMore}
       message_id={recoilTestState}
     />
