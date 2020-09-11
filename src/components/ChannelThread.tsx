@@ -61,8 +61,13 @@ const ChannelThread: React.FC = (props) => {
     variables: { message_id: recoilTestState },
   });
 
-  if (!channelThreadMessages && data && data.channel_thread) {
-    console.log('unsubscribe', data);
+  if (
+    channelThreadMessages.length === 0 &&
+    data &&
+    data.channel_thread &&
+    data.channel_thread[0]
+  ) {
+    console.log('ChannelThread setChannelThreadMessages', data);
     setChannelThreadMessages(data.channel_thread[0].channel_thread_messages);
   }
 

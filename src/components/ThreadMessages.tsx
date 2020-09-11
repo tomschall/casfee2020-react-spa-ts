@@ -44,15 +44,17 @@ const ThreadMessages: React.SFC<ThreadMessagesProps> = ({
       updateQuery: (prev: any, { subscriptionData }: any) => {
         if (!subscriptionData.data) return prev;
 
-        let newItem = subscriptionData.data.channel_thread_message[0];
-        let lastItem =
-          channelThreadMessages?.channel_thread[0].channel_thread_messages[
-            channelThreadMessages?.channel_thread[0].channel_thread_messages - 1
-          ];
-        if (lastItem.id === newItem.id) return prev;
-        console.log('lastitem', lastItem);
         console.log('prev', prev);
         console.log('subscriptionData', subscriptionData);
+        console.log('channelThreadMessages', channelThreadMessages);
+
+        let newItem = subscriptionData.data.channel_thread_message[0];
+
+        let lastItem = channelThreadMessages[channelThreadMessages.length - 1];
+        if (lastItem.id === newItem.id) return prev;
+
+        console.log('lastitem', lastItem);
+
         let obj;
         if (prev && prev.channel_thread) {
           obj = Object.assign({}, prev, {
@@ -68,7 +70,7 @@ const ThreadMessages: React.SFC<ThreadMessagesProps> = ({
         }
 
         console.log('obj', obj);
-        setChannelThreadMessages(obj);
+        setChannelThreadMessages(obj.channel_thread[0].channel_thread_messages);
         return obj;
       },
     });
@@ -77,12 +79,12 @@ const ThreadMessages: React.SFC<ThreadMessagesProps> = ({
       unsubscribe();
       console.log('component ThreadMessages did unmount');
     };
-  }, []);
+  }, [channelThreadMessages]);
 
   console.log('channelThreadMessages', channelThreadMessages);
   return (
     <React.Fragment>
-      {channelThreadMessages
+      {channelThreadMessages && channelThreadMessages.length !== 0
         ? channelThreadMessages.map((m: any) => {
             return <p key={m.id}>{m.message}</p>;
           })
