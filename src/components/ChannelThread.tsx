@@ -25,19 +25,6 @@ const CHANNEL_THREAD = gql`
   }
 `;
 
-const CHANNEL_THREAD_SUBSCRIPTION = gql`
-  subscription {
-    channel_thread_message(limit: 1, order_by: { id: desc }) {
-      id
-      message
-      user {
-        id
-        username
-      }
-    }
-  }
-`;
-
 const ChannelThread: React.FC = (props) => {
   const [recoilTestState, setTestState] = useRecoilState<any>(testState);
 
