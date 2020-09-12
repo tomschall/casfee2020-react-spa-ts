@@ -1,66 +1,66 @@
-import React, { useEffect } from 'react';
-import { ApolloProvider } from 'react-apollo';
-import { ApolloClient } from 'apollo-client';
-import { HttpLink } from 'apollo-link-http';
-import { WebSocketLink } from 'apollo-link-ws';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { setContext } from 'apollo-link-context';
-import { useAuth0 } from '@auth0/auth0-react';
-import { useRecoilState } from 'recoil';
-import { atomTokenState } from '../atom.js';
-import { split } from 'apollo-link';
+import React from 'react';
+import {
+  ApolloProvider as ApolloHooksProvider,
+  HttpOptions
+} from '@apollo/react-hooks';
 import { getMainDefinition } from 'apollo-utilities';
+import { useAuth0 } from '@auth0/auth0-react';
+import {
+  ApolloClient,
+  InMemoryCache,
+  createHttpLink,
+  split
+} from '@apollo/client';
+import { WebSocketLink, WebSocketParams } from '@apollo/client/link/ws';
+import { setContext } from '@apollo/client/link/context';
+
+interface Definition {
+  kind: string;
+  operation?: string;
+}
+
+export type ApolloHeadersType = {
+  Authorization: string;
+};
 
 const ApolloWrapper: React.FC<any> = ({ children }) => {
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
-  const [bearerToken, setBearerToken] = useRecoilState<any>(atomTokenState);
 
-  useEffect(() => {
-    console.log('apollowrapper useEffect');
-    const getToken = async () => {
-      if (isAuthenticated) {
-        let token = await getAccessTokenSilently();
-        console.log('set bearer token', token);
-        setBearerToken(token);
+  const getHeaders = async () => {
+    const headers = {} as ApolloHeadersType;
+    if (isAuthenticated) {
+      const token = await getAccessTokenSilently();
+      headers.Authorization = `Bearer ${token}`;
+    }
+    return headers;
+  };
+
+  const authMiddleware = setContext(async (operation, { originalHeaders }) => {
+    return {
+      headers: {
+      ...originalHeaders,
+      ...await getHeaders()
       }
-    };
-    getToken();
-  }, [isAuthenticated, getAccessTokenSilently]);
-
-  const httpLink = new HttpLink({
-    uri: process.env.REACT_APP_HTTP_BACKEND_LINK,
+    }
   });
 
-  const wsLink = new WebSocketLink({
+  const httpLinkOptions: HttpOptions = {
+    uri: process.env.REACT_APP_HTTP_BACKEND_LINK,
+  };
+
+  const wsLinkOptions: WebSocketParams = {
     uri: process.env.REACT_APP_WS_BACKEND_LINK || '',
     options: {
       reconnect: true,
-      connectionParams: {
-        headers: {
-          Authorization: `Bearer ${bearerToken}`,
-        },
+      lazy: true,
+      connectionParams: async () => {
+        return { headers: await getHeaders() };
       },
     },
-  });
-
-  const authLink = setContext((_, { headers, ...rest }) => {
-    if (!bearerToken) return { headers: { ...headers } };
-    //console.log('bearerToken', bearerToken);
-    return {
-      headers: {
-        ...headers,
-        authorization: `Bearer ${bearerToken}`,
-      },
-    };
-  });
-
-  /* Set up local cache */
-  const cache = new InMemoryCache();
-
-  interface Definition {
-    kind: string;
-    operation?: string;
   }
+
+  const httpLink = createHttpLink(httpLinkOptions)
+  const wsLink = new WebSocketLink(wsLinkOptions);
 
   const link = split(
     // split based on operation type
@@ -69,16 +69,20 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
       return kind === 'OperationDefinition' && operation === 'subscription';
     },
     wsLink,
-    authLink.concat(httpLink),
+    authMiddleware.concat(httpLink),
   );
 
-  /* Create Apollo Client */
-  const client = new ApolloClient({
-    link,
-    cache,
-  });
+  /* Set up local cache */
+  const cache = new InMemoryCache();
 
-  return <ApolloProvider client={client}>{children}</ApolloProvider>;
+  /* Create Apollo Client */
+  const client = new ApolloClient({ link, cache });
+
+  return (
+    <ApolloHooksProvider client={client}>
+      {children}
+    </ApolloHooksProvider>
+  );
 };
 
 export default ApolloWrapper;

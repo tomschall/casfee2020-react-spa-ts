@@ -1,29 +1,15 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-
-import { useRecoilState } from 'recoil';
-import {
-  channelModalOpenState,
-  recoilUserState,
-  atomChannelState,
-} from '../../atom.js';
-import { useMutation } from 'react-apollo';
-import { ADD_CHANNEL, INSERT_MESSAGE } from '../../data/mutations';
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { Alert } from '@material-ui/lab';
+import { useAuth0 } from '@auth0/auth0-react';
+import { useAddChannelMutation } from '../../api/generated/graphql';
 
 function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
   return {
     top: '50%',
     left: '50%',
-    transform: `translate(-${top}%, -${left}%)`,
   };
 }
 
@@ -40,103 +26,75 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const AddChannelModal: React.FC<any> = () => {
+interface AddChannelModalProps {
+  onSuccess: Function;
+}
+
+const AddChannelModal: React.FC<AddChannelModalProps> = (props) => {
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
-  const [formValue, setFormValue] = useState('');
-  const history = useHistory();
+  const [channelName, setChannelName] = useState('');
+  const [addChannel, { error, loading }] = useAddChannelMutation();
+  const { user: userAuth0, isLoading: loadingAuth0 } = useAuth0();
 
-  const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
-  const [userState, setUserState] = useRecoilState<any>(recoilUserState);
-  const [channelModalOpen, setChannelModalOpen] = useRecoilState<any>(
-    channelModalOpenState,
-  );
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
 
-  const [sendUpdateChannel, { data, error, loading }] = useMutation(
-    ADD_CHANNEL,
-    {
-      variables: {
-        owner_id: userState.user_id,
-        name: formValue,
-        is_private: false,
-      },
-    },
-  );
+    if (!channelName) return;
 
-  const [sendUpdateMessage, { data: sendUpdateMessageData }] = useMutation(
-    INSERT_MESSAGE,
-  );
-
-  if (error) {
-    console.log("you can't use this name...", error);
-  }
-
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
-    if (formValue === '') return;
-
-    const resp = await sendUpdateChannel();
-    if (resp && resp.data) {
-      const newChannel = {
-        id: resp.data.insert_channel.returning[0].id,
-        name: resp.data.insert_channel.returning[0].name,
-        is_private: resp.data.insert_channel.returning[0].is_private,
-        owner_id: resp.data.insert_channel.returning[0].owner_id,
-      };
-      setChannel((oldChannelList: any) => [...oldChannelList, newChannel]);
-
-      sendUpdateMessage({
+    try {
+      await addChannel({
         variables: {
-          message: {
-            user_id: userState.user_id,
-            text: 'joined ' + resp.data.insert_channel.returning[0].name,
-            channel_id: resp.data.insert_channel.returning[0].id,
-          },
+          owner_id: userAuth0.sub,
+          name: channelName,
+          is_private: false,
         },
-      }).then(() => {
-        setChannelModalOpen(false);
-        history.push(resp.data.insert_channel.returning[0].name);
       });
+    } catch(e) {
+      console.log('error on mutation');
+      return;
     }
+
+    props.onSuccess();
   };
 
   const handleChange = (event: any) => {
-    setFormValue(event.target.value);
+    setChannelName(event.target.value);
   };
 
-  const handleOpen = () => {
-    setChannelModalOpen(true);
-  };
-
-  const handleClose = () => {
-    setChannelModalOpen(false);
-  };
-
-  const body = (
+  let body = (
     <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Add a channel</h2>
-      <p id="simple-modal-description">Here you can simply add a channel...</p>
+      <h2 id="simple-modal-title">Add channel</h2>
+      {error && (
+        <Alert severity={'error'}>You can not use this name as it is already taken.</Alert>
+      )}
+
+      {(loadingAuth0 || loading) && (
+        <CircularProgress />
+      )}
+
+      {!(loadingAuth0 || loading || error) && (
+        <p id="simple-modal-description">Enter a name for the new channel.</p>
+      )}
+
       <form onSubmit={handleSubmit}>
         <label>
           Channel Name:
-          <input type="text" value={formValue} onChange={handleChange} />
+          <input disabled={loadingAuth0 || loading} type="text" value={channelName} onChange={handleChange} />
         </label>
-        <input type="submit" value="Submit" />
+        <input disabled={loadingAuth0 || loading} type="submit" value="Submit" />
       </form>
     </div>
   );
 
   return (
-    <div>
-      <Modal
-        open={channelModalOpen}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        {body}
-      </Modal>
-    </div>
+    <Modal
+      open={true}
+      aria-labelledby="simple-modal-title"
+      aria-describedby="simple-modal-description"
+    >
+      {body}
+    </Modal>
   );
 };
 

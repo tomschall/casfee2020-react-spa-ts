@@ -27,6 +27,7 @@ const AddChannel: React.FC<any> = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+    setChannelModalOpen(false);
   };
 
   const handleOpen = () => {
@@ -53,8 +54,11 @@ const AddChannel: React.FC<any> = () => {
         onClose={handleClose}
       >
         <MenuItem onClick={handleOpen}>Add Channel</MenuItem>
-        <MenuItem onClick={handleClose}>Close</MenuItem>
-        <AddChannelModal />
+        {channelModalOpen && (
+          <AddChannelModal
+            onSuccess={handleClose}
+          />
+        )}
       </SidebarMenu>
     </React.Fragment>
   );

@@ -45,24 +45,22 @@ const MessageList: React.FC<MessageProps> = ({ messages }) => {
 
   return (
     <>
-      {messages.length
-        ? messages.map((m) => {
-            return (
-              <div key={m.id} className="message">
-                {renderAvatar(m.user)}
+      {messages?.reverse()?.map((m) => {
+        return (
+          <div key={m.id} className="message">
+            {renderAvatar(m.user)}
 
-                <div className="datetime">
-                  {m.user.username}: <i>{moment(m.timestamp).fromNow()}</i>
-                </div>
-                <p>{m.text}</p>
-                <ChannelThread
-                  message={m.id}
-                  channel_threads={m.channel_threads}
-                />
-              </div>
-            );
-          })
-        : ''}
+            <div className="datetime">
+              {m.user.username}: <i>{moment(m.timestamp).fromNow()}</i>
+            </div>
+            <p>{m.text}</p>
+            <ChannelThread
+              message={m.id}
+              channel_threads={m.channel_threads}
+            />
+          </div>
+        );
+      })}
 
       <div ref={messagesEndRef} />
     </>

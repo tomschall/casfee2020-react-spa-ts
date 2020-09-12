@@ -16,9 +16,11 @@ export const MESSAGE_CREATED = gql`
 export const WATCH_MESSAGES = gql`
   subscription watchMessages(
     $channelId: Int!
+    $limit: Int = 20
   ) {
     messages: message(
-      order_by: { timestamp: asc }
+      order_by: { timestamp: desc }
+      limit: $limit,
       where: {
         channel: {
           id: { _eq: $channelId }
@@ -43,9 +45,20 @@ export const WATCH_MESSAGES = gql`
 
 export const ONLINE_USERS = gql`
   subscription watchOnlineUsers {
-    user_online(order_by: { username: asc }) {
+    users: user_online(order_by: { username: asc }) {
       id
       username
+    }
+  }
+`;
+
+export const WATCH_CHANNELS = gql`
+  subscription watchChannels {
+    channels: channel {
+      name
+      id
+      is_private
+      owner_id
     }
   }
 `;

@@ -35,7 +35,18 @@ export const GET_MESSAGES = gql`
 
 export const ROOM = gql`
   query getChannels {
-    channel {
+    channels: channel {
+      name
+      id
+      is_private
+      owner_id
+    }
+  }
+`;
+
+export const GET_CHANNEL_BY_NAME = gql`
+  query getChannelByName($name: String!) {
+    channel(where: { name: { _eq: $name } }) {
       name
       id
       is_private

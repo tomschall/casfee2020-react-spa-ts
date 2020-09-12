@@ -4962,6 +4962,19 @@ export type GetChannelsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetChannelsQuery = (
   { __typename?: 'query_root' }
+  & { channels: Array<(
+    { __typename?: 'channel' }
+    & Pick<Channel, 'name' | 'id' | 'is_private' | 'owner_id'>
+  )> }
+);
+
+export type GetChannelByNameQueryVariables = Exact<{
+  name: Scalars['String'];
+}>;
+
+
+export type GetChannelByNameQuery = (
+  { __typename?: 'query_root' }
   & { channel: Array<(
     { __typename?: 'channel' }
     & Pick<Channel, 'name' | 'id' | 'is_private' | 'owner_id'>
@@ -5005,6 +5018,7 @@ export type WatchNewMessagesSubscription = (
 
 export type WatchMessagesSubscriptionVariables = Exact<{
   channelId: Scalars['Int'];
+  limit?: Maybe<Scalars['Int']>;
 }>;
 
 
@@ -5031,9 +5045,20 @@ export type WatchOnlineUsersSubscriptionVariables = Exact<{ [key: string]: never
 
 export type WatchOnlineUsersSubscription = (
   { __typename?: 'subscription_root' }
-  & { user_online: Array<(
+  & { users: Array<(
     { __typename?: 'user_online' }
     & Pick<User_Online, 'id' | 'username'>
+  )> }
+);
+
+export type WatchChannelsSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type WatchChannelsSubscription = (
+  { __typename?: 'subscription_root' }
+  & { channels: Array<(
+    { __typename?: 'channel' }
+    & Pick<Channel, 'name' | 'id' | 'is_private' | 'owner_id'>
   )> }
 );
 
@@ -5201,7 +5226,7 @@ export type GetMessagesLazyQueryHookResult = ReturnType<typeof useGetMessagesLaz
 export type GetMessagesQueryResult = Apollo.QueryResult<GetMessagesQuery, GetMessagesQueryVariables>;
 export const GetChannelsDocument = gql`
     query getChannels {
-  channel {
+  channels: channel {
     name
     id
     is_private
@@ -5234,6 +5259,42 @@ export function useGetChannelsLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetChannelsQueryHookResult = ReturnType<typeof useGetChannelsQuery>;
 export type GetChannelsLazyQueryHookResult = ReturnType<typeof useGetChannelsLazyQuery>;
 export type GetChannelsQueryResult = Apollo.QueryResult<GetChannelsQuery, GetChannelsQueryVariables>;
+export const GetChannelByNameDocument = gql`
+    query getChannelByName($name: String!) {
+  channel(where: {name: {_eq: $name}}) {
+    name
+    id
+    is_private
+    owner_id
+  }
+}
+    `;
+
+/**
+ * __useGetChannelByNameQuery__
+ *
+ * To run a query within a React component, call `useGetChannelByNameQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetChannelByNameQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetChannelByNameQuery({
+ *   variables: {
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function useGetChannelByNameQuery(baseOptions?: Apollo.QueryHookOptions<GetChannelByNameQuery, GetChannelByNameQueryVariables>) {
+        return Apollo.useQuery<GetChannelByNameQuery, GetChannelByNameQueryVariables>(GetChannelByNameDocument, baseOptions);
+      }
+export function useGetChannelByNameLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChannelByNameQuery, GetChannelByNameQueryVariables>) {
+          return Apollo.useLazyQuery<GetChannelByNameQuery, GetChannelByNameQueryVariables>(GetChannelByNameDocument, baseOptions);
+        }
+export type GetChannelByNameQueryHookResult = ReturnType<typeof useGetChannelByNameQuery>;
+export type GetChannelByNameLazyQueryHookResult = ReturnType<typeof useGetChannelByNameLazyQuery>;
+export type GetChannelByNameQueryResult = Apollo.QueryResult<GetChannelByNameQuery, GetChannelByNameQueryVariables>;
 export const GetAuth0UserByIdDocument = gql`
     query getAuth0UserById($user_id: String) {
   user(where: {auth0_user_id: {_eq: $user_id}}) {
@@ -5310,8 +5371,8 @@ export function useWatchNewMessagesSubscription(baseOptions?: Apollo.Subscriptio
 export type WatchNewMessagesSubscriptionHookResult = ReturnType<typeof useWatchNewMessagesSubscription>;
 export type WatchNewMessagesSubscriptionResult = Apollo.SubscriptionResult<WatchNewMessagesSubscription>;
 export const WatchMessagesDocument = gql`
-    subscription watchMessages($channelId: Int!) {
-  messages: message(order_by: {timestamp: asc}, where: {channel: {id: {_eq: $channelId}}}) {
+    subscription watchMessages($channelId: Int!, $limit: Int = 20) {
+  messages: message(order_by: {timestamp: desc}, limit: $limit, where: {channel: {id: {_eq: $channelId}}}) {
     id
     text
     timestamp
@@ -5341,6 +5402,7 @@ export const WatchMessagesDocument = gql`
  * const { data, loading, error } = useWatchMessagesSubscription({
  *   variables: {
  *      channelId: // value for 'channelId'
+ *      limit: // value for 'limit'
  *   },
  * });
  */
@@ -5351,7 +5413,7 @@ export type WatchMessagesSubscriptionHookResult = ReturnType<typeof useWatchMess
 export type WatchMessagesSubscriptionResult = Apollo.SubscriptionResult<WatchMessagesSubscription>;
 export const WatchOnlineUsersDocument = gql`
     subscription watchOnlineUsers {
-  user_online(order_by: {username: asc}) {
+  users: user_online(order_by: {username: asc}) {
     id
     username
   }
@@ -5378,3 +5440,34 @@ export function useWatchOnlineUsersSubscription(baseOptions?: Apollo.Subscriptio
       }
 export type WatchOnlineUsersSubscriptionHookResult = ReturnType<typeof useWatchOnlineUsersSubscription>;
 export type WatchOnlineUsersSubscriptionResult = Apollo.SubscriptionResult<WatchOnlineUsersSubscription>;
+export const WatchChannelsDocument = gql`
+    subscription watchChannels {
+  channels: channel {
+    name
+    id
+    is_private
+    owner_id
+  }
+}
+    `;
+
+/**
+ * __useWatchChannelsSubscription__
+ *
+ * To run a query within a React component, call `useWatchChannelsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useWatchChannelsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWatchChannelsSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useWatchChannelsSubscription(baseOptions?: Apollo.SubscriptionHookOptions<WatchChannelsSubscription, WatchChannelsSubscriptionVariables>) {
+        return Apollo.useSubscription<WatchChannelsSubscription, WatchChannelsSubscriptionVariables>(WatchChannelsDocument, baseOptions);
+      }
+export type WatchChannelsSubscriptionHookResult = ReturnType<typeof useWatchChannelsSubscription>;
+export type WatchChannelsSubscriptionResult = Apollo.SubscriptionResult<WatchChannelsSubscription>;

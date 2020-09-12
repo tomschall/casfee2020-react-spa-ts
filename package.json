@@ -43,7 +43,7 @@
     "dev:start": "yarn run api:hasura:migrations:apply && yarn start",
     "api:hasura:migrations:apply": "hasura --envfile ../.env --project hasura migrate apply && hasura --envfile ../.env --project hasura metadata apply",
     "api:hasura:console": "hasura --envfile ../.env --project hasura console",
-    "api:client:generate": "DEBUG=true rimraf src/api/generated/* && graphql-codegen --config codegen.js && npm run build",
+    "api:client:generate": "DEBUG=true rimraf src/api/generated/* && graphql-codegen --config codegen.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
