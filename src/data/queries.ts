@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const GET_MESSAGES = gql`
-  query(
+  query getMessages(
     $last_received_id: Int
     $last_received_ts: timestamptz
     $channel: String
@@ -34,7 +34,7 @@ export const GET_MESSAGES = gql`
 `;
 
 export const ROOM = gql`
-  query {
+  query getChannels {
     channel {
       name
       id
@@ -45,7 +45,7 @@ export const ROOM = gql`
 `;
 
 export const USER = gql`
-  query($user_id: String) {
+  query getAuth0UserById($user_id: String) {
     user(where: { auth0_user_id: { _eq: $user_id } }) {
       id
       username
