@@ -6,7 +6,6 @@ import { Button } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ChatInput from './ChatInput';
-import { messagesState } from '../atom';
 
 interface ChatProps {
   channelId: number;
@@ -26,7 +25,6 @@ const Chat: React.FC<ChatProps> = ({ channelId }) => {
   });
 
   useEffect(() => {
-    console.log('data changed', data);
     setLastMessage({});
   }, [data]);
 

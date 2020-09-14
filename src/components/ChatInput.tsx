@@ -54,7 +54,9 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
 
     props.handleSetLastMessage({
       id: props.preLastMessageId + 1,
-      username: user.nickname,
+      user: {
+        username: user.nickname,
+      },
       user_id: user.sub,
       text: text,
       channel_id: channelId,

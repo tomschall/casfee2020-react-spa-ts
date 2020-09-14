@@ -49,42 +49,32 @@ const MessageList: React.FC<MessageProps> = ({
     return image;
   };
 
+  const renderMessages = (message: Message) => {
+    return (
+      <div key={message.id} className="message">
+        {renderAvatar(message.user)}
+
+        <div className="datetime">
+          {message.user.username}: <i>{moment(message.timestamp).fromNow()}</i>
+        </div>
+        <p>{message.text}</p>
+        <ChannelThread
+          message={message.id}
+          channel_threads={message.channel_threads}
+        />
+      </div>
+    );
+  };
+
   return (
     <>
-      {[...messages]?.reverse()?.map((m) => {
-        return (
-          <div key={m.id} className="message">
-            {renderAvatar(m.user)}
-
-            <div className="datetime">
-              {m.user.username}: <i>{moment(m.timestamp).fromNow()}</i>
-            </div>
-            <p>{m.text}</p>
-            <ChannelThread message={m.id} channel_threads={m.channel_threads} />
-          </div>
-        );
-      })}
+      {[...messages]?.reverse()?.map((message) => renderMessages(message))}
 
       {lastMessage &&
-      lastMessage.id > 0 &&
       preLastMessageId !== 0 &&
-      preLastMessageId !== lastMessage.id ? (
-        <div key={lastMessage.id} className="message">
-          {renderAvatar(lastMessage.user)}
-
-          <div className="datetime">
-            {lastMessage.username}:{' '}
-            <i>{moment(lastMessage.timestamp).fromNow()}</i>
-          </div>
-          <p>{lastMessage.text}</p>
-          <ChannelThread
-            message={lastMessage.id}
-            channel_threads={lastMessage.channel_threads}
-          />
-        </div>
-      ) : (
-        ''
-      )}
+      preLastMessageId < lastMessage.id
+        ? renderMessages(lastMessage)
+        : ''}
 
       <div ref={messagesEndRef} />
     </>
