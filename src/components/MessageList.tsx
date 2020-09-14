@@ -6,9 +6,19 @@ import ChannelThread from './ChannelThread';
 
 interface MessageProps {
   messages: Message[];
+  lastMessage: any;
+  preLastMessageId: number;
 }
 
-const MessageList: React.FC<MessageProps> = ({ messages }) => {
+const MessageList: React.FC<MessageProps> = ({
+  messages,
+  lastMessage,
+  preLastMessageId,
+}) => {
+  useEffect(() => {
+    scrollToBottom();
+  });
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -16,10 +26,6 @@ const MessageList: React.FC<MessageProps> = ({ messages }) => {
       messagesEndRef.current.scrollIntoView();
     }
   };
-
-  useEffect(() => {
-    scrollToBottom();
-  });
 
   const renderAvatar = (user: any) => {
     let image;
@@ -45,24 +51,40 @@ const MessageList: React.FC<MessageProps> = ({ messages }) => {
 
   return (
     <>
-      {messages.length
-        ? messages.map((m) => {
-            return (
-              <div key={m.id} className="message">
-                {renderAvatar(m.user)}
+      {[...messages]?.reverse()?.map((m) => {
+        return (
+          <div key={m.id} className="message">
+            {renderAvatar(m.user)}
 
-                <div className="datetime">
-                  {m.user.username}: <i>{moment(m.timestamp).fromNow()}</i>
-                </div>
-                <p>{m.text}</p>
-                <ChannelThread
-                  message={m.id}
-                  channel_threads={m.channel_threads}
-                />
-              </div>
-            );
-          })
-        : ''}
+            <div className="datetime">
+              {m.user.username}: <i>{moment(m.timestamp).fromNow()}</i>
+            </div>
+            <p>{m.text}</p>
+            <ChannelThread message={m.id} channel_threads={m.channel_threads} />
+          </div>
+        );
+      })}
+
+      {lastMessage &&
+      lastMessage.id > 0 &&
+      preLastMessageId !== 0 &&
+      preLastMessageId !== lastMessage.id ? (
+        <div key={lastMessage.id} className="message">
+          {renderAvatar(lastMessage.user)}
+
+          <div className="datetime">
+            {lastMessage.username}:{' '}
+            <i>{moment(lastMessage.timestamp).fromNow()}</i>
+          </div>
+          <p>{lastMessage.text}</p>
+          <ChannelThread
+            message={lastMessage.id}
+            channel_threads={lastMessage.channel_threads}
+          />
+        </div>
+      ) : (
+        ''
+      )}
 
       <div ref={messagesEndRef} />
     </>

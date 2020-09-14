@@ -3,8 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/react-hooks": "^4.0.0",
+    "@apollo/client": "^3.0.0-rc.13",
+    "@apollo/link-context": "^2.0.0-beta.3",
+    "@apollo/link-error": "^2.0.0-beta.3",
+    "@apollo/link-retry": "^2.0.0-beta.3",
+    "@apollo/link-ws": "^2.0.0-beta.3",
     "@auth0/auth0-react": "^1.0.0",
     "@material-ui/core": "^4.11.0",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -19,11 +26,6 @@
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-cache-persist": "^0.1.1",
     "apollo-client-preset": "^1.0.8",
-    "apollo-link": "^1.2.14",
-    "apollo-link-context": "^1.0.20",
-    "apollo-link-schema": "^1.1.0",
-    "apollo-link-ws": "^1.0.8",
-    "apollo-utilities": "^1.0.16",
     "graphql": "^15.3.0",
     "graphql-tag": "^2.11.0",
     "graphql-tools": "^6.0.16",
@@ -38,8 +40,12 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
+    "dev:start": "yarn run api:hasura:migrations:apply && npm run api:client:generate && yarn start",
+    "api:hasura:migrations:apply": "hasura --envfile ../.env --project hasura migrate apply && hasura --envfile ../.env --project hasura metadata apply",
+    "api:hasura:console": "hasura --envfile ../.env --project hasura console",
+    "api:client:generate": "DEBUG=true rimraf src/api/generated/* && graphql-codegen --config codegen.js",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "npm run api:client:generate && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -57,5 +63,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.17.8",
+    "@graphql-codegen/introspection": "^1.17.8",
+    "@graphql-codegen/typescript": "^1.17.9",
+    "@graphql-codegen/typescript-graphql-request": "^2.0.0",
+    "@graphql-codegen/typescript-operations": "^1.17.8",
+    "@graphql-codegen/typescript-react-apollo": "^2.0.6"
   }
 }

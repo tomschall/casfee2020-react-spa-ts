@@ -1,39 +1,31 @@
-import React, { useEffect } from 'react';
-
+import React from 'react';
 import { Link } from 'react-router-dom';
-import gql from 'graphql-tag';
-import { useQuery } from 'react-apollo';
-import { useRecoilState } from 'recoil';
-import { atomChannelState } from '../../atom.js';
-
-const CHANNELS = gql`
-  query {
-    channel {
-      id
-      name
-    }
-  }
-`;
+import { useWatchChannelsSubscription } from '../../api/generated/graphql';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { List, ListItem, ListItemText } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 
 const Sidebar: React.FC<any> = () => {
-  const { data, loading, refetch } = useQuery(CHANNELS);
+  const { data, loading, error } = useWatchChannelsSubscription();
 
-  const [channelState, setChannel] = useRecoilState<any>(atomChannelState);
+  if (error) {
+    return <Alert severity="error">Channels could not be loaded.</Alert>;
+  }
+
+  if (loading) {
+    return <CircularProgress/>;
+  }
 
   return (
-    <React.Fragment>
-      <ul>
-        {channelState
-          ? channelState.map((data: any) => {
-              return (
-                <li key={data.id}>
-                  <Link to={'/channel/' + data.name}>{data.name}</Link>
-                </li>
-              );
-            })
-          : ''}
-      </ul>
-    </React.Fragment>
+    <List component="nav" aria-label="secondary mailbox folders">
+      {data?.channels.map((data: any) => (
+        <ListItem button key={data.id}>
+          <ListItemText primary={
+            <Link to={'/channel/' + data.name}>{data.name}</Link>}
+          />
+        </ListItem>
+      ))}
+    </List>
   );
 };
 

@@ -1,21 +1,19 @@
 import React from 'react';
-import ChatApp from './components/ChatApp';
-import NotFound from './components/NotFound';
-import PrivateRoute from './components/PrivateRoute';
-import Loading from './components/Loading';
-import Home from './components/Home';
-import Dashboard from './components/Dashboard';
-import AddChannel from './components/sidebar/AddChannel';
-import OnlineUser from './components/OnlineUser';
-import LogoutButton from './components/LogoutButton';
-import Sidebar from './components/sidebar/Sidebar';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useRecoilState } from 'recoil';
-import { recoilUserState } from './atom';
-
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import AddChannel from './components/sidebar/AddChannel';
+import ChatApp from './components/ChatApp';
+import Dashboard from './components/Dashboard';
+import Home from './components/Home';
+import Loading from './components/Loading';
+import LogoutButton from './components/LogoutButton';
+import NotFound from './components/NotFound';
+import OnlineUsers from './components/OnlineUsers';
+import OnlineUser from './components/OnlineUser';
+import PrivateRoute from './components/PrivateRoute';
+import Sidebar from './components/sidebar/Sidebar';
 
 // MUI STYLES
 const useStyles = makeStyles((theme) => ({
@@ -52,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
 
 const App: React.FC = (client) => {
   const { isAuthenticated, isLoading, user } = useAuth0();
-  const [userState, setUserState] = useRecoilState<any>(recoilUserState);
   const classes = useStyles();
 
   if (isLoading) {
@@ -63,9 +60,6 @@ const App: React.FC = (client) => {
     );
   }
 
-  console.log('ia', isAuthenticated);
-  console.log('user App ', user);
-
   return (
     <div className="app">
       <div className={classes.root}>
@@ -75,10 +69,8 @@ const App: React.FC = (client) => {
               <div className={classes.logo}>
                 <img src="/logo-chicken-chat.png" alt="Chicken Chat" />
               </div>
-              <OnlineUser
-                username={userState.username}
-                user_id={userState.user_id}
-              />
+              <OnlineUser user_id={user.id} username={user.username} />
+              <OnlineUsers />
               <LogoutButton />
               <AddChannel />
               <Sidebar />

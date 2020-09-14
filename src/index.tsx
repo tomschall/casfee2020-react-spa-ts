@@ -20,7 +20,7 @@ const onRedirectCallback = (appState: any) => {
 
 const domain: string = process.env.REACT_APP_AUTH0_DOMAIN || '';
 const clientId: string = process.env.REACT_APP_AUTH0_CLIENT_ID || '';
-const redirectUri: string = process.env.REACT_APP_AUTH0_REDIRECT_URI || '';
+const redirectUri: string = 'http://localhost:3000/channel/general';
 const audience: string = process.env.REACT_APP_AUTH0_AUDIENCE || '';
 
 ReactDOM.render(

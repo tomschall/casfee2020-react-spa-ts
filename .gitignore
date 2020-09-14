@@ -1,9 +1,16 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Local configuration
+.env
+.secrets
 
 # dependencies
 /node_modules
 /.pnp
 .pnp.js
+
+# generated
+src/api/generated/graphql.tsx
+graphql.schema.json
 
 # testing
 /coverage
