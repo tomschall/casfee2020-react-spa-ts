@@ -1,5 +1,5 @@
-import React from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress'
+import React, { useEffect } from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import {
   Avatar,
   Divider,
@@ -11,12 +11,26 @@ import {
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { useWatchOnlineUsersSubscription } from '../api/generated/graphql';
+import { useSetUserOnlineMutation } from '../api/generated/graphql';
 
-const OnlineUsers: React.FC = () => {
+interface OnlineUsersProps {
+  user_id: string;
+}
+
+const OnlineUsers: React.FC<OnlineUsersProps> = ({ user_id }) => {
   const { data, loading, error } = useWatchOnlineUsersSubscription();
+  const [sendUserIsOnline] = useSetUserOnlineMutation({
+    variables: { user_id },
+  });
+
+  useEffect(() => {
+    const timeout = setInterval(() => {
+      sendUserIsOnline();
+    }, 9000);
+  }, []);
 
   if (error) {
-    return <Alert severity="error">Online users could not be loaded.</Alert>
+    return <Alert severity="error">Online users could not be loaded.</Alert>;
   }
 
   if (loading) {
@@ -32,14 +46,14 @@ const OnlineUsers: React.FC = () => {
       <Divider />
 
       <List component="nav" aria-label="main mailbox folders">
-      { data?.users.map(user => (
+        {data?.users.map((user) => (
           <ListItem key={user.id} button>
             <ListItemAvatar>
               <Avatar src={'https://api.adorable.io/avatars/face'} />
             </ListItemAvatar>
             <ListItemText primary={user.username} />
           </ListItem>
-      ))}
+        ))}
       </List>
     </>
   );

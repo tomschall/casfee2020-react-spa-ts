@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 const App: React.FC = (client) => {
   const { isAuthenticated, isLoading, user } = useAuth0();
+
   const classes = useStyles();
 
   if (isLoading) {
@@ -69,8 +70,7 @@ const App: React.FC = (client) => {
               <div className={classes.logo}>
                 <img src="/logo-chicken-chat.png" alt="Chicken Chat" />
               </div>
-              <OnlineUser user_id={user.id} username={user.username} />
-              <OnlineUsers />
+              <OnlineUsers user_id={user.id} />
               <LogoutButton />
               <AddChannel />
               <Sidebar />
