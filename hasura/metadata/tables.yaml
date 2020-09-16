@@ -130,13 +130,6 @@
         table:
           schema: public
           name: channel
-  select_permissions:
-  - role: user
-    permission:
-      columns:
-      - comment
-      - value
-      filter: {}
 - table:
     schema: public
     name: message
@@ -317,9 +310,7 @@
       columns:
       - channel_id
       - user_id
-      filter:
-        user_id:
-          _eq: X-Hasura-User-Id
+      filter: {}
 - table:
     schema: public
     name: user_online

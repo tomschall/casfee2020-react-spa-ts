@@ -45,3 +45,21 @@ subscription watchChannels($channel_type: channel_type_enum!) {
     owner_id
   }
 }
+
+subscription watchDirectMessageChannels(
+  $channel_type: channel_type_enum! = DIRECT_MESSAGE
+  $user_id: String!
+) {
+  channels: channel(where: { channel_type: { _eq: $channel_type } }) {
+    name
+    id
+    is_private
+    owner_id
+    user_channels(where: { user_id: { _neq: $user_id } }) {
+      user {
+        username
+        auth0_user_id
+      }
+    }
+  }
+}

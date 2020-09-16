@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   ApolloProvider as ApolloHooksProvider,
-  HttpOptions
+  HttpOptions,
 } from '@apollo/react-hooks';
 import { getMainDefinition } from 'apollo-utilities';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -9,7 +9,7 @@ import {
   ApolloClient,
   InMemoryCache,
   createHttpLink,
-  split
+  split,
 } from '@apollo/client';
 import { WebSocketLink, WebSocketParams } from '@apollo/client/link/ws';
 import { setContext } from '@apollo/client/link/context';
@@ -30,6 +30,7 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
     const headers = {} as ApolloHeadersType;
     if (isAuthenticated) {
       const token = await getAccessTokenSilently();
+      console.log('token', token);
       headers.Authorization = `Bearer ${token}`;
     }
     return headers;
@@ -38,10 +39,10 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
   const authMiddleware = setContext(async (operation, { originalHeaders }) => {
     return {
       headers: {
-      ...originalHeaders,
-      ...await getHeaders()
-      }
-    }
+        ...originalHeaders,
+        ...(await getHeaders()),
+      },
+    };
   });
 
   const httpLinkOptions: HttpOptions = {
@@ -57,9 +58,9 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
         return { headers: await getHeaders() };
       },
     },
-  }
+  };
 
-  const httpLink = createHttpLink(httpLinkOptions)
+  const httpLink = createHttpLink(httpLinkOptions);
   const wsLink = new WebSocketLink(wsLinkOptions);
 
   const link = split(
@@ -78,11 +79,7 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
   /* Create Apollo Client */
   const client = new ApolloClient({ link, cache });
 
-  return (
-    <ApolloHooksProvider client={client}>
-      {children}
-    </ApolloHooksProvider>
-  );
+  return <ApolloHooksProvider client={client}>{children}</ApolloHooksProvider>;
 };
 
 export default ApolloWrapper;

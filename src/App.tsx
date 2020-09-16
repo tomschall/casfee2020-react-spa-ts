@@ -61,6 +61,8 @@ const App: React.FC = (client) => {
     );
   }
 
+  if (isAuthenticated) console.log('user.id', user.id);
+
   return (
     <div className="app">
       <div className={classes.root}>
@@ -70,11 +72,12 @@ const App: React.FC = (client) => {
               <div className={classes.logo}>
                 <img src="/logo-chicken-chat.png" alt="Chicken Chat" />
               </div>
-              <OnlineUsers user_id={user.id} />
+              <OnlineUsers user_id={user.sub} />
               <LogoutButton />
               <AddChannel />
               <Sidebar />
-              <UserList />
+              <hr></hr>
+              <UserList user_id={user.sub} />
             </Grid>
             <Switch>
               <Redirect exact from="/" to="/channel/general" />
