@@ -23,9 +23,19 @@ mutation setUserOnline($user_id: String) {
   }
 }
 
-mutation addChannel($name: String, $owner_id: String, $is_private: Boolean) {
+mutation addChannel(
+  $name: String
+  $owner_id: String
+  $is_private: Boolean
+  $channel_type: channel_type_enum
+) {
   insert_channel(
-    objects: { name: $name, owner_id: $owner_id, is_private: $is_private }
+    objects: {
+      name: $name
+      owner_id: $owner_id
+      is_private: $is_private
+      channel_type: $channel_type
+    }
   ) {
     returning {
       id
@@ -35,4 +45,3 @@ mutation addChannel($name: String, $owner_id: String, $is_private: Boolean) {
     }
   }
 }
-

@@ -26,7 +26,7 @@ const OnlineUsers: React.FC<OnlineUsersProps> = ({ user_id }) => {
   useEffect(() => {
     const timeout = setInterval(() => {
       sendUserIsOnline();
-    }, 9000);
+    }, 5000);
   }, []);
 
   if (error) {

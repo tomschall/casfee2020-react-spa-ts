@@ -2,6 +2,9 @@
     schema: public
     name: channel
   object_relationships:
+  - name: channelTypeByChannelType
+    using:
+      foreign_key_constraint_on: channel_type
   - name: user
     using:
       foreign_key_constraint_on: owner_id
@@ -40,6 +43,7 @@
         - owner_id:
             _is_null: true
       columns:
+      - channel_type
       - id
       - is_private
       - name
@@ -48,6 +52,7 @@
   - role: user
     permission:
       columns:
+      - channel_type
       - id
       - is_private
       - name
@@ -112,6 +117,25 @@
       - id
       - message
       - user_id
+      filter: {}
+- table:
+    schema: public
+    name: channel_type
+  is_enum: true
+  array_relationships:
+  - name: channels
+    using:
+      foreign_key_constraint_on:
+        column: channel_type
+        table:
+          schema: public
+          name: channel
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - comment
+      - value
       filter: {}
 - table:
     schema: public

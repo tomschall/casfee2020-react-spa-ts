@@ -11,9 +11,9 @@ import Loading from './components/Loading';
 import LogoutButton from './components/LogoutButton';
 import NotFound from './components/NotFound';
 import OnlineUsers from './components/OnlineUsers';
-import OnlineUser from './components/OnlineUser';
 import PrivateRoute from './components/PrivateRoute';
 import Sidebar from './components/sidebar/Sidebar';
+import UserList from './components/sidebar/UserList';
 
 // MUI STYLES
 const useStyles = makeStyles((theme) => ({
@@ -74,6 +74,7 @@ const App: React.FC = (client) => {
               <LogoutButton />
               <AddChannel />
               <Sidebar />
+              <UserList />
             </Grid>
             <Switch>
               <Redirect exact from="/" to="/channel/general" />

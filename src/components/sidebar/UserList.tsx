@@ -6,10 +6,10 @@ import { List, ListItem, ListItemText } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
 
-const Sidebar: React.FC<any> = () => {
+const UserList: React.FC<any> = () => {
   const { data, loading, error } = useWatchChannelsSubscription({
     variables: {
-      channel_type: Channel_Type_Enum.ChatMessage,
+      channel_type: Channel_Type_Enum.DirectMessage,
     },
   });
 
@@ -19,6 +19,10 @@ const Sidebar: React.FC<any> = () => {
 
   if (loading) {
     return <CircularProgress />;
+  }
+
+  if (data) {
+    console.log('data UserList', data);
   }
 
   return (
@@ -34,4 +38,4 @@ const Sidebar: React.FC<any> = () => {
   );
 };
 
-export default Sidebar;
+export default UserList;

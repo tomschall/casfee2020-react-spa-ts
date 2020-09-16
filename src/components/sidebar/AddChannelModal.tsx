@@ -5,6 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { Alert } from '@material-ui/lab';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useAddChannelMutation } from '../../api/generated/graphql';
+import { Channel_Type_Enum } from '../../api/generated/graphql';
 
 function getModalStyle() {
   return {
@@ -48,9 +49,10 @@ const AddChannelModal: React.FC<AddChannelModalProps> = (props) => {
           owner_id: userAuth0.sub,
           name: channelName,
           is_private: false,
+          channel_type: Channel_Type_Enum.ChatMessage,
         },
       });
-    } catch(e) {
+    } catch (e) {
       console.log('error on mutation');
       return;
     }
@@ -62,16 +64,18 @@ const AddChannelModal: React.FC<AddChannelModalProps> = (props) => {
     setChannelName(event.target.value);
   };
 
+  if (error) console.log('error mutation', error);
+
   let body = (
     <div style={modalStyle} className={classes.paper}>
       <h2 id="simple-modal-title">Add channel</h2>
       {error && (
-        <Alert severity={'error'}>You can not use this name as it is already taken.</Alert>
+        <Alert severity={'error'}>
+          You can not use this name as it is already taken.
+        </Alert>
       )}
 
-      {(loadingAuth0 || loading) && (
-        <CircularProgress />
-      )}
+      {(loadingAuth0 || loading) && <CircularProgress />}
 
       {!(loadingAuth0 || loading || error) && (
         <p id="simple-modal-description">Enter a name for the new channel.</p>
@@ -80,9 +84,18 @@ const AddChannelModal: React.FC<AddChannelModalProps> = (props) => {
       <form onSubmit={handleSubmit}>
         <label>
           Channel Name:
-          <input disabled={loadingAuth0 || loading} type="text" value={channelName} onChange={handleChange} />
+          <input
+            disabled={loadingAuth0 || loading}
+            type="text"
+            value={channelName}
+            onChange={handleChange}
+          />
         </label>
-        <input disabled={loadingAuth0 || loading} type="submit" value="Submit" />
+        <input
+          disabled={loadingAuth0 || loading}
+          type="submit"
+          value="Submit"
+        />
       </form>
     </div>
   );

@@ -37,8 +37,8 @@ subscription watchOnlineUsers {
   }
 }
 
-subscription watchChannels {
-  channels: channel {
+subscription watchChannels($channel_type: channel_type_enum!) {
+  channels: channel(where: { channel_type: { _eq: $channel_type } }) {
     name
     id
     is_private

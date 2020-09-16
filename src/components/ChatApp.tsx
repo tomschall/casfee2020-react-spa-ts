@@ -8,7 +8,6 @@ import Grid from '@material-ui/core/Grid';
 import { useGetChannelByNameQuery } from '../api/generated/graphql';
 import ChannelTreadSidebar from './ChannelThreadSidebar';
 import Chat from './Chat';
-import ChatInput from './ChatInput';
 
 // MUI STYLES
 const useStyles = makeStyles((theme) => ({
