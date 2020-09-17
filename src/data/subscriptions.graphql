@@ -68,3 +68,16 @@ subscription watchDirectMessageChannels(
     }
   }
 }
+
+subscription watchUsers {
+  user(order_by: { username: asc }) {
+    id
+    username
+    auth0_user_id
+    channels {
+      channel_type
+      id
+      name
+    }
+  }
+}

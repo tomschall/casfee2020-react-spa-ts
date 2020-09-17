@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface AddChannelModalProps {
-  onSuccess: Function;
+  handleClose: Function;
 }
 
 const AddChannelModal: React.FC<AddChannelModalProps> = (props) => {
@@ -57,7 +57,7 @@ const AddChannelModal: React.FC<AddChannelModalProps> = (props) => {
       return;
     }
 
-    props.onSuccess();
+    props.handleClose();
   };
 
   const handleChange = (event: any) => {
@@ -96,6 +96,9 @@ const AddChannelModal: React.FC<AddChannelModalProps> = (props) => {
           type="submit"
           value="Submit"
         />
+        <button type="button" onClick={() => props.handleClose()}>
+          Cancel
+        </button>
       </form>
     </div>
   );

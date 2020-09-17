@@ -62,3 +62,23 @@ query getAuth0UserById($user_id: String) {
   }
 }
 
+query getCheckIfUserHasSubscribedToChannel($user_id: String!, $dm_to_user: String!) {
+  channel(
+    where: {
+      user_channels: {
+        _and: {
+          user_id: { _eq: $user_id }
+          channel: {
+            user_channels: {
+              user_id: { _eq: $dm_to_user }
+              _and: { channel: { channel_type: { _eq: DIRECT_MESSAGE } } }
+            }
+          }
+        }
+      }
+    }
+  ) {
+    id
+    name
+  }
+}

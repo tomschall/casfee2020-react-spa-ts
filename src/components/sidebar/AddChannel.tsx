@@ -44,7 +44,7 @@ const AddChannel: React.FC<any> = () => {
         aria-haspopup="true"
         onClick={handleClick}
       >
-        Open Menu
+        Channels
       </SidebarMenuButton>
       <SidebarMenu
         id="simple-menu"
@@ -54,11 +54,7 @@ const AddChannel: React.FC<any> = () => {
         onClose={handleClose}
       >
         <MenuItem onClick={handleOpen}>Add Channel</MenuItem>
-        {channelModalOpen && (
-          <AddChannelModal
-            onSuccess={handleClose}
-          />
-        )}
+        {channelModalOpen && <AddChannelModal handleClose={handleClose} />}
       </SidebarMenu>
     </React.Fragment>
   );

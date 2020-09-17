@@ -4,6 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import AddChannel from './components/sidebar/AddChannel';
+import AddDirectMessageChannel from './components/sidebar/AddDirectMessageChannel';
 import ChatApp from './components/ChatApp';
 import Dashboard from './components/Dashboard';
 import Home from './components/Home';
@@ -74,9 +75,12 @@ const App: React.FC = (client) => {
               </div>
               <OnlineUsers user_id={user.sub} />
               <LogoutButton />
+              <br />
               <AddChannel />
               <Sidebar />
               <hr></hr>
+              <AddDirectMessageChannel user_id={user.sub} />
+              <br />
               <UserList user_id={user.sub} />
             </Grid>
             <Switch>

@@ -297,9 +297,13 @@
   - role: user
     permission:
       check:
-        channel:
-          owner_id:
-            _eq: X-Hasura-User-Id
+        _or:
+        - channel:
+            owner_id:
+              _eq: X-Hasura-User-Id
+        - channel:
+            owner_id:
+              _is_null: true
       columns:
       - channel_id
       - user_id

@@ -45,3 +45,34 @@ mutation addChannel(
     }
   }
 }
+
+mutation addDirectMessageChannel($name: String!, $owner_id: String!) {
+  insert_channel(
+    objects: {
+      channel_type: DIRECT_MESSAGE
+      is_private: true
+      name: $name
+      owner_id: $owner_id
+    }
+  ) {
+    affected_rows
+    returning {
+      id
+    }
+  }
+}
+
+mutation addDirectMessageChannelSubscription(
+  $user_id: String!
+  $user_id2: String!
+  $channel_id: Int!
+) {
+  insert_user_channels(
+    objects: [
+      { channel_id: $channel_id, user_id: $user_id }
+      { channel_id: $channel_id, user_id: $user_id2 }
+    ]
+  ) {
+    affected_rows
+  }
+}
