@@ -41,11 +41,7 @@ const UserList: React.FC<any> = ({ user_id }) => {
             <ListItemText
               primary={
                 <Link to={'/channel/' + data.name}>
-                  {
-                    data.user_channels?.filter(
-                      (el: any) => el.user.auth0_user_id !== user_id,
-                    )[0]?.user.username
-                  }
+                  {data.user_channels[0]?.user.username}
                 </Link>
               }
             />

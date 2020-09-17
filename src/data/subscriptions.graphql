@@ -47,10 +47,15 @@ subscription watchChannels($channel_type: channel_type_enum!) {
 }
 
 subscription watchDirectMessageChannels(
-  $channel_type: channel_type_enum! = DIRECT_MESSAGE
-  $user_id: String!
+  $channel_type: channel_type_enum!
+  $user_id: String
 ) {
-  channels: channel(where: { channel_type: { _eq: $channel_type } }) {
+  channels: channel(
+    where: {
+      channel_type: { _eq: $channel_type }
+      _and: { user_channels: { user_id: { _eq: $user_id } } }
+    }
+  ) {
     name
     id
     is_private
