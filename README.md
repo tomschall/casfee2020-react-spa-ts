@@ -34,6 +34,12 @@ yarn dev:start
 npm run api:hasura:console
 ```
 
+### Add channel type
+#### Add to channel_type table
+value: DIRECT_MESSAGE comment: this channel type is for direct messages
+value: CHAT_MESSAGE comment: this channel type is for chat messages in a private or public channel
+
+
 ##### Generate TS types and React hooks
 ```shell script
 npm run api:client:generate
