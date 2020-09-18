@@ -13,7 +13,7 @@ import LogoutButton from './components/LogoutButton';
 import NotFound from './components/NotFound';
 import OnlineUsers from './components/OnlineUsers';
 import PrivateRoute from './components/PrivateRoute';
-import Sidebar from './components/sidebar/Sidebar';
+import ChannelList from './components/sidebar/ChannelList';
 import UserList from './components/sidebar/UserList';
 
 // MUI STYLES
@@ -77,7 +77,7 @@ const App: React.FC = (client) => {
               <LogoutButton />
               <br />
               <AddChannel />
-              <Sidebar />
+              <ChannelList />
               <hr></hr>
               <AddDirectMessageChannel user_id={user.sub} />
               <br />

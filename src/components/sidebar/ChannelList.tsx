@@ -6,7 +6,7 @@ import { List, ListItem, ListItemText } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
 
-const Sidebar: React.FC<any> = () => {
+const ChannelList: React.FC<any> = () => {
   const { data, loading, error } = useWatchChannelsSubscription({
     variables: {
       channel_type: Channel_Type_Enum.ChatMessage,
@@ -34,4 +34,4 @@ const Sidebar: React.FC<any> = () => {
   );
 };
 
-export default Sidebar;
+export default ChannelList;

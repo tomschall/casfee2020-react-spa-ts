@@ -13,7 +13,7 @@ import {
   useWatchUsersSubscription,
   useGetCheckIfUserHasSubscribedToChannelQuery,
   useAddDirectMessageChannelMutation,
-  useAddDirectMessageChannelSubscriptionMutation,
+  WatchUsersSubscriptionHookResult,
 } from '../../api/generated/graphql';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
 import { Alert } from '@material-ui/lab';
@@ -50,11 +50,6 @@ const AddDirectMessageChannel: React.FC<AddDirectMessageChannelProps> = ({
     { data: addDMData, loading: addDMLoading, error: addDMError },
   ] = useAddDirectMessageChannelMutation();
 
-  const [
-    addDirectMessageChannelSubscriptionMutation,
-    { data: addDMSData, loading: addDMSLoading, error: addDMSError },
-  ] = useAddDirectMessageChannelSubscriptionMutation();
-
   if (error) {
     return <Alert severity="error">Fetching users error...</Alert>;
   }
@@ -71,30 +66,19 @@ const AddDirectMessageChannel: React.FC<AddDirectMessageChannelProps> = ({
     setAnchorEl(null);
   };
 
-  const handleOpen = async (user_id: any, dm_user: any) => {
+  const handleOpen = async (user_id: string, dm_user: string) => {
     setAnchorEl(null);
     const { data } = await addDirectMessageChannelMutation({
       variables: {
-        name: 'yeah',
-        owner_id: user_id,
+        name: 'dmyyy',
+        user_id1: user_id,
+        user_id2: dm_user,
       },
     });
 
-    const channelId = data?.insert_channel?.returning[0]?.id;
-
-    if (channelId) {
-      await addDirectMessageChannelSubscriptionMutation({
-        variables: {
-          user_id,
-          user_id2: dm_user,
-          channel_id: channelId,
-        },
-      });
-    }
-
-    console.log('channelId', channelId);
-    console.log('dm_user', dm_user);
-    console.log('user_id', user_id);
+    // TODO: Check with action that only 2 users can be addes in one dm_channel
+    // and that 2 users can only have one dm_channel...
+    // generate random channel string on each channel creation
   };
 
   return (
@@ -116,7 +100,7 @@ const AddDirectMessageChannel: React.FC<AddDirectMessageChannelProps> = ({
         onClose={handleClose}
       >
         {users
-          ? users.user.map((dm_user) => (
+          ? users.user.map((dm_user: any) => (
               <MenuItem
                 onClick={() => handleOpen(user_id, dm_user?.auth0_user_id)}
               >
