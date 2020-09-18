@@ -64,3 +64,21 @@ mutation addDirectMessageChannel(
     affected_rows
   }
 }
+
+mutation addValidateAndAddDirectMessageChannel(
+  $channel_type: ValidateAndAddDirectMessageChannelTypeEnum!
+  $name: String!
+  $is_private: Boolean!
+  $user_id1: String!
+  $user_id2: String!
+) {
+  validateAndAddDirectMessageChannel(
+    channel_type: $channel_type
+    name: $name
+    is_private: $is_private
+    user_id1: $user_id1
+    user_id2: $user_id2
+  ) {
+    affected_rows
+  }
+}

@@ -1,6 +1,30 @@
-actions: []
+actions:
+- name: validateAndAddDirectMessageChannel
+  definition:
+    kind: synchronous
+    handler: http://host.docker.internal:3001/validateAndAddDirectMessageChannel
+  permissions:
+  - role: user
 custom_types:
-  enums: []
+  enums:
+  - name: AddDirectMessageChannelChannelTypeEnum
+    values:
+    - description: this channel type is for chat messages in a private or public channel
+      is_deprecated: null
+      value: CHAT_MESSAGE
+    - description: this channel type is for direct messages
+      is_deprecated: null
+      value: DIRECT_MESSAGE
+  - name: ValidateAndAddDirectMessageChannelTypeEnum
+    values:
+    - description: this channel type is for chat messages in a private or public channel
+      is_deprecated: null
+      value: CHAT_MESSAGE
+    - description: this channel type is for direct messages
+      is_deprecated: null
+      value: DIRECT_MESSAGE
   input_objects: []
-  objects: []
+  objects:
+  - name: AddDirectMessageChannelOutput
+  - name: validateAndAddDirectMessageChannelOutput
   scalars: []
