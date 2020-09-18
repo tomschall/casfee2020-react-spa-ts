@@ -39,6 +39,14 @@ npm run api:hasura:console
 value: DIRECT_MESSAGE comment: this channel type is for direct messages
 value: CHAT_MESSAGE comment: this channel type is for chat messages in a private or public channel
 
+### Start express server 
+#### This server is for executing requests from hasura actions
+```shell script
+cd nodejs-express
+npm ci
+npm start
+```
+
 
 ##### Generate TS types and React hooks
 ```shell script
