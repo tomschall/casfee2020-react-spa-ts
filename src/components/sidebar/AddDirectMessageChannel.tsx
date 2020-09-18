@@ -17,6 +17,7 @@ import {
 } from '../../api/generated/graphql';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
 import { Alert } from '@material-ui/lab';
+import { v4 as uuidv4 } from 'uuid';
 
 const SidebarMenuButton = styled(Button)({
   border: 0,
@@ -70,7 +71,7 @@ const AddDirectMessageChannel: React.FC<AddDirectMessageChannelProps> = ({
     setAnchorEl(null);
     const { data } = await addDirectMessageChannelMutation({
       variables: {
-        name: 'dmyyy',
+        name: uuidv4(),
         user_id1: user_id,
         user_id2: dm_user,
       },
