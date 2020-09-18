@@ -83,7 +83,7 @@ const ChatApp: React.FC = (props) => {
     <>
       {isAuthenticated && (
         <React.Fragment>
-          <Grid item direction="column" xs={8} className={classes.messageList}>
+          <Grid item direction="column" xs={6} className={classes.messageList}>
             <Typography variant="subtitle2">
               <Chat channelId={currentChannel?.id} />
             </Typography>

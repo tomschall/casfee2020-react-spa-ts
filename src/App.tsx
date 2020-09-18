@@ -69,7 +69,7 @@ const App: React.FC = (client) => {
       <div className={classes.root}>
         {isAuthenticated ? (
           <Grid container spacing={3} className={classes.root}>
-            <Grid item className={classes.sidebar} xs={2}>
+            <Grid item className={classes.sidebar} xs={4}>
               <div className={classes.logo}>
                 <img src="/logo-chicken-chat.png" alt="Chicken Chat" />
               </div>
@@ -80,6 +80,7 @@ const App: React.FC = (client) => {
               <ChannelList />
               <hr></hr>
               <AddDirectMessageChannel user_id={user.sub} />
+              <br />
               <br />
               <UserList user_id={user.sub} />
             </Grid>
