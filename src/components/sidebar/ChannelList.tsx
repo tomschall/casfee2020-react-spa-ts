@@ -26,7 +26,16 @@ const ChannelList: React.FC<any> = () => {
       {data?.channels.map((data: any) => (
         <ListItem button key={data.id}>
           <ListItemText
-            primary={<Link to={'/channel/' + data.name}>{data.name}</Link>}
+            primary={
+              <Link to={'/channel/' + data.name}>
+                {data.is_private === true ? (
+                  <i className="material-icons">lock </i>
+                ) : (
+                  ' '
+                )}
+                {data.name}
+              </Link>
+            }
           />
         </ListItem>
       ))}

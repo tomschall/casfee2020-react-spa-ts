@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import AddChannelModal from './AddChannelModal';
-import { useRecoilState } from 'recoil';
-import { channelModalOpenState } from '../../atom.js';
+import AddChannelUserModal from './AddChannelUserModal';
 import { Button, Menu, MenuItem, styled } from '@material-ui/core';
 
 const SidebarMenuButton = styled(Button)({
@@ -17,9 +16,8 @@ const SidebarMenu = styled(Menu)({});
 
 const AddChannel: React.FC<any> = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [channelModalOpen, setChannelModalOpen] = useRecoilState<any>(
-    channelModalOpenState,
-  );
+  const [channelModalOpen, setChannelModalOpen] = useState(false);
+  const [addChannelUserModalOpen, setAddChannelUserModalOpen] = useState(false);
 
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -32,6 +30,15 @@ const AddChannel: React.FC<any> = () => {
 
   const handleOpen = () => {
     setChannelModalOpen(true);
+    setAnchorEl(null);
+  };
+  const handleAddChannelUserClose = () => {
+    setAnchorEl(null);
+    setAddChannelUserModalOpen(false);
+  };
+
+  const handleAddChannelUserOpen = () => {
+    setAddChannelUserModalOpen(true);
     setAnchorEl(null);
   };
 
@@ -53,8 +60,14 @@ const AddChannel: React.FC<any> = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleOpen}>Add Channel</MenuItem>
+        <MenuItem onClick={handleOpen}>Add channel</MenuItem>
+        <MenuItem onClick={handleAddChannelUserOpen}>
+          Add users to channel
+        </MenuItem>
         {channelModalOpen && <AddChannelModal handleClose={handleClose} />}
+        {addChannelUserModalOpen && (
+          <AddChannelUserModal handleClose={handleAddChannelUserClose} />
+        )}
       </SidebarMenu>
     </React.Fragment>
   );

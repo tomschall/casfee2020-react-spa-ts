@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,6 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import { useGetChannelByNameQuery } from '../api/generated/graphql';
 import ChannelTreadSidebar from './ChannelThreadSidebar';
 import Chat from './Chat';
+import { useRecoilState } from 'recoil';
+import { currentChannelState } from '../atom';
 
 // MUI STYLES
 const useStyles = makeStyles((theme) => ({
@@ -51,6 +53,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ChatApp: React.FC = (props) => {
+  const [currentChannel, setCurrentChannel] = useRecoilState<any>(
+    currentChannelState,
+  );
+
   const classes = useStyles();
   const {
     isAuthenticated,
@@ -73,7 +79,12 @@ const ChatApp: React.FC = (props) => {
     return <CircularProgress />;
   }
 
-  const currentChannel = data?.channel[0];
+  if (
+    !currentChannel ||
+    (currentChannel && currentChannel.name !== channelName)
+  ) {
+    setCurrentChannel(data?.channel[0]);
+  }
 
   if (error || channelError || !currentChannel) {
     return <React.Fragment>Error: {error}</React.Fragment>;

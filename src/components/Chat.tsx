@@ -26,6 +26,7 @@ interface ChatProps {
 const Chat: React.FC<ChatProps> = ({ channelId }) => {
   const [limit, setLimit] = useState(20);
   const [lastMessage, setLastMessage] = useState({});
+
   let preLastMessageId = 0;
 
   const { data, loading, error } = useWatchMessagesSubscription({

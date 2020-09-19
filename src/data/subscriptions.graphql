@@ -38,7 +38,10 @@ subscription watchOnlineUsers {
 }
 
 subscription watchChannels($channel_type: channel_type_enum!) {
-  channels: channel(where: { channel_type: { _eq: $channel_type } }) {
+  channels: channel(
+    where: { channel_type: { _eq: $channel_type } }
+    order_by: { name: asc, is_private: asc }
+  ) {
     name
     id
     is_private
@@ -71,13 +74,7 @@ subscription watchDirectMessageChannels(
 
 subscription watchUsers {
   user(order_by: { username: asc }) {
-    id
     username
     auth0_user_id
-    channels {
-      channel_type
-      id
-      name
-    }
   }
 }

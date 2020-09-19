@@ -1,7 +1,4 @@
-import React, { useState, useCallback } from 'react';
-import AddChannelModal from './AddChannelModal';
-import { useRecoilState } from 'recoil';
-import { channelModalOpenState } from '../../atom.js';
+import React, { useState } from 'react';
 import {
   Button,
   Menu,
@@ -12,9 +9,7 @@ import {
 import {
   useWatchUsersSubscription,
   useValidateAndAddDirectMessageChannelMutation,
-  ValidateAndAddDirectMessageChannelTypeEnum,
 } from '../../api/generated/graphql';
-import { Channel_Type_Enum } from '../../api/generated/graphql';
 import { Alert } from '@material-ui/lab';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -37,13 +32,8 @@ const AddDirectMessageChannel: React.FC<AddDirectMessageChannelProps> = ({
   user_id,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [channelModalOpen, setChannelModalOpen] = useRecoilState<any>(
-    channelModalOpenState,
-  );
 
-  const { data: users, loading, error } = useWatchUsersSubscription({
-    variables: {},
-  });
+  const { data: users, loading, error } = useWatchUsersSubscription();
 
   const [
     validateAndAddDirectMessageChannelMutation,
@@ -76,9 +66,7 @@ const AddDirectMessageChannel: React.FC<AddDirectMessageChannelProps> = ({
       },
     });
 
-    // TODO: Check with action that only 2 users can be addes in one dm_channel
-    // and that 2 users can only have one dm_channel...
-    // generate random channel string on each channel creation
+    // TODO: add backend_only flag for addDirectMessageChannel mutation to hasura
   };
 
   return (

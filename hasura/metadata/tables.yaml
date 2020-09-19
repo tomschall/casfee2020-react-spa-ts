@@ -293,21 +293,6 @@
   - name: user
     using:
       foreign_key_constraint_on: user_id
-  insert_permissions:
-  - role: user
-    permission:
-      check:
-        _or:
-        - channel:
-            owner_id:
-              _eq: X-Hasura-User-Id
-        - channel:
-            owner_id:
-              _is_null: true
-      columns:
-      - channel_id
-      - user_id
-      backend_only: false
   select_permissions:
   - role: user
     permission:

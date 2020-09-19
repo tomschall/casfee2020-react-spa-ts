@@ -1,4 +1,10 @@
 actions:
+- name: addChannelUser
+  definition:
+    kind: synchronous
+    handler: http://host.docker.internal:3001/addChannelUser
+  permissions:
+  - role: user
 - name: validateAndAddDirectMessageChannel
   definition:
     kind: synchronous
@@ -27,4 +33,6 @@ custom_types:
   objects:
   - name: AddDirectMessageChannelOutput
   - name: validateAndAddDirectMessageChannelOutput
+  - name: AddChannelUserSubscriptionOutput
+  - name: AddChannelUserOutput
   scalars: []

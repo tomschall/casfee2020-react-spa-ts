@@ -1,4 +1,12 @@
 type Mutation {
+  addChannelUser (
+    user_id: String!
+    channel_id: Int!
+  ): AddChannelUserOutput
+}
+
+
+type Mutation {
   validateAndAddDirectMessageChannel (
     name: String!
     user_id1: String!
@@ -24,6 +32,14 @@ type AddDirectMessageChannelOutput {
 }
 
 type validateAndAddDirectMessageChannelOutput {
+  affected_rows : Int!
+}
+
+type AddChannelUserSubscriptionOutput {
+  affected_rows : Int!
+}
+
+type AddChannelUserOutput {
   affected_rows : Int!
 }
 

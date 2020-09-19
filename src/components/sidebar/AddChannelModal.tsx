@@ -5,7 +5,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { Alert } from '@material-ui/lab';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useAddChannelMutation } from '../../api/generated/graphql';
-import { Channel_Type_Enum } from '../../api/generated/graphql';
 
 function getModalStyle() {
   return {
@@ -35,8 +34,11 @@ const AddChannelModal: React.FC<AddChannelModalProps> = (props) => {
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
   const [channelName, setChannelName] = useState('');
+  const [channelIsPrivate, setChannelIsPrivate] = useState(false);
   const [addChannel, { error, loading }] = useAddChannelMutation();
   const { user: userAuth0, isLoading: loadingAuth0 } = useAuth0();
+
+  console.log('channelIsPrivate init', channelIsPrivate);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -48,8 +50,7 @@ const AddChannelModal: React.FC<AddChannelModalProps> = (props) => {
         variables: {
           owner_id: userAuth0.sub,
           name: channelName,
-          is_private: false,
-          channel_type: Channel_Type_Enum.ChatMessage,
+          is_private: channelIsPrivate,
         },
       });
     } catch (e) {
@@ -62,6 +63,10 @@ const AddChannelModal: React.FC<AddChannelModalProps> = (props) => {
 
   const handleChange = (event: any) => {
     setChannelName(event.target.value);
+  };
+
+  const handleIsPrivateChange = (event: any) => {
+    setChannelIsPrivate(event.target.checked);
   };
 
   if (error) console.log('error mutation', error);
@@ -83,7 +88,7 @@ const AddChannelModal: React.FC<AddChannelModalProps> = (props) => {
 
       <form onSubmit={handleSubmit}>
         <label>
-          Channel Name:
+          Channel Name
           <input
             disabled={loadingAuth0 || loading}
             type="text"
@@ -91,11 +96,23 @@ const AddChannelModal: React.FC<AddChannelModalProps> = (props) => {
             onChange={handleChange}
           />
         </label>
+        <label>
+          Is Private
+          <input
+            type="checkbox"
+            name="channelIsPrivate"
+            checked={channelIsPrivate}
+            onChange={handleIsPrivateChange}
+          />
+        </label>
+        <br />
+        <br />
         <input
           disabled={loadingAuth0 || loading}
           type="submit"
           value="Submit"
         />
+
         <button type="button" onClick={() => props.handleClose()}>
           Cancel
         </button>
