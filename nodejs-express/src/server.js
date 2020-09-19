@@ -95,7 +95,7 @@ const executeCheck = async (variables) => {
 // Request Handler
 app.post('/validateAndAddDirectMessageChannel', async (req, res) => {
   // get request input
-  const { channel_type, name, is_private, user_id1, user_id2 } = req.body.input;
+  const { name, user_id1, user_id2 } = req.body.input;
 
   // run some business logic
 
@@ -120,9 +120,9 @@ app.post('/validateAndAddDirectMessageChannel', async (req, res) => {
 
   // execute the Hasura operation
   const { data, errors } = await execute({
-    channel_type,
+    channel_type: 'DIRECT_MESSAGE',
     name,
-    is_private,
+    is_private: true,
     user_id1,
     user_id2,
   });

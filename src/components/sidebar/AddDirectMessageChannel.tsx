@@ -11,10 +11,7 @@ import {
 } from '@material-ui/core';
 import {
   useWatchUsersSubscription,
-  useGetCheckIfUserHasSubscribedToChannelQuery,
-  useAddDirectMessageChannelMutation,
-  WatchUsersSubscriptionHookResult,
-  useAddValidateAndAddDirectMessageChannelMutation,
+  useValidateAndAddDirectMessageChannelMutation,
   ValidateAndAddDirectMessageChannelTypeEnum,
 } from '../../api/generated/graphql';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
@@ -49,9 +46,9 @@ const AddDirectMessageChannel: React.FC<AddDirectMessageChannelProps> = ({
   });
 
   const [
-    addValidateAndAddDirectMessageChannelMutation,
+    validateAndAddDirectMessageChannelMutation,
     { data: addDMData, loading: addDMLoading, error: addDMError },
-  ] = useAddValidateAndAddDirectMessageChannelMutation();
+  ] = useValidateAndAddDirectMessageChannelMutation();
 
   if (error || addDMError) {
     return <Alert severity="error">Fetching users error...</Alert>;
@@ -71,11 +68,9 @@ const AddDirectMessageChannel: React.FC<AddDirectMessageChannelProps> = ({
 
   const handleOpen = async (user_id: string, dm_user: string) => {
     setAnchorEl(null);
-    const { data } = await addValidateAndAddDirectMessageChannelMutation({
+    const { data } = await validateAndAddDirectMessageChannelMutation({
       variables: {
-        channel_type: ValidateAndAddDirectMessageChannelTypeEnum.DirectMessage,
         name: uuidv4(),
-        is_private: true,
         user_id1: user_id,
         user_id2: dm_user,
       },
