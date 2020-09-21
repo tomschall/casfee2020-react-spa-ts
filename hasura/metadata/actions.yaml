@@ -1,10 +1,18 @@
 actions:
+- name: actionName
+  definition:
+    kind: synchronous
+    handler: http://host.docker.internal:3000
 - name: addChannelUser
   definition:
     kind: synchronous
     handler: http://host.docker.internal:3001/addChannelUser
   permissions:
   - role: user
+- name: MyMutation
+  definition:
+    kind: synchronous
+    handler: http://host.docker.internal:3000
 - name: validateAndAddDirectMessageChannel
   definition:
     kind: synchronous
@@ -29,10 +37,36 @@ custom_types:
     - description: this channel type is for direct messages
       is_deprecated: null
       value: DIRECT_MESSAGE
-  input_objects: []
+  - name: MyMutationChannelTypeEnum
+    values:
+    - description: this channel type is for chat messages in a private or public channel
+      is_deprecated: null
+      value: CHAT_MESSAGE
+    - description: this channel type is for direct messages
+      is_deprecated: null
+      value: DIRECT_MESSAGE
+  input_objects:
+  - name: MyMutationPollAnwersBoolExp
+  - name: MyMutationTimestamptzComparisonExp
+  - name: MyMutationIntComparisonExp
+  - name: MyMutationPollQuestionsBoolExp
+  - name: MyMutationChannelPollBoolExp
+  - name: MyMutationChannelBoolExp
+  - name: MyMutationChannelTypeBoolExp
+  - name: MyMutationStringComparisonExp
+  - name: MyMutationChannelTypeEnumComparisonExp
+  - name: MyMutationBooleanComparisonExp
+  - name: MyMutationMessageBoolExp
+  - name: MyMutationChannelThreadBoolExp
+  - name: MyMutationChannelThreadMessageBoolExp
+  - name: MyMutationUserBoolExp
+  - name: MyMutationUserChannelsBoolExp
+  - name: SampleInput
   objects:
   - name: AddDirectMessageChannelOutput
   - name: validateAndAddDirectMessageChannelOutput
   - name: AddChannelUserSubscriptionOutput
   - name: AddChannelUserOutput
+  - name: MyMutationOutput
+  - name: SampleOutput
   scalars: []

@@ -1,8 +1,22 @@
 type Mutation {
+  actionName (
+    arg1: SampleInput!
+  ): SampleOutput
+}
+
+
+type Mutation {
   addChannelUser (
     user_id: String!
     channel_id: Int!
   ): AddChannelUserOutput
+}
+
+
+type Mutation {
+  MyMutation (
+    _and: [MyMutationPollAnwersBoolExp]
+  ): MyMutationOutput
 }
 
 
@@ -27,6 +41,203 @@ enum ValidateAndAddDirectMessageChannelTypeEnum {
   """ this channel type is for direct messages """ DIRECT_MESSAGE
 }
 
+enum MyMutationChannelTypeEnum {
+  """ this channel type is for chat messages in a private or public channel """ CHAT_MESSAGE
+  """ this channel type is for direct messages """ DIRECT_MESSAGE
+}
+
+input MyMutationPollAnwersBoolExp {
+  _and : [MyMutationPollAnwersBoolExp]
+  _not : MyMutationPollAnwersBoolExp
+  _or : [MyMutationPollAnwersBoolExp]
+  created_at : MyMutationTimestamptzComparisonExp
+  id : MyMutationIntComparisonExp
+  poll_question : MyMutationPollQuestionsBoolExp
+  question_id : MyMutationIntComparisonExp
+  text : MyMutationStringComparisonExp
+  updated_at : MyMutationTimestamptzComparisonExp
+  user_id : MyMutationStringComparisonExp
+  votes : MyMutationIntComparisonExp
+}
+
+input MyMutationTimestamptzComparisonExp {
+  _eq : timestamptz
+  _gt : timestamptz
+  _gte : timestamptz
+  _in : [timestamptz!]
+  _is_null : Boolean
+  _lt : timestamptz
+  _lte : timestamptz
+  _neq : timestamptz
+  _nin : [timestamptz!]
+}
+
+input MyMutationIntComparisonExp {
+  _eq : Int
+  _gt : Int
+  _gte : Int
+  _in : [Int!]
+  _is_null : Boolean
+  _lt : Int
+  _lte : Int
+  _neq : Int
+  _nin : [Int!]
+}
+
+input MyMutationPollQuestionsBoolExp {
+  _and : [MyMutationPollQuestionsBoolExp]
+  _not : MyMutationPollQuestionsBoolExp
+  _or : [MyMutationPollQuestionsBoolExp]
+  channel_polls : MyMutationChannelPollBoolExp
+  created_at : MyMutationTimestamptzComparisonExp
+  id : MyMutationIntComparisonExp
+  is_active : MyMutationBooleanComparisonExp
+  owner_id : MyMutationStringComparisonExp
+  poll_anwers : MyMutationPollAnwersBoolExp
+  text : MyMutationStringComparisonExp
+  updated_at : MyMutationTimestamptzComparisonExp
+}
+
+input MyMutationChannelPollBoolExp {
+  _and : [MyMutationChannelPollBoolExp]
+  _not : MyMutationChannelPollBoolExp
+  _or : [MyMutationChannelPollBoolExp]
+  channel : MyMutationChannelBoolExp
+  channel_id : MyMutationIntComparisonExp
+  id : MyMutationIntComparisonExp
+  poll_question : MyMutationPollQuestionsBoolExp
+  poll_questions : MyMutationIntComparisonExp
+}
+
+input MyMutationChannelBoolExp {
+  _and : [MyMutationChannelBoolExp]
+  _not : MyMutationChannelBoolExp
+  _or : [MyMutationChannelBoolExp]
+  channelTypeByChannelType : MyMutationChannelTypeBoolExp
+  channel_polls : MyMutationChannelPollBoolExp
+  channel_type : MyMutationChannelTypeEnumComparisonExp
+  id : MyMutationIntComparisonExp
+  is_private : MyMutationBooleanComparisonExp
+  messages : MyMutationMessageBoolExp
+  name : MyMutationStringComparisonExp
+  owner_id : MyMutationStringComparisonExp
+  user : MyMutationUserBoolExp
+  user_channels : MyMutationUserChannelsBoolExp
+}
+
+input MyMutationChannelTypeBoolExp {
+  _and : [MyMutationChannelTypeBoolExp]
+  _not : MyMutationChannelTypeBoolExp
+  _or : [MyMutationChannelTypeBoolExp]
+  channels : MyMutationChannelBoolExp
+  comment : MyMutationStringComparisonExp
+  value : MyMutationStringComparisonExp
+}
+
+input MyMutationStringComparisonExp {
+  _eq : String
+  _gt : String
+  _gte : String
+  _ilike : String
+  _in : [String!]
+  _is_null : Boolean
+  _like : String
+  _lt : String
+  _lte : String
+  _neq : String
+  _nilike : String
+  _nin : [String!]
+  _nlike : String
+  _nsimilar : String
+  _similar : String
+}
+
+input MyMutationChannelTypeEnumComparisonExp {
+  _eq : MyMutationChannelTypeEnum
+  _in : [MyMutationChannelTypeEnum!]
+  _is_null : Boolean
+  _neq : MyMutationChannelTypeEnum
+  _nin : [MyMutationChannelTypeEnum!]
+}
+
+input MyMutationBooleanComparisonExp {
+  _eq : Boolean
+  _gt : Boolean
+  _gte : Boolean
+  _in : [Boolean!]
+  _is_null : Boolean
+  _lt : Boolean
+  _lte : Boolean
+  _neq : Boolean
+  _nin : [Boolean!]
+}
+
+input MyMutationMessageBoolExp {
+  _and : [MyMutationMessageBoolExp]
+  _not : MyMutationMessageBoolExp
+  _or : [MyMutationMessageBoolExp]
+  channel : MyMutationChannelBoolExp
+  channel_id : MyMutationIntComparisonExp
+  channel_threads : MyMutationChannelThreadBoolExp
+  id : MyMutationIntComparisonExp
+  text : MyMutationStringComparisonExp
+  timestamp : MyMutationTimestamptzComparisonExp
+  user : MyMutationUserBoolExp
+  user_id : MyMutationStringComparisonExp
+}
+
+input MyMutationChannelThreadBoolExp {
+  _and : [MyMutationChannelThreadBoolExp]
+  _not : MyMutationChannelThreadBoolExp
+  _or : [MyMutationChannelThreadBoolExp]
+  channel_thread_messages : MyMutationChannelThreadMessageBoolExp
+  id : MyMutationIntComparisonExp
+  message : MyMutationMessageBoolExp
+  message_id : MyMutationIntComparisonExp
+}
+
+input MyMutationChannelThreadMessageBoolExp {
+  _and : [MyMutationChannelThreadMessageBoolExp]
+  _not : MyMutationChannelThreadMessageBoolExp
+  _or : [MyMutationChannelThreadMessageBoolExp]
+  channel_thread : MyMutationChannelThreadBoolExp
+  channel_thread_id : MyMutationIntComparisonExp
+  id : MyMutationIntComparisonExp
+  message : MyMutationStringComparisonExp
+  user : MyMutationUserBoolExp
+  user_id : MyMutationStringComparisonExp
+}
+
+input MyMutationUserBoolExp {
+  _and : [MyMutationUserBoolExp]
+  _not : MyMutationUserBoolExp
+  _or : [MyMutationUserBoolExp]
+  auth0_user_id : MyMutationStringComparisonExp
+  channel_thread_messages : MyMutationChannelThreadMessageBoolExp
+  channels : MyMutationChannelBoolExp
+  id : MyMutationIntComparisonExp
+  last_seen : MyMutationTimestamptzComparisonExp
+  last_typed : MyMutationTimestamptzComparisonExp
+  messages : MyMutationMessageBoolExp
+  user_channels : MyMutationUserChannelsBoolExp
+  username : MyMutationStringComparisonExp
+}
+
+input MyMutationUserChannelsBoolExp {
+  _and : [MyMutationUserChannelsBoolExp]
+  _not : MyMutationUserChannelsBoolExp
+  _or : [MyMutationUserChannelsBoolExp]
+  channel : MyMutationChannelBoolExp
+  channel_id : MyMutationIntComparisonExp
+  user : MyMutationUserBoolExp
+  user_id : MyMutationStringComparisonExp
+}
+
+input SampleInput {
+  username : String!
+  password : String!
+}
+
 type AddDirectMessageChannelOutput {
   affected_rows : Int!
 }
@@ -41,5 +252,13 @@ type AddChannelUserSubscriptionOutput {
 
 type AddChannelUserOutput {
   affected_rows : Int!
+}
+
+type MyMutationOutput {
+  affected_rows : Int!
+}
+
+type SampleOutput {
+  accessToken : String!
 }
 
