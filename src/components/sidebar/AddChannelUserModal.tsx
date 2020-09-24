@@ -5,15 +5,14 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { Alert } from '@material-ui/lab';
 import { useAuth0 } from '@auth0/auth0-react';
 import {
-  useAddChannelMutation,
   useWatchUsersSubscription,
+  useWatchUsersWhoHaveNotSubscribedToChannelSubscription,
   useAddChannelUserMutation,
 } from '../../api/generated/graphql';
-import { useParams } from 'react-router';
+
 import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../atom';
 import { List, ListItem, ListItemText } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 
 function getModalStyle() {
   return {
@@ -42,16 +41,22 @@ interface AddChannelUserModalProps {
 const AddChannelUserModal: React.FC<AddChannelUserModalProps> = (props) => {
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
-  const { channel: channelName } = useParams();
   const [currentChannel, setCurrentChannel] = useRecoilState<any>(
     currentChannelState,
   );
 
   const { user: userAuth0, isLoading: loadingAuth0 } = useAuth0();
 
-  const [usertoAdd, setUsersToAdd] = useState('');
-
-  const { data: users, loading, error } = useWatchUsersSubscription();
+  const {
+    data: users,
+    loading,
+    error,
+  } = useWatchUsersWhoHaveNotSubscribedToChannelSubscription({
+    variables: {
+      user_id: currentChannel.owner_id,
+      channel_id: currentChannel.id,
+    },
+  });
 
   const [
     addChannelUserMutation,
@@ -62,12 +67,11 @@ const AddChannelUserModal: React.FC<AddChannelUserModalProps> = (props) => {
     },
   ] = useAddChannelUserMutation();
 
+  console.log('userAuth0', userAuth0);
   console.log('currentChannel', currentChannel);
   console.log('users', users);
 
-  const handleChange = (event: any) => {};
   const handleUsersToggle = async (event: any, user_id: string) => {
-    console.log('event', event);
     console.log('user_id', user_id);
 
     try {
@@ -77,13 +81,13 @@ const AddChannelUserModal: React.FC<AddChannelUserModalProps> = (props) => {
           user_id,
         },
       });
-    } catch (e) {
-      console.log('error on mutation');
+    } catch (error) {
+      console.log('error on mutation', error);
       return;
     }
   };
 
-  if (error) console.log('error mutation', error);
+  if (error) console.log('error on user subscription', error);
 
   let body = (
     <div style={modalStyle} className={classes.paper}>
@@ -97,28 +101,32 @@ const AddChannelUserModal: React.FC<AddChannelUserModalProps> = (props) => {
       {(loadingAuth0 || loading) && <CircularProgress />}
 
       {!(loadingAuth0 || loading || error) && (
-        <p id="simple-modal-description">
-          Select users that you wanna add to this channel.
-        </p>
-      )}
+        <React.Fragment>
+          <p id="simple-modal-description">
+            Select users that you wanna add to this channel.
+          </p>
 
-      <List component="nav" aria-label="secondary mailbox folders">
-        {users &&
-          users.user.map((u: any) => {
-            return (
-              <ListItem
-                button
-                key={u.id}
-                onClick={(event) => handleUsersToggle(event, u.auth0_user_id)}
-              >
-                <ListItemText primary={u.username} />
-              </ListItem>
-            );
-          })}
-      </List>
-      <button type="button" onClick={() => props.handleClose()}>
-        Cancel
-      </button>
+          <List component="nav" aria-label="secondary mailbox folders">
+            {users &&
+              users.user.map((u: any) => {
+                return (
+                  <ListItem
+                    button
+                    key={u.id}
+                    onClick={(event) =>
+                      handleUsersToggle(event, u.auth0_user_id)
+                    }
+                  >
+                    <ListItemText primary={u.username} />
+                  </ListItem>
+                );
+              })}
+          </List>
+          <button type="button" onClick={() => props.handleClose()}>
+            Cancel
+          </button>
+        </React.Fragment>
+      )}
     </div>
   );
 

@@ -78,3 +78,18 @@ subscription watchUsers {
     auth0_user_id
   }
 }
+
+subscription watchUsersWhoHaveNotSubscribedToChannel(
+  $user_id: String!
+  $channel_id: Int!
+) {
+  user(
+    where: {
+      _not: { user_channels: { channel_id: { _eq: $channel_id } } }
+      auth0_user_id: { _neq: $user_id }
+    }
+  ) {
+    auth0_user_id
+    username
+  }
+}

@@ -1,22 +1,8 @@
 type Mutation {
-  actionName (
-    arg1: SampleInput!
-  ): SampleOutput
-}
-
-
-type Mutation {
   addChannelUser (
     user_id: String!
     channel_id: Int!
   ): AddChannelUserOutput
-}
-
-
-type Mutation {
-  MyMutation (
-    _and: [MyMutationPollAnwersBoolExp]
-  ): MyMutationOutput
 }
 
 

@@ -48,7 +48,7 @@ const AddDirectMessageChannel: React.FC<AddDirectMessageChannelProps> = ({
     return <CircularProgress />;
   }
 
-  const handleClick = (event: any) => {
+  const handleOpen = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -56,7 +56,7 @@ const AddDirectMessageChannel: React.FC<AddDirectMessageChannelProps> = ({
     setAnchorEl(null);
   };
 
-  const handleOpen = async (user_id: string, dm_user: string) => {
+  const handleAddUser = async (user_id: string, dm_user: string) => {
     setAnchorEl(null);
     const { data } = await validateAndAddDirectMessageChannelMutation({
       variables: {
@@ -76,7 +76,7 @@ const AddDirectMessageChannel: React.FC<AddDirectMessageChannelProps> = ({
         variant="contained"
         aria-controls="simple-menu"
         aria-haspopup="true"
-        onClick={handleClick}
+        onClick={handleOpen}
       >
         Direct Messages
       </SidebarMenuButton>
@@ -90,7 +90,7 @@ const AddDirectMessageChannel: React.FC<AddDirectMessageChannelProps> = ({
         {users
           ? users.user.map((dm_user: any) => (
               <MenuItem
-                onClick={() => handleOpen(user_id, dm_user?.auth0_user_id)}
+                onClick={() => handleAddUser(user_id, dm_user?.auth0_user_id)}
               >
                 {dm_user.username}
               </MenuItem>

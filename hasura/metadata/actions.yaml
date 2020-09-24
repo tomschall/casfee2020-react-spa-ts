@@ -1,18 +1,10 @@
 actions:
-- name: actionName
-  definition:
-    kind: synchronous
-    handler: http://host.docker.internal:3000
 - name: addChannelUser
   definition:
     kind: synchronous
     handler: http://host.docker.internal:3001/addChannelUser
   permissions:
   - role: user
-- name: MyMutation
-  definition:
-    kind: synchronous
-    handler: http://host.docker.internal:3000
 - name: validateAndAddDirectMessageChannel
   definition:
     kind: synchronous
