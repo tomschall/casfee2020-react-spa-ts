@@ -5,7 +5,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { Alert } from '@material-ui/lab';
 import { useAuth0 } from '@auth0/auth0-react';
 import {
-  useWatchUsersSubscription,
   useWatchUsersWhoHaveNotSubscribedToChannelSubscription,
   useAddChannelUserMutation,
 } from '../../api/generated/graphql';
@@ -103,7 +102,9 @@ const AddChannelUserModal: React.FC<AddChannelUserModalProps> = (props) => {
       {!(loadingAuth0 || loading || error) && (
         <React.Fragment>
           <p id="simple-modal-description">
-            Select users that you wanna add to this channel.
+            {users && users.user.length > 0
+              ? 'Select users that you wanna add to this channel.'
+              : 'All users have subscribed to this channel.'}
           </p>
 
           <List component="nav" aria-label="secondary mailbox folders">
