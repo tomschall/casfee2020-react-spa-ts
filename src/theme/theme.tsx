@@ -82,6 +82,6 @@ export const theme = createMuiTheme({
       disableTouchRipple: false,
     },
   },
-  typography,
-  overrides,
+  // typography,
+  // overrides,
 });
