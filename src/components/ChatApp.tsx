@@ -64,31 +64,31 @@ const ChatApp: React.FC = (props) => {
     user,
     error,
   } = useAuth0();
-  const { channel: channelName } = useParams();
-  const {
-    data,
-    loading: channelLoading,
-    error: channelError,
-  } = useGetChannelByNameQuery({
-    variables: {
-      name: channelName,
-    },
-  });
+  // const { channel: channelName } = useParams();
+  // const {
+  //   data,
+  //   loading: channelLoading,
+  //   error: channelError,
+  // } = useGetChannelByNameQuery({
+  //   variables: {
+  //     name: channelName,
+  //   },
+  // });
 
-  if (isLoadingAuth0 || channelLoading) {
-    return <CircularProgress />;
-  }
+  // if (isLoadingAuth0 || channelLoading) {
+  //   return <CircularProgress />;
+  // }
 
-  if (
-    !currentChannel ||
-    (currentChannel && currentChannel.name !== channelName)
-  ) {
-    setCurrentChannel(data?.channel[0]);
-  }
+  // if (
+  //   !currentChannel ||
+  //   (currentChannel && currentChannel.name !== channelName)
+  // ) {
+  //   setCurrentChannel(data?.channel[0]);
+  // }
 
-  if (error || channelError || !currentChannel) {
-    return <React.Fragment>Error: {error}</React.Fragment>;
-  }
+  // if (error || channelError || !currentChannel) {
+  //   return <React.Fragment>Error: {error}</React.Fragment>;
+  // }
 
   return (
     <>
@@ -96,7 +96,7 @@ const ChatApp: React.FC = (props) => {
         <React.Fragment>
           <Grid item direction="column" xs={6} className={classes.messageList}>
             <Typography variant="subtitle2">
-              <Chat channelId={currentChannel?.id} />
+              {/* <Chat channelId={currentChannel?.id} /> */}
             </Typography>
           </Grid>
           <Grid item xs={2} className={classes.extraBox}>

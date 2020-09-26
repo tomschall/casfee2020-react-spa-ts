@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
-import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import AddChannel from './components/sidebar/AddChannel';
 import AddDirectMessageChannel from './components/sidebar/AddDirectMessageChannel';
@@ -15,44 +14,10 @@ import OnlineUsers from './components/OnlineUsers';
 import PrivateRoute from './components/PrivateRoute';
 import ChannelList from './components/sidebar/ChannelList';
 import UserList from './components/sidebar/UserList';
-
-// MUI STYLES
-const useStyles = makeStyles((theme) => ({
-  '@global': {
-    '*::-webkit-scrollbar': {
-      width: '1em',
-    },
-    '*::-webkit-scrollbar-track': {
-      '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)',
-    },
-    '*::-webkit-scrollbar-thumb': {
-      backgroundColor: 'rgba(0,0,0,.1)',
-    },
-  },
-  root: {
-    flexGrow: 1,
-    margin: theme.spacing(0),
-    backgroundColor: '#2b0d3b',
-    height: '100vh',
-    color: 'white',
-    overflowX: 'hidden',
-  },
-  sidebar: {
-    marginTop: theme.spacing(5),
-    backgroundColor: '#2b0d3b',
-  },
-
-  logo: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-}));
+import ChatBoard from './layout/chat';
 
 const App: React.FC = (client) => {
   const { isAuthenticated, isLoading, user } = useAuth0();
-
-  const classes = useStyles();
 
   if (isLoading) {
     return (
@@ -66,44 +31,25 @@ const App: React.FC = (client) => {
 
   return (
     <div className="app">
-      <div className={classes.root}>
-        {isAuthenticated ? (
-          <Grid container spacing={3} className={classes.root}>
-            <Grid item className={classes.sidebar} xs={4}>
-              <div className={classes.logo}>
-                <img src="/logo-chicken-chat.png" alt="Chicken Chat" />
-              </div>
-              <OnlineUsers user_id={user.sub} />
-              <LogoutButton />
-              <br />
-              <AddChannel />
-              <ChannelList />
-              <hr></hr>
-              <AddDirectMessageChannel user_id={user.sub} />
-              <br />
-              <br />
-              <UserList user_id={user.sub} />
-            </Grid>
-            <Switch>
-              <Redirect exact from="/" to="/channel/general" />
-              <Redirect exact from="/channel" to="/channel/general" />
-              <PrivateRoute path="/channel/:channel" component={ChatApp} />
-              <PrivateRoute path="/dashboard" component={Dashboard} />
-              <Route exact path="/not-found" render={(props) => NotFound} />
-              <Redirect to="/not-found" />
-            </Switch>
-          </Grid>
-        ) : (
-          <Switch>
-            <Redirect exact from="/" to="/home" />
-            <Route path="/home" component={Home} />
-            <PrivateRoute path="/channel/:channel" component={ChatApp} />
-            <PrivateRoute path="/dashboard" component={Dashboard} />
-            <Route exact path="/not-found" render={(props) => NotFound} />
-            <Redirect to="/not-found" />
-          </Switch>
-        )}
-      </div>
+      {isAuthenticated ? (
+        <Switch>
+          <Redirect exact from="/" to="/channel/general" />
+          <Redirect exact from="/channel" to="/channel/general" />
+          <PrivateRoute path="/channel/:channel" component={ChatBoard} />
+          <PrivateRoute path="/dashboard" component={Dashboard} />
+          <Route exact path="/not-found" render={(props) => NotFound} />
+          <Redirect to="/not-found" />
+        </Switch>
+      ) : (
+        <Switch>
+          <Redirect exact from="/" to="/home" />
+          <Route path="/home" component={Home} />
+          <PrivateRoute path="/channel/:channel" component={ChatBoard} />
+          <PrivateRoute path="/dashboard" component={Dashboard} />
+          <Route exact path="/not-found" render={(props) => NotFound} />
+          <Redirect to="/not-found" />
+        </Switch>
+      )}
     </div>
   );
 };
