@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import routes from '../src/routes/routes';
 import { useAuth0 } from '@auth0/auth0-react';
 import AddChannel from './components/sidebar/AddChannel';
 import AddDirectMessageChannel from './components/sidebar/AddDirectMessageChannel';
@@ -34,17 +35,21 @@ const App: React.FC = (client) => {
     <div className="app">
       {isAuthenticated ? (
         <Switch>
-          <Redirect exact from="/" to="/channel/general" />
-          <Redirect exact from="/channel" to="/channel/general" />
-          <PrivateRoute path="/channel/:channel" component={ChatBoard} />
-          <PrivateRoute path="/dashboard" component={Dashboard} />
+          <Redirect exact from={routes.base} to={routes.signed.general} />
+          <Redirect
+            exact
+            from={routes.signed.base}
+            to={routes.signed.general}
+          />
+          <PrivateRoute path={routes.signed.dynamic} component={ChatBoard} />
+          <PrivateRoute path={routes.signed.dashboard} component={Dashboard} />
           <Route exact path="/not-found" render={(props) => NotFound} />
           <Redirect to="/not-found" />
         </Switch>
       ) : (
         <Switch>
-          <Redirect exact from="/" to="/home" />
-          <Route path="/home" component={Home} />
+          <Redirect exact from={routes.base} to={routes.unsigned.home} />
+          <Route path={routes.unsigned.home} component={Home} />
           <PrivateRoute path="/channel/:channel" component={ChatBoard} />
           <PrivateRoute path="/dashboard" component={Dashboard} />
           <Route exact path="/not-found" render={(props) => NotFound} />
