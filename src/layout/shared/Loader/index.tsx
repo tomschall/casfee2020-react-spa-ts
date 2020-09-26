@@ -6,7 +6,7 @@ const Loader = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.wrapper} data-testid="loader">
+    <div className={classes.root} data-testid="loader">
       <CircularProgress />
     </div>
   );

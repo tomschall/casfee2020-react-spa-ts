@@ -41,7 +41,13 @@ const UserStatus: React.FC<OnlineUsersProps> = ({ user_id }) => {
   }
 
   if (loading) {
-    return <Loader />;
+    return (
+      <Container>
+        <Grid item>
+          <Loader />
+        </Grid>
+      </Container>
+    );
   }
 
   return (
