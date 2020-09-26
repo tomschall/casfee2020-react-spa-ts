@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import { Grid, Divider } from '@material-ui/core';
 import UserStatus from '../../../components/userStatus';
 import Channels from '../../../components/channels';
@@ -9,6 +10,7 @@ import AddChannel from '../../../components/addChannel';
 import useStyles from './styles';
 
 const SideBar: React.FC = () => {
+  const { user } = useAuth0();
   const classes = useStyles();
 
   return (
@@ -16,7 +18,7 @@ const SideBar: React.FC = () => {
       <div className={classes.root}>
         <Grid container>
           <Grid item xs={12}>
-            <UserStatus />
+            <UserStatus user_id={user.sub} />
           </Grid>
           <Grid item xs={12} className={classes.branding}>
             <img

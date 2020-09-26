@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
-import Grid from '@material-ui/core/Grid';
 import AddChannel from './components/sidebar/AddChannel';
 import AddDirectMessageChannel from './components/sidebar/AddDirectMessageChannel';
 import ChatApp from './components/ChatApp';
@@ -18,6 +17,8 @@ import ChatBoard from './layout/chat';
 
 const App: React.FC = (client) => {
   const { isAuthenticated, isLoading, user } = useAuth0();
+
+  console.log(user);
 
   if (isLoading) {
     return (

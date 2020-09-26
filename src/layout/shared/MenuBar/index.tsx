@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import clsx from 'clsx';
 import { theme } from '../../../theme/theme';
 import {
@@ -21,6 +22,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import useStyles from './styles';
 
 const MenuBar: React.FC<any> = () => {
+  const { user } = useAuth0();
   const classes = useStyles();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -51,7 +53,7 @@ const MenuBar: React.FC<any> = () => {
                   color="primary"
                   size="small"
                   icon={<FaceIcon />}
-                  label="Thomas"
+                  label={user.nickname}
                 />
 
                 <Chip
