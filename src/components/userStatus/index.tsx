@@ -1,18 +1,10 @@
 import React, { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import Loader from '../../layout/shared/Loader';
-
-import {
-  Badge,
-  Chip,
-  CircularProgress,
-  Container,
-  Grid,
-  Tooltip,
-} from '@material-ui/core';
+import { Badge, Chip, Container, Grid, Tooltip } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import PeopleIcon from '@material-ui/icons/People';
 import FaceIcon from '@material-ui/icons/Face';
+import Loader from '../../layout/shared/Loader';
 
 import { useWatchOnlineUsersSubscription } from '../../api/generated/graphql';
 import { useSetUserOnlineMutation } from '../../api/generated/graphql';
