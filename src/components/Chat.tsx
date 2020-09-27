@@ -10,7 +10,7 @@ import { blue } from '@material-ui/core/colors';
 
 const ColorButton = withStyles((theme: Theme) => ({
   root: {
-    color: 'white',
+    // color: 'white',
     backgroundColor: blue[500],
     '&:hover': {
       backgroundColor: blue[700],
@@ -36,6 +36,8 @@ const Chat: React.FC<ChatProps> = ({ channelId }) => {
     },
     fetchPolicy: 'network-only',
   });
+
+  console.log(data);
 
   useEffect(() => {
     setLastMessage({});

@@ -2,19 +2,13 @@ import React, { useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import routes from '../src/routes/routes';
 import { useAuth0 } from '@auth0/auth0-react';
-import AddChannel from './components/sidebar/AddChannel';
-import AddDirectMessageChannel from './components/sidebar/AddDirectMessageChannel';
-import ChatApp from './components/ChatApp';
 import Dashboard from './components/Dashboard';
 import Home from './components/Home';
-import Loading from './components/Loading';
-import LogoutButton from './components/LogoutButton';
+import Loader from './layout/shared/Loader';
 import NotFound from './components/NotFound';
-import OnlineUsers from './components/OnlineUsers';
 import PrivateRoute from './components/PrivateRoute';
-import ChannelList from './components/sidebar/ChannelList';
-import UserList from './components/sidebar/UserList';
 import ChatBoard from './layout/chat';
+import { theme } from './theme/theme';
 
 const App: React.FC = (client) => {
   const { isAuthenticated, isLoading, user } = useAuth0();
@@ -23,9 +17,16 @@ const App: React.FC = (client) => {
 
   if (isLoading) {
     return (
-      <React.Fragment>
-        <Loading />
-      </React.Fragment>
+      <>
+        <div
+          style={{
+            height: '100vh',
+            backgroundColor: theme.palette.background.default,
+          }}
+        >
+          <Loader />
+        </div>
+      </>
     );
   }
 

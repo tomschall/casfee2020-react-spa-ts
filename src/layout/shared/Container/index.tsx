@@ -6,12 +6,11 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useStyles from './styles';
 
 import SideBar from '../Sidebar';
-// import MessageList from '../../../views/messageList';
+import ChatApp from '../../../components/ChatApp';
 import MenuBar from '../MenuBar';
 
 const ChatContainer: React.FC = () => {
   const classes = useStyles();
-  // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const matches = useMediaQuery(theme.breakpoints.up('md'));
   return (
     <>
@@ -23,7 +22,7 @@ const ChatContainer: React.FC = () => {
             </Grid>
           )}
           <Grid item xs={12}>
-            {/* <MessageList /> */}
+            MessageList
           </Grid>
         </Container>
       </main>

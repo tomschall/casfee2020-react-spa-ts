@@ -4,6 +4,7 @@ import { RecoilRoot } from 'recoil';
 import { BrowserRouter } from 'react-router-dom';
 import { Auth0Provider } from '@auth0/auth0-react';
 import ApolloWrapper from './components/ApolloWrapper';
+import './index.css';
 import App from './App';
 
 // A function that routes the user to the right place

@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
   chatInput: {
     padding: theme.spacing(0),
-    backgroundColor: '#2b0d3b',
+    // backgroundColor: '#2b0d3b',
     // height: '20vh',
   },
   extraBox: {
@@ -56,6 +56,8 @@ const ChatApp: React.FC = (props) => {
   const [currentChannel, setCurrentChannel] = useRecoilState<any>(
     currentChannelState,
   );
+
+  console.table(currentChannel?.name);
 
   const classes = useStyles();
   const {
@@ -96,7 +98,7 @@ const ChatApp: React.FC = (props) => {
         <React.Fragment>
           <Grid item direction="column" xs={6} className={classes.messageList}>
             <Typography variant="subtitle2">
-              {/* <Chat channelId={currentChannel?.id} /> */}
+              <Chat channelId={currentChannel?.id} />
             </Typography>
           </Grid>
           <Grid item xs={2} className={classes.extraBox}>
