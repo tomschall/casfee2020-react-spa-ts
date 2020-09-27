@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Alert } from '@material-ui/lab';
+import { useAuth0 } from '@auth0/auth0-react';
+import { useAddChannelMutation } from '../../api/generated/graphql';
+import Loader from '../../layout/shared/Loader';
 import {
   Button,
   Checkbox,
@@ -18,13 +22,52 @@ import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import useStyles from './styles';
 
+// interface AddChannelModalProps {
+//   handleClose: Function;
+// }
+
 const AddChannel: React.FC = () => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [channelName, setChannelName] = useState('');
+  const [channelIsPrivate, setChannelIsPrivate] = useState(false);
+  const [addChannel, { error, loading }] = useAddChannelMutation();
+  const { user: userAuth0, isLoading: loadingAuth0 } = useAuth0();
 
   const handleClick = () => {
     setOpen(!open);
   };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    if (!channelName) return;
+
+    try {
+      await addChannel({
+        variables: {
+          owner_id: userAuth0.sub,
+          name: channelName,
+          is_private: channelIsPrivate,
+        },
+      });
+    } catch (e) {
+      console.log('error on mutation');
+      return;
+    }
+
+    // props.handleClose();
+  };
+
+  const handleChange = (event: any) => {
+    setChannelName(event.target.value);
+  };
+
+  const handleIsPrivateChange = (event: any) => {
+    setChannelIsPrivate(event.target.checked);
+  };
+
+  if (error) console.log('error mutation', error);
 
   return (
     <List className={classes.root}>
@@ -40,14 +83,29 @@ const AddChannel: React.FC = () => {
         )}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
+        {(loadingAuth0 || loading) && <Loader />}
         <List component="div">
+          {error && (
+            <ListItem className={classes.nested}>
+              <Alert severity={'error'}>
+                You can not use this name as it is already taken.
+              </Alert>
+            </ListItem>
+          )}
           <ListItem className={classes.nested}>
             <Grid container>
-              <form className={classes.form} noValidate autoComplete="off">
+              <form
+                className={classes.form}
+                noValidate
+                autoComplete="off"
+                onSubmit={handleSubmit}
+              >
                 <Grid item xs={12}>
                   <TextField
-                    value=""
+                    disabled={loadingAuth0 || loading}
+                    value={channelName}
                     autoFocus={false}
+                    onChange={handleChange}
                     autoComplete="off"
                     placeholder="Your channel name"
                     id="standard-basic"
@@ -59,6 +117,8 @@ const AddChannel: React.FC = () => {
                   <FormControlLabel
                     control={
                       <Checkbox
+                        checked={channelIsPrivate}
+                        onChange={handleIsPrivateChange}
                         color="secondary"
                         name="private"
                         className={classes.checkbox}
@@ -73,12 +133,16 @@ const AddChannel: React.FC = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <Button
+                    disabled={loadingAuth0 || loading}
+                    type="submit"
+                    value="Submit"
                     endIcon={<AddCircle />}
                     className={classes.submit}
                     variant="outlined"
                   >
                     Add new channel
                   </Button>
+                  {/* <Button onClick={() => props.handleClose()}>Cancel</Button> */}
                 </Grid>
               </form>
             </Grid>

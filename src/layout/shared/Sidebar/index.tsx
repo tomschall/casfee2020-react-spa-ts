@@ -5,11 +5,12 @@ import UserStatus from '../../../components/userStatus';
 import Channels from '../../../components/channels';
 import Users from '../../../components/users';
 import Logout from '../../../components/logout';
+// import AddChannel from '../../../components/addChannel';
 import AddChannel from '../../../components/addChannel';
 
 import useStyles from './styles';
 
-const SideBar: React.FC = () => {
+const SideBar: React.FC<any> = () => {
   const { user } = useAuth0();
   const classes = useStyles();
 
