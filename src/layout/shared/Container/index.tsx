@@ -22,7 +22,7 @@ const ChatContainer: React.FC = () => {
             </Grid>
           )}
           <Grid item xs={12}>
-            MessageList
+            <ChatApp />
           </Grid>
         </Container>
       </main>
