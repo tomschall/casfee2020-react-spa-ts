@@ -55,8 +55,6 @@ const AddChannel: React.FC = () => {
       console.log('error on mutation');
       return;
     }
-
-    // props.handleClose();
   };
 
   const handleChange = (event: any) => {
@@ -142,7 +140,6 @@ const AddChannel: React.FC = () => {
                   >
                     Add new channel
                   </Button>
-                  {/* <Button onClick={() => props.handleClose()}>Cancel</Button> */}
                 </Grid>
               </form>
             </Grid>

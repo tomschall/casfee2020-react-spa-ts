@@ -6,6 +6,6 @@ export default makeStyles((theme) => ({
     justifyContent: 'center',
     marginTop: theme.spacing(0),
     width: '100%',
-    height: 'auto',
+    height: '100vh',
   },
 }));

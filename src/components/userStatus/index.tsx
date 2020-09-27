@@ -32,41 +32,37 @@ const UserStatus: React.FC<OnlineUsersProps> = ({ user_id }) => {
     return <Alert severity="error">Online users could not be loaded.</Alert>;
   }
 
-  if (loading) {
-    return (
-      <Container>
-        <Grid item>
-          <Loader />
-        </Grid>
-      </Container>
-    );
-  }
-
   return (
     <>
       <Container>
-        <Grid container justify="space-between">
-          <Grid item>
-            <Chip
-              variant="outlined"
-              color="primary"
-              size="small"
-              icon={<FaceIcon />}
-              label={user.nickname}
-            />
+        {!loading ? (
+          <Grid container justify="space-between">
+            <Grid item>
+              <Chip
+                variant="outlined"
+                color="primary"
+                size="small"
+                icon={<FaceIcon />}
+                label={user.nickname}
+              />
+            </Grid>
+            <Grid item>
+              <Tooltip
+                title="Users online"
+                aria-label="Unsers online"
+                placement="top"
+              >
+                <Badge color="secondary" badgeContent={usersOnline}>
+                  <PeopleIcon color="primary" />
+                </Badge>
+              </Tooltip>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Tooltip
-              title="Users online"
-              aria-label="Unsers online"
-              placement="top"
-            >
-              <Badge color="secondary" badgeContent={usersOnline}>
-                <PeopleIcon color="primary" />
-              </Badge>
-            </Tooltip>
+        ) : (
+          <Grid container justify="center">
+            <Loader />
           </Grid>
-        </Grid>
+        )}
       </Container>
     </>
   );

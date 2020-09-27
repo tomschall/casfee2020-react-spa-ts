@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import routes from '../src/routes/routes';
-import { useAuth0 } from '@auth0/auth0-react';
 import Dashboard from './components/Dashboard';
 import Home from './components/Home';
 import Loader from './layout/shared/Loader';
@@ -11,7 +11,7 @@ import ChatBoard from './layout/chat';
 import { theme } from './theme/theme';
 
 const App: React.FC = (client) => {
-  const { isAuthenticated, isLoading, user } = useAuth0();
+  const { isAuthenticated, user, isLoading } = useAuth0();
 
   console.log(user);
 
@@ -20,8 +20,12 @@ const App: React.FC = (client) => {
       <>
         <div
           style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            // width: '100vw',
             height: '100vh',
-            backgroundColor: theme.palette.background.default,
+            backgroundColor: theme.palette.background.paper,
           }}
         >
           <Loader />
@@ -30,7 +34,7 @@ const App: React.FC = (client) => {
     );
   }
 
-  if (isAuthenticated) console.log('user.id', user.id);
+  if (isAuthenticated) console.log('user.id', user.sub);
 
   return (
     <div className="app">
