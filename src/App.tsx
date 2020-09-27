@@ -9,8 +9,6 @@ import NotFound from './components/NotFound';
 import PrivateRoute from './components/PrivateRoute';
 import ChatBoard from './layout/chat';
 import { theme } from './theme/theme';
-import ChatApp from './components/ChatApp';
-import Loading from './components/Loading';
 
 const App: React.FC = (client) => {
   const { isAuthenticated, user, isLoading } = useAuth0();
@@ -19,9 +17,20 @@ const App: React.FC = (client) => {
 
   if (isLoading) {
     return (
-      <React.Fragment>
-        <Loading />
-      </React.Fragment>
+      <>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            // width: '100vw',
+            height: '100vh',
+            backgroundColor: theme.palette.background.paper,
+          }}
+        >
+          <Loader />
+        </div>
+      </>
     );
   }
 
@@ -31,17 +40,21 @@ const App: React.FC = (client) => {
     <div className="app">
       {isAuthenticated ? (
         <Switch>
-          <Redirect exact from="/" to="/channel/general" />
-          <Redirect exact from="/channel" to="/channel/general" />
-          <PrivateRoute path="/channel/:channel" component={ChatBoard} />
-          <PrivateRoute path="/dashboard" component={Dashboard} />
+          <Redirect exact from={routes.base} to={routes.signed.general} />
+          <Redirect
+            exact
+            from={routes.signed.base}
+            to={routes.signed.general}
+          />
+          <PrivateRoute path={routes.signed.dynamic} component={ChatBoard} />
+          <PrivateRoute path={routes.signed.dashboard} component={Dashboard} />
           <Route exact path="/not-found" render={(props) => NotFound} />
           <Redirect to="/not-found" />
         </Switch>
       ) : (
         <Switch>
-          <Redirect exact from="/" to="/home" />
-          <Route path="/home" component={Home} />
+          <Redirect exact from={routes.base} to={routes.unsigned.home} />
+          <Route path={routes.unsigned.home} component={Home} />
           <PrivateRoute path="/channel/:channel" component={ChatBoard} />
           <PrivateRoute path="/dashboard" component={Dashboard} />
           <Route exact path="/not-found" render={(props) => NotFound} />

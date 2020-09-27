@@ -26,9 +26,6 @@ const ChatContainer: React.FC = () => {
           </Grid>
         </Container>
       </main>
-      <Box maxWidth="xl" component="nav">
-        <MenuBar />
-      </Box>
     </>
   );
 };

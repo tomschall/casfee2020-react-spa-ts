@@ -21,7 +21,17 @@ import FaceIcon from '@material-ui/icons/Face';
 import PeopleIcon from '@material-ui/icons/People';
 import useStyles from './styles';
 
-const MenuBar: React.FC<any> = () => {
+interface MenuBarProps {
+  channelId: number;
+  handleSetLastMessage: Function;
+  preLastMessageId: number;
+}
+
+const MenuBar: React.FC<MenuBarProps> = ({
+  channelId,
+  handleSetLastMessage,
+  preLastMessageId,
+}) => {
   const { user } = useAuth0();
   const classes = useStyles();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
@@ -87,7 +97,11 @@ const MenuBar: React.FC<any> = () => {
                 )}
               </Grid>
               <Grid item xs={12}>
-                <MessageInput />
+                <MessageInput
+                  channelId={channelId}
+                  handleSetLastMessage={handleSetLastMessage}
+                  preLastMessageId={preLastMessageId}
+                />
               </Grid>
             </Grid>
           </Container>
