@@ -10,7 +10,7 @@ export default {
       },
       '*::-webkit-scrollbar-thumb': {
         backgroundColor: 'rgba(0,0,0,.5)',
-        borderRadius: 10,
+        borderRadius: 20,
       },
     },
   },
