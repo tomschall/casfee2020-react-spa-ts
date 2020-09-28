@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, List } from '@material-ui/core';
+import { Grid, List, Button } from '@material-ui/core';
 import MessageList from '../messageList';
 import { Message } from '../../interfaces/message/message.interface';
 import { useWatchMessagesSubscription } from '../../api/generated/graphql';
@@ -67,9 +67,9 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate }) => {
         <Grid container>
           <Grid item xs={12} className={classes.messageContainer}>
             {isPrivate && (
-              <button type="button" onClick={navigateToAddChannelMembers}>
+              <Button type="button" onClick={navigateToAddChannelMembers}>
                 Add users to channel
-              </button>
+              </Button>
             )}
             <List>
               <MessageList
