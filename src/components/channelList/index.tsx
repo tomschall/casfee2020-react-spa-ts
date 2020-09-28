@@ -28,8 +28,6 @@ const Channels: React.FC<any> = () => {
     currentChannelState,
   );
 
-  console.log('currentChannel', currentChannel);
-
   const [open, setOpen] = React.useState(true);
 
   const handleClick = () => {

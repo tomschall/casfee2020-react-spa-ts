@@ -2,6 +2,8 @@ import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import clsx from 'clsx';
 import { theme } from '../../../theme/theme';
+import { useRecoilState } from 'recoil';
+import { currentChannelState } from '../../../atom';
 import {
   AppBar,
   Box,
@@ -19,6 +21,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import FaceIcon from '@material-ui/icons/Face';
 import PeopleIcon from '@material-ui/icons/People';
+import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import useStyles from './styles';
 
 interface MenuBarProps {
@@ -35,6 +38,11 @@ const MenuBar: React.FC<MenuBarProps> = ({
   const { user } = useAuth0();
   const classes = useStyles();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
+  const [currentChannel, setCurrentChannel] = useRecoilState<any>(
+    currentChannelState,
+  );
+
+  console.log('currentChannel', currentChannel);
 
   const [open, setOpen] = React.useState(false); // Sidebar default state
   const handleDrawerOpen = () => {
@@ -70,8 +78,14 @@ const MenuBar: React.FC<MenuBarProps> = ({
                   color="secondary"
                   variant="outlined"
                   size="small"
-                  icon={<PeopleIcon />}
-                  label="General"
+                  icon={
+                    currentChannel.is_private === true ? (
+                      <EnhancedEncryptionOutlinedIcon />
+                    ) : (
+                      <PeopleIcon color="secondary" />
+                    )
+                  }
+                  label={currentChannel.name}
                 />
               </Grid>
               <Grid item style={{ flex: 1 }}>

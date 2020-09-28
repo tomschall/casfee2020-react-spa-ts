@@ -13,6 +13,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import useStyles from './styles';
+import Loader from '../../layout/shared/Loader';
 import { useWatchOnlineUsersSubscription } from '../../api/generated/graphql';
 
 const UsersList: React.FC = () => {
@@ -23,6 +24,10 @@ const UsersList: React.FC = () => {
   const handleClick = () => {
     setOpen(!open);
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <>
