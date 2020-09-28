@@ -64,7 +64,7 @@ const MessageList: React.FC<MessageProps> = ({
           <Typography variant="caption">
             {message.user.username} <i>{moment(message.timestamp).fromNow()}</i>
           </Typography>
-          <Typography component="p" style={{ paddingBottom: '1rem' }}>
+          <Typography component="p" className={classes.messageText}>
             {message.text}
           </Typography>
           <Divider className={classes.vspace} />

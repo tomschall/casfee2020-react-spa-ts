@@ -4,9 +4,21 @@ export default makeStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
   },
+  [theme.breakpoints.up('md')]: {
+    messageText: {
+      paddingBottom: '1rem',
+    },
+  },
   [theme.breakpoints.down('md')]: {
-    text: {
-      fontSize: 10,
+    messageText: {
+      fontSize: 14,
+      paddingBottom: '1rem',
+    },
+  },
+  [theme.breakpoints.down('sm')]: {
+    messageText: {
+      fontSize: 12,
+      paddingBottom: '1rem',
     },
   },
   vspace: {
