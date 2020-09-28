@@ -17,7 +17,7 @@ import useStyles from './styles';
 import Loader from '../../layout/shared/Loader';
 import { useWatchOnlineUsersSubscription } from '../../api/generated/graphql';
 
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useWatchDirectMessageChannelsSubscription } from '../../api/generated/graphql';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -31,6 +31,7 @@ interface UsersListProps {
 const UsersList: React.FC<UsersListProps> = ({ user_id }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  let history = useHistory();
 
   const { data, loading, error } = useWatchDirectMessageChannelsSubscription({
     variables: {
@@ -48,12 +49,12 @@ const UsersList: React.FC<UsersListProps> = ({ user_id }) => {
     return <Loader />;
   }
 
-  if (data) {
-    console.log('data UserList', data);
-  }
-
   const handleClick = () => {
     setOpen(!open);
+  };
+
+  const navigateToAddDirectMessageChannelMembers = () => {
+    history.push(`/addDirectMessageChannelMembers`);
   };
 
   return (
@@ -69,7 +70,9 @@ const UsersList: React.FC<UsersListProps> = ({ user_id }) => {
             <Typography variant="h6">Direct Messages</Typography>
           </ListItemText>
           <ListItemIcon>
-            <AddCircleOutlineIcon />
+            <AddCircleOutlineIcon
+              onClick={navigateToAddDirectMessageChannelMembers}
+            />
           </ListItemIcon>
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>

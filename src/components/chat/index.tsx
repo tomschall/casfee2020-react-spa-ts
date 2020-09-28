@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Grid, List, Button } from '@material-ui/core';
 import MessageList from '../messageList';
 import { Message } from '../../interfaces/message/message.interface';
-import { useWatchMessagesSubscription } from '../../api/generated/graphql';
+import {
+  useWatchMessagesSubscription,
+  Channel_Type_Enum,
+} from '../../api/generated/graphql';
 
 import { Box } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
@@ -14,9 +17,10 @@ import { useHistory } from 'react-router-dom';
 interface ChatProps {
   channelId: number;
   isPrivate: boolean;
+  channelType: Channel_Type_Enum;
 }
 
-const Chat: React.FC<ChatProps> = ({ channelId, isPrivate }) => {
+const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   const classes = useStyles();
   const [limit, setLimit] = useState(20);
   const [lastMessage, setLastMessage] = useState({});
@@ -66,7 +70,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate }) => {
       <div className={classes.root}>
         <Grid container>
           <Grid item xs={12} className={classes.messageContainer}>
-            {isPrivate && (
+            {isPrivate && channelType !== Channel_Type_Enum.DirectMessage && (
               <Button type="button" onClick={navigateToAddChannelMembers}>
                 Add users to channel
               </Button>
