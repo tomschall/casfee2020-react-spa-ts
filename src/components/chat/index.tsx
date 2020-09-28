@@ -60,7 +60,7 @@ const Chat: React.FC<ChatProps> = ({ channelId }) => {
     <>
       <div className={classes.root}>
         <Grid container>
-          <Grid item xs={12}>
+          <Grid item xs={12} className={classes.messageContainer}>
             <List>
               <MessageList
                 messages={data?.messages as Message[]}
