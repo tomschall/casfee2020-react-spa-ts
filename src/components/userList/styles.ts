@@ -20,4 +20,7 @@ export default makeStyles((theme) => ({
     color: theme.palette.primary.light,
     fontWeight: 700,
   },
+  link: {
+    color: '#f9cd8b',
+  },
 }));

@@ -34,7 +34,7 @@ const SideBar: React.FC<any> = () => {
             <Divider />
             <Channels />
             <Divider />
-            <UserList />
+            <UserList user_id={user.sub} />
             <Divider />
           </div>
           <Logout />

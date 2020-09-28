@@ -9,6 +9,7 @@ import {
   ListItemText,
   Typography,
 } from '@material-ui/core';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import PersonIcon from '@material-ui/icons/Person';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
@@ -16,18 +17,44 @@ import useStyles from './styles';
 import Loader from '../../layout/shared/Loader';
 import { useWatchOnlineUsersSubscription } from '../../api/generated/graphql';
 
-const UsersList: React.FC = () => {
-  const { data, loading, error } = useWatchOnlineUsersSubscription();
+import { Link } from 'react-router-dom';
+import { useWatchDirectMessageChannelsSubscription } from '../../api/generated/graphql';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+import Alert from '@material-ui/lab/Alert';
+import { Channel_Type_Enum } from '../../api/generated/graphql';
+
+interface UsersListProps {
+  user_id: string;
+}
+
+const UsersList: React.FC<UsersListProps> = ({ user_id }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
+  const { data, loading, error } = useWatchDirectMessageChannelsSubscription({
+    variables: {
+      channel_type: Channel_Type_Enum.DirectMessage,
+      user_id,
+    },
+  });
+
+  if (error) {
+    console.log('error', error);
+    return <Alert severity="error">Channels could not be loaded.</Alert>;
+  }
 
   if (loading) {
     return <Loader />;
   }
+
+  if (data) {
+    console.log('data UserList', data);
+  }
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
 
   return (
     <>
@@ -39,15 +66,24 @@ const UsersList: React.FC = () => {
             </Badge>
           </ListItemIcon>
           <ListItemText>
-            <Typography variant="h6">Users</Typography>
+            <Typography variant="h6">Direct Messages</Typography>
           </ListItemText>
+          <ListItemIcon>
+            <AddCircleOutlineIcon />
+          </ListItemIcon>
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div">
-            {data?.users.map((user) => (
-              <ListItem button key={user.id}>
-                <ListItemText primary={user.username} />
+            {data?.channels.map((data: any) => (
+              <ListItem button key={data.id}>
+                <ListItemText
+                  primary={
+                    <Link className={classes.link} to={'/channel/' + data.name}>
+                      {data.user_channels[0]?.user.username}
+                    </Link>
+                  }
+                />
                 <ListItemIcon>
                   <Badge
                     classes={{ badge: classes.badge }}
