@@ -1,13 +1,12 @@
 import React from 'react';
 
 import { theme } from '../../../theme/theme';
-import { Container, Grid, Box } from '@material-ui/core/';
+import { Container, Grid } from '@material-ui/core/';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useStyles from './styles';
 
 import SideBar from '../Sidebar';
-import ChatApp from '../../../components/ChatApp';
-import MenuBar from '../MenuBar';
+import ChatApp from '../../../components/chatApp';
 
 const ChatContainer: React.FC = () => {
   const classes = useStyles();

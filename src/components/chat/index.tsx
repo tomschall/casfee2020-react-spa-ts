@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import MessageList from './MessageList';
-import { Message } from '../interfaces/message/message.interface';
-import { useWatchMessagesSubscription } from '../api/generated/graphql';
-import { Button, withStyles, Theme, Box } from '@material-ui/core';
+import { Grid, List } from '@material-ui/core';
+import MessageList from '../messageList';
+import { Message } from '../../interfaces/message/message.interface';
+import { useWatchMessagesSubscription } from '../../api/generated/graphql';
+
+import { Box } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import ChatInput from './ChatInput';
-import { blue } from '@material-ui/core/colors';
-import MenuBar from '../layout/shared/MenuBar';
+import MenuBar from '../../layout/shared/MenuBar';
+import useStyles from './styles';
 
 interface ChatProps {
   channelId: number;
 }
 
 const Chat: React.FC<ChatProps> = ({ channelId }) => {
+  const classes = useStyles();
   const [limit, setLimit] = useState(20);
   const [lastMessage, setLastMessage] = useState({});
 
@@ -56,18 +58,26 @@ const Chat: React.FC<ChatProps> = ({ channelId }) => {
 
   return (
     <>
-      <MessageList
-        messages={data?.messages as Message[]}
-        lastMessage={lastMessage}
-        preLastMessageId={preLastMessageId}
-      />
-      <Box maxWidth="xl" component="nav">
-        <MenuBar
-          channelId={channelId}
-          handleSetLastMessage={handleSetLastMessage}
-          preLastMessageId={preLastMessageId}
-        />
-      </Box>
+      <div className={classes.root}>
+        <Grid container>
+          <Grid item xs={12}>
+            <List>
+              <MessageList
+                messages={data?.messages as Message[]}
+                lastMessage={lastMessage}
+                preLastMessageId={preLastMessageId}
+              />
+            </List>
+          </Grid>
+          <Box maxWidth="xl" component="nav">
+            <MenuBar
+              channelId={channelId}
+              handleSetLastMessage={handleSetLastMessage}
+              preLastMessageId={preLastMessageId}
+            />
+          </Box>
+        </Grid>
+      </div>
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import routes from '../src/routes/routes';
@@ -7,7 +7,7 @@ import Home from './components/Home';
 import Loader from './layout/shared/Loader';
 import NotFound from './components/NotFound';
 import PrivateRoute from './components/PrivateRoute';
-import ChatBoard from './layout/chat';
+import ChatBoard from './layout/chatBoard';
 import { theme } from './theme/theme';
 
 const App: React.FC = (client) => {
@@ -23,7 +23,6 @@ const App: React.FC = (client) => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            // width: '100vw',
             height: '100vh',
             backgroundColor: theme.palette.background.paper,
           }}

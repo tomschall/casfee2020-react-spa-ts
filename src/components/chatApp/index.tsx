@@ -1,15 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router';
 import { useAuth0 } from '@auth0/auth0-react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid';
-import { useGetChannelByNameQuery } from '../api/generated/graphql';
-import ChannelTreadSidebar from './ChannelThreadSidebar';
-import Chat from './Chat';
+
+import Chat from '../chat';
+import Loader from '../../layout/shared/Loader';
+
 import { useRecoilState } from 'recoil';
-import { currentChannelState } from '../atom';
+import { useGetChannelByNameQuery } from '../../api/generated/graphql';
+import { currentChannelState } from '../../atom';
 
 const ChatApp: React.FC = (props) => {
   const [currentChannel, setCurrentChannel] = useRecoilState<any>(
@@ -35,7 +33,7 @@ const ChatApp: React.FC = (props) => {
   });
 
   if (isLoadingAuth0 || channelLoading) {
-    return <CircularProgress />;
+    return <Loader />;
   }
 
   if (

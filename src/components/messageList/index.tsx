@@ -1,58 +1,93 @@
-import React from 'react';
-import {
-  Badge,
-  Button,
-  Chip,
-  Grid,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  ListItemAvatar,
-  Avatar,
-  Typography,
-} from '@material-ui/core/';
-
-import PeopleIcon from '@material-ui/icons/People';
+import React, { useEffect, useRef } from 'react';
+import moment from 'moment';
+import { isObject } from 'util';
+import { Message } from '../../interfaces/message/message.interface';
+import ChannelThread from '../ChannelThread';
 import useStyles from './styles';
+import {
+  Avatar,
+  Box,
+  Divider,
+  ListItem,
+  ListItemAvatar,
+  ListItemIcon,
+  Badge,
+  Typography,
+} from '@material-ui/core';
 
-const MessageList: React.FC = () => {
+interface MessageProps {
+  messages: Message[];
+  lastMessage: any;
+  preLastMessageId: number;
+}
+
+const MessageList: React.FC<MessageProps> = ({
+  messages,
+  lastMessage,
+  preLastMessageId,
+}) => {
+  useEffect(() => {
+    scrollToBottom();
+  });
+
   const classes = useStyles();
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    if (isObject(messagesEndRef) && messagesEndRef.current !== null) {
+      messagesEndRef.current.scrollIntoView();
+    }
+  };
+
+  const renderAvatar = (user: any) => {
+    let image;
+    if (user === 'roli') {
+      image = 'https://placeimg.com/50/50/people?1';
+    } else {
+      image = 'https://placeimg.com/50/50/people?2';
+    }
+    return image;
+  };
+
+  const renderMessages = (message: Message) => {
+    return (
+      <ListItem key={message.id} className={classes.root}>
+        <ListItemAvatar>
+          <ListItemIcon>
+            <Badge variant="dot">
+              <Avatar alt="Username" src={renderAvatar(message.user)} />
+            </Badge>
+          </ListItemIcon>
+        </ListItemAvatar>
+        <Box component="div" display="flex" flexDirection="column" flex="1">
+          <Typography variant="caption">
+            {message.user.username} <i>{moment(message.timestamp).fromNow()}</i>
+          </Typography>
+          <Typography component="p" style={{ paddingBottom: '1rem' }}>
+            {message.text}
+          </Typography>
+          <Divider className={classes.vspace} />
+          <ChannelThread
+            message={message.id}
+            channel_threads={message.channel_threads}
+          />
+        </Box>
+      </ListItem>
+    );
+  };
+
   return (
     <>
-      <div className={classes.root}>
-        <Grid container>
-          <Grid item xs={12}>
-            <Chip
-              color="secondary"
-              variant="outlined"
-              size="small"
-              icon={<PeopleIcon />}
-              label="General"
-            />
-          </Grid>
-          <Grid item>
-            <ListItem>
-              <ListItemAvatar>
-                <ListItemIcon>
-                  <Badge variant="dot">
-                    <Avatar alt="Username" src="/chicken-chat-logo.svg" />
-                  </Badge>
-                </ListItemIcon>
-              </ListItemAvatar>
-              <ListItemText primary="Username" />
-            </ListItem>
-            <Typography component="p" className={classes.text}>
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-              erat, sed diam voluptua.
-            </Typography>
+      {[...messages]?.reverse()?.map((message) => renderMessages(message))}
 
-            <Button size="small" variant="outlined" color="secondary">
-              Reply
-            </Button>
-          </Grid>
-        </Grid>
-      </div>
+      {lastMessage &&
+      preLastMessageId !== 0 &&
+      preLastMessageId < lastMessage.id
+        ? renderMessages(lastMessage)
+        : ''}
+
+      <div ref={messagesEndRef} />
     </>
   );
 };
