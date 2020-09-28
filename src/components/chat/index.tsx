@@ -9,15 +9,18 @@ import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import MenuBar from '../../layout/shared/MenuBar';
 import useStyles from './styles';
+import { useHistory } from 'react-router-dom';
 
 interface ChatProps {
   channelId: number;
+  isPrivate: boolean;
 }
 
-const Chat: React.FC<ChatProps> = ({ channelId }) => {
+const Chat: React.FC<ChatProps> = ({ channelId, isPrivate }) => {
   const classes = useStyles();
   const [limit, setLimit] = useState(20);
   const [lastMessage, setLastMessage] = useState({});
+  let history = useHistory();
 
   let preLastMessageId = 0;
 
@@ -28,8 +31,6 @@ const Chat: React.FC<ChatProps> = ({ channelId }) => {
     },
     fetchPolicy: 'network-only',
   });
-
-  console.log(data);
 
   useEffect(() => {
     setLastMessage({});
@@ -56,11 +57,20 @@ const Chat: React.FC<ChatProps> = ({ channelId }) => {
     setLastMessage(lastMessage);
   };
 
+  const navigateToAddChannelMembers = () => {
+    history.push(`/addChannelMembers`);
+  };
+
   return (
     <>
       <div className={classes.root}>
         <Grid container>
           <Grid item xs={12} className={classes.messageContainer}>
+            {isPrivate && (
+              <button type="button" onClick={navigateToAddChannelMembers}>
+                Add users to channel
+              </button>
+            )}
             <List>
               <MessageList
                 messages={data?.messages as Message[]}

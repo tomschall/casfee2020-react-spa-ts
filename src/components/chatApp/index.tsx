@@ -47,7 +47,16 @@ const ChatApp: React.FC = (props) => {
     return <React.Fragment>Error: {error}</React.Fragment>;
   }
 
-  return <>{isAuthenticated && <Chat channelId={currentChannel?.id} />}</>;
+  return (
+    <>
+      {isAuthenticated && (
+        <Chat
+          channelId={currentChannel?.id}
+          isPrivate={currentChannel.is_private}
+        />
+      )}
+    </>
+  );
 };
 
 export default ChatApp;

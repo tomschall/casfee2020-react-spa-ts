@@ -7,6 +7,7 @@ import Home from './components/Home';
 import Loader from './layout/shared/Loader';
 import NotFound from './components/NotFound';
 import PrivateRoute from './components/PrivateRoute';
+import AddChannelMembers from './layout/addChannelMembers';
 import ChatBoard from './layout/chatBoard';
 import { theme } from './theme/theme';
 
@@ -46,6 +47,10 @@ const App: React.FC = (client) => {
             to={routes.signed.general}
           />
           <PrivateRoute path={routes.signed.dynamic} component={ChatBoard} />
+          <PrivateRoute
+            path="/addChannelMembers"
+            component={AddChannelMembers}
+          />
           <PrivateRoute path={routes.signed.dashboard} component={Dashboard} />
           <Route exact path="/not-found" render={(props) => NotFound} />
           <Redirect to="/not-found" />
@@ -55,6 +60,10 @@ const App: React.FC = (client) => {
           <Redirect exact from={routes.base} to={routes.unsigned.home} />
           <Route path={routes.unsigned.home} component={Home} />
           <PrivateRoute path="/channel/:channel" component={ChatBoard} />
+          <PrivateRoute
+            path="/addChannelMembers"
+            component={AddChannelMembers}
+          />
           <PrivateRoute path="/dashboard" component={Dashboard} />
           <Route exact path="/not-found" render={(props) => NotFound} />
           <Redirect to="/not-found" />

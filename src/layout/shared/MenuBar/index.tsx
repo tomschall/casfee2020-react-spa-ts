@@ -42,8 +42,6 @@ const MenuBar: React.FC<MenuBarProps> = ({
     currentChannelState,
   );
 
-  console.log('currentChannel', currentChannel);
-
   const [open, setOpen] = React.useState(false); // Sidebar default state
   const handleDrawerOpen = () => {
     setOpen(true);
