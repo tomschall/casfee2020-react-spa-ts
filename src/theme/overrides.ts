@@ -12,6 +12,9 @@ export default {
         backgroundColor: 'rgba(0,0,0,.5)',
         borderRadius: 20,
       },
+      a: {
+        textDecoration: 'none',
+      },
     },
   },
   MuiInputBase: {

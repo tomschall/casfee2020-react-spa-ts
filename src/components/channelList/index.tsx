@@ -66,22 +66,38 @@ const Channels: React.FC<any> = () => {
           <List component="div">
             {data?.channels.map((data: any) => (
               <ListItem key={data.id} button>
-                <ListItemIcon>
-                  <Badge classes={{ badge: classes.badge }} variant="dot">
+                {data?.name === currentChannel.name ? (
+                  <ListItemIcon>
+                    <Badge classes={{ badge: classes.badge }} variant="dot">
+                      {data.is_private === true ? (
+                        <EnhancedEncryptionOutlinedIcon />
+                      ) : (
+                        <PeopleIcon color="secondary" />
+                      )}
+                    </Badge>
+                  </ListItemIcon>
+                ) : (
+                  <ListItemIcon>
                     {data.is_private === true ? (
                       <EnhancedEncryptionOutlinedIcon />
                     ) : (
                       <PeopleIcon color="secondary" />
                     )}
-                  </Badge>
-                </ListItemIcon>
-                <ListItemText>
+                  </ListItemIcon>
+                )}
+                {data?.name === currentChannel.name ? (
+                  <ListItemText>
+                    <Link to={'/channel/' + data.name}>
+                      <Typography variant="h6" color="secondary">
+                        {data.name}
+                      </Typography>
+                    </Link>
+                  </ListItemText>
+                ) : (
                   <Link to={'/channel/' + data.name}>
-                    <Typography variant="h6" color="secondary">
-                      {data.name}
-                    </Typography>
+                    <ListItemText primary={data?.name} />
                   </Link>
-                </ListItemText>
+                )}
               </ListItem>
             ))}
           </List>

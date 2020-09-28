@@ -8,15 +8,12 @@ import {
   Avatar,
   Badge,
   Box,
-  Chip,
   Divider,
   ListItem,
   ListItemAvatar,
   ListItemIcon,
   Typography,
 } from '@material-ui/core';
-
-import FaceIcon from '@material-ui/icons/Face';
 
 interface MessageProps {
   messages: Message[];
