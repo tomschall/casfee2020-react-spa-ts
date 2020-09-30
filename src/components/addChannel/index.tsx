@@ -78,6 +78,7 @@ const AddChannel: React.FC = () => {
           is_private: channelIsPrivate,
         },
       });
+      setOpen(false);
     } catch (e) {
       setChannelName('');
       console.log('error on mutation');
