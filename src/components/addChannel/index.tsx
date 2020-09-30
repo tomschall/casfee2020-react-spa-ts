@@ -70,10 +70,11 @@ const AddChannel: React.FC = () => {
     }
 
     try {
+      const channelNameToLowerCase = channelName;
       await addChannel({
         variables: {
           owner_id: userAuth0.sub,
-          name: channelName,
+          name: channelNameToLowerCase.toLocaleLowerCase(),
           is_private: channelIsPrivate,
         },
       });
@@ -84,12 +85,12 @@ const AddChannel: React.FC = () => {
     }
   };
 
-  const handleChange = (event: any) => {
-    setChannelName(event.target.value);
+  const handleChange = (e: any) => {
+    setChannelName(e.target.value);
   };
 
-  const handleIsPrivateChange = (event: any) => {
-    setChannelIsPrivate(event.target.checked);
+  const handleIsPrivateChange = (e: any) => {
+    setChannelIsPrivate(e.target.checked);
   };
 
   if (error) {
