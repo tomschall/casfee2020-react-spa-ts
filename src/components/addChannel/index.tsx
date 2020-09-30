@@ -79,6 +79,7 @@ const AddChannel: React.FC = () => {
         },
       });
       setOpen(false);
+      setChannelName('');
     } catch (e) {
       setChannelName('');
       console.log('error on mutation');
