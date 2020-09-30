@@ -47,7 +47,6 @@ export default {
       '& span': {
         padding: 0,
         fontSize: '.875rem',
-        textTransform: 'capitalize',
       },
       '& h6': {
         fontSize: '.857rem',
