@@ -27,6 +27,13 @@ export default {
       },
     },
   },
+  MuiListItemIcon: {
+    root: {
+      '& :hover': {
+        color: '#F57C00',
+      },
+    },
+  },
   MuiContainer: {
     root: {
       padding: 0,
