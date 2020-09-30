@@ -7,8 +7,6 @@ import useStyles from './styles';
 import { Container } from '@material-ui/core';
 
 const ChatBoard: React.FC = () => {
-  const classes = useStyles();
-
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="xl">
