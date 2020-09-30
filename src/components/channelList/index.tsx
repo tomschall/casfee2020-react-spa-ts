@@ -24,9 +24,7 @@ import useStyles from './styles';
 
 const Channels: React.FC<any> = () => {
   const classes = useStyles();
-  const [currentChannel, setCurrentChannel] = useRecoilState<any>(
-    currentChannelState,
-  );
+  const [currentChannel] = useRecoilState<any>(currentChannelState);
 
   const [open, setOpen] = React.useState(true);
 

@@ -10,18 +10,18 @@ import {
   Typography,
 } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import Alert from '@material-ui/lab/Alert';
 import PersonIcon from '@material-ui/icons/Person';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import useStyles from './styles';
 import Loader from '../../layout/shared/Loader';
-import { useWatchOnlineUsersSubscription } from '../../api/generated/graphql';
 
 import { Link, useHistory } from 'react-router-dom';
-import { useWatchDirectMessageChannelsSubscription } from '../../api/generated/graphql';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-import Alert from '@material-ui/lab/Alert';
+import {
+  useWatchDirectMessageChannelsSubscription,
+  useWatchOnlineUsersSubscription,
+} from '../../api/generated/graphql';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
 
 interface DirectMessageUserListProps {

@@ -37,11 +37,11 @@ export const theme = createMuiTheme({
     },
   },
   shape: {
-    borderRadius: 0,
+    borderRadius: 2,
   },
   mixins: {
     toolbar: {
-      // minHeight: 100,
+      backgroundColor: '#151c66',
     },
   },
   spacing: 0,
@@ -59,7 +59,8 @@ export const theme = createMuiTheme({
     },
     MuiList: {
       style: {
-        // padding: 0,
+        paddingTop: 2,
+        paddingBottom: 2,
       },
     },
     MuiListItemIcon: {
