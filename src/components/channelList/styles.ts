@@ -9,9 +9,6 @@ export default makeStyles((theme) => ({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  label: {
-    padding: '10px 15px',
-  },
   badge: {
     backgroundColor: '#0f0',
   },
