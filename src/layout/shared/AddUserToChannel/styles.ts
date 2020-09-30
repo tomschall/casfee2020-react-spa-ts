@@ -19,7 +19,7 @@ export default makeStyles((theme) => ({
   },
   sidebar: {
     height: '100vh',
-    maxHeight: '80vh',
+    maxHeight: '200vh',
     display: 'flex',
     alignItems: 'flex-start',
     paddingTop: theme.spacing(5),

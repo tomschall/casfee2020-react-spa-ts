@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Grid, Divider } from '@material-ui/core';
+import { Box, Divider, Grid } from '@material-ui/core';
 import UserStatus from '../../../components/userStatus';
 import Channels from '../../../components/channelList';
 import UserList from '../../../components/userList';
@@ -15,7 +15,12 @@ const SideBar: React.FC<any> = () => {
 
   return (
     <>
-      <div className={classes.root}>
+      <Box
+        display="flex"
+        flexDirection="column"
+        flex="1"
+        className={classes.root}
+      >
         <Grid container>
           <Grid item xs={12}>
             <UserStatus user_id={user.sub} />
@@ -30,16 +35,16 @@ const SideBar: React.FC<any> = () => {
         </Grid>
         <Grid item xs={12}>
           <AddChannel />
-          <div className={classes.treeView}>
+          <Box className={classes.treeView}>
             <Divider />
             <Channels />
             <Divider />
             <UserList user_id={user.sub} />
             <Divider />
-          </div>
-          <Logout />
+            <Logout />
+          </Box>
         </Grid>
-      </div>
+      </Box>
     </>
   );
 };

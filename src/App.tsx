@@ -2,6 +2,9 @@ import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import routes from '../src/routes/routes';
+import { theme } from './theme/theme';
+import { Box } from '@material-ui/core';
+
 import Dashboard from './components/Dashboard';
 import Home from './components/Home';
 import Loader from './layout/shared/Loader';
@@ -10,7 +13,6 @@ import PrivateRoute from './components/PrivateRoute';
 import AddChannelMembers from './layout/addChannelMembers';
 import AddDirectMessageChannel from './components/addDirectMessageChannel';
 import ChatBoard from './layout/chatBoard';
-import { theme } from './theme/theme';
 
 const App: React.FC = (client) => {
   const { isAuthenticated, user, isLoading } = useAuth0();
@@ -20,17 +22,17 @@ const App: React.FC = (client) => {
   if (isLoading) {
     return (
       <>
-        <div
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
           style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
             height: '100vh',
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: theme.palette.background.default,
           }}
         >
           <Loader />
-        </div>
+        </Box>
       </>
     );
   }
@@ -48,6 +50,7 @@ const App: React.FC = (client) => {
             to={routes.signed.general}
           />
           <PrivateRoute path={routes.signed.dynamic} component={ChatBoard} />
+          <PrivateRoute path="/add-user-to-channel" component={ChatBoard} />
           <PrivateRoute
             path="/addChannelMembers"
             component={AddChannelMembers}

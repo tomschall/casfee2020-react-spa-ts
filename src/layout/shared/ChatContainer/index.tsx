@@ -12,20 +12,21 @@ const ChatContainer: React.FC = () => {
   const classes = useStyles();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
   return (
-    <>
-      <main className={classes.root}>
-        <Container maxWidth="xl" disableGutters className={classes.container}>
-          {matches === true && (
-            <Grid item xs={5} className={classes.sidebar}>
-              <SideBar />
-            </Grid>
-          )}
-          <Grid item xs={12}>
-            <ChatApp />
-          </Grid>
-        </Container>
-      </main>
-    </>
+    <Container
+      component="main"
+      maxWidth="xl"
+      disableGutters
+      className={classes.container}
+    >
+      {matches === true && (
+        <Grid item xs={5} className={classes.sidebar}>
+          <SideBar />
+        </Grid>
+      )}
+      <Grid item xs={12}>
+        <ChatApp />
+      </Grid>
+    </Container>
   );
 };
 

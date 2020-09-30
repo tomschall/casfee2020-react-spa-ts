@@ -2,9 +2,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'column',
     [theme.breakpoints.up('sm')]: {
       marginRight: theme.spacing(5),
       marginLeft: theme.spacing(5),
@@ -24,13 +21,10 @@ export default makeStyles((theme) => ({
   },
   treeView: {
     overflowY: 'scroll',
-    maxHeight: '300vh',
+    maxHeight: '50vh',
     marginRight: theme.spacing(0),
     marginLeft: theme.spacing(0),
     paddingRight: theme.spacing(0),
-  },
-  label: {
-    padding: '10px 15px',
   },
   branding: {
     display: 'flex',

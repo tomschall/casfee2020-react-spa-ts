@@ -10,6 +10,7 @@ import {
   Grid,
   TextField,
   Typography,
+  Snackbar,
 } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -29,6 +30,7 @@ import useStyles from './styles';
 const AddChannel: React.FC = () => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [openAlert, setOpenAlert] = React.useState(true);
   const [channelName, setChannelName] = useState('');
   const [channelIsPrivate, setChannelIsPrivate] = useState(false);
   const [addChannel, { error, loading }] = useAddChannelMutation();
@@ -36,6 +38,14 @@ const AddChannel: React.FC = () => {
 
   const handleClick = () => {
     setOpen(!open);
+  };
+
+  const handleCloseAlert = () => {
+    setOpenAlert(!openAlert);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const handleSubmit = async (e: any) => {
@@ -85,9 +95,19 @@ const AddChannel: React.FC = () => {
         <List component="div">
           {error && (
             <ListItem className={classes.nested}>
-              <Alert severity={'error'}>
-                You can not use this name as it is already taken.
-              </Alert>
+              <Snackbar
+                open={openAlert}
+                autoHideDuration={3000}
+                onClose={handleCloseAlert}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+              >
+                <Alert severity={'error'} onClose={handleCloseAlert}>
+                  You can not use this name as it is already taken.
+                </Alert>
+              </Snackbar>
             </ListItem>
           )}
           <ListItem className={classes.nested}>
