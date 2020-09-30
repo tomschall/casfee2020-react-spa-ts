@@ -12,6 +12,8 @@ import {
   Typography,
   Snackbar,
 } from '@material-ui/core';
+import { theme } from '../../theme/theme';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -29,29 +31,43 @@ import useStyles from './styles';
 
 const AddChannel: React.FC = () => {
   const classes = useStyles();
+  const matches = useMediaQuery(theme.breakpoints.up('md'));
   const [open, setOpen] = React.useState(false);
   const [openAlert, setOpenAlert] = React.useState(true);
+  const [openSuccess, setOpenSuccess] = React.useState(true);
   const [channelName, setChannelName] = useState('');
   const [channelIsPrivate, setChannelIsPrivate] = useState(false);
-  const [addChannel, { error, loading }] = useAddChannelMutation();
+  const [addChannel, { error, loading, called }] = useAddChannelMutation();
   const { user: userAuth0, isLoading: loadingAuth0 } = useAuth0();
+
+  const setSnackbarPosition = () => {
+    switch (matches) {
+      case true:
+        return 'right';
+      case false:
+        return 'center';
+
+      default:
+        return 'right';
+    }
+  };
 
   const handleClick = () => {
     setOpen(!open);
   };
 
-  const handleCloseAlert = () => {
+  const handleAlert = () => {
     setOpenAlert(!openAlert);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    if (!channelName) return;
+    if (!channelName) {
+      return;
+    } else {
+      setOpenAlert(true);
+    }
 
     try {
       await addChannel({
@@ -62,6 +78,7 @@ const AddChannel: React.FC = () => {
         },
       });
     } catch (e) {
+      setChannelName('');
       console.log('error on mutation');
       return;
     }
@@ -75,7 +92,9 @@ const AddChannel: React.FC = () => {
     setChannelIsPrivate(event.target.checked);
   };
 
-  if (error) console.log('error mutation', error);
+  if (error) {
+    console.log('error mutation', error);
+  }
 
   return (
     <List className={classes.root}>
@@ -97,14 +116,14 @@ const AddChannel: React.FC = () => {
             <ListItem className={classes.nested}>
               <Snackbar
                 open={openAlert}
-                autoHideDuration={3000}
-                onClose={handleCloseAlert}
+                autoHideDuration={5000}
+                onClose={handleAlert}
                 anchorOrigin={{
                   vertical: 'top',
-                  horizontal: 'right',
+                  horizontal: setSnackbarPosition(),
                 }}
               >
-                <Alert severity={'error'} onClose={handleCloseAlert}>
+                <Alert severity={'error'} onClose={handleAlert}>
                   You can not use this name as it is already taken.
                 </Alert>
               </Snackbar>
