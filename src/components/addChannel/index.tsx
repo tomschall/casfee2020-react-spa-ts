@@ -70,11 +70,10 @@ const AddChannel: React.FC = () => {
     }
 
     try {
-      const channelNameToLowerCase = channelName;
       await addChannel({
         variables: {
           owner_id: userAuth0.sub,
-          name: channelNameToLowerCase.toLocaleLowerCase(),
+          name: channelName.toLocaleLowerCase(),
           is_private: channelIsPrivate,
         },
       });
