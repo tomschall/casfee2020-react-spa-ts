@@ -7,8 +7,8 @@ import {
   CircularProgress,
 } from '@material-ui/core';
 import {
-  useWatchUsersSubscription,
   useValidateAndAddDirectMessageChannelMutation,
+  useWatchUsersWhoHaveSubscribedToDirectMessageChannelSubscription,
 } from '../../api/generated/graphql';
 import { Alert } from '@material-ui/lab';
 import { v4 as uuidv4 } from 'uuid';
@@ -34,7 +34,15 @@ const AddDirectMessageChannel: React.FC = () => {
 
   let history = useHistory();
 
-  const { data: users, loading, error } = useWatchUsersSubscription();
+  const {
+    data: users,
+    loading,
+    error,
+  } = useWatchUsersWhoHaveSubscribedToDirectMessageChannelSubscription({
+    variables: {
+      user_id,
+    },
+  });
 
   const [
     validateAndAddDirectMessageChannelMutation,
@@ -76,13 +84,17 @@ const AddDirectMessageChannel: React.FC = () => {
         back to general channel...
       </button>
       {users
-        ? users.user.map((dm_user: any) => (
-            <MenuItem
-              onClick={() => handleAddUser(user_id, dm_user?.auth0_user_id)}
-            >
-              {dm_user.username}
-            </MenuItem>
-          ))
+        ? users.user.map((dm_user: any) => {
+            return dm_user.user_channels.length === 0 ? (
+              <MenuItem
+                onClick={() => handleAddUser(user_id, dm_user?.auth0_user_id)}
+              >
+                {dm_user.username}
+              </MenuItem>
+            ) : (
+              false
+            );
+          })
         : ''}
     </React.Fragment>
   );
