@@ -83,19 +83,23 @@ const AddDirectMessageChannel: React.FC = () => {
       <button type="button" onClick={handleClick}>
         back to general channel...
       </button>
-      {users
-        ? users.user.map((dm_user: any) => {
-            return dm_user.user_channels.length === 0 ? (
-              <MenuItem
-                onClick={() => handleAddUser(user_id, dm_user?.auth0_user_id)}
-              >
-                {dm_user.username}
-              </MenuItem>
-            ) : (
-              false
-            );
-          })
-        : ''}
+      <p id="simple-modal-description">
+        {users && users.user.length > 0
+          ? 'Select users that you wanna send direct messages to.'
+          : 'At the moment there are no more users to select. You have to select them from the direct message sidebar.'}
+      </p>
+      {users &&
+        users.user.map((dm_user: any) => {
+          return dm_user.user_channels.length === 0 ? (
+            <MenuItem
+              onClick={() => handleAddUser(user_id, dm_user?.auth0_user_id)}
+            >
+              {dm_user.username}
+            </MenuItem>
+          ) : (
+            false
+          );
+        })}
     </React.Fragment>
   );
 };
