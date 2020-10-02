@@ -88,6 +88,7 @@ subscription watchUsersWhoHaveNotSubscribedToChannel(
       _not: { user_channels: { channel_id: { _eq: $channel_id } } }
       auth0_user_id: { _neq: $user_id }
     }
+    order_by: { username: asc }
   ) {
     auth0_user_id
     username
@@ -97,7 +98,10 @@ subscription watchUsersWhoHaveNotSubscribedToChannel(
 subscription watchUsersWhoHaveSubscribedToDirectMessageChannel(
   $user_id: String!
 ) {
-  user(where: { auth0_user_id: { _neq: $user_id } }) {
+  user(
+    where: { auth0_user_id: { _neq: $user_id } }
+    order_by: { username: asc }
+  ) {
     auth0_user_id
     username
     user_channels(
