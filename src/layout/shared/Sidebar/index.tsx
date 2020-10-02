@@ -3,7 +3,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Box, Divider, Grid } from '@material-ui/core';
 import UserStatus from '../../../components/userStatus';
 import Channels from '../../../components/channelList';
-import UserList from '../../../components/userList';
+import DirectMessageUserList from '../../../components/directMessageUserList';
 import Logout from '../../../components/logout';
 import AddChannel from '../../../components/addChannel';
 
@@ -39,7 +39,7 @@ const SideBar: React.FC<any> = () => {
             <Divider />
             <Channels />
             <Divider />
-            <UserList user_id={user.sub} />
+            <DirectMessageUserList user_id={user.sub} />
             <Divider />
             <Logout />
           </Box>

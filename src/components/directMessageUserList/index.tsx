@@ -24,14 +24,22 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
 
-interface UsersListProps {
+interface DirectMessageUserListProps {
   user_id: string;
 }
 
-const UsersList: React.FC<UsersListProps> = ({ user_id }) => {
+const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
+  user_id,
+}) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   let history = useHistory();
+
+  const {
+    data: onlineUsers,
+    loading: onlineUsersLoading,
+    error: onlineUsersError,
+  } = useWatchOnlineUsersSubscription();
 
   const { data, loading, error } = useWatchDirectMessageChannelsSubscription({
     variables: {
@@ -40,9 +48,12 @@ const UsersList: React.FC<UsersListProps> = ({ user_id }) => {
     },
   });
 
-  if (error) {
+  if (error || onlineUsersError) {
     console.log('error', error);
-    return <Alert severity="error">Channels could not be loaded.</Alert>;
+    console.log('onlineUsersError', onlineUsersError);
+    return (
+      <Alert severity="error">A DirectMessageUserListError occured.</Alert>
+    );
   }
 
   if (loading) {
@@ -55,6 +66,15 @@ const UsersList: React.FC<UsersListProps> = ({ user_id }) => {
 
   const navigateToAddDirectMessageChannelMembers = () => {
     history.push(`/addDirectMessageChannelMembers`);
+  };
+
+  const setOnlineUsersStatus = (user_id: any) => {
+    if (user_id === undefined) return true;
+    const onlineUser = onlineUsers?.users.filter((u) => {
+      return user_id === u.auth0_user_id ? true : false;
+    });
+
+    return onlineUser?.length ? false : true;
   };
 
   return (
@@ -78,26 +98,34 @@ const UsersList: React.FC<UsersListProps> = ({ user_id }) => {
         </ListItem>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div">
-            {data?.channels.map((data: any) => (
-              <ListItem button key={data.id}>
-                <ListItemText
-                  primary={
-                    <Link className={classes.link} to={'/channel/' + data.name}>
-                      {data.user_channels[0]?.user.username}
-                    </Link>
-                  }
-                />
-                <ListItemIcon>
-                  <Badge
-                    classes={{ badge: classes.badge }}
-                    variant="dot"
-                    // invisible
-                  >
-                    <Avatar alt="Username" src="/chicken-chat-logo.svg" />
-                  </Badge>
-                </ListItemIcon>
-              </ListItem>
-            ))}
+            {data?.channels.map((data: any) => {
+              const onlineUser = setOnlineUsersStatus(
+                data.user_channels[0]?.user.auth0_user_id,
+              );
+              return (
+                <ListItem button key={data.id}>
+                  <ListItemText
+                    primary={
+                      <Link
+                        className={classes.link}
+                        to={'/channel/' + data.name}
+                      >
+                        {data.user_channels[0]?.user.username}
+                      </Link>
+                    }
+                  />
+                  <ListItemIcon>
+                    <Badge
+                      classes={{ badge: classes.badge }}
+                      variant="dot"
+                      invisible={onlineUser}
+                    >
+                      <Avatar alt="Username" src="/chicken-chat-logo.svg" />
+                    </Badge>
+                  </ListItemIcon>
+                </ListItem>
+              );
+            })}
           </List>
         </Collapse>
       </List>
@@ -105,4 +133,4 @@ const UsersList: React.FC<UsersListProps> = ({ user_id }) => {
   );
 };
 
-export default UsersList;
+export default DirectMessageUserList;

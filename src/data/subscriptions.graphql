@@ -34,6 +34,7 @@ subscription watchOnlineUsers {
   users: user_online(order_by: { username: asc }) {
     id
     username
+    auth0_user_id
   }
 }
 
