@@ -98,34 +98,28 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
         </ListItem>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div">
-            {data?.channels.map((data: any) => {
-              const onlineUser = setOnlineUsersStatus(
-                data.user_channels[0]?.user.auth0_user_id,
-              );
-              return (
-                <ListItem button key={data.id}>
-                  <ListItemText
-                    primary={
-                      <Link
-                        className={classes.link}
-                        to={'/channel/' + data.name}
-                      >
-                        {data.user_channels[0]?.user.username}
-                      </Link>
-                    }
-                  />
-                  <ListItemIcon>
-                    <Badge
-                      classes={{ badge: classes.badge }}
-                      variant="dot"
-                      invisible={onlineUser}
-                    >
-                      <Avatar alt="Username" src="/chicken-chat-logo.svg" />
-                    </Badge>
-                  </ListItemIcon>
-                </ListItem>
-              );
-            })}
+            {data?.channels.map((data: any) => (
+              <ListItem button key={data.id}>
+                <ListItemText
+                  primary={
+                    <Link className={classes.link} to={'/channel/' + data.name}>
+                      {data.user_channels[0]?.user.username}
+                    </Link>
+                  }
+                />
+                <ListItemIcon>
+                  <Badge
+                    classes={{ badge: classes.badge }}
+                    variant="dot"
+                    invisible={setOnlineUsersStatus(
+                      data.user_channels[0]?.user.auth0_user_id,
+                    )}
+                  >
+                    <Avatar alt="Username" src="/chicken-chat-logo.svg" />
+                  </Badge>
+                </ListItemIcon>
+              </ListItem>
+            ))}
           </List>
         </Collapse>
       </List>
