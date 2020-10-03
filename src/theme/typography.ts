@@ -13,6 +13,11 @@ export default {
     fontSize: 12,
     fontWeight: 400,
   },
+  h1: {
+    fontWeight: 700,
+    fontSize: 18,
+    paddingBottom: 16,
+  },
   h6: {
     fontWeight: 700,
     fontSize: 16,

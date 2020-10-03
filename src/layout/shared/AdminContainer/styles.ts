@@ -10,7 +10,7 @@ export default makeStyles((theme) => ({
     paddingBottom: theme.spacing(0),
   },
   container: {
-    marginLeft: theme.spacing(5),
+    margin: theme.spacing(5),
     marginTop: theme.spacing(5),
   },
   sidebar: {

@@ -1,11 +1,15 @@
 import React from 'react';
-
+import { Route, Switch } from 'react-router-dom';
+import routes from '../../../routes/routes';
 import { theme } from '../../../theme/theme';
-import { Container, Divider, Grid } from '@material-ui/core/';
+import { Container, Divider, Grid, Typography } from '@material-ui/core/';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useStyles from './styles';
 
 import AdminSidebar from '../../shared/AdminSidebar';
+import AdminUserList from '../../../components/AdminUserList';
+import AdminPollings from '../../../components/AdminPollings';
+import NotFound from '../../../components/NotFound';
 
 const AdminContainer: React.FC = () => {
   const classes = useStyles();
@@ -18,13 +22,22 @@ const AdminContainer: React.FC = () => {
       className={classes.root}
     >
       {matches === true && (
-        <Grid item xs={5} className={classes.sidebar}>
+        <Grid item xs={4} className={classes.sidebar}>
           <AdminSidebar />
         </Grid>
       )}
-      <Grid item xs={12} className={classes.container}>
-        <h1>Admin Dashboard</h1>
+      <Grid item xs={12} md={8} className={classes.container}>
+        <Typography variant="h1">Admin Dashboard</Typography>
         <Divider />
+        <Switch>
+          <Route exact path={routes.signed.users} component={AdminUserList} />
+          <Route
+            exact
+            path={routes.signed.pollings}
+            component={AdminPollings}
+          />
+          <Route component={NotFound} />
+        </Switch>
       </Grid>
     </Container>
   );

@@ -5,6 +5,8 @@ export default {
     dynamic: '/channel/:channel',
     general: '/channel/general',
     dashboard: '/dashboard',
+    users: '/dashboard/users',
+    pollings: '/dashboard/pollings',
     addUserToChannel: '/add-user-to-channel',
   },
   unsigned: {
