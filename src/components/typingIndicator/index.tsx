@@ -7,13 +7,19 @@ import FaceIcon from '@material-ui/icons/Face';
 import Loader from '../../layout/shared/Loader';
 import { useGetUserIsTypingSubscription } from '../../api/generated/graphql';
 import useStyles from './styles';
+import { useRecoilState } from 'recoil';
+import { currentChannelState } from '../../atom';
 
 const TypingIndicator: React.FC = () => {
   const classes = useStyles();
   const { user } = useAuth0();
+  const [currentChannel, setCurrentChannel] = useRecoilState<any>(
+    currentChannelState,
+  );
   const { data, loading, error } = useGetUserIsTypingSubscription({
     variables: {
       self_id: user.sub,
+      channel_id: currentChannel.id,
     },
   });
 

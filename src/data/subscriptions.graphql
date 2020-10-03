@@ -116,9 +116,12 @@ subscription watchUsersWhoHaveSubscribedToDirectMessageChannel(
   }
 }
 
-subscription getUserIsTyping($self_id: String!) {
+subscription getUserIsTyping($self_id: String!, $channel_id: Int!) {
   user_typing(
-    where: { auth0_user_id: { _neq: $self_id } }
+    where: {
+      auth0_user_id: { _neq: $self_id }
+      _and: { last_typed_channel: { _eq: $channel_id } }
+    }
     limit: 1
     order_by: { last_typed: desc }
   ) {

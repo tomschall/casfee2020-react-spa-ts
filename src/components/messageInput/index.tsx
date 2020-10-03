@@ -48,16 +48,17 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
   const { user } = useAuth0();
   const [text, setText] = useState('');
 
+  const channelId = props.channelId;
+
   const [
     sendTypingEventMutation,
     { data, loading, error },
   ] = useSendTypingEventMutation({
     variables: {
-      user_id: user.auth0_user_id,
+      user_id: user.sub,
+      channel_id: channelId,
     },
   });
-
-  const channelId = props.channelId;
 
   const handleTyping = (text: string) => {
     const textLength = text.length;

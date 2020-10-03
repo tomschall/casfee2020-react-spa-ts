@@ -252,32 +252,35 @@
     permission:
       check: {}
       columns:
-      - id
       - auth0_user_id
-      - username
+      - id
       - last_seen
       - last_typed
+      - last_typed_channel
+      - username
       backend_only: false
   select_permissions:
   - role: user
     permission:
       columns:
-      - id
-      - username
-      - last_typed
-      - last_seen
       - auth0_user_id
+      - id
+      - last_seen
+      - last_typed
+      - last_typed_channel
+      - username
       filter: {}
       allow_aggregations: true
   update_permissions:
   - role: user
     permission:
       columns:
-      - id
       - auth0_user_id
-      - username
+      - id
       - last_seen
       - last_typed
+      - last_typed_channel
+      - username
       filter:
         _and:
         - auth0_user_id:
@@ -332,5 +335,6 @@
       - id
       - last_seen
       - last_typed
+      - last_typed_channel
       - username
       filter: {}
