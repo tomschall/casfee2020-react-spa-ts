@@ -42,49 +42,43 @@ const MessageList: React.FC<MessageProps> = ({
 
   const renderMessages = (message: Message) => {
     return (
-      <React.Fragment>
-        <ListItem key={message.id} className={classes.root}>
+      <ListItem key={message.id} className={classes.root}>
+        <Box display="flex" justifyContent="flex-start" alignItems="flex-start">
+          <ListItemAvatar>
+            <ListItemIcon>
+              <Badge variant="dot">
+                <Avatar alt="Username" src="https://picsum.photos/100" />
+              </Badge>
+            </ListItemIcon>
+          </ListItemAvatar>
+        </Box>
+        <Box component="div" display="flex" flexDirection="column" flex="1">
           <Box
             display="flex"
             justifyContent="flex-start"
             alignItems="flex-start"
           >
-            <ListItemAvatar>
-              <ListItemIcon>
-                <Badge variant="dot">
-                  <Avatar alt="Username" src="https://picsum.photos/100" />
-                </Badge>
-              </ListItemIcon>
-            </ListItemAvatar>
-          </Box>
-          <Box component="div" display="flex" flexDirection="column" flex="1">
-            <Box
-              display="flex"
-              justifyContent="flex-start"
-              alignItems="flex-start"
-            >
-              <Typography variant="caption">
-                <strong>{message.user.username} </strong>
-                <i>{moment(message.timestamp).fromNow()}</i>
-              </Typography>
-            </Box>
-            <Typography component="p" className={classes.messageText}>
-              {message.text}
+            <Typography variant="caption">
+              <strong>{message.user.username} </strong>
+              <i>{moment(message.timestamp).fromNow()}</i>
             </Typography>
-            <Divider className={classes.vspace} />
-            <ChannelThread
-              message={message.id}
-              channel_threads={message.channel_threads}
-            />
           </Box>
-        </ListItem>
-      </React.Fragment>
+          <Typography component="p" className={classes.messageText}>
+            {message.text}
+          </Typography>
+          <Divider className={classes.vspace} />
+          <ChannelThread
+            message={message.id}
+            channel_threads={message.channel_threads}
+          />
+        </Box>
+      </ListItem>
     );
   };
 
   return (
     <>
-      {[...messages]?.reverse()?.map((message) => renderMessages(message))}
+      {[...messages]?.reverse()?.map((message, i) => renderMessages(message))}
 
       {lastMessage &&
       preLastMessageId !== 0 &&

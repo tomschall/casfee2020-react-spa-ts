@@ -40,7 +40,7 @@ const Channels: React.FC<any> = () => {
     },
   });
 
-  if (error) {
+  if (error || !currentChannel?.name) {
     return <Alert severity="error">Channels could not be loaded.</Alert>;
   }
 
@@ -62,9 +62,9 @@ const Channels: React.FC<any> = () => {
         </ListItem>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div">
-            {data?.channels.map((data: any) => (
+            {data?.channels?.map((data: any) => (
               <ListItem key={data.id} button>
-                {data?.name === currentChannel.name ? (
+                {data?.name === currentChannel?.name ? (
                   <ListItemIcon>
                     <Badge classes={{ badge: classes.badge }} variant="dot">
                       {data.is_private === true ? (
@@ -83,7 +83,7 @@ const Channels: React.FC<any> = () => {
                     )}
                   </ListItemIcon>
                 )}
-                {data?.name === currentChannel.name ? (
+                {data?.name === currentChannel?.name ? (
                   <ListItemText>
                     <Link to={'/channel/' + data.name}>
                       <Typography variant="h6" color="secondary">

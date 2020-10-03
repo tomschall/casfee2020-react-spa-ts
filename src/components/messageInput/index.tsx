@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { TextField, Button } from '@material-ui/core';
 import { theme } from '../../theme/theme';
 import Icon from '@material-ui/core/Icon';
 import useStyles from './styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useInsertMessageMutation } from '../../api/generated/graphql';
+import {
+  useInsertMessageMutation,
+  useSendTypingEventMutation,
+} from '../../api/generated/graphql';
+import TypingIndicator from '../typingIndicator';
 
 interface ChatInputProps {
   channelId: number;
@@ -44,9 +48,22 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
   const { user } = useAuth0();
   const [text, setText] = useState('');
 
+  const [
+    sendTypingEventMutation,
+    { data, loading, error },
+  ] = useSendTypingEventMutation({
+    variables: {
+      user_id: user.auth0_user_id,
+    },
+  });
+
   const channelId = props.channelId;
 
   const handleTyping = (text: string) => {
+    const textLength = text.length;
+    if ((textLength !== 0 && textLength % 5 === 0) || textLength === 1) {
+      sendTypingEventMutation();
+    }
     setText(text);
   };
 
@@ -91,6 +108,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
       className={classes.root}
       onSubmit={handleSubmit}
     >
+      <TypingIndicator />
       <TextField
         value={text}
         autoFocus={true}
@@ -114,6 +132,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
           className: classes.messageInput,
         }}
       />
+
       <Button
         size={setButtonSize()}
         type={'submit'}

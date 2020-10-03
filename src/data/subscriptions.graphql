@@ -115,3 +115,14 @@ subscription watchUsersWhoHaveSubscribedToDirectMessageChannel(
     }
   }
 }
+
+subscription getUserIsTyping($self_id: String!) {
+  user_typing(
+    where: { auth0_user_id: { _neq: $self_id } }
+    limit: 1
+    order_by: { last_typed: desc }
+  ) {
+    last_typed
+    username
+  }
+}

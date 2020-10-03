@@ -328,8 +328,9 @@
   - role: user
     permission:
       columns:
+      - auth0_user_id
       - id
-      - username
-      - last_typed
       - last_seen
+      - last_typed
+      - username
       filter: {}

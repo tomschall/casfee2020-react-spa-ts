@@ -60,3 +60,9 @@ mutation addChannelUser($channel_id: Int!, $user_id: String!) {
     affected_rows
   }
 }
+
+mutation sendTypingEvent($user_id: Int) {
+  update_user(_set: { last_typed: "now()" }, where: { id: { _eq: $user_id } }) {
+    affected_rows
+  }
+}
