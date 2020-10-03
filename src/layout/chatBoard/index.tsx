@@ -4,9 +4,9 @@ import { Container } from '@material-ui/core';
 
 const ChatBoard: React.FC = () => {
   return (
-      <Container maxWidth="xl">
-        <ChatContainer />
-      </Container>
+    <Container maxWidth="xl">
+      <ChatContainer />
+    </Container>
   );
 };
 
