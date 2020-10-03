@@ -38,6 +38,15 @@ query getChannels {
   }
 }
 
+query getUserList {
+  users: user {
+    username
+    id
+    auth0_user_id
+    last_seen
+  }
+}
+
 query getChannelByName($name: String!) {
   channel(where: { name: { _eq: $name } }) {
     name
