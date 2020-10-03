@@ -59,8 +59,7 @@ export const theme = createMuiTheme({
     },
     MuiList: {
       style: {
-        paddingTop: 2,
-        paddingBottom: 2,
+        padding: 0,
       },
     },
     MuiListItemIcon: {
