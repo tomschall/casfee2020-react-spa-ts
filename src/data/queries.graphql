@@ -71,3 +71,11 @@ query getAuth0UserById($user_id: String) {
     }
   }
 }
+
+query getPollQuestions {
+  questions: poll_questions {
+    id
+    owner_id
+    text
+  }
+}

@@ -37,7 +37,7 @@ export const theme = createMuiTheme({
     },
   },
   shape: {
-    borderRadius: 0,
+    borderRadius: 2,
   },
   mixins: {
     toolbar: {
