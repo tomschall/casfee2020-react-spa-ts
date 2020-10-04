@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, List, Button } from '@material-ui/core';
-import MessageList from '../messageList';
+import MessageList from '../MessageList';
 import { Message } from '../../interfaces/message/message.interface';
 import {
   useWatchMessagesSubscription,

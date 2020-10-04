@@ -1,5 +1,6 @@
 export default {
   base: '/',
+  notfound: '/404-not-found',
   signed: {
     base: '/channel',
     dynamic: '/channel/:channel',
@@ -11,5 +12,6 @@ export default {
   },
   unsigned: {
     home: '/home',
+    dynamic: '/channel/:channel',
   },
 };

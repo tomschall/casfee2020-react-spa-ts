@@ -13,8 +13,8 @@ import {
   Grid,
   Toolbar,
 } from '@material-ui/core';
-import SideBar from '../Sidebar';
-import MessageInput from '../../../components/messageInput';
+import SideBar from '../SideBar';
+import MessageInput from '../../../components/MessageInput';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ExpandMore from '@material-ui/icons/ExpandMore';

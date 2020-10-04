@@ -1,10 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link as Linky } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import {
   Box,
+  Button,
   Divider,
   Grid,
+  Link,
   List,
   ListSubheader,
   ListItem,
@@ -14,9 +16,8 @@ import {
 } from '@material-ui/core';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
-import UserStatus from '../../../components/userStatus';
-import Channels from '../../../components/channelList';
-import Logout from '../../../components/logout';
+import UserStatus from '../../../components/UserStatus';
+import Logout from '../../../components/Logout';
 
 import useStyles from './styles';
 
@@ -62,11 +63,11 @@ const AdminSidebar: React.FC<any> = () => {
                   <PeopleOutlineIcon />
                 </ListItemIcon>
                 <ListItemText>
-                  <Link to={'/dashboard/users'}>
+                  <Linky to={'/dashboard/users'}>
                     <Typography variant="h6" color="secondary">
                       Users
                     </Typography>
-                  </Link>
+                  </Linky>
                 </ListItemText>
               </ListItem>
               <ListItem button>
@@ -74,15 +75,24 @@ const AdminSidebar: React.FC<any> = () => {
                   <HowToVoteIcon />
                 </ListItemIcon>
                 <ListItemText>
-                  <Link to={'/dashboard/pollings'}>
+                  <Linky to={'/dashboard/pollings'}>
                     <Typography variant="h6" color="secondary">
                       Pollings
                     </Typography>
-                  </Link>
+                  </Linky>
                 </ListItemText>
               </ListItem>
             </List>
             <Divider />
+            <Link
+              component="button"
+              variant="body2"
+              onClick={() => {
+                console.info("I'm a button.");
+              }}
+            >
+              Button Link
+            </Link>
             <Logout />
           </Box>
         </Grid>

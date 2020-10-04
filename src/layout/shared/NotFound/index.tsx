@@ -9,7 +9,7 @@ const NotFound: React.FC = () => {
 
   return (
     <Box className={classes.root}>
-      <h2>Upppsss ....!</h2>
+      <h2>Upppsss ....! Something went wrong!</h2>
     </Box>
   );
 };

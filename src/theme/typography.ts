@@ -7,7 +7,7 @@ export default {
   body2: {
     fontSize: 16,
     fontWeight: 500,
-    color: '#f9cd8b',
+    // color: '#f9cd8b',
   },
   button: {
     fontSize: 12,

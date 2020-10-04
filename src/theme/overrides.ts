@@ -17,6 +17,11 @@ export default {
       },
     },
   },
+  MuiTableCell: {
+    root: {
+      borderBottom: 'none',
+    },
+  },
   MuiInputBase: {
     root: {},
   },

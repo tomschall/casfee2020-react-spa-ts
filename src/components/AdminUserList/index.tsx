@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import {
   Avatar,
   Box,
@@ -13,10 +14,14 @@ import {
 } from '@material-ui/core';
 import { useGetUserListQuery } from '../../api/generated/graphql';
 import Loader from '../../layout/shared/Loader';
+import NotFound from '../../layout/shared/NotFound';
 import useStyles from './styles';
 
 const AdminUserList: React.FC = () => {
   const classes = useStyles();
+  const [auth0User, setAuth0User] = useState(useAuth0);
+  console.log('auth0User', auth0User);
+
   const { data, loading, error } = useGetUserListQuery({
     variables: {},
   });
@@ -26,7 +31,7 @@ const AdminUserList: React.FC = () => {
   }
 
   if (error) {
-    return <>Error loading users</>;
+    return <NotFound />;
   }
 
   return (

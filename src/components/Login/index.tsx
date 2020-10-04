@@ -2,7 +2,7 @@ import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import Button from '@material-ui/core/Button';
 
-const LoginButton: React.FC<any> = () => {
+const Login: React.FC<any> = () => {
   const { loginWithRedirect } = useAuth0();
 
   const checkAndLogin = () => {
@@ -18,10 +18,10 @@ const LoginButton: React.FC<any> = () => {
         color="secondary"
         onClick={checkAndLogin}
       >
-        Log in
+        Login
       </Button>
     </>
   );
 };
 
-export default LoginButton;
+export default Login;

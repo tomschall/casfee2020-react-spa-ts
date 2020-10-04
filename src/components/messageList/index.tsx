@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import moment from 'moment';
 import { isObject } from 'util';
 import { Message } from '../../interfaces/message/message.interface';
-import ChannelThread from '../ChannelThread';
+import ThreadChannelButton from '../ThreadChannelButton';
 import useStyles from './styles';
 import {
   Avatar,
@@ -14,6 +14,7 @@ import {
   ListItemIcon,
   Typography,
 } from '@material-ui/core';
+import ChannelThread from '../ChannelThread';
 
 interface MessageProps {
   messages: Message[];
@@ -62,6 +63,11 @@ const MessageList: React.FC<MessageProps> = ({
               <strong>{message.user.username} </strong>
               <i>{moment(message.timestamp).fromNow()}</i>
             </Typography>
+            <Divider className={classes.vspace} />
+            <ThreadChannelButton
+              message={message.id}
+              channel_threads={message.channel_threads}
+            />
           </Box>
           <Typography component="p" className={classes.messageText}>
             {message.text}

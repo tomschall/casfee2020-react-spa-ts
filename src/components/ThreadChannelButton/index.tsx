@@ -1,10 +1,10 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useRecoilState } from 'recoil';
-import { testState } from '../atom.js';
+import { testState } from '../../atom.js';
 import { Button } from '@material-ui/core';
 
-const ChannelThread: React.FC<any> = (props) => {
+const ThreadChannelButton: React.FC<any> = (props) => {
   const { isAuthenticated, loginWithRedirect } = useAuth0();
   const [recoilTestState, setTestState] = useRecoilState<any>(testState);
 
@@ -32,4 +32,4 @@ const ChannelThread: React.FC<any> = (props) => {
   );
 };
 
-export default ChannelThread;
+export default ThreadChannelButton;

@@ -5,8 +5,8 @@ import { Container, Grid } from '@material-ui/core/';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useStyles from './styles';
 
-import SideBar from '../Sidebar';
-import ChatApp from '../../../components/chatApp';
+import SideBar from '../SideBar';
+import ChatApp from '../../../components/ChatApp';
 
 const ChatContainer: React.FC = () => {
   const classes = useStyles();
