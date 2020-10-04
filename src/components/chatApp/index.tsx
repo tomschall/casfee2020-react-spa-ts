@@ -1,13 +1,11 @@
 import React from 'react';
 import { useParams } from 'react-router';
 import { useAuth0 } from '@auth0/auth0-react';
-
-import Chat from '../chat';
-import Loader from '../../layout/shared/Loader';
-
 import { useRecoilState } from 'recoil';
 import { useGetChannelByNameQuery } from '../../api/generated/graphql';
 import { currentChannelState } from '../../atom';
+import Chat from '../Chat';
+import Loader from '../../layout/shared/Loader';
 
 const ChatApp: React.FC = (props) => {
   const [currentChannel, setCurrentChannel] = useRecoilState<any>(

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import moment from 'moment';
 import { isObject } from 'util';
 import { Message } from '../../interfaces/message/message.interface';
-import ChannelThread from '../ChannelThread';
+import ThreadChannelButton from '../ThreadChannelButton';
 import useStyles from './styles';
 import {
   Avatar,
@@ -72,7 +72,7 @@ const MessageList: React.FC<MessageProps> = ({
               {message.text}
             </Typography>
             <Divider className={classes.vspace} />
-            <ChannelThread
+            <ThreadChannelButton
               message={message.id}
               channel_threads={message.channel_threads}
             />

@@ -9,7 +9,7 @@ import useStyles from './styles';
 import AdminSidebar from '../../shared/AdminSidebar';
 import AdminUserList from '../../../components/AdminUserList';
 import AdminPollings from '../../../components/AdminPollings';
-import NotFound from '../../../components/NotFound';
+import NotFound from '../NotFound';
 
 const AdminContainer: React.FC = () => {
   const classes = useStyles();

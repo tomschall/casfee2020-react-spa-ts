@@ -7,13 +7,12 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { theme } from './theme/theme';
 import { Box } from '@material-ui/core';
 
-// import Dashboard from './components/Dashboard';
-import Home from './components/Home';
+import SignIn from './layout/shared/SignIn';
 import Loader from './layout/shared/Loader';
-import NotFound from './components/NotFound';
+import NotFound from './layout/shared/NotFound';
 import PrivateRoute from './components/PrivateRoute';
-import AddChannelMembers from './layout/addChannelMembers';
-import AddDirectMessageChannel from './components/addDirectMessageChannel';
+import AddChannelMembers from './layout/AddChannelMembers';
+import AddDirectMessageChannel from './components/AddDirectMessageChannel';
 import ChatBoard from './layout/ChatBoard';
 import AdminBoard from './layout/AdminBoard';
 
@@ -65,17 +64,23 @@ const App: React.FC = (client) => {
               path={routes.signed.dashboard}
               component={AdminBoard}
             />
-            <Route exact path="/not-found" render={(props) => NotFound} />
-            <Redirect to="/not-found" />
+            <Route exact path={routes.notfound} component={NotFound} />
+            <Redirect to={routes.notfound} />
           </Switch>
         ) : (
           <Switch>
             <Redirect exact from={routes.base} to={routes.unsigned.home} />
-            <Route path={routes.unsigned.home} component={Home} />
-            <PrivateRoute path="/channel/:channel" component={ChatBoard} />
-            <PrivateRoute path="/dashboard" component={AdminBoard} />
-            <Route exact path="/not-found" render={(props) => NotFound} />
-            <Redirect to="/not-found" />
+            <Route path={routes.unsigned.home} component={SignIn} />
+            <PrivateRoute
+              path={routes.unsigned.dynamic}
+              component={ChatBoard}
+            />
+            <PrivateRoute
+              path={routes.signed.dashboard}
+              component={AdminBoard}
+            />
+            <Route exact path={routes.notfound} component={NotFound} />
+            <Redirect to={routes.notfound} />
           </Switch>
         )}
       </div>
