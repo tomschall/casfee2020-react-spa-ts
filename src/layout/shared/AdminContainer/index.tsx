@@ -36,7 +36,7 @@ const AdminContainer: React.FC = () => {
             path={routes.signed.pollings}
             component={AdminPollings}
           />
-          <Redirect from={routes.signed.dashboard} to={routes.signed.users} />
+          {/* <Redirect from={routes.signed.dashboard} to={routes.signed.users} /> */}
           <Route component={NotFound} />
         </Switch>
       </Grid>

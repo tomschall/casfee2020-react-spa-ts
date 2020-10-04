@@ -84,15 +84,6 @@ const AdminSidebar: React.FC<any> = () => {
               </ListItem>
             </List>
             <Divider />
-            <Link
-              component="button"
-              variant="body2"
-              onClick={() => {
-                console.info("I'm a button.");
-              }}
-            >
-              Button Link
-            </Link>
             <Logout />
           </Box>
         </Grid>

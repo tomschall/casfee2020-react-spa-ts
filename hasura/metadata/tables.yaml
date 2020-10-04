@@ -77,6 +77,22 @@
   - name: poll_question
     using:
       foreign_key_constraint_on: poll_questions
+  insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      columns:
+      - channel_id
+      - poll_questions
+      backend_only: false
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - channel_id
+      - id
+      - poll_questions
+      filter: {}
 - table:
     schema: public
     name: channel_thread
@@ -215,6 +231,45 @@
         table:
           schema: public
           name: poll_anwers
+  insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      columns:
+      - id
+      - text
+      - created_at
+      - updated_at
+      - owner_id
+      - is_active
+      backend_only: false
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - is_active
+      - id
+      - owner_id
+      - text
+      - created_at
+      - updated_at
+      filter: {}
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - is_active
+      - id
+      - owner_id
+      - text
+      - created_at
+      - updated_at
+      filter: {}
+      check: null
+  delete_permissions:
+  - role: user
+    permission:
+      filter: {}
 - table:
     schema: public
     name: user
