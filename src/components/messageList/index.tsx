@@ -14,7 +14,6 @@ import {
   ListItemIcon,
   Typography,
 } from '@material-ui/core';
-import ChannelThread from '../ChannelThread';
 
 interface MessageProps {
   messages: Message[];
@@ -64,16 +63,12 @@ const MessageList: React.FC<MessageProps> = ({
               <i>{moment(message.timestamp).fromNow()}</i>
             </Typography>
             <Divider className={classes.vspace} />
-            <ThreadChannelButton
-              message={message.id}
-              channel_threads={message.channel_threads}
-            />
           </Box>
           <Typography component="p" className={classes.messageText}>
             {message.text}
           </Typography>
           <Divider className={classes.vspace} />
-          <ChannelThread
+          <ThreadChannelButton
             message={message.id}
             channel_threads={message.channel_threads}
           />

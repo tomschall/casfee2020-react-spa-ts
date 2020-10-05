@@ -9,7 +9,7 @@ import {
   useInsertMessageMutation,
   useSendTypingEventMutation,
 } from '../../api/generated/graphql';
-import TypingIndicator from '../typingIndicator';
+import TypingIndicator from '../TypingIndicator';
 
 interface ChatInputProps {
   channelId: number;
