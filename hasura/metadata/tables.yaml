@@ -254,22 +254,6 @@
       - created_at
       - updated_at
       filter: {}
-  update_permissions:
-  - role: user
-    permission:
-      columns:
-      - is_active
-      - id
-      - owner_id
-      - text
-      - created_at
-      - updated_at
-      filter: {}
-      check: null
-  delete_permissions:
-  - role: user
-    permission:
-      filter: {}
 - table:
     schema: public
     name: user
