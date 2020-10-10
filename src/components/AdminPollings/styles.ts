@@ -6,6 +6,7 @@ export default makeStyles((theme) => ({
     marginTop: theme.spacing(5),
     marginBottom: theme.spacing(5),
   },
+  form: {},
   messageInput: {
     floatingLabelFocusStyle: {
       color: theme.palette.secondary.dark,
@@ -23,5 +24,11 @@ export default makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginLeft: theme.spacing(0),
     backgroundColor: theme.palette.primary.dark,
+  },
+  play: {
+    color: theme.palette.success.main,
+  },
+  stop: {
+    color: theme.palette.error.main,
   },
 }));
