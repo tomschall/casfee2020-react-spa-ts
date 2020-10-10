@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const drawerWidth = '100%';
 
 export default makeStyles((theme) => ({
+  root: {},
   toolbar: {
     [theme.breakpoints.up('md')]: {
       paddingTop: theme.spacing(5),
@@ -18,9 +19,8 @@ export default makeStyles((theme) => ({
     borderTopStyle: 'solid',
     borderTopColor: theme.palette.primary.dark,
   },
-  desktopNavi: {},
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: theme.palette.background.default,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -37,7 +37,6 @@ export default makeStyles((theme) => ({
   menuButton: {
     marginTop: theme.spacing(5),
     flex: '1',
-    // backgroundColor: theme.palette.primary.dark,
   },
   menuButtonHidden: {
     display: 'none',
