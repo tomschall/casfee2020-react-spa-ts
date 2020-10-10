@@ -41,12 +41,6 @@ mutation addChannel($name: String, $owner_id: String, $is_private: Boolean) {
   }
 }
 
-mutation addPollQuestion($text: String, $owner_id: String) {
-  insert_poll_questions(objects: { text: $text, owner_id: $owner_id }) {
-    affected_rows
-  }
-}
-
 mutation validateAndAddDirectMessageChannel(
   $name: String!
   $user_id1: String!
@@ -72,6 +66,12 @@ mutation sendTypingEvent($user_id: String!, $channel_id: Int!) {
     _set: { last_typed: "now()", last_typed_channel: $channel_id }
     where: { auth0_user_id: { _eq: $user_id } }
   ) {
+    affected_rows
+  }
+}
+
+mutation addPollQuestion($text: String, $owner_id: String) {
+  insert_poll_questions(objects: { text: $text, owner_id: $owner_id }) {
     affected_rows
   }
 }
