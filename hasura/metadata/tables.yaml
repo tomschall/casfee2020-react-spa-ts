@@ -234,7 +234,10 @@
   insert_permissions:
   - role: user
     permission:
-      check: {}
+      check:
+        _or:
+        - owner_id:
+            _eq: X-Hasura-User-Id
       columns:
       - id
       - text
@@ -254,6 +257,18 @@
       - created_at
       - updated_at
       filter: {}
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - id
+      - text
+      - created_at
+      - updated_at
+      - owner_id
+      - is_active
+      filter: {}
+      check: null
 - table:
     schema: public
     name: user

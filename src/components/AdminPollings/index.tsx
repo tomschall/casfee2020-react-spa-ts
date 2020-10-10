@@ -1,83 +1,111 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import {
-  Badge,
   Box,
   Button,
-  Container,
-  Collapse,
   Divider,
-  FormControl,
+  FormGroup,
   FormHelperText,
   Grid,
   Input,
   InputLabel,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   TextField,
   Typography,
+  Snackbar,
 } from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
-import HowToVoteIcon from '@material-ui/icons/HowToVote';
-import HelpIcon from '@material-ui/icons/Help';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 
-import { useGetPollQuestionsQuery } from '../../api/generated/graphql';
-import Loader from '../../layout/shared/Loader';
-import NotFound from '../../layout/shared/NotFound';
+import { useAuth0 } from '@auth0/auth0-react';
+import { useAddPollQuestionMutation } from '../../api/generated/graphql';
+import GetPollQuestions from './GetPollQuestions';
+
+// import Loader from '../../layout/shared/Loader';
+// import NotFound from '../../layout/shared/NotFound';
+// import Alert from '@material-ui/lab/Alert';
+
 import useStyles from './styles';
 
 const AdminPollings: React.FC = () => {
   const classes = useStyles();
-  const { data, loading, error } = useGetPollQuestionsQuery({
-    variables: {},
+  const { user: userAuth0, isLoading: loadingAuth0 } = useAuth0();
+  const [
+    addPollQuestionMutation,
+    { error, loading, called },
+  ] = useAddPollQuestionMutation();
+  const { register, handleSubmit, errors } = useForm();
+  const [openAlert, setOpenAlert] = React.useState(true);
+  const [pollTitle, setPollTitle] = React.useState({
+    title: '',
   });
 
-  const [open, setOpen] = React.useState(false);
-  const handleClick = () => {
-    setOpen(!open);
+  React.useEffect(() => {
+    setOpenAlert(!openAlert);
+  }, [errors]);
+
+  const handleChange = (e: any) => {
+    // console.log(e.target.id, e.target.value);
+    setPollTitle({ ...pollTitle, [e.target.id]: e.target.value });
   };
 
-  if (loading) {
-    return <Loader />;
-  }
+  const handleAddTitle = async (e: any) => {
+    e.preventDefault();
 
-  if (error) {
-    return <NotFound />;
-  }
+    try {
+      console.log('try add poll question');
+      const { title } = pollTitle;
+      console.log('handleAddTitle', title, userAuth0.sub);
+      await addPollQuestionMutation({
+        variables: {
+          text: pollTitle.title,
+          owner_id: userAuth0.sub,
+        },
+      });
+      setPollTitle({ title: '' });
+    } catch (e) {
+      console.log('error on mutation addPollQuestion');
+    }
+  };
+
+  // const handleSnackBarClose = (event: any, reason: any) => {
+  //   if (reason == 'clickaway') {
+  //     return;
+  //   }
+  //   setOpenAlert(!openAlert);
+  // };
+
+  // if (loading) {
+  //   return <Loader />;
+  // }
+
+  // if (error) {
+  //   return <NotFound />;
+  // }
 
   return (
     <>
       <Box className={classes.root}>
-        <h2>Pollings</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos dolorum
-          magnam, earum aliquid commodi voluptates officia in, eos ex ipsam quae
-          ratione nesciunt porro qui vitae rem praesentium esse. Ipsa!
-        </p>
+        <Typography variant="h2">Add a new poll</Typography>
       </Box>
       <Grid item xs={12}>
-        <form
-          noValidate
-          autoComplete="off"
-          className={classes.root}
-          // onSubmit={handleSubmit}
-        >
+        <FormGroup>
           <TextField
-            value=""
-            autoFocus={true}
-            // onChange={(e) => {
-            //   handleTyping(e.target.value);
-            // }}
+            id="title"
+            required
+            value={pollTitle.title}
+            onChange={handleChange}
+            // inputRef={register({
+            //   required: 'A poll title is required',
+            //   maxLength: {
+            //     value: 10,
+            //     message: 'Title must be shorter than 10 characters',
+            //   },
+            // })}
+            // error={errors.title ? true : false}
             size="medium"
             variant="outlined"
             color="secondary"
             autoComplete="off"
             placeholder="Type your question here ..."
-            id="standard-basic"
             label="Add a meaningful question"
             fullWidth
             InputProps={{
@@ -90,6 +118,7 @@ const AdminPollings: React.FC = () => {
             }}
           />
           <Button
+            onClick={handleAddTitle}
             size="medium"
             type={'submit'}
             variant="contained"
@@ -98,39 +127,11 @@ const AdminPollings: React.FC = () => {
           >
             Submit
           </Button>
-        </form>
+        </FormGroup>
         <Divider className={classes.divider} />
       </Grid>
       <Grid item xs={12}>
-        {data?.questions.map((question) => (
-          <List className={classes.root}>
-            <ListItem button onClick={handleClick}>
-              <ListItemIcon>
-                <HowToVoteIcon />
-              </ListItemIcon>
-              <ListItemText>
-                <Typography variant="h6">{question.text}</Typography>
-              </ListItemText>
-              {open ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <List component="div">
-                <ListItem key={question.id} button>
-                  <ListItemIcon>
-                    <HelpIcon color="secondary" />
-                  </ListItemIcon>
-                  <ListItemText primary="Das Huhn" />
-                </ListItem>
-                <ListItem key={question.id} button>
-                  <ListItemIcon>
-                    <HelpIcon color="secondary" />
-                  </ListItemIcon>
-                  <ListItemText primary="Das Ei" />
-                </ListItem>
-              </List>
-            </Collapse>
-          </List>
-        ))}
+        <GetPollQuestions />
       </Grid>
     </>
   );
