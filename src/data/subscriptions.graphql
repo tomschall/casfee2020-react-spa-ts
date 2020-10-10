@@ -133,7 +133,10 @@ subscription getUserIsTyping($self_id: String!, $channel_id: Int!) {
 subscription WatchGetPollQuestions {
   questions: poll_questions {
     id
-    owner_id
     text
+    created_at
+    updated_at
+    owner_id
+    is_active
   }
 }
