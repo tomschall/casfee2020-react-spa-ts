@@ -55,10 +55,7 @@ const MenuBar: React.FC<MenuBarProps> = ({
       <AppBar
         elevation={0}
         position="fixed"
-        className={
-          (clsx(classes.appBar, open && classes.appBarShift),
-          classes.desktopNavi)
-        }
+        className={clsx(classes.appBar, open && classes.appBarShift)}
       >
         <Toolbar className={classes.toolbar}>
           <Container maxWidth="xl" disableGutters>
