@@ -56,6 +56,12 @@ export default {
       '& h6': {
         fontSize: '.857rem',
       },
+      '& a': {
+        color: '#fff',
+      },
+      '& a:hover': {
+        color: 'yellow',
+      },
     },
   },
   MuiDivider: {
