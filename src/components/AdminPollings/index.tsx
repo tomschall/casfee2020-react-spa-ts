@@ -14,6 +14,7 @@ import {
   Snackbar,
 } from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
+import HowToVoteIcon from '@material-ui/icons/HowToVote';
 
 import { useAuth0 } from '@auth0/auth0-react';
 import { useAddPollQuestionMutation } from '../../api/generated/graphql';
@@ -43,7 +44,6 @@ const AdminPollings: React.FC = () => {
   }, [errors]);
 
   const handleChange = (e: any) => {
-    // console.log(e.target.id, e.target.value);
     setPollTitle({ ...pollTitle, [e.target.id]: e.target.value });
   };
 
@@ -51,9 +51,8 @@ const AdminPollings: React.FC = () => {
     e.preventDefault();
 
     try {
-      console.log('try add poll question');
-      const { title } = pollTitle;
-      console.log('handleAddTitle', title, userAuth0.sub);
+      if (pollTitle.title === '') return;
+
       await addPollQuestionMutation({
         variables: {
           text: pollTitle.title,
@@ -87,47 +86,54 @@ const AdminPollings: React.FC = () => {
         <Typography variant="h2">Add a new poll</Typography>
       </Box>
       <Grid item xs={12}>
-        <FormGroup>
-          <TextField
-            id="title"
-            required
-            value={pollTitle.title}
-            onChange={handleChange}
-            // inputRef={register({
-            //   required: 'A poll title is required',
-            //   maxLength: {
-            //     value: 10,
-            //     message: 'Title must be shorter than 10 characters',
-            //   },
-            // })}
-            // error={errors.title ? true : false}
-            size="medium"
-            variant="outlined"
-            color="secondary"
-            autoComplete="off"
-            placeholder="Type your question here ..."
-            label="Add a meaningful question"
-            fullWidth
-            InputProps={{
-              classes: {
-                input: classes.messageInput,
-              },
-            }}
-            InputLabelProps={{
-              className: classes.messageInput,
-            }}
-          />
-          <Button
-            onClick={handleAddTitle}
-            size="medium"
-            type={'submit'}
-            variant="contained"
-            endIcon={<Icon>send</Icon>}
-            className={classes.messageButton}
-          >
-            Submit
-          </Button>
-        </FormGroup>
+        <form
+          className={classes.form}
+          noValidate
+          autoComplete="off"
+          onSubmit={handleAddTitle}
+        >
+          <FormGroup>
+            <TextField
+              id="title"
+              required
+              value={pollTitle.title}
+              onChange={handleChange}
+              inputRef={register({
+                required: 'A poll title is required',
+                maxLength: {
+                  value: 10,
+                  message: 'Title must be shorter than 10 characters',
+                },
+              })}
+              error={errors.title ? true : false}
+              size="medium"
+              variant="outlined"
+              color="secondary"
+              autoComplete="off"
+              placeholder="Type your question here ..."
+              label="Add a meaningful question"
+              fullWidth
+              InputProps={{
+                classes: {
+                  input: classes.messageInput,
+                },
+              }}
+              InputLabelProps={{
+                className: classes.messageInput,
+              }}
+            />
+            <Button
+              type="submit"
+              value="Add poll title"
+              size="medium"
+              variant="contained"
+              endIcon={<HowToVoteIcon />}
+              className={classes.messageButton}
+            >
+              Add poll
+            </Button>
+          </FormGroup>
+        </form>
         <Divider className={classes.divider} />
       </Grid>
       <Grid item xs={12}>

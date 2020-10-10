@@ -8,6 +8,7 @@ export default {
     dashboard: '/dashboard',
     users: '/dashboard/users',
     pollings: '/dashboard/pollings',
+    question: '/dashboard/pollings/:question',
     addUserToChannel: '/add-user-to-channel',
   },
   unsigned: {
