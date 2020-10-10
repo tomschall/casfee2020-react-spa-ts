@@ -41,7 +41,7 @@ export const theme = createMuiTheme({
   },
   mixins: {
     toolbar: {
-      backgroundColor: '#151c66',
+      // backgroundColor: '#151c66',
     },
   },
   spacing: 0,
@@ -75,7 +75,6 @@ export const theme = createMuiTheme({
       style: {
         top: 'auto',
         bottom: 0,
-        backgroundColor: '#1A237E',
       },
     },
     MuiButton: {
