@@ -167,7 +167,10 @@ subscription watchMessageCursor($channel_id: Int!, $user_id: String!) {
 subscription WatchGetPollQuestions {
   questions: poll_questions {
     id
-    owner_id
     text
+    created_at
+    updated_at
+    owner_id
+    is_active
   }
 }
