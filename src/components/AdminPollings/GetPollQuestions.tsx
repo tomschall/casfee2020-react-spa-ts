@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import routes from '../../routes/routes';
+
 import { useForm, Controller } from 'react-hook-form';
 import {
+  Badge,
   Collapse,
   List,
   ListItem,
@@ -10,8 +14,8 @@ import {
 } from '@material-ui/core';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import HelpIcon from '@material-ui/icons/Help';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import StopIcon from '@material-ui/icons/Stop';
 import { useWatchGetPollQuestionsSubscription } from '../../api/generated/graphql';
 import Loader from '../../layout/shared/Loader';
 import NotFound from '../../layout/shared/NotFound';
@@ -39,35 +43,31 @@ const GetPollQuestions: React.FC = () => {
   return (
     <>
       <Typography variant="h3">Poll list</Typography>
-      {data?.questions.map((question) => (
-        <List className={classes.root}>
-          <ListItem button onClick={handleClick}>
+      <List className={classes.root}>
+        {data?.questions.map((question) => (
+          <ListItem key={question.id} component="li" onClick={handleClick}>
             <ListItemIcon>
               <HowToVoteIcon />
             </ListItemIcon>
             <ListItemText>
-              <Typography variant="h6">{question.text}</Typography>
+              <Link to={'/dashboard/pollings/' + question.id}>
+                <Typography variant="body2">
+                  {question.id} - {question.text}
+                </Typography>
+              </Link>
             </ListItemText>
-            {open ? <ExpandLess /> : <ExpandMore />}
+            {question.is_active ? (
+              <ListItemIcon>
+                <PlayArrowIcon className={classes.play} />
+              </ListItemIcon>
+            ) : (
+              <ListItemIcon>
+                <StopIcon className={classes.stop} />
+              </ListItemIcon>
+            )}
           </ListItem>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <List component="div">
-              <ListItem key={question.id} button>
-                <ListItemIcon>
-                  <HelpIcon color="secondary" />
-                </ListItemIcon>
-                <ListItemText primary="Das Huhn" />
-              </ListItem>
-              <ListItem key={question.id} button>
-                <ListItemIcon>
-                  <HelpIcon color="secondary" />
-                </ListItemIcon>
-                <ListItemText primary="Das Ei" />
-              </ListItem>
-            </List>
-          </Collapse>
-        </List>
-      ))}
+        ))}
+      </List>
     </>
   );
 };
