@@ -41,6 +41,12 @@ mutation addChannel($name: String, $owner_id: String, $is_private: Boolean) {
   }
 }
 
+mutation addPollQuestion($text: String, $owner_id: String) {
+  insert_poll_questions(objects: { text: $text, owner_id: $owner_id }) {
+    affected_rows
+  }
+}
+
 mutation validateAndAddDirectMessageChannel(
   $name: String!
   $user_id1: String!
