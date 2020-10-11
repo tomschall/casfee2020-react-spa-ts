@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { useForm } from 'react-hook-form';
-import { getPollQuestionAnswers } from '../../atom';
 import {
   Badge,
   Box,
@@ -9,14 +8,9 @@ import {
   Chip,
   Divider,
   FormGroup,
-  FormHelperText,
   Grid,
-  Input,
-  InputLabel,
-  ListItemIcon,
   TextField,
   Typography,
-  Snackbar,
 } from '@material-ui/core';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
@@ -27,6 +21,8 @@ import {
   useWatchGetPollQuestionSubscription,
   useWatchGetPollAnswersSubscription,
 } from '../../api/generated/graphql';
+import { getPollQuestionAnswers } from '../../atom';
+import GetPublicChannels from './GetPublicChannels';
 import useStyles from './styles';
 
 const PollQuestions: React.FC = () => {
@@ -173,7 +169,6 @@ const PollQuestions: React.FC = () => {
               Add answer
             </Button>
           </FormGroup>
-
           <Divider className={classes.divider} />
         </Grid>
         <Grid item xs={12}>
@@ -204,6 +199,8 @@ const PollQuestions: React.FC = () => {
               />
             ))}
           </FormGroup>
+          <Divider className={classes.divider} />
+          <GetPublicChannels />
         </Grid>
       </form>
     </>

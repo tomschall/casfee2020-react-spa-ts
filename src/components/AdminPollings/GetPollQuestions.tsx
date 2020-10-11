@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import {
+  Divider,
   List,
   ListItem,
   ListItemIcon,
@@ -11,11 +12,12 @@ import {
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import StopIcon from '@material-ui/icons/Stop';
-import { useWatchGetPollQuestionsSubscription } from '../../api/generated/graphql';
-import { getPollQuestionAnswers } from '../../atom';
 import Loader from '../../layout/shared/Loader';
 import NotFound from '../../layout/shared/NotFound';
 import useStyles from './styles';
+
+import { useWatchGetPollQuestionsSubscription } from '../../api/generated/graphql';
+import { getPollQuestionAnswers } from '../../atom';
 
 const GetPollQuestions: React.FC = () => {
   const classes = useStyles();
@@ -58,7 +60,7 @@ const GetPollQuestions: React.FC = () => {
             <ListItemText>
               <Link
                 to={{
-                  pathname: '/dashboard/pollings/' + question.id,
+                  pathname: '/dashboard/pollings/edit/question/' + question.id,
                   state: { fromDashboard: true },
                 }}
               >

@@ -95,3 +95,10 @@ query getPollQuestionAnswers($pollQuestionId: Int) {
     votes
   }
 }
+
+query getPublicChannels {
+  channels: channel(where: { is_private: { _neq: true } }) {
+    name
+    id
+  }
+}
