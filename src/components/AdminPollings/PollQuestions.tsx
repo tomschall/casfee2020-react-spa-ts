@@ -127,7 +127,7 @@ const PollQuestions: React.FC = () => {
               </Button>
             )}
           </Box>
-          <FormGroup>
+          <FormGroup row>
             <TextField
               id="text"
               required

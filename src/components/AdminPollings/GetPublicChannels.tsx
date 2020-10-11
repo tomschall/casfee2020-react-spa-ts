@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import {
   Badge,
+  Checkbox,
   Collapse,
+  FormControlLabel,
   Link,
   List,
   ListItem,
@@ -19,7 +21,6 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import useStyles from './styles';
 
-import { getPollQuestionAnswers } from '../../atom';
 import {
   useGetPublicChannelsQuery,
   useWatchGetPollQuestionSubscription,
@@ -27,28 +28,18 @@ import {
 
 const GetPublicChannels: React.FC = () => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
+  const [toggleCheckbox, setToggleCheckbox] = React.useState(Boolean);
   const getPublicChannels = useGetPublicChannelsQuery();
-  console.log('get public channels', getPublicChannels);
 
-  const [pollQuestionId, setPollQuestion] = useRecoilState<any>(
-    getPollQuestionAnswers,
-  );
-
-  const getPollQuestion = useWatchGetPollQuestionSubscription({
-    variables: {
-      pollQuestionId: pollQuestionId,
-    },
-  });
-
-  console.log('getPublicChannel', getPollQuestion);
+  const handleChange = (e: any) => {
+    setToggleCheckbox(!toggleCheckbox);
+    console.log('hello checkbox', toggleCheckbox, e.target.checked);
+  };
 
   const handleCollapseClick = () => {
     setOpen(!open);
   };
-
-  const setPublicChannel = getPollQuestion.data?.poll_question[0].is_active;
-  console.log('setPublicChannel', setPublicChannel);
 
   return (
     <List>
@@ -63,14 +54,27 @@ const GetPublicChannels: React.FC = () => {
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div">
-          {getPublicChannels.data?.channels.map((channel) => (
-            <ListItem button>
+          {getPublicChannels.data?.channels.map((channel, index: any) => (
+            <ListItem button key={index}>
               <ListItemIcon>
                 <Badge variant="dot">
                   <PeopleIcon />
                 </Badge>
               </ListItemIcon>
-              <ListItemText primary={channel.name} />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={
+                      channel.channel_polls[0]?.poll_question?.is_active
+                        ? true
+                        : false
+                    }
+                    onChange={handleChange}
+                    name={channel.name}
+                  />
+                }
+                label={channel.name}
+              />
             </ListItem>
           ))}
         </List>
