@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import routes from '../../../routes/routes';
 import { theme } from '../../../theme/theme';
 import { Container, Divider, Grid, Typography } from '@material-ui/core/';
@@ -9,6 +9,7 @@ import useStyles from './styles';
 import AdminSidebar from '../../shared/AdminSidebar';
 import AdminUserList from '../../../components/AdminUserList';
 import AdminPollings from '../../../components/AdminPollings';
+import PollQuestions from '../../../components/AdminPollings/PollQuestions';
 import NotFound from '../NotFound';
 
 const AdminContainer: React.FC = () => {
@@ -39,7 +40,7 @@ const AdminContainer: React.FC = () => {
           <Route
             exact
             path={routes.signed.question}
-            component={AdminPollings}
+            component={PollQuestions}
           />
           {/* <Redirect from={routes.signed.dashboard} to={routes.signed.users} /> */}
           <Route component={NotFound} />

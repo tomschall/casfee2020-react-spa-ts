@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import routes from '../../routes/routes';
-
-import { useForm, Controller } from 'react-hook-form';
+import { useRecoilState } from 'recoil';
 import {
-  Badge,
-  Collapse,
   List,
   ListItem,
   ListItemIcon,
@@ -13,10 +9,10 @@ import {
   Typography,
 } from '@material-ui/core';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
-import HelpIcon from '@material-ui/icons/Help';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import StopIcon from '@material-ui/icons/Stop';
 import { useWatchGetPollQuestionsSubscription } from '../../api/generated/graphql';
+import { getPollQuestionAnswers } from '../../atom';
 import Loader from '../../layout/shared/Loader';
 import NotFound from '../../layout/shared/NotFound';
 import useStyles from './styles';
@@ -27,8 +23,17 @@ const GetPollQuestions: React.FC = () => {
     variables: {},
   });
 
+  const [pollQuestion, setPollQuestion] = useRecoilState<any>(
+    getPollQuestionAnswers,
+  );
+
+  console.log('RECOIL pollQuestion', pollQuestion);
+
   const [open, setOpen] = React.useState(false);
-  const handleClick = () => {
+
+  const handleClick = (questionId: number) => {
+    console.log('questionId', questionId);
+    setPollQuestion(questionId);
     setOpen(!open);
   };
 
@@ -45,12 +50,23 @@ const GetPollQuestions: React.FC = () => {
       <Typography variant="h3">Poll list</Typography>
       <List className={classes.root}>
         {data?.questions.map((question) => (
-          <ListItem key={question.id} component="li" onClick={handleClick}>
+          <ListItem
+            key={question.id}
+            component="li"
+            onClick={() => {
+              handleClick(question.id);
+            }}
+          >
             <ListItemIcon>
               <HowToVoteIcon />
             </ListItemIcon>
             <ListItemText>
-              <Link to={'/dashboard/pollings/' + question.id}>
+              <Link
+                to={{
+                  pathname: '/dashboard/pollings/' + question.id,
+                  state: { fromDashboard: true },
+                }}
+              >
                 <Typography variant="body2">
                   {question.id} - {question.text}
                 </Typography>

@@ -14,3 +14,8 @@ export const testState = atom({
 export const currentChannelState = atom({
   key: 'currentChannelState',
 });
+
+export const getPollQuestionAnswers = atom({
+  key: 'getPollQuestionAnswersState',
+  default: 1,
+});

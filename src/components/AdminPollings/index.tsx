@@ -43,6 +43,8 @@ const AdminPollings: React.FC = () => {
     setOpenAlert(!openAlert);
   }, [errors]);
 
+  console.log(pollTitle);
+
   const handleChange = (e: any) => {
     setPollTitle({ ...pollTitle, [e.target.id]: e.target.value });
   };
@@ -82,10 +84,10 @@ const AdminPollings: React.FC = () => {
 
   return (
     <>
-      <Box className={classes.root}>
-        <Typography variant="h2">Add a new poll</Typography>
-      </Box>
       <Grid item xs={12}>
+        <Box className={classes.root} mt={5} mb={3}>
+          <Typography variant="h2">Add a new poll</Typography>
+        </Box>
         <form
           className={classes.form}
           noValidate
