@@ -179,6 +179,7 @@ subscription watchGetPollQuestion($pollQuestionId: Int) {
   poll_question: poll_questions(where: { id: { _eq: $pollQuestionId } }) {
     id
     text
+    is_active
   }
 }
 

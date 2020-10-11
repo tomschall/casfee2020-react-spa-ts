@@ -3,6 +3,7 @@ import { useRecoilState } from 'recoil';
 import { useForm } from 'react-hook-form';
 import { getPollQuestionAnswers } from '../../atom';
 import {
+  Badge,
   Box,
   Button,
   Divider,
@@ -11,11 +12,14 @@ import {
   Grid,
   Input,
   InputLabel,
+  ListItemIcon,
   TextField,
   Typography,
   Snackbar,
 } from '@material-ui/core';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import StopIcon from '@material-ui/icons/Stop';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useAddAnswerToQuestionMutation } from '../../api/generated/graphql';
 import {
@@ -36,15 +40,11 @@ const PollQuestions: React.FC = () => {
     getPollQuestionAnswers,
   );
 
-  const questionTitle = useWatchGetPollQuestionSubscription({
+  const getPollQuestion = useWatchGetPollQuestionSubscription({
     variables: {
       pollQuestionId: pollQuestionId,
     },
   });
-
-  console.log('questionTitle', questionTitle.data?.poll_question[0].text);
-
-  console.log('questionTitle', questionTitle);
 
   const { data } = useWatchGetPollAnswersSubscription({
     variables: {
@@ -77,7 +77,7 @@ const PollQuestions: React.FC = () => {
       });
       setAnswerText({ text: '' });
     } catch (e) {
-      console.log('error on mutation addPollQuestion');
+      console.log(error, 'error on mutation addPollQuestion');
     }
   };
 
@@ -90,15 +90,56 @@ const PollQuestions: React.FC = () => {
         onSubmit={handleAddAnswer}
       >
         <Grid item xs={12}>
-          <Box className={classes.root} mb={3} mt={5}>
-            <Typography variant="h2">
-              {questionTitle.data?.poll_question[0].text}
+          <Box mt={3} p={0}>
+            <Typography color="secondary" variant="caption">
+              POLL QUESTION
             </Typography>
+          </Box>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="flex-start"
+            className={classes.root}
+            mb={3}
+            mt={0}
+          >
+            <Badge
+              color="secondary"
+              // variant="dot"
+              badgeContent={getPollQuestion.data?.poll_question[0].id}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+            >
+              <Typography variant="h2">
+                {getPollQuestion.data?.poll_question[0].text}
+              </Typography>
+            </Badge>
+
+            {getPollQuestion.data?.poll_question[0].is_active ? (
+              <Button
+                variant="text"
+                color="primary"
+                startIcon={<PlayArrowIcon className={classes.play} />}
+              >
+                Active
+              </Button>
+            ) : (
+              <Button
+                variant="text"
+                color="secondary"
+                startIcon={<StopIcon className={classes.stop} />}
+              >
+                Inactive
+              </Button>
+            )}
           </Box>
           <FormGroup>
             <TextField
               id="text"
               required
+              disabled={getPollQuestion.data?.poll_question[0].is_active}
               value={answerText.text}
               onChange={handleAnswerChange}
               inputRef={register({
@@ -140,15 +181,17 @@ const PollQuestions: React.FC = () => {
           <Divider className={classes.divider} />
         </Grid>
         <Grid item xs={12}>
+          <Typography variant="h3">Answers to these question</Typography>
           <FormGroup>
             {data?.poll_answers.map((answer) => (
               <TextField
                 id={JSON.stringify(answer.id)}
                 required
                 value=""
+                disabled={getPollQuestion.data?.poll_question[0].is_active}
                 // onChange={handleAnswerChange}
                 size="medium"
-                variant="outlined"
+                variant="standard"
                 color="secondary"
                 autoComplete="off"
                 placeholder="Type your answers here ..."
