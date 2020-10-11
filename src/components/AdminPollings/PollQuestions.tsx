@@ -6,6 +6,7 @@ import {
   Badge,
   Box,
   Button,
+  Chip,
   Divider,
   FormGroup,
   FormHelperText,
@@ -91,9 +92,14 @@ const PollQuestions: React.FC = () => {
       >
         <Grid item xs={12}>
           <Box mt={3} p={0}>
-            <Typography color="secondary" variant="caption">
-              POLL QUESTION
-            </Typography>
+            <Chip
+              color="secondary"
+              size="small"
+              variant="outlined"
+              label={
+                'Poll question id: ' + getPollQuestion.data?.poll_question[0].id
+              }
+            />
           </Box>
           <Box
             display="flex"
@@ -103,19 +109,9 @@ const PollQuestions: React.FC = () => {
             mb={3}
             mt={0}
           >
-            <Badge
-              color="secondary"
-              // variant="dot"
-              badgeContent={getPollQuestion.data?.poll_question[0].id}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-            >
-              <Typography variant="h2">
-                {getPollQuestion.data?.poll_question[0].text}
-              </Typography>
-            </Badge>
+            <Typography variant="h2">
+              {getPollQuestion.data?.poll_question[0].text}
+            </Typography>
 
             {getPollQuestion.data?.poll_question[0].is_active ? (
               <Button
@@ -155,7 +151,7 @@ const PollQuestions: React.FC = () => {
               color="secondary"
               autoComplete="off"
               placeholder="Type your answers here ..."
-              label="Add a meaningful answer"
+              label="Add an answer to these question"
               fullWidth
               InputProps={{
                 classes: {
