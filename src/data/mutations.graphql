@@ -100,3 +100,9 @@ mutation addPollQuestion($text: String, $owner_id: String) {
     affected_rows
   }
 }
+
+mutation addAnswerToQuestion($text: String!, $pollQuestionId: Int!) {
+  insert_poll_anwers(objects: { question_id: $pollQuestionId, text: $text }) {
+    affected_rows
+  }
+}

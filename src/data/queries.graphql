@@ -100,3 +100,18 @@ query getPollQuestions {
     text
   }
 }
+
+query getPollQuestionAnswers($pollQuestionId: Int) {
+  poll_question: poll_questions(where: { id: { _eq: $pollQuestionId } }) {
+    id
+    text
+  }
+  poll_answers: poll_anwers(
+    where: { poll_question: { id: { _eq: $pollQuestionId } } }
+  ) {
+    question_id
+    text
+    id
+    votes
+  }
+}
