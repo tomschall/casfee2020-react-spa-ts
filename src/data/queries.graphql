@@ -119,7 +119,12 @@ query getPollQuestionAnswers($pollQuestionId: Int) {
 
 query getPublicChannels {
   channels: channel(where: { is_private: { _neq: true } }) {
-    name
     id
+    name
+    channel_polls(where: { poll_question: { is_active: { _eq: true } } }) {
+      poll_question {
+        is_active
+      }
+    }
   }
 }
