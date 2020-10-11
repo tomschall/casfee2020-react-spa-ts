@@ -28,7 +28,9 @@ const AdminContainer: React.FC = () => {
         </Grid>
       )}
       <Grid item xs={12} md={8} className={classes.container}>
-        <Typography variant="h1">Admin Dashboard</Typography>
+        <Typography color="primary" variant="h1">
+          Admin Dashboard
+        </Typography>
         <Divider />
         <Switch>
           <Route exact path={routes.signed.users} component={AdminUserList} />

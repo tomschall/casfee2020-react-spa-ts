@@ -27,14 +27,9 @@ const GetPollQuestions: React.FC = () => {
     getPollQuestionAnswers,
   );
 
-  console.log('RECOIL pollQuestion', pollQuestion);
-
-  const [open, setOpen] = React.useState(false);
-
   const handleClick = (questionId: number) => {
     console.log('questionId', questionId);
     setPollQuestion(questionId);
-    setOpen(!open);
   };
 
   if (loading) {
