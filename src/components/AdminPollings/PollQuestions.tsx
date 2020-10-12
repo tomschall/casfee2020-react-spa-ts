@@ -33,7 +33,7 @@ const PollQuestions: React.FC = () => {
     text: '',
   });
 
-  const [pollQuestionId, setPollQuestion] = useRecoilState<any>(
+  const [pollQuestionId, setPollQuestion] = useRecoilState(
     getPollQuestionAnswers,
   );
 
