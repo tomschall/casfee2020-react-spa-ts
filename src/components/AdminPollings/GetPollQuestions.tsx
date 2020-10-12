@@ -19,7 +19,12 @@ import useStyles from './styles';
 import { useWatchGetPollQuestionsSubscription } from '../../api/generated/graphql';
 import { getPollQuestionAnswers } from '../../atom';
 
-const GetPollQuestions: React.FC = () => {
+interface Props {
+  question_text?: string;
+  question_id?: number;
+}
+
+const GetPollQuestions: React.FC<Props> = () => {
   const classes = useStyles();
   const { data, loading, error } = useWatchGetPollQuestionsSubscription({
     variables: {},
@@ -30,7 +35,6 @@ const GetPollQuestions: React.FC = () => {
   );
 
   const handleClick = (questionId: number) => {
-    console.log('questionId', questionId);
     setPollQuestion(questionId);
   };
 
@@ -55,7 +59,11 @@ const GetPollQuestions: React.FC = () => {
             }}
           >
             <ListItemIcon>
-              <HowToVoteIcon />
+              {question.is_active ? (
+                <HowToVoteIcon color="secondary" />
+              ) : (
+                <HowToVoteIcon />
+              )}
             </ListItemIcon>
             <ListItemText>
               <Link

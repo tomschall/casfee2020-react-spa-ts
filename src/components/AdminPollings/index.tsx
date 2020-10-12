@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import {
   Box,
@@ -23,27 +23,24 @@ import GetPollQuestions from './GetPollQuestions';
 // import Loader from '../../layout/shared/Loader';
 // import NotFound from '../../layout/shared/NotFound';
 // import Alert from '@material-ui/lab/Alert';
-
 import useStyles from './styles';
 
-const AdminPollings: React.FC = () => {
+interface Props {
+  text?: string;
+  owner_id?: string;
+  title: string;
+}
+
+const AdminPollings: React.FC<Props> = () => {
   const classes = useStyles();
   const { user: userAuth0, isLoading: loadingAuth0 } = useAuth0();
   const [
     addPollQuestionMutation,
     { error, loading, called },
   ] = useAddPollQuestionMutation();
-  const { register, handleSubmit, errors } = useForm();
-  const [openAlert, setOpenAlert] = React.useState(true);
-  const [pollTitle, setPollTitle] = React.useState({
+  const [pollTitle, setPollTitle] = React.useState<{ title: string }>({
     title: '',
   });
-
-  React.useEffect(() => {
-    setOpenAlert(!openAlert);
-  }, [errors]);
-
-  console.log(pollTitle);
 
   const handleChange = (e: any) => {
     setPollTitle({ ...pollTitle, [e.target.id]: e.target.value });
@@ -100,14 +97,6 @@ const AdminPollings: React.FC = () => {
               required
               value={pollTitle.title}
               onChange={handleChange}
-              inputRef={register({
-                required: 'A poll title is required',
-                maxLength: {
-                  value: 10,
-                  message: 'Title must be shorter than 10 characters',
-                },
-              })}
-              error={errors.title ? true : false}
               size="medium"
               variant="outlined"
               color="secondary"
@@ -139,7 +128,7 @@ const AdminPollings: React.FC = () => {
         <Divider className={classes.divider} />
       </Grid>
       <Grid item xs={12}>
-        <GetPollQuestions />
+        <GetPollQuestions question_text={''} question_id={undefined} />
       </Grid>
     </>
   );

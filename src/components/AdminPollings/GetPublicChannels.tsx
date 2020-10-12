@@ -28,8 +28,8 @@ import {
 
 const GetPublicChannels: React.FC = () => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  const [toggleCheckbox, setToggleCheckbox] = React.useState(Boolean);
+  const [open, setOpen] = React.useState<true | false>(true);
+  const [toggleCheckbox, setToggleCheckbox] = React.useState<Boolean>();
   const getPublicChannels = useGetPublicChannelsQuery();
 
   const handleChange = (e: any) => {
@@ -64,11 +64,11 @@ const GetPublicChannels: React.FC = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={
-                      channel.channel_polls[0]?.poll_question?.is_active
-                        ? true
-                        : false
-                    }
+                    // checked={
+                    //   channel.channel_polls[0]?.poll_question?.is_active
+                    //     ? true
+                    //     : false
+                    // }
                     onChange={handleChange}
                     name={channel.name}
                   />
