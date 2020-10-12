@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import {
   Badge,
   Checkbox,
@@ -21,20 +21,47 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import useStyles from './styles';
 
+import { getPollQuestionAnswers } from '../../atom';
 import {
   useGetPublicChannelsQuery,
-  useWatchGetPollQuestionSubscription,
+  useGetChannelPollsQuery,
+  useAddPublishPollQuestionToChannelMutation,
 } from '../../api/generated/graphql';
 
 const GetPublicChannels: React.FC = () => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState<true | false>(true);
-  const [toggleCheckbox, setToggleCheckbox] = React.useState<Boolean>();
+  const [open, setOpen] = React.useState<boolean>(true);
+  const [toggleCheckbox, setToggleCheckbox] = React.useState<boolean>();
   const getPublicChannels = useGetPublicChannelsQuery();
+  const getChannelPolls = useGetChannelPollsQuery();
+  const getPollQuestionId = useRecoilValue<number>(getPollQuestionAnswers);
+  const [
+    addPublishPollQuestionToChannelMutation,
+    { data, loading, error },
+  ] = useAddPublishPollQuestionToChannelMutation();
 
-  const handleChange = (e: any) => {
+  console.log('getChannelPolls', getChannelPolls);
+
+  const handleChange = async (e: any) => {
     setToggleCheckbox(!toggleCheckbox);
-    console.log('hello checkbox', toggleCheckbox, e.target.checked);
+    console.log(
+      'checkbox',
+      toggleCheckbox,
+      e.target.checked,
+      e.target.value,
+      getPublicChannels,
+    );
+
+    try {
+      await addPublishPollQuestionToChannelMutation({
+        variables: {
+          channelID: e.target.value,
+          pollQuestionID: getPollQuestionId,
+        },
+      });
+    } catch (e) {
+      console.log('error on mutation addPollQuestion');
+    }
   };
 
   const handleCollapseClick = () => {
@@ -64,16 +91,13 @@ const GetPublicChannels: React.FC = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    // checked={
-                    //   channel.channel_polls[0]?.poll_question?.is_active
-                    //     ? true
-                    //     : false
-                    // }
+                    value={channel.id}
                     onChange={handleChange}
                     name={channel.name}
+                    size="medium"
                   />
                 }
-                label={channel.name}
+                label={channel.id + ' - ' + channel.name}
               />
             </ListItem>
           ))}

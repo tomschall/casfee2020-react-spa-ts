@@ -81,3 +81,14 @@ mutation addAnswerToQuestion($text: String!, $pollQuestionId: Int!) {
     affected_rows
   }
 }
+
+mutation addPublishPollQuestionToChannel(
+  $channelID: Int!
+  $pollQuestionID: Int!
+) {
+  channelPoll: insert_channel_poll(
+    objects: { channel_id: $channelID, poll_questions: $pollQuestionID }
+  ) {
+    affected_rows
+  }
+}
