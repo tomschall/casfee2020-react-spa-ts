@@ -1,7 +1,6 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import routes from '../src/routes/routes';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { theme } from './theme/theme';
@@ -66,7 +65,7 @@ const App: React.FC = () => {
         ) : (
           <Switch>
             <Redirect exact from="/" to="/channel/general" />
-            <Route path={routes.unsigned.home} component={SignIn} />
+            <Route path="/home" component={SignIn} />
             <PrivateRoute path="/channel/:channel" component={ChatBoard} />
             <PrivateRoute path="/dashboard" component={AdminBoard} />
             <Route exact path="/404-not-found" component={NotFound} />
