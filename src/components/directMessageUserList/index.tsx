@@ -68,8 +68,9 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
     history.push(`/addDirectMessageChannelMembers`);
   };
 
-  const setOnlineUsersStatus = (user_id: any) => {
+  const setOnlineUsersStatus = (user_id: string) => {
     if (user_id === undefined) return true;
+
     const onlineUser = onlineUsers?.users.filter((u) => {
       return user_id === u.auth0_user_id ? true : false;
     });

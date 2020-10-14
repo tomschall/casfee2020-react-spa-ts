@@ -18,16 +18,6 @@ const UserStatus: React.FC<OnlineUsersProps> = ({ user_id }) => {
   const { user } = useAuth0();
   const usersOnline = data?.users.length ?? 0;
 
-  const [sendUserIsOnline] = useSetUserOnlineMutation({
-    variables: { user_id },
-  });
-
-  useEffect(() => {
-    setInterval(() => {
-      sendUserIsOnline();
-    }, 5000);
-  }, []);
-
   if (error) {
     return <Alert severity="error">Online users could not be loaded.</Alert>;
   }

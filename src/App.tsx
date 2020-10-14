@@ -16,8 +16,9 @@ import AddDirectMessageChannel from './components/AddDirectMessageChannel';
 import ChatBoard from './layout/ChatBoard';
 import AdminBoard from './layout/AdminBoard';
 
-const App: React.FC = (client) => {
+const App: React.FC = () => {
   const { isAuthenticated, user, isLoading } = useAuth0();
+
   if (isLoading) {
     return (
       <>
@@ -36,7 +37,9 @@ const App: React.FC = (client) => {
     );
   }
 
-  if (isAuthenticated) console.log('user.id', user.sub);
+  if (isAuthenticated) {
+    console.log('user.id', user.sub);
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -44,13 +47,9 @@ const App: React.FC = (client) => {
       <div className="app">
         {isAuthenticated ? (
           <Switch>
-            <Redirect exact from={routes.base} to={routes.signed.general} />
-            <Redirect
-              exact
-              from={routes.signed.base}
-              to={routes.signed.general}
-            />
-            <PrivateRoute path={routes.signed.dynamic} component={ChatBoard} />
+            <Redirect exact from="/" to="/channel/general" />
+            <Redirect exact from="/channel" to="/channel/general" />
+            <PrivateRoute path="/channel/:channel" component={ChatBoard} />
             <PrivateRoute path="/add-user-to-channel" component={ChatBoard} />
             <PrivateRoute
               path="/addChannelMembers"
@@ -60,27 +59,18 @@ const App: React.FC = (client) => {
               path="/addDirectMessageChannelMembers"
               component={AddDirectMessageChannel}
             />
-            <PrivateRoute
-              path={routes.signed.dashboard}
-              component={AdminBoard}
-            />
-            <Route exact path={routes.notfound} component={NotFound} />
-            <Redirect to={routes.notfound} />
+            <PrivateRoute path="/dashboard" component={AdminBoard} />
+            <Route exact path="/404-not-found" component={NotFound} />
+            <Redirect to="/404-not-found" />
           </Switch>
         ) : (
           <Switch>
-            <Redirect exact from={routes.base} to={routes.unsigned.home} />
+            <Redirect exact from="/" to="/channel/general" />
             <Route path={routes.unsigned.home} component={SignIn} />
-            <PrivateRoute
-              path={routes.unsigned.dynamic}
-              component={ChatBoard}
-            />
-            <PrivateRoute
-              path={routes.signed.dashboard}
-              component={AdminBoard}
-            />
-            <Route exact path={routes.notfound} component={NotFound} />
-            <Redirect to={routes.notfound} />
+            <PrivateRoute path="/channel/:channel" component={ChatBoard} />
+            <PrivateRoute path="/dashboard" component={AdminBoard} />
+            <Route exact path="/404-not-found" component={NotFound} />
+            <Redirect to="/404-not-found" />
           </Switch>
         )}
       </div>
