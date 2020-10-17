@@ -1,15 +1,4 @@
-subscription watchNewMessages {
-  newMessages: message(order_by: { id: desc }, limit: 1) {
-    id
-    text
-    timestamp
-    user {
-      username
-    }
-  }
-}
-
-subscription watchMessages($channelId: Int!, $limit: Int = 20) {
+subscription watchMessages($channelId: Int!, $limit: Int) {
   messages: message(
     order_by: { timestamp: desc }
     limit: $limit
@@ -127,5 +116,50 @@ subscription getUserIsTyping($self_id: String!, $channel_id: Int!) {
   ) {
     last_typed
     username
+  }
+}
+
+subscription watchNewMessages($channelId: Int!) {
+  newMessages: message(
+    order_by: { id: desc }
+    limit: 1
+    where: { channel: { id: { _eq: $channelId } } }
+  ) {
+    id
+    text
+    timestamp
+    user {
+      username
+    }
+  }
+}
+
+subscription watchChannelsLastMessageId(
+  $channel_type: channel_type_enum! = CHAT_MESSAGE
+) {
+  channels: channel(
+    where: { channel_type: { _eq: $channel_type } }
+    order_by: { name: asc, is_private: asc }
+  ) {
+    name
+    id
+    is_private
+    owner_id
+    messages(order_by: { id: desc }, limit: 1) {
+      id
+    }
+  }
+}
+
+subscription watchMessageCursor($channel_id: Int!, $user_id: String!) {
+  message_cursor(
+    where: {
+      user_id: { _eq: $user_id }
+      _and: { channel_id: { _eq: $channel_id } }
+    }
+  ) {
+    channel_id
+    message_id
+    user_id
   }
 }

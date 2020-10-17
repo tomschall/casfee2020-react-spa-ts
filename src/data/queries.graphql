@@ -29,6 +29,27 @@ query getMessages(
   }
 }
 
+query getMessagesSum {
+  channel_aggregate(
+    where: { channel_type: { _eq: CHAT_MESSAGE } }
+    order_by: { name: asc }
+  ) {
+    nodes {
+      messages(distinct_on: channel_id) {
+        channel_id
+        channel {
+          name
+        }
+      }
+      messages_aggregate {
+        aggregate {
+          count
+        }
+      }
+    }
+  }
+}
+
 query getChannels {
   channels: channel {
     name

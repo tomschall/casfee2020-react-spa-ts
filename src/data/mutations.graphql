@@ -69,3 +69,27 @@ mutation sendTypingEvent($user_id: String!, $channel_id: Int!) {
     affected_rows
   }
 }
+
+mutation upsertMessageCursor(
+  $channel_id: Int!
+  $message_id: Int!
+  $user_id: String!
+) {
+  insert_message_cursor(
+    objects: {
+      channel_id: $channel_id
+      message_id: $message_id
+      user_id: $user_id
+    }
+    on_conflict: {
+      constraint: message_cursor_channel_id_user_id_key
+      update_columns: message_id
+    }
+  ) {
+    returning {
+      channel_id
+      message_id
+      user_id
+    }
+  }
+}

@@ -1,16 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  Badge,
   Box,
   Button,
-  Container,
   Collapse,
   Divider,
-  FormControl,
-  FormHelperText,
   Grid,
-  Input,
-  InputLabel,
   List,
   ListItem,
   ListItemIcon,
@@ -23,7 +17,6 @@ import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import HelpIcon from '@material-ui/icons/Help';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 
 import { useGetPollQuestionsQuery } from '../../api/generated/graphql';
 import Loader from '../../layout/shared/Loader';

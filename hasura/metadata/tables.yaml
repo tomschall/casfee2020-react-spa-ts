@@ -206,6 +206,34 @@
         - channel:
             is_private:
               _eq: false
+      allow_aggregations: true
+- table:
+    schema: public
+    name: message_cursor
+  insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      columns:
+      - channel_id
+      - message_id
+      - user_id
+      backend_only: false
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - channel_id
+      - message_id
+      - user_id
+      filter: {}
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - message_id
+      filter: {}
+      check: {}
 - table:
     schema: public
     name: poll_anwers

@@ -11,6 +11,7 @@ import ChatApp from '../../../components/ChatApp';
 const ChatContainer: React.FC = () => {
   const classes = useStyles();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
+
   return (
     <Container
       component="main"

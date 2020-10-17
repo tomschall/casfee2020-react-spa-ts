@@ -21,6 +21,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import useStyles from './styles';
+import ChannelListMessageCounter from '../ChannelListMessageCounter';
 
 const Channels: React.FC<any> = () => {
   const classes = useStyles();
@@ -90,9 +91,12 @@ const Channels: React.FC<any> = () => {
                     </Link>
                   </ListItemText>
                 ) : (
-                  <Link to={'/channel/' + data.name}>
-                    <ListItemText primary={data?.name} />
-                  </Link>
+                  <React.Fragment>
+                    <Link to={'/channel/' + data.name}>
+                      <ListItemText primary={data?.name} />
+                    </Link>
+                    <ChannelListMessageCounter channelId={data.id} />
+                  </React.Fragment>
                 )}
               </ListItem>
             ))}

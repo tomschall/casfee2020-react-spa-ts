@@ -15,17 +15,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useHistory } from 'react-router';
 
-const SidebarMenuButton = styled(Button)({
-  border: 0,
-  borderRadius: 3,
-  boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-  color: 'white',
-  margin: '20px 0 0 0',
-  padding: '0 30px',
-});
-
-const SidebarMenu = styled(Menu)({});
-
 const AddDirectMessageChannel: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { isAuthenticated, user, isLoading } = useAuth0();
@@ -94,7 +83,7 @@ const AddDirectMessageChannel: React.FC = () => {
             <MenuItem
               onClick={() => handleAddUser(user_id, dm_user?.auth0_user_id)}
             >
-              {dm_user.username}
+              {dm_user?.username} ({dm_user?.auth0_user_id})
             </MenuItem>
           ) : (
             false
