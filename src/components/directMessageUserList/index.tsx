@@ -23,6 +23,7 @@ import {
   useWatchOnlineUsersSubscription,
 } from '../../api/generated/graphql';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
+import ChannelListMessageCounter from '../ChannelListMessageCounter';
 
 interface DirectMessageUserListProps {
   user_id: string;
@@ -78,6 +79,8 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
     return onlineUser?.length ? false : true;
   };
 
+  console.log('data direct message user list', data);
+
   return (
     <>
       <List className={classes.root}>
@@ -101,11 +104,17 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
           <List component="div">
             {data?.channels.map((data: any) => (
               <ListItem button key={data.id}>
+                <ChannelListMessageCounter channelId={data.id} />
                 <ListItemText
                   primary={
-                    <Link className={classes.link} to={'/channel/' + data.name}>
-                      {data.user_channels[0]?.user.username}
-                    </Link>
+                    <React.Fragment>
+                      <Link
+                        className={classes.link}
+                        to={'/channel/' + data.name}
+                      >
+                        {data.user_channels[0]?.user.username}
+                      </Link>
+                    </React.Fragment>
                   }
                 />
                 <ListItemIcon>
