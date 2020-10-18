@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Alert } from '@material-ui/lab';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useAddChannelMutation } from '../../api/generated/graphql';
+import {
+  useAddChannelMutation,
+  useInsertMessageMutation,
+} from '../../api/generated/graphql';
 import Loader from '../../layout/shared/Loader';
 import {
   Button,
@@ -24,6 +27,7 @@ import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import useStyles from './styles';
+import { useHistory } from 'react-router';
 
 // interface AddChannelModalProps {
 //   handleClose: Function;
@@ -37,8 +41,17 @@ const AddChannel: React.FC = () => {
   const [openSuccess, setOpenSuccess] = React.useState(true);
   const [channelName, setChannelName] = useState('');
   const [channelIsPrivate, setChannelIsPrivate] = useState(false);
-  const [addChannel, { error, loading, called }] = useAddChannelMutation();
+  const { user } = useAuth0();
+
+  const [addChannel, { data, loading, error }] = useAddChannelMutation();
+
+  const [
+    sendMessage,
+    { data: sendUpdateMessageData },
+  ] = useInsertMessageMutation();
+
   const { user: userAuth0, isLoading: loadingAuth0 } = useAuth0();
+  let history = useHistory();
 
   const setSnackbarPosition = () => {
     switch (matches) {
@@ -63,22 +76,34 @@ const AddChannel: React.FC = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    if (!channelName) {
-      return;
-    } else {
-      setOpenAlert(true);
-    }
+    if (!channelName) return;
+    setOpenAlert(true);
 
     try {
-      await addChannel({
+      const dataAddChannel = await addChannel({
         variables: {
           owner_id: userAuth0.sub,
           name: channelName.toLocaleLowerCase(),
           is_private: channelIsPrivate,
         },
       });
+
+      await sendMessage({
+        variables: {
+          message: {
+            user_id: user.sub,
+            text: `Welcome to channel ${dataAddChannel.data?.insert_channel?.returning[0]?.name}`,
+            channel_id: dataAddChannel.data?.insert_channel?.returning[0]?.id,
+          },
+        },
+      });
+
       setOpen(false);
       setChannelName('');
+
+      console.log('dataAddChannel', dataAddChannel);
+
+      history.push(`/channel/${channelName.toLocaleLowerCase()}`);
     } catch (e) {
       setChannelName('');
       console.log('error on mutation');
@@ -127,6 +152,23 @@ const AddChannel: React.FC = () => {
               >
                 <Alert severity={'error'} onClose={handleAlert}>
                   You can not use this name as it is already taken.
+                </Alert>
+              </Snackbar>
+            </ListItem>
+          )}
+          {data && (
+            <ListItem className={classes.nested}>
+              <Snackbar
+                open={openAlert}
+                autoHideDuration={5000}
+                onClose={handleAlert}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: setSnackbarPosition(),
+                }}
+              >
+                <Alert severity={'success'} onClose={handleAlert}>
+                  Channel has been added.
                 </Alert>
               </Snackbar>
             </ListItem>
