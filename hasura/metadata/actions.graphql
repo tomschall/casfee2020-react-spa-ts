@@ -229,7 +229,8 @@ type AddDirectMessageChannelOutput {
 }
 
 type validateAndAddDirectMessageChannelOutput {
-  affected_rows : Int!
+  id : Int!
+  name : String!
 }
 
 type AddChannelUserSubscriptionOutput {

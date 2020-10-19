@@ -57,7 +57,6 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   });
 
   useEffect(() => {
-    console.log('data?.messages[0].id', data?.messages[0]?.id);
     if (data?.messages[0]?.id && data?.messages[0].id > 0)
       upsertMessageCursorMutation();
   }, [data]);

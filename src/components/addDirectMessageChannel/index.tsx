@@ -9,6 +9,8 @@ import {
 import {
   useValidateAndAddDirectMessageChannelMutation,
   useWatchUsersWhoHaveSubscribedToDirectMessageChannelSubscription,
+  useUpsertMessageCursorMutation,
+  useInsertMessageMutation,
 } from '../../api/generated/graphql';
 import { Alert } from '@material-ui/lab';
 import { v4 as uuidv4 } from 'uuid';
@@ -34,11 +36,26 @@ const AddDirectMessageChannel: React.FC = () => {
   });
 
   const [
+    upsertMessageCursorMutation,
+    {
+      data: upsertMessageData,
+      loading: upsertMessageLoading,
+      error: upsertMessageError,
+    },
+  ] = useUpsertMessageCursorMutation();
+
+  const [
+    sendMessage,
+    { data: sendUpdateMessageData },
+  ] = useInsertMessageMutation();
+
+  const [
     validateAndAddDirectMessageChannelMutation,
     { data: addDMData, loading: addDMLoading, error: addDMError },
   ] = useValidateAndAddDirectMessageChannelMutation();
 
   if (error || addDMError) {
+    console.log('error', addDMError);
     return <Alert severity="error">Fetching users error...</Alert>;
   }
 
@@ -56,9 +73,31 @@ const AddDirectMessageChannel: React.FC = () => {
       },
     });
 
+    await sendMessage({
+      variables: {
+        message: {
+          user_id: 'admin',
+          text: `Welcome to your new direct message channel`,
+          channel_id: data?.validateAndAddDirectMessageChannel?.id,
+        },
+      },
+    });
+
+    if (
+      data?.validateAndAddDirectMessageChannel?.id &&
+      data?.validateAndAddDirectMessageChannel?.id > 0
+    )
+      upsertMessageCursorMutation({
+        variables: {
+          channel_id: data?.validateAndAddDirectMessageChannel?.id,
+          message_id: 1,
+          user_id: dm_user,
+        },
+      });
+
     console.log('data', data);
 
-    history.push(`/channel/general`);
+    history.push(`/channel/${data?.validateAndAddDirectMessageChannel?.name}`);
 
     // TODO: add backend_only flag for addDirectMessageChannel mutation to hasura
   };

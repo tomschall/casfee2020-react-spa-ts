@@ -79,8 +79,6 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
     return onlineUser?.length ? false : true;
   };
 
-  console.log('data direct message user list', data);
-
   return (
     <>
       <List className={classes.root}>

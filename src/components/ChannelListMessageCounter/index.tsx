@@ -8,10 +8,7 @@ import { currentChannelState } from '../../atom';
 import { useAuth0 } from '@auth0/auth0-react';
 import Alert from '@material-ui/lab/Alert';
 import useStyles from './styles';
-
-import Badge from '@material-ui/core/Badge';
-import MailIcon from '@material-ui/icons/Mail';
-import { Chip, Avatar } from '@material-ui/core';
+import { Chip } from '@material-ui/core';
 
 interface ChannelListMessageCounterProps {
   channelId: number;
@@ -44,13 +41,6 @@ const ChannelListMessageCounter: React.FC<ChannelListMessageCounterProps> = ({
   });
 
   useEffect(() => {
-    console.log('data changed', channelId, data);
-    console.log(
-      'data changed useWatchMessageCursorData',
-      channelId,
-      useWatchMessageCursorData,
-    );
-
     let messageId = useWatchMessageCursorData?.message_cursor[0]?.message_id
       ? useWatchMessageCursorData?.message_cursor[0]?.message_id
       : 0;
@@ -59,8 +49,6 @@ const ChannelListMessageCounter: React.FC<ChannelListMessageCounterProps> = ({
       if (messageId === 0) return false;
       return m.id > messageId;
     });
-
-    console.log('messageCounterArray', channelId, messageCounterArray?.length);
 
     setCount(messageCounterArray?.length);
   }, [data, useWatchMessageCursorData]);
