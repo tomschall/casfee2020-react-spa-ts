@@ -39,14 +39,21 @@ npm run api:hasura:console
 value: DIRECT_MESSAGE comment: this channel type is for direct messages
 value: CHAT_MESSAGE comment: this channel type is for chat messages in a private or public channel
 
-### Start express server 
+### Add channel
+#### Add one default channel
+name: general
+owner_id:
+is_privat: false
+channel_type: CHAT_MESSAGE
+
+### Checkout nestjs server and install
 #### This server is for executing requests from hasura actions
 ```shell script
-cd nodejs-express
-npm ci
-npm start
+git clone https://github.com/tomschall/casfee2020-nestjs.git
+cd casfee2020-nestjs
+npm install
+npm run start
 ```
-
 
 ##### Generate TS types and React hooks
 ```shell script
@@ -55,11 +62,8 @@ npm run api:client:generate
 
 ## Troubleshooting
 ### Complete reinstall
-* If your docker containers are running, and you have to reinstall the whole project, stop 
+* If your docker containers are running, and you have to reinstall the whole project, stop
   them, the execute ./clean.sh script in the root folder of the project.
-
-
-
 
 
 
