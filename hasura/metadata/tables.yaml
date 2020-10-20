@@ -93,16 +93,6 @@
       - id
       - poll_questions
       filter: {}
-  update_permissions:
-  - role: user
-    permission:
-      columns:
-      - id
-      - channel_id
-      - poll_questions
-      - is_active
-      filter: {}
-      check: null
 - table:
     schema: public
     name: channel_thread
@@ -251,31 +241,6 @@
   - name: poll_question
     using:
       foreign_key_constraint_on: question_id
-  insert_permissions:
-  - role: user
-    permission:
-      check: {}
-      columns:
-      - id
-      - text
-      - votes
-      - question_id
-      - created_at
-      - updated_at
-      - user_id
-      backend_only: false
-  select_permissions:
-  - role: user
-    permission:
-      columns:
-      - id
-      - question_id
-      - votes
-      - text
-      - user_id
-      - created_at
-      - updated_at
-      filter: {}
 - table:
     schema: public
     name: poll_questions
@@ -297,10 +262,7 @@
   insert_permissions:
   - role: user
     permission:
-      check:
-        _or:
-        - owner_id:
-            _eq: X-Hasura-User-Id
+      check: {}
       columns:
       - id
       - text
@@ -320,18 +282,6 @@
       - created_at
       - updated_at
       filter: {}
-  update_permissions:
-  - role: user
-    permission:
-      columns:
-      - id
-      - text
-      - created_at
-      - updated_at
-      - owner_id
-      - is_active
-      filter: {}
-      check: null
 - table:
     schema: public
     name: user
