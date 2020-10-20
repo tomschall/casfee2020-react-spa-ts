@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useRecoilState } from 'recoil';
 import { useForm } from 'react-hook-form';
 import {
@@ -49,10 +49,7 @@ const PollQuestions: React.FC = () => {
     },
   });
 
-  const [
-    addPollQuestionMutation,
-    { error, loading, called },
-  ] = useAddAnswerToQuestionMutation();
+  const [addPollQuestionMutation, { error }] = useAddAnswerToQuestionMutation();
 
   // const [openAlert, setOpenAlert] = React.useState(true);
 
@@ -130,6 +127,7 @@ const PollQuestions: React.FC = () => {
           <FormGroup row>
             <TextField
               id="text"
+              name="poll_answer"
               required
               disabled={getPollQuestion.data?.poll_question[0].is_active}
               value={answerText.text}
@@ -176,6 +174,7 @@ const PollQuestions: React.FC = () => {
           <FormGroup>
             {data?.poll_answers.map((answer) => (
               <TextField
+                key={answer.id}
                 id={JSON.stringify(answer.id)}
                 required
                 value=""

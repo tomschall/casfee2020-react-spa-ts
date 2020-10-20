@@ -93,6 +93,16 @@
       - id
       - poll_questions
       filter: {}
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - id
+      - channel_id
+      - poll_questions
+      - is_active
+      filter: {}
+      check: null
 - table:
     schema: public
     name: channel_thread

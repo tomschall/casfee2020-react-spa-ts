@@ -112,8 +112,22 @@ mutation addPublishPollQuestionToChannel(
   $pollQuestionID: Int!
 ) {
   channelPoll: insert_channel_poll(
-    objects: { channel_id: $channelID, poll_questions: $pollQuestionID }
+    objects: {
+      channel_id: $channelID
+      poll_questions: $pollQuestionID
+      id: $channelID
+    }
+    on_conflict: {
+      constraint: channel_poll_pkey
+      update_columns: poll_questions
+      where: { id: { _eq: $channelID } }
+    }
   ) {
     affected_rows
+    returning {
+      channel_id
+      id
+      poll_questions
+    }
   }
 }
