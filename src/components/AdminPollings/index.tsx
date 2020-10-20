@@ -11,14 +11,9 @@ import {
 } from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
-
 import { useAuth0 } from '@auth0/auth0-react';
 import { useAddPollQuestionMutation } from '../../api/generated/graphql';
 import GetPollQuestions from './GetPollQuestions';
-
-// import Loader from '../../layout/shared/Loader';
-// import NotFound from '../../layout/shared/NotFound';
-// import Alert from '@material-ui/lab/Alert';
 import useStyles from './styles';
 
 interface AdminPollingsProps {

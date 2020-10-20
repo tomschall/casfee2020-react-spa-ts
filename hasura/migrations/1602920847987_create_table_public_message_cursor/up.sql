@@ -1,1 +1,0 @@
-CREATE TABLE "public"."message_cursor"("id" serial NOT NULL, "channel_id" integer NOT NULL, "user_id" text NOT NULL, "message_id" Integer NOT NULL, PRIMARY KEY ("id") , UNIQUE ("channel_id", "user_id"));
