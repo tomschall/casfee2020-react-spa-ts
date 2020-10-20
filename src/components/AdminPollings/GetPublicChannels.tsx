@@ -44,13 +44,7 @@ const GetPublicChannels: React.FC = () => {
 
   const handleChange = async (e: any) => {
     setToggleCheckbox(!toggleCheckbox);
-    console.log(
-      'checkbox',
-      toggleCheckbox,
-      e.target.checked,
-      e.target.value,
-      getPublicChannels,
-    );
+    console.log(e.target.value, getPollQuestionId);
 
     try {
       await addPublishPollQuestionToChannelMutation({
@@ -70,7 +64,7 @@ const GetPublicChannels: React.FC = () => {
 
   return (
     <List>
-      <ListItem button onClick={handleCollapseClick}>
+      <ListItem button onClick={handleCollapseClick} key={100}>
         <ListItemIcon>
           <PeopleOutlineIcon />
         </ListItemIcon>
@@ -80,7 +74,7 @@ const GetPublicChannels: React.FC = () => {
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div">
+        <List component="div" key={2}>
           {getPublicChannels.data?.channels.map((channel, index: any) => (
             <ListItem button key={index}>
               <ListItemIcon>
@@ -95,6 +89,7 @@ const GetPublicChannels: React.FC = () => {
                     onChange={handleChange}
                     name={channel.name}
                     size="medium"
+                    // disabled={toggleCheckbox}
                   />
                 }
                 label={channel.id + ' - ' + channel.name}

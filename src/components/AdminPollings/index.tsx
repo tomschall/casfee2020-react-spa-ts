@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import {
   Box,
@@ -25,13 +25,13 @@ import GetPollQuestions from './GetPollQuestions';
 // import Alert from '@material-ui/lab/Alert';
 import useStyles from './styles';
 
-interface Props {
+interface AdminPollingsProps {
   text?: string;
-  owner_id?: string;
+  owner_id: string;
   title: string;
 }
 
-const AdminPollings: React.FC<Props> = () => {
+const AdminPollings: React.FC<AdminPollingsProps> = () => {
   const classes = useStyles();
   const { user: userAuth0, isLoading: loadingAuth0 } = useAuth0();
   const [
