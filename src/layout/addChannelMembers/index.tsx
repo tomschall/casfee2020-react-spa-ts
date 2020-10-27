@@ -47,13 +47,7 @@ const AddChannelMembers: React.FC = () => {
     },
   ] = useAddChannelUserMutation();
 
-  console.log('userAuth0', userAuth0);
-  console.log('currentChannel', currentChannel);
-  console.log('users', users);
-
   const handleUsersToggle = async (event: any, user_id: string) => {
-    console.log('user_id', user_id);
-
     try {
       await addChannelUserMutation({
         variables: {
@@ -103,11 +97,11 @@ const AddChannelMembers: React.FC = () => {
 
                 <List component="nav" aria-label="secondary mailbox folders">
                   {users &&
-                    users.user.map((u: any) => {
+                    users.user.map((u: any, index) => {
                       return (
                         <ListItem
                           button
-                          key={u.id}
+                          key={index}
                           onClick={(event) =>
                             handleUsersToggle(event, u.auth0_user_id)
                           }

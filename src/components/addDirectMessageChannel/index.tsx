@@ -117,9 +117,10 @@ const AddDirectMessageChannel: React.FC = () => {
           : 'At the moment there are no more users to select. You have to select them from the direct message sidebar.'}
       </p>
       {users &&
-        users.user.map((dm_user: any) => {
+        users.user.map((dm_user: any, index) => {
           return dm_user.user_channels.length === 0 ? (
             <MenuItem
+              key={index}
               onClick={() => handleAddUser(user_id, dm_user?.auth0_user_id)}
             >
               {dm_user?.username} ({dm_user?.auth0_user_id})
