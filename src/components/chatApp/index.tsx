@@ -36,7 +36,7 @@ const ChatApp: React.FC = (props) => {
     setCurrentChannel(data?.channel[0]);
   }
 
-  if (error || channelError || !currentChannel) {
+  if (error || channelError) {
     return <React.Fragment>Error: {error}</React.Fragment>;
   }
 
@@ -47,8 +47,8 @@ const ChatApp: React.FC = (props) => {
       {isAuthenticated && (
         <Chat
           channelId={currentChannel?.id}
-          isPrivate={currentChannel.is_private}
-          channelType={currentChannel.channel_type}
+          isPrivate={currentChannel?.is_private}
+          channelType={currentChannel?.channel_type}
         />
       )}
     </>

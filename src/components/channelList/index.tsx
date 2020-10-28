@@ -39,7 +39,7 @@ const Channels: React.FC<any> = () => {
     },
   });
 
-  if (error || !currentChannel?.name) {
+  if (error) {
     return <Alert severity="error">Channels could not be loaded.</Alert>;
   }
 

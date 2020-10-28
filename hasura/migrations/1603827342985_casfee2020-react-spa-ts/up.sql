@@ -62,7 +62,8 @@ CREATE TABLE public.message (
     text text NOT NULL,
     "timestamp" timestamp with time zone DEFAULT now() NOT NULL,
     user_id text NOT NULL,
-    channel_id integer NOT NULL
+    channel_id integer NOT NULL,
+    image text
 );
 CREATE TABLE public.message_cursor (
     id integer NOT NULL,

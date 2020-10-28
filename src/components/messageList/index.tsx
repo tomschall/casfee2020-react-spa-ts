@@ -13,6 +13,7 @@ import {
   ListItemAvatar,
   ListItemIcon,
   Typography,
+  CardMedia,
 } from '@material-ui/core';
 
 interface MessageProps {
@@ -67,6 +68,9 @@ const MessageList: React.FC<MessageProps> = ({
           <Typography component="p" className={classes.messageText}>
             {message.text}
           </Typography>
+          <Box height={100}>
+            {message?.image ? <img src={message.image} /> : ''}
+          </Box>
           <Divider className={classes.vspace} />
           <ThreadChannelButton
             message={message.id}

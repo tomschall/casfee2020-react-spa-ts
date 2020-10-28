@@ -58,4 +58,10 @@ export default makeStyles((theme) => ({
     width: drawerWidth,
   },
   appBarSpacer: theme.mixins.toolbar,
+  fab: {
+    margin: theme.spacing(2),
+  },
+  giphyImage: {
+    marginTop: theme.spacing(2),
+  },
 }));

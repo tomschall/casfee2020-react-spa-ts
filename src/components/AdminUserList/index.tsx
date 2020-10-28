@@ -10,7 +10,9 @@ import {
   TableRow,
   TableCell,
   Typography,
+  CircularProgress,
 } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { useGetUserListQuery } from '../../api/generated/graphql';
 import Loader from '../../layout/shared/Loader';
 import NotFound from '../../layout/shared/NotFound';
@@ -23,11 +25,11 @@ const AdminUserList: React.FC = () => {
   });
 
   if (loading) {
-    return <Loader />;
+    return <CircularProgress />;
   }
 
   if (error) {
-    return <NotFound />;
+    return <Alert severity="error">Users could not be loaded.</Alert>;
   }
 
   return (

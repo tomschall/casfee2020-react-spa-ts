@@ -3,7 +3,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import clsx from 'clsx';
 import { theme } from '../../../theme/theme';
 import { useRecoilState } from 'recoil';
-import { currentChannelState } from '../../../atom';
+import { currentChannelState, giphyState } from '../../../atom';
+import { IGif } from '@giphy/js-types';
 import {
   AppBar,
   Box,
@@ -12,9 +13,13 @@ import {
   Drawer,
   Grid,
   Toolbar,
+  Fab,
+  Tooltip,
 } from '@material-ui/core';
+import AddGif from '@material-ui/icons/Gif';
 import SideBar from '../SideBar';
 import MessageInput from '../../../components/MessageInput';
+import GiphyCarousel from '../../../components/GiphyCarousel';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ExpandMore from '@material-ui/icons/ExpandMore';
@@ -23,6 +28,7 @@ import FaceIcon from '@material-ui/icons/Face';
 import PeopleIcon from '@material-ui/icons/People';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import useStyles from './styles';
+import { useHistory } from 'react-router';
 
 interface MenuBarProps {
   channelId: number;
@@ -43,11 +49,18 @@ const MenuBar: React.FC<MenuBarProps> = ({
   );
 
   const [open, setOpen] = React.useState(false); // Sidebar default state
+  const history = useHistory();
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
+
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleGiphyClick = () => {
+    console.log('handle giphy click');
   };
 
   return (
@@ -68,7 +81,6 @@ const MenuBar: React.FC<MenuBarProps> = ({
                   icon={<FaceIcon />}
                   label={user.nickname}
                 />
-
                 <Chip
                   color="secondary"
                   variant="outlined"
@@ -82,6 +94,24 @@ const MenuBar: React.FC<MenuBarProps> = ({
                   }
                   label={currentChannel.name}
                 />
+                <Chip
+                  variant="outlined"
+                  color="primary"
+                  size="small"
+                  icon={<AddGif />}
+                  label="+Gif"
+                  onClick={handleGiphyClick}
+                />
+                <Box
+                  className={classes.giphyImage}
+                  order={1}
+                  display="flex"
+                  flex="1"
+                  justifyContent="flex-end"
+                  alignItems="flex-end"
+                >
+                  <GiphyCarousel />
+                </Box>
               </Grid>
               <Grid item style={{ flex: 1 }}>
                 {matches === false && (

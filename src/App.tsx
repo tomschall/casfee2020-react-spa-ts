@@ -14,6 +14,7 @@ import AddChannelMembers from './layout/AddChannelMembers';
 import AddDirectMessageChannel from './components/AddDirectMessageChannel';
 import ChatBoard from './layout/ChatBoard';
 import AdminBoard from './layout/AdminBoard';
+import GiphyGrid from './components/GiphyGrid';
 
 const App: React.FC = () => {
   const { isAuthenticated, user, isLoading } = useAuth0();

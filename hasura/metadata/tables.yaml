@@ -182,18 +182,20 @@
       columns:
       - channel_id
       - id
+      - image
       - text
-      - user_id
       - timestamp
+      - user_id
   select_permissions:
   - role: user
     permission:
       columns:
       - channel_id
       - id
+      - image
       - text
-      - user_id
       - timestamp
+      - user_id
       filter:
         _or:
         - channel:

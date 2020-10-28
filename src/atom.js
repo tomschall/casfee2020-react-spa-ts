@@ -12,3 +12,7 @@ export const getPollQuestionAnswers = atom({
   key: 'getPollQuestionAnswersState',
   default: 1,
 });
+
+export const giphyState = atom({
+  key: 'giphyState',
+});

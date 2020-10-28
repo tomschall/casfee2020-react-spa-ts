@@ -62,6 +62,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   }, [data]);
 
   if (error) {
+    console.log('messages error', error);
     return <Alert severity="error">Messages could not be loaded.</Alert>;
   }
 
@@ -78,7 +79,6 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   };
 
   const handleSetLastMessage = (lastMessage: Message) => {
-    console.log('triggered handleSetLastMessage');
     setLastMessage(lastMessage);
   };
 
