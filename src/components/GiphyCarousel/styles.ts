@@ -4,4 +4,8 @@ export default makeStyles((theme) => ({
   root: {
     width: '100%',
   },
+  giphySearchInput: {
+    marginBottom: theme.spacing(5),
+    marginLeft: theme.spacing(2),
+  },
 }));

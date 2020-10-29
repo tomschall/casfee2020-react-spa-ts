@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import clsx from 'clsx';
 import { theme } from '../../../theme/theme';
@@ -15,6 +15,7 @@ import {
   Toolbar,
   Fab,
   Tooltip,
+  TextField,
 } from '@material-ui/core';
 import AddGif from '@material-ui/icons/Gif';
 import SideBar from '../SideBar';
@@ -49,7 +50,7 @@ const MenuBar: React.FC<MenuBarProps> = ({
   );
 
   const [open, setOpen] = React.useState(false); // Sidebar default state
-  const history = useHistory();
+  const [showGiphyCarousel, setShowGiphyCarousel] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -60,7 +61,11 @@ const MenuBar: React.FC<MenuBarProps> = ({
   };
 
   const handleGiphyClick = () => {
-    console.log('handle giphy click');
+    setShowGiphyCarousel(!showGiphyCarousel);
+  };
+
+  const hideGiphyCarousel = () => {
+    setShowGiphyCarousel(false);
   };
 
   return (
@@ -103,14 +108,16 @@ const MenuBar: React.FC<MenuBarProps> = ({
                   onClick={handleGiphyClick}
                 />
                 <Box
+                  style={{ display: showGiphyCarousel ? 'flex' : 'none' }}
                   className={classes.giphyImage}
                   order={1}
-                  display="flex"
                   flex="1"
                   justifyContent="flex-end"
                   alignItems="flex-end"
                 >
-                  <GiphyCarousel />
+                  <GiphyCarousel
+                    hideGiphyCarousel={() => hideGiphyCarousel()}
+                  />
                 </Box>
               </Grid>
               <Grid item style={{ flex: 1 }}>

@@ -139,7 +139,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
           autoComplete="off"
           placeholder="Type your message here ..."
           id="standard-basic"
-          label={'Cackle your message here ...'}
+          label={'Crackle your message here ...'}
           // fullWidth
           InputProps={{
             classes: {
