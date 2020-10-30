@@ -7,5 +7,6 @@ export default makeStyles((theme) => ({
   giphySearchInput: {
     marginBottom: theme.spacing(5),
     marginLeft: theme.spacing(2),
+    minWidth: 200,
   },
 }));
