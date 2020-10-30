@@ -41,21 +41,16 @@ npm run api:hasura:console
 value: DIRECT_MESSAGE comment: this channel type is for direct messages
 value: CHAT_MESSAGE comment: this channel type is for chat messages in a private or public channel
 
-### Add channel
+### Add user and channel
+#### Add default user
+name: admin
+aut0_user_id: admin
+
 #### Add one default channel
 name: general
-owner_id:
+owner_id: admin
 is_privat: false
 channel_type: CHAT_MESSAGE
-
-### Checkout nestjs server and install
-#### This server is for executing requests from hasura actions
-```shell script
-git clone https://github.com/tomschall/casfee2020-nestjs.git
-cd casfee2020-nestjs
-npm install
-npm run start
-```
 
 ##### Generate TS types and React hooks
 ```shell script
