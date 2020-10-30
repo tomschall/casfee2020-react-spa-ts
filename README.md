@@ -16,6 +16,8 @@ It is built using React, Apollo and Hasura with Postgres DB.
 
 ### Installation
 ```shell script
+# Clone nestjs microservice for hasura actions
+git clone https://github.com/tomschall/casfee2020-nestjs.git nestjs
 # Install all dependencies
 yarn install
 ```
