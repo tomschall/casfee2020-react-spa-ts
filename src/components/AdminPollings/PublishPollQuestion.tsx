@@ -13,34 +13,67 @@ import {
   Paper,
   Typography
 } from '@material-ui/core';
-import { useWatchChannelPollQuestionSubscription } from '../../api/generated/graphql';
+import {
+  useWatchChannelPollQuestionSubscription,
+  useWatchPollAnswerVotesSubscription,
+  useSetPollAnswerVoteMutation
+} from '../../api/generated/graphql';
 
 const PublishChannelPolling: React.FC = () => {
   const classes = useStyles();
 
   const [currentChannel, setCurrentChannelState] = useRecoilState(currentChannelState);
-  console.log('currentChannel', currentChannel);
-
-
-  const [value, setValue] = React.useState<string>('');
+  // console.log('currentChannel', currentChannel);
+  const [value, setValue] = React.useState('');
   const [voteError, setVoteError] = React.useState(false);
-  const { data, loading, error } = useWatchChannelPollQuestionSubscription({
+  const { data, loading } = useWatchChannelPollQuestionSubscription({
     variables: {
       channelId: currentChannel.id
     },
   });
-  console.log('PublishChannelPolling', data);
+  // console.log('PublishChannelPolling', data);
+  const getPollAnswerVotes = useWatchPollAnswerVotesSubscription({
+    variables: {
+      pollAnswerId: parseInt(value, 10)
+    },
+  });
+  console.log('getPollAnswerVotes', getPollAnswerVotes.data?.pollAnswerVotes[0].votes);
+
+
+  const [setPollAnswerVoteMutation, { error }] = useSetPollAnswerVoteMutation();
+
+  // console.log('getPollAnswerVotes', getPollAnswerVotes.data?.pollAnswerVotes[0].votes);
 
   const handleChange = (e: any, value: any) => {
     setValue(e.target.value);
     console.log('radio value', e.target.value, 'pollAnswerId', value);
-
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log('Form submitted', value);
-  }
+    let currentVotes = getPollAnswerVotes.data?.pollAnswerVotes[0].votes;
+
+    if (currentVotes !== undefined) {
+      console.log('oldVotes', currentVotes);
+      currentVotes++
+      console.log('newVotes', currentVotes);
+    };
+
+    console.log('Form submitted', value, currentVotes);
+
+    try {
+      if (currentVotes === undefined) return;
+      await setPollAnswerVoteMutation({
+        variables: {
+          pollAnswerId: parseInt(value),
+          newVote: currentVotes,
+        }
+      })
+    } catch (e) {
+      console.log('error on mutation setVotes');
+
+    }
+  };
 
   return (
     <>
@@ -53,7 +86,7 @@ const PublishChannelPolling: React.FC = () => {
 
           <form onSubmit={handleSubmit}>
             <FormControl component="fieldset" error={voteError}>
-              <RadioGroup aria-label="quiz" name="quiz" value={value} onChange={handleChange}>
+              <RadioGroup aria-label="poll" name="poll" value={value} onChange={handleChange}>
                 {data?.getChannelPoll[0].poll_question.poll_anwers.map(pollAnswer => (
                   <FormControlLabel key={pollAnswer.id} value={pollAnswer.id} control={
                     <Radio

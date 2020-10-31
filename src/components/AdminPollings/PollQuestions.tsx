@@ -16,10 +16,10 @@ import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import StopIcon from '@material-ui/icons/Stop';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useAddAnswerToQuestionMutation } from '../../api/generated/graphql';
 import {
   useWatchGetPollQuestionSubscription,
   useWatchGetPollAnswersSubscription,
+  useAddAnswerToQuestionMutation
 } from '../../api/generated/graphql';
 import { getPollQuestionAnswers } from '../../atom';
 import GetPublicChannels from './GetPublicChannels';
@@ -115,14 +115,14 @@ const PollQuestions: React.FC = () => {
                 Active
               </Button>
             ) : (
-              <Button
-                variant="text"
-                color="secondary"
-                startIcon={<StopIcon className={classes.stop} />}
-              >
-                Inactive
-              </Button>
-            )}
+                <Button
+                  variant="text"
+                  color="secondary"
+                  startIcon={<StopIcon className={classes.stop} />}
+                >
+                  Inactive
+                </Button>
+              )}
           </Box>
           <FormGroup row>
             <TextField

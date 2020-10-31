@@ -211,3 +211,10 @@ subscription watchChannelPollQuestion($channelId: Int!) {
     }
   }
 }
+
+subscription watchPollAnswerVotes($pollAnswerId: Int!) {
+  pollAnswerVotes: poll_anwers(where: { id: { _eq: $pollAnswerId } }) {
+    id
+    votes
+  }
+}

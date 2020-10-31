@@ -131,3 +131,15 @@ mutation addPublishPollQuestionToChannel(
     }
   }
 }
+
+mutation setPollAnswerVote($pollAnswerId: Int!, $newVote: Int!) {
+  updatePollAnswer: update_poll_anwers(
+    where: { id: { _eq: $pollAnswerId } }
+    _set: { votes: $newVote }
+  ) {
+    affected_rows
+    returning {
+      votes
+    }
+  }
+}

@@ -137,15 +137,24 @@ query getChannelPolls {
 }
 
 query getChannelPollQuestion($channelId: Int) {
-  getChannelPoll: channel_poll(where: {channel_id: {_eq: $channelId}, is_active: {_eq: true}}) {
+  getChannelPoll: channel_poll(
+    where: { channel_id: { _eq: $channelId }, is_active: { _eq: true } }
+  ) {
     id
     poll_question {
       id
       text
-      poll_anwers(where: {poll_question: {}}) {
+      poll_anwers(where: { poll_question: {} }) {
         text
         question_id
       }
     }
+  }
+}
+
+query getPollAnswerVotes($pollAnswerId: Int!) {
+  poll_anwers(where: { id: { _eq: $pollAnswerId } }) {
+    id
+    votes
   }
 }

@@ -243,6 +243,13 @@
   - name: poll_question
     using:
       foreign_key_constraint_on: question_id
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - votes
+      filter: {}
+      check: null
 - table:
     schema: public
     name: poll_questions
