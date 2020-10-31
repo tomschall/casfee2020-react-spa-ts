@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../atom.js';
+import Loader from '../../layout/shared/Loader';
 import useStyles from './styles';
 import {
   Button,
@@ -25,24 +26,27 @@ const PublishChannelPolling: React.FC = () => {
   const [currentChannel, setCurrentChannelState] = useRecoilState(currentChannelState);
   // console.log('currentChannel', currentChannel);
   const [value, setValue] = React.useState('');
+
   const [voteError, setVoteError] = React.useState(false);
+
   const { data, loading } = useWatchChannelPollQuestionSubscription({
     variables: {
       channelId: currentChannel.id
     },
   });
-  // console.log('PublishChannelPolling', data);
+
+
   const getPollAnswerVotes = useWatchPollAnswerVotesSubscription({
     variables: {
       pollAnswerId: parseInt(value, 10)
     },
   });
-  console.log('getPollAnswerVotes', getPollAnswerVotes.data?.pollAnswerVotes[0].votes);
-
 
   const [setPollAnswerVoteMutation, { error }] = useSetPollAnswerVoteMutation();
 
-  // console.log('getPollAnswerVotes', getPollAnswerVotes.data?.pollAnswerVotes[0].votes);
+  if (loading) {
+    return <Loader />;
+  }
 
   const handleChange = (e: any, value: any) => {
     setValue(e.target.value);
@@ -51,7 +55,7 @@ const PublishChannelPolling: React.FC = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    let currentVotes = getPollAnswerVotes.data?.pollAnswerVotes[0].votes;
+    let currentVotes = await getPollAnswerVotes.data?.pollAnswerVotes[0].votes;
 
     if (currentVotes !== undefined) {
       console.log('oldVotes', currentVotes);
@@ -87,14 +91,16 @@ const PublishChannelPolling: React.FC = () => {
           <form onSubmit={handleSubmit}>
             <FormControl component="fieldset" error={voteError}>
               <RadioGroup aria-label="poll" name="poll" value={value} onChange={handleChange}>
-                {data?.getChannelPoll[0].poll_question.poll_anwers.map(pollAnswer => (
-                  <FormControlLabel key={pollAnswer.id} value={pollAnswer.id} control={
-                    <Radio
-                      value={JSON.stringify(pollAnswer.id)}
-                      checked={value === JSON.stringify(pollAnswer.id)}
-                      onChange={handleChange}
-                    />} label={pollAnswer.text} />
-                ))}
+                {data?.getChannelPoll[0].poll_question.poll_anwers
+                  .sort((a, b) => a.id > b.id ? 1 : -1)
+                  .map(pollAnswer => (
+                    <FormControlLabel key={pollAnswer.id} value={pollAnswer.id} control={
+                      <Radio
+                        value={JSON.stringify(pollAnswer.id)}
+                        checked={value === JSON.stringify(pollAnswer.id)}
+                        onChange={handleChange}
+                      />} label={pollAnswer.text} />
+                  ))}
               </RadioGroup>
               <Button type="submit" variant="contained" color="secondary" className={classes.pollSubmit}>
                 Vote
