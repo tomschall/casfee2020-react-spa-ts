@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, List, Button } from '@material-ui/core';
 import MessageList from '../MessageList';
+import PublishChannelPolling from '../AdminPollings/PublishPollQuestion';
 import { Message } from '../../interfaces/message/message.interface';
 import {
   useWatchMessagesSubscription,
@@ -90,6 +91,9 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
     <>
       <div className={classes.root}>
         <Grid container>
+          <Grid item xs={12} className={classes.messageContainer}>
+          <PublishChannelPolling />
+          </Grid>
           <Grid item xs={12} className={classes.messageContainer}>
             {isPrivate && channelType !== Channel_Type_Enum.DirectMessage && (
               <Button type="button" onClick={navigateToAddChannelMembers}>

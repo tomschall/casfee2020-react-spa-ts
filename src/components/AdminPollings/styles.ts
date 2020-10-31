@@ -31,4 +31,10 @@ export default makeStyles((theme) => ({
   stop: {
     color: theme.palette.error.main,
   },
+  pollCard: {
+    padding: theme.spacing(5)
+  },
+  pollSubmit: {
+    marginTop: theme.spacing(3)
+  }
 }));
