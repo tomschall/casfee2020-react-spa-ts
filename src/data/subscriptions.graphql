@@ -194,3 +194,17 @@ subscription watchGetPollAnswers($pollQuestionId: Int!) {
     votes
   }
 }
+
+subscription watchChannelPollQuestion($channelId: Int!) {
+  getChannelPoll: channel_poll(where: {channel_id: {_eq: $channelId}, is_active: {_eq: true}}) {
+    id
+    poll_question {
+      id
+      text
+      poll_anwers(where: {poll_question: {}}) {
+        text
+        question_id
+      }
+    }
+  }
+}
