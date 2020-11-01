@@ -69,19 +69,13 @@ const PublishChannelPolling: React.FC = () => {
           <LinearProgress variant="determinate" {...props} />
         </Box>
         <Box minWidth={0}>
-          <Typography variant="body2" color="textSecondary">{`${Math.round(
-            props.value
-          )}%`}</Typography>
+          <Typography variant="body2" color="textSecondary">{(props.value.toFixed(2))}%</Typography>
         </Box>
       </Box>
     );
   }
 
   LinearProgressWithLabel.propTypes = {
-    /**
-     * The value of the progress indicator for the determinate and buffer variants.
-     * Value between 0 and 100.
-     */
     value: totalVotes,
   };
 
@@ -164,7 +158,7 @@ const PublishChannelPolling: React.FC = () => {
                     return (
                       <Box key={pollVotes.id} width="100%" display="flex" alignItems="flex-start" flexDirection="column">
                         <Typography variant="body2">{pollVotes.text}</Typography>
-                        <LinearProgressWithLabel value={Math.round(100 * pollVotes.votes) / totalVotes()} />
+                        <LinearProgressWithLabel value={100 * pollVotes.votes / totalVotes()} />
                       </Box>
                     )
                   })}
