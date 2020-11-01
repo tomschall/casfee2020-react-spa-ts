@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
+import PropTypes from 'prop-types';
 import { currentChannelState } from '../../atom.js';
 import Loader from '../../layout/shared/Loader';
 import useStyles from './styles';
@@ -30,8 +31,6 @@ const PublishChannelPolling: React.FC = () => {
   const [voteError, setVoteError] = React.useState(false);
 
   const [hasVoted, setHasVoted] = React.useState(false);
-  console.log('hasVoted', hasVoted);
-
 
   const { data, loading } = useWatchChannelPollQuestionSubscription({
     variables: {
@@ -47,14 +46,48 @@ const PublishChannelPolling: React.FC = () => {
 
   const [setPollAnswerVoteMutation, { error }] = useSetPollAnswerVoteMutation();
 
+  const totalVotes = () => {
+    let numbers: any = [];
+    numbers = data?.getChannelPoll[0] !== undefined && data?.getChannelPoll[0].poll_question.poll_anwers;
+
+    const count: any = [];
+    numbers.map((num: any) => count.push(num.votes));
+
+    const result = count.reduce((a: any, b: any) => a + b);
+
+    return result;
+  }
+
   if (loading) {
     return <Loader />;
   }
 
+  const LinearProgressWithLabel = (props: any) => {
+    return (
+      <Box width="100%" display="flex" justifyContent="center" alignItems="center" flexDirection="row">
+        <Box width="100%" mr={1}>
+          <LinearProgress variant="determinate" {...props} />
+        </Box>
+        <Box minWidth={0}>
+          <Typography variant="body2" color="textSecondary">{`${Math.round(
+            props.value
+          )}%`}</Typography>
+        </Box>
+      </Box>
+    );
+  }
+
+  LinearProgressWithLabel.propTypes = {
+    /**
+     * The value of the progress indicator for the determinate and buffer variants.
+     * Value between 0 and 100.
+     */
+    value: totalVotes,
+  };
+
   // HANDLE EVENTS
   const handleChange = (e: any, value: any) => {
     setValue(e.target.value);
-    console.log('radio value', e.target.value, 'pollAnswerId', value);
   };
 
   const handleSubmit = async (e: any) => {
@@ -64,8 +97,6 @@ const PublishChannelPolling: React.FC = () => {
     if (currentPollAnswerVotes !== undefined) {
       currentPollAnswerVotes++
     };
-
-    console.log('Form submitted', value, currentPollAnswerVotes);
 
     try {
       if (currentPollAnswerVotes === undefined) return;
@@ -77,12 +108,9 @@ const PublishChannelPolling: React.FC = () => {
       })
 
       setHasVoted(true);
-      console.log('hasVoted', hasVoted);
-
 
     } catch (e) {
       console.log('error on mutation setVotes');
-
     }
   };
 
@@ -123,7 +151,7 @@ const PublishChannelPolling: React.FC = () => {
               <Paper className={classes.pollCard}>
 
                 <Box width="100%" mb={3}>
-                  <Typography variant="caption">Voting results!</Typography>
+                  <Typography variant="caption">Voting results! Total votes: {totalVotes()}</Typography>
                   {data?.getChannelPoll.map(channelPoll => (
                     <Typography variant="h2" key={channelPoll.id}>{channelPoll.poll_question.text}</Typography>
                   ))}
@@ -131,26 +159,15 @@ const PublishChannelPolling: React.FC = () => {
 
                 {data?.getChannelPoll[0] !== undefined && data?.getChannelPoll[0].poll_question.poll_anwers
                   .sort((a, b) => a.id > b.id ? 1 : -1)
-                  .map(pollVotes => (
-                    <Box display="flex" alignItems="flex-start" flexDirection="column">
-                      <Box width="100%">
+                  .map(pollVotes => {
+
+                    return (
+                      <Box key={pollVotes.id} width="100%" display="flex" alignItems="flex-start" flexDirection="column">
                         <Typography variant="body2">{pollVotes.text}</Typography>
+                        <LinearProgressWithLabel value={Math.round(100 * pollVotes.votes) / totalVotes()} />
                       </Box>
-
-                      <Box display="flex" alignItems="center" justifyContent="center" flexDirection="row">
-                        <Box width={pollVotes.votes} mr={1}>
-                          <LinearProgress
-                            variant="determinate" {...pollVotes.votes !== undefined && pollVotes.votes} />
-                        </Box>
-                        <Box minWidth={35}>
-                          <Typography variant="body1" color="secondary">
-                            {`${Math.round(pollVotes.votes)}%`}
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </Box>
-                  ))}
-
+                    )
+                  })}
               </Paper>
             )}
           </>
