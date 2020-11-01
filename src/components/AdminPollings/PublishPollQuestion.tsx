@@ -118,36 +118,42 @@ const PublishChannelPolling: React.FC = () => {
 
         </Paper>
       ) : (
-          <Paper className={classes.pollCard}>
+          <>
+            {data?.getChannelPoll[0] !== undefined && (
+              <Paper className={classes.pollCard}>
 
-            <Box width="100%" mb={3}>
-              <Typography variant="h2">Voting results!</Typography>
-            </Box>
-
-            {data?.getChannelPoll[0].poll_question.poll_anwers
-              .sort((a, b) => a.id > b.id ? 1 : -1)
-              .map(pollVotes => (
-                <Box display="flex" alignItems="flex-start" flexDirection="column">
-                  <Box width="100%">
-                    <Typography variant="body2">{pollVotes.text}</Typography>
-                  </Box>
-
-                  <Box display="flex" alignItems="center" justifyContent="center" flexDirection="row">
-                    <Box width={pollVotes.votes} mr={1}>
-                      <LinearProgress
-                        variant="determinate" {...pollVotes.votes !== undefined && pollVotes.votes} />
-                    </Box>
-                    <Box minWidth={35}>
-                      <Typography variant="body1" color="secondary">
-                        {`${Math.round(pollVotes.votes)}%`}
-                      </Typography>
-                    </Box>
-                  </Box>
-
+                <Box width="100%" mb={3}>
+                  <Typography variant="caption">Voting results!</Typography>
+                  {data?.getChannelPoll.map(channelPoll => (
+                    <Typography variant="h2" key={channelPoll.id}>{channelPoll.poll_question.text}</Typography>
+                  ))}
                 </Box>
-              ))}
 
-          </Paper>
+                {data?.getChannelPoll[0] !== undefined && data?.getChannelPoll[0].poll_question.poll_anwers
+                  .sort((a, b) => a.id > b.id ? 1 : -1)
+                  .map(pollVotes => (
+                    <Box display="flex" alignItems="flex-start" flexDirection="column">
+                      <Box width="100%">
+                        <Typography variant="body2">{pollVotes.text}</Typography>
+                      </Box>
+
+                      <Box display="flex" alignItems="center" justifyContent="center" flexDirection="row">
+                        <Box width={pollVotes.votes} mr={1}>
+                          <LinearProgress
+                            variant="determinate" {...pollVotes.votes !== undefined && pollVotes.votes} />
+                        </Box>
+                        <Box minWidth={35}>
+                          <Typography variant="body1" color="secondary">
+                            {`${Math.round(pollVotes.votes)}%`}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Box>
+                  ))}
+
+              </Paper>
+            )}
+          </>
         )}
     </>
   )
