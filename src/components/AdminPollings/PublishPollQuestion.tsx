@@ -69,7 +69,7 @@ const PublishChannelPolling: React.FC = () => {
           <LinearProgress variant="determinate" {...props} />
         </Box>
         <Box minWidth={0}>
-          <Typography variant="body2" color="textSecondary">{(props.value.toFixed(2))}%</Typography>
+          <Typography variant="body2" color="textSecondary">{(props.value.toFixed(1))}%</Typography>
         </Box>
       </Box>
     );
