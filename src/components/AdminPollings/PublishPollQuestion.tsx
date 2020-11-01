@@ -4,13 +4,13 @@ import { currentChannelState } from '../../atom.js';
 import Loader from '../../layout/shared/Loader';
 import useStyles from './styles';
 import {
+  Box,
   Button,
   Radio,
   RadioGroup,
   FormControlLabel,
   FormControl,
-  FormHelperText,
-  FormLabel,
+  LinearProgress,
   Paper,
   Typography
 } from '@material-ui/core';
@@ -24,17 +24,20 @@ const PublishChannelPolling: React.FC = () => {
   const classes = useStyles();
 
   const [currentChannel, setCurrentChannelState] = useRecoilState(currentChannelState);
-  // console.log('currentChannel', currentChannel);
+
   const [value, setValue] = React.useState('');
 
   const [voteError, setVoteError] = React.useState(false);
+
+  const [hasVoted, setHasVoted] = React.useState(false);
+  console.log('hasVoted', hasVoted);
+
 
   const { data, loading } = useWatchChannelPollQuestionSubscription({
     variables: {
       channelId: currentChannel.id
     },
   });
-
 
   const getPollAnswerVotes = useWatchPollAnswerVotesSubscription({
     variables: {
@@ -48,6 +51,7 @@ const PublishChannelPolling: React.FC = () => {
     return <Loader />;
   }
 
+  // HANDLE EVENTS
   const handleChange = (e: any, value: any) => {
     setValue(e.target.value);
     console.log('radio value', e.target.value, 'pollAnswerId', value);
@@ -55,24 +59,27 @@ const PublishChannelPolling: React.FC = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    let currentVotes = await getPollAnswerVotes.data?.pollAnswerVotes[0].votes;
+    let currentPollAnswerVotes = await getPollAnswerVotes.data?.pollAnswerVotes[0].votes;
 
-    if (currentVotes !== undefined) {
-      console.log('oldVotes', currentVotes);
-      currentVotes++
-      console.log('newVotes', currentVotes);
+    if (currentPollAnswerVotes !== undefined) {
+      currentPollAnswerVotes++
     };
 
-    console.log('Form submitted', value, currentVotes);
+    console.log('Form submitted', value, currentPollAnswerVotes);
 
     try {
-      if (currentVotes === undefined) return;
+      if (currentPollAnswerVotes === undefined) return;
       await setPollAnswerVoteMutation({
         variables: {
           pollAnswerId: parseInt(value),
-          newVote: currentVotes,
+          newVote: currentPollAnswerVotes,
         }
       })
+
+      setHasVoted(true);
+      console.log('hasVoted', hasVoted);
+
+
     } catch (e) {
       console.log('error on mutation setVotes');
 
@@ -81,10 +88,11 @@ const PublishChannelPolling: React.FC = () => {
 
   return (
     <>
-      {(data?.getChannelPoll[0] !== undefined) && (
 
+      {(data?.getChannelPoll[0] !== undefined) && hasVoted === false ? (
         <Paper className={classes.pollCard}>
-          {data?.getChannelPoll.map(channelPoll => (
+
+          { data?.getChannelPoll.map(channelPoll => (
             <Typography variant="h2" key={channelPoll.id}>{channelPoll.poll_question.text}</Typography>
           ))}
 
@@ -109,7 +117,38 @@ const PublishChannelPolling: React.FC = () => {
           </form>
 
         </Paper>
-      )}
+      ) : (
+          <Paper className={classes.pollCard}>
+
+            <Box width="100%" mb={3}>
+              <Typography variant="h2">Voting results!</Typography>
+            </Box>
+
+            {data?.getChannelPoll[0].poll_question.poll_anwers
+              .sort((a, b) => a.id > b.id ? 1 : -1)
+              .map(pollVotes => (
+                <Box display="flex" alignItems="flex-start" flexDirection="column">
+                  <Box width="100%">
+                    <Typography variant="body2">{pollVotes.text}</Typography>
+                  </Box>
+
+                  <Box display="flex" alignItems="center" justifyContent="center" flexDirection="row">
+                    <Box width={pollVotes.votes} mr={1}>
+                      <LinearProgress
+                        variant="determinate" {...pollVotes.votes !== undefined && pollVotes.votes} />
+                    </Box>
+                    <Box minWidth={35}>
+                      <Typography variant="body1" color="secondary">
+                        {`${Math.round(pollVotes.votes)}%`}
+                      </Typography>
+                    </Box>
+                  </Box>
+
+                </Box>
+              ))}
+
+          </Paper>
+        )}
     </>
   )
 }
