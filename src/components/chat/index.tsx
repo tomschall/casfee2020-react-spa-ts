@@ -40,8 +40,6 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
     fetchPolicy: 'network-only',
   });
 
-  // console.log('data.messages', data?.messages[0]);
-
   const [
     upsertMessageCursorMutation,
     {
@@ -52,13 +50,13 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   ] = useUpsertMessageCursorMutation({
     variables: {
       channel_id: channelId,
-      message_id: data?.messages[0]?.id ? data?.messages[0].id : 0,
+      message_id: data?.messages[0]?.id ?? 0,
       user_id: user.sub,
     },
   });
 
   useEffect(() => {
-    if (data?.messages[0]?.id && data?.messages[0].id > 0)
+    if (data?.messages[0]?.id && data.messages[0].id > 0)
       upsertMessageCursorMutation();
   }, [data]);
 
@@ -92,7 +90,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
       <div className={classes.root}>
         <Grid container>
           <Grid item xs={12} className={classes.messageContainer}>
-          <PublishChannelPolling />
+            <PublishChannelPolling />
           </Grid>
           <Grid item xs={12} className={classes.messageContainer}>
             {isPrivate && channelType !== Channel_Type_Enum.DirectMessage && (
