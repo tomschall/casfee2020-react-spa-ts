@@ -4,9 +4,20 @@ import { GiphyFetch } from '@giphy/js-fetch-api';
 import { currentChannelState, giphyState } from '../../atom';
 import { TextField } from '@material-ui/core';
 import { Carousel } from '@giphy/react-components';
-import useStyles from './styles';
 import { useHistory } from 'react-router';
 import { IGif } from '@giphy/js-types';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+  },
+  giphySearchInput: {
+    marginBottom: theme.spacing(5),
+    marginLeft: theme.spacing(2),
+    minWidth: 200,
+  },
+}));
 
 const giphyFetch = new GiphyFetch('gNDqYmKTip2mgTRqQbS5BwslaLM8Jdq0');
 

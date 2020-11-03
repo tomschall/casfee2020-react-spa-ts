@@ -1,6 +1,16 @@
 import React from 'react';
 import { Box, CircularProgress } from '@material-ui/core';
-import useStyles from './styles';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: theme.spacing(0),
+    width: '100%',
+    height: '100vh',
+  },
+}));
 
 const Loader = () => {
   const classes = useStyles();

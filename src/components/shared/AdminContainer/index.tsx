@@ -3,12 +3,38 @@ import { Route, Switch } from 'react-router-dom';
 import { theme } from '../../../theme/theme';
 import { Container, Divider, Grid, Typography } from '@material-ui/core/';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import useStyles from './styles';
 import AdminSidebar from '../AdminSidebar';
 import AdminUserList from '../../AdminUserList';
 import AdminPollings from '../../AdminPollings';
 import PollQuestions from '../../AdminPollings/PollQuestions';
 import NotFound from '../NotFound';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    flexGrow: 1,
+    height: '100vh',
+    marginTop: theme.spacing(0),
+    paddingBottom: theme.spacing(0),
+  },
+  container: {
+    margin: theme.spacing(5),
+    marginTop: theme.spacing(5),
+  },
+  sidebar: {
+    height: '100vh',
+    maxHeight: '100vh',
+    display: 'flex',
+    alignItems: 'flex-start',
+    marginTop: theme.spacing(0),
+    paddingTop: theme.spacing(5),
+    borderRightWidth: 1,
+    borderRightStyle: 'solid',
+    borderRightColor: theme.palette.primary.dark,
+  },
+}));
 
 const AdminContainer: React.FC = () => {
   const classes = useStyles();

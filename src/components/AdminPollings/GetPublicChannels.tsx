@@ -15,8 +15,6 @@ import PeopleIcon from '@material-ui/icons/People';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import useStyles from './styles';
-
 import { getPollQuestionAnswers } from '../../atom';
 import {
   useGetPublicChannelsQuery,
@@ -25,7 +23,6 @@ import {
 } from '../../api/generated/graphql';
 
 const GetPublicChannels: React.FC = () => {
-  const classes = useStyles();
   const [open, setOpen] = React.useState<boolean>(true);
   const [toggleCheckbox, setToggleCheckbox] = React.useState<boolean>();
   const getPublicChannels = useGetPublicChannelsQuery();

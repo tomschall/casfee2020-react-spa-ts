@@ -6,7 +6,40 @@ import ChannelList from '../../ChannelList';
 import DirectMessageUserList from '../../DirectMessageUserList';
 import Logout from '../../Logout';
 import AddChannel from '../../AddChannel';
-import useStyles from './styles';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    [theme.breakpoints.up('sm')]: {
+      marginRight: theme.spacing(5),
+      marginLeft: theme.spacing(5),
+      marginTop: theme.spacing(0),
+      marginBottom: theme.spacing(5),
+    },
+    [theme.breakpoints.down('md')]: {
+      padding: theme.spacing(2),
+      margin: theme.spacing(0),
+      paddingTop: theme.spacing(2),
+    },
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(0),
+      margin: theme.spacing(0),
+      paddingTop: theme.spacing(2),
+    },
+  },
+  treeView: {
+    overflowY: 'scroll',
+    maxHeight: '50vh',
+    marginRight: theme.spacing(0),
+    marginLeft: theme.spacing(0),
+    paddingRight: theme.spacing(0),
+  },
+  branding: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+}));
 
 const SideBar: React.FC<any> = () => {
   const { user } = useAuth0();

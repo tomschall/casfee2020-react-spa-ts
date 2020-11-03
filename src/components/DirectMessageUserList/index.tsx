@@ -14,9 +14,7 @@ import Alert from '@material-ui/lab/Alert';
 import PersonIcon from '@material-ui/icons/Person';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import useStyles from './styles';
 import Loader from '../shared/Loader';
-
 import { Link, useHistory } from 'react-router-dom';
 import {
   useWatchDirectMessageChannelsSubscription,
@@ -24,6 +22,32 @@ import {
 } from '../../api/generated/graphql';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
 import ChannelListMessageCounter from '../ChannelListMessageCounter';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {},
+  nested: {
+    paddingLeft: theme.spacing(0),
+  },
+  form: {
+    flexGrow: 1,
+    margin: theme.spacing(2),
+  },
+  submit: {
+    marginTop: theme.spacing(2),
+    // flex: 1,
+  },
+  badge: {
+    backgroundColor: '#0f0',
+  },
+  itemText: {
+    color: theme.palette.primary.light,
+    fontWeight: 700,
+  },
+  link: {
+    color: '#f9cd8b',
+  },
+}));
 
 interface DirectMessageUserListProps {
   user_id: string;

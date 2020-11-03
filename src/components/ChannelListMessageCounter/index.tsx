@@ -7,8 +7,22 @@ import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../atom';
 import { useAuth0 } from '@auth0/auth0-react';
 import Alert from '@material-ui/lab/Alert';
-import useStyles from './styles';
 import { Chip } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: theme.spacing(0.5),
+    },
+  },
+  item: {
+    height: '16px',
+  },
+}));
 
 interface ChannelListMessageCounterProps {
   channelId: number;

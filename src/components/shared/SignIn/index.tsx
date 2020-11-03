@@ -1,7 +1,23 @@
 import React from 'react';
-import useStyles from './styles';
 import { Box, Container, Grid, Typography } from '@material-ui/core';
 import Login from '../../Login';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    height: '100vh',
+  },
+  title: {
+    fontSize: '2rem',
+    fontWeight: 700,
+    textTransform: 'uppercase',
+    paddingTop: theme.spacing(5),
+  },
+}));
 
 const SignIn: React.FC = () => {
   const classes = useStyles();

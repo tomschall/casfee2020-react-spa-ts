@@ -14,7 +14,11 @@ import {
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { useGetUserListQuery } from '../../api/generated/graphql';
-import useStyles from './styles';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {},
+}));
 
 const AdminUserList: React.FC = () => {
   const classes = useStyles();

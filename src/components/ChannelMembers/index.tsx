@@ -1,7 +1,14 @@
 import React from 'react';
 import { Avatar } from '@material-ui/core';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
-import useStyles from './styles';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {},
+  toolbarIcon: {
+    ...theme.mixins.toolbar,
+  },
+}));
 
 const ChannelMembers: React.FC = () => {
   const classes = useStyles();

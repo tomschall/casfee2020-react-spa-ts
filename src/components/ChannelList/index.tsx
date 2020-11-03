@@ -20,8 +20,22 @@ import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
-import useStyles from './styles';
 import ChannelListMessageCounter from '../ChannelListMessageCounter';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+  },
+  treeView: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  badge: {
+    backgroundColor: '#0f0',
+  },
+}));
 
 const Channels: React.FC<any> = () => {
   const classes = useStyles();

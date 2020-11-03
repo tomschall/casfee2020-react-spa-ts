@@ -13,10 +13,19 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import StopIcon from '@material-ui/icons/Stop';
 import Loader from '../shared/Loader';
 import NotFound from '../shared/NotFound';
-import useStyles from './styles';
-
 import { useWatchGetPollQuestionsSubscription } from '../../api/generated/graphql';
 import { getPollQuestionAnswers } from '../../atom';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {},
+  play: {
+    color: theme.palette.success.main,
+  },
+  stop: {
+    color: theme.palette.error.main,
+  },
+}));
 
 interface Props {
   question_text?: string;

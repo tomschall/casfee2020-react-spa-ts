@@ -3,7 +3,6 @@ import moment from 'moment';
 import { isObject } from 'util';
 import { Message } from '../../interfaces/message/message.interface';
 import ThreadChannelButton from '../ThreadChannelButton';
-import useStyles from './styles';
 import {
   Avatar,
   Badge,
@@ -14,6 +13,36 @@ import {
   ListItemIcon,
   Typography,
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    padding: theme.spacing(2),
+  },
+  [theme.breakpoints.up('md')]: {
+    messageText: {
+      paddingBottom: '1rem',
+    },
+  },
+  [theme.breakpoints.down('md')]: {
+    messageText: {
+      fontSize: 14,
+      paddingBottom: '1rem',
+    },
+  },
+  [theme.breakpoints.down('sm')]: {
+    messageText: {
+      fontSize: 12,
+      paddingBottom: '1rem',
+    },
+  },
+  vspace: {
+    marginBottom: theme.spacing(1),
+  },
+}));
 
 interface MessageProps {
   messages: Message[];

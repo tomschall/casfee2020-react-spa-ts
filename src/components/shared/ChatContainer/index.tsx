@@ -1,12 +1,31 @@
 import React from 'react';
-
 import { theme } from '../../../theme/theme';
 import { Container, Grid } from '@material-ui/core/';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import useStyles from './styles';
-
 import SideBar from '../SideBar';
 import ChatApp from '../../ChatApp';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    margin: 0,
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    overflowX: 'hidden',
+    overflowY: 'hidden',
+  },
+  sidebar: {
+    height: '100vh',
+    maxHeight: '80vh',
+    display: 'flex',
+    alignItems: 'flex-start',
+    paddingTop: theme.spacing(5),
+    borderRightWidth: 1,
+    borderRightStyle: 'solid',
+    borderRightColor: theme.palette.primary.dark,
+  },
+}));
 
 const ChatContainer: React.FC = () => {
   const classes = useStyles();

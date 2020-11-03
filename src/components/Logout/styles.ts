@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
   button: {
     [theme.breakpoints.down('md')]: {
       width: '100%',

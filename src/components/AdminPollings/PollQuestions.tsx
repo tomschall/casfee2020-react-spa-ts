@@ -22,12 +22,44 @@ import {
 } from '../../api/generated/graphql';
 import { getPollQuestionAnswers } from '../../atom';
 import GetPublicChannels from './GetPublicChannels';
-import useStyles from './styles';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {},
+  divider: {
+    marginTop: theme.spacing(5),
+    marginBottom: theme.spacing(5),
+  },
+  form: {},
+  messageInput: {
+    floatingLabelFocusStyle: {
+      color: theme.palette.secondary.dark,
+    },
+  },
+  messageButton: {
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      size: 'small',
+    },
+    [theme.breakpoints.up('md')]: {
+      size: 'large',
+      width: '25%',
+    },
+    marginTop: theme.spacing(2),
+    marginLeft: theme.spacing(0),
+    backgroundColor: theme.palette.primary.dark,
+  },
+  play: {
+    color: theme.palette.success.main,
+  },
+  stop: {
+    color: theme.palette.error.main,
+  },
+}));
 
 const PollQuestions: React.FC = () => {
   const classes = useStyles();
-  const { user: userAuth0, isLoading: loadingAuth0 } = useAuth0();
-  const { register, handleSubmit, errors } = useForm();
+  const { register, errors } = useForm();
   const [answerText, setAnswerText] = React.useState({
     text: '',
   });
@@ -49,8 +81,6 @@ const PollQuestions: React.FC = () => {
   });
 
   const [addPollQuestionMutation, { error }] = useAddAnswerToQuestionMutation();
-
-  // const [openAlert, setOpenAlert] = React.useState(true);
 
   const handleAnswerChange = (e: any) => {
     console.log(e.target.value);

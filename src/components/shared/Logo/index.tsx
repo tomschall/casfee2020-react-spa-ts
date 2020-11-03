@@ -1,6 +1,18 @@
 import React from 'react';
 import { Avatar } from '@material-ui/core';
-import useStyles from './styles';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {},
+  large: {
+    left: '-20px',
+    backgroundSize: 'cover',
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    width: theme.spacing(10),
+    height: theme.spacing(10),
+  },
+}));
 
 const Logo = () => {
   const classes = useStyles();

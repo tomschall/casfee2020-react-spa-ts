@@ -26,17 +26,35 @@ import AddCircle from '@material-ui/icons/AddCircle';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import useStyles from './styles';
 import { useHistory } from 'react-router';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {},
+  nested: {
+    paddingLeft: theme.spacing(0),
+  },
+  form: {
+    flexGrow: 1,
+    margin: theme.spacing(2),
+    marginTop: theme.spacing(0),
+  },
+  checkbox: {
+    color: theme.palette.primary.dark,
+  },
+  submit: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 const AddChannel: React.FC = () => {
-  const classes = useStyles();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
   const [open, setOpen] = React.useState(false);
   const [openAlert, setOpenAlert] = React.useState(true);
   const [channelName, setChannelName] = useState('');
   const [channelIsPrivate, setChannelIsPrivate] = useState(false);
   const { user } = useAuth0();
+  const classes = useStyles();
 
   const [addChannel, { data, loading, error }] = useAddChannelMutation();
 

@@ -3,7 +3,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { TextField, Button, Box } from '@material-ui/core';
 import { theme } from '../../theme/theme';
 import Icon from '@material-ui/core/Icon';
-import useStyles from './styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {
   useInsertMessageMutation,
@@ -13,6 +12,46 @@ import TypingIndicator from '../TypingIndicator';
 import { useRecoilState } from 'recoil';
 import { giphyState } from '../../atom';
 import { IGif } from '@giphy/js-types';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  giphyImage: {
+    marginTop: theme.spacing(2),
+  },
+  form: {
+    marginTop: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+  },
+  messageInput: {
+    floatingLabelFocusStyle: {
+      color: theme.palette.secondary.dark,
+    },
+  },
+  messageButton: {
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      size: 'small',
+    },
+    [theme.breakpoints.up('md')]: {
+      size: 'large',
+      width: '25%',
+    },
+    marginTop: theme.spacing(2),
+    marginLeft: theme.spacing(0),
+    backgroundColor: theme.palette.primary.dark,
+  },
+  image: {
+    maxHeight: 55,
+    paddingRight: theme.spacing(1),
+  },
+}));
 
 interface ChatInputProps {
   channelId: number;

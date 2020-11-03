@@ -16,8 +16,40 @@ import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import UserStatus from '../../UserStatus';
 import Logout from '../../Logout';
+import { makeStyles } from '@material-ui/core/styles';
 
-import useStyles from './styles';
+const useStyles = makeStyles((theme) => ({
+  root: {
+    [theme.breakpoints.up('sm')]: {
+      marginRight: theme.spacing(5),
+      marginLeft: theme.spacing(5),
+      marginTop: theme.spacing(0),
+      marginBottom: theme.spacing(5),
+    },
+    [theme.breakpoints.down('md')]: {
+      padding: theme.spacing(2),
+      margin: theme.spacing(0),
+      paddingTop: theme.spacing(2),
+    },
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(0),
+      margin: theme.spacing(0),
+      paddingTop: theme.spacing(2),
+    },
+  },
+  treeView: {
+    overflowY: 'scroll',
+    maxHeight: '50vh',
+    marginRight: theme.spacing(0),
+    marginLeft: theme.spacing(0),
+    paddingRight: theme.spacing(0),
+  },
+  branding: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+}));
 
 const AdminSidebar: React.FC<any> = () => {
   const classes = useStyles();

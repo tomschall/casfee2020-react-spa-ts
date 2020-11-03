@@ -2,7 +2,6 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../atom.js';
 import Loader from '../shared/Loader';
-import useStyles from './styles';
 import {
   Box,
   Button,
@@ -19,6 +18,17 @@ import {
   useWatchPollAnswerVotesSubscription,
   useSetPollAnswerVoteMutation,
 } from '../../api/generated/graphql';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {},
+  pollCard: {
+    padding: theme.spacing(5),
+  },
+  pollSubmit: {
+    marginTop: theme.spacing(3),
+  },
+}));
 
 const PublishChannelPolling: React.FC = () => {
   const classes = useStyles();
