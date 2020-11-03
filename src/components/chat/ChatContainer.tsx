@@ -2,8 +2,8 @@ import React from 'react';
 import { theme } from '../../theme/theme';
 import { Container, Grid } from '@material-ui/core/';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import SideBar from './SideBar';
-import ChatApp from '../chat/ChatApp';
+import SideBar from '../shared/SideBar';
+import ChatApp from './ChatApp';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({

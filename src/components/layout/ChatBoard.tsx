@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import ChatContainer from '../shared/ChatContainer';
+import ChatContainer from '../chat/ChatContainer';
 import { Container } from '@material-ui/core';
 import { useSetUserOnlineMutation } from '../../api/generated/graphql';
 

@@ -4,10 +4,10 @@ import { theme } from '../../theme/theme';
 import { Container, Divider, Grid, Typography } from '@material-ui/core/';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import AdminSidebar from './AdminSidebar';
-import AdminUserList from '../admin/AdminUserList';
+import AdminUserList from './AdminUserList';
 import AdminPollings from '../adminPollings';
 import PollQuestions from '../adminPollings/PollQuestions';
-import NotFound from './NotFound';
+import NotFound from '../shared/NotFound';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
