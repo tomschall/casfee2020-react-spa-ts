@@ -4,10 +4,10 @@ import { theme } from '../../../theme/theme';
 import { Container, Divider, Grid, Typography } from '@material-ui/core/';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useStyles from './styles';
-import AdminSidebar from '../../shared/AdminSidebar';
-import AdminUserList from '../../../components/AdminUserList';
-import AdminPollings from '../../../components/AdminPollings';
-import PollQuestions from '../../../components/AdminPollings/PollQuestions';
+import AdminSidebar from '../AdminSidebar';
+import AdminUserList from '../../AdminUserList';
+import AdminPollings from '../../AdminPollings';
+import PollQuestions from '../../AdminPollings/PollQuestions';
 import NotFound from '../NotFound';
 
 const AdminContainer: React.FC = () => {

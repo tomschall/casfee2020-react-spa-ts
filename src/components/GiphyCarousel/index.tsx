@@ -2,16 +2,8 @@ import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { GiphyFetch } from '@giphy/js-fetch-api';
 import { currentChannelState, giphyState } from '../../atom';
-import {
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-  TextField,
-} from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
-import { Gif, Grid, Carousel } from '@giphy/react-components';
-import ResizeObserver from 'react-resize-observer';
+import { TextField } from '@material-ui/core';
+import { Carousel } from '@giphy/react-components';
 import useStyles from './styles';
 import { useHistory } from 'react-router';
 import { IGif } from '@giphy/js-types';

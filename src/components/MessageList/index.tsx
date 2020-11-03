@@ -13,7 +13,6 @@ import {
   ListItemAvatar,
   ListItemIcon,
   Typography,
-  CardMedia,
 } from '@material-ui/core';
 
 interface MessageProps {

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useForm, Controller } from 'react-hook-form';
 import {
   Box,
   Button,
@@ -9,7 +8,6 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import Icon from '@material-ui/core/Icon';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useAddPollQuestionMutation } from '../../api/generated/graphql';

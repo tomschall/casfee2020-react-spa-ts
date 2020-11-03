@@ -14,8 +14,6 @@ import {
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { useGetUserListQuery } from '../../api/generated/graphql';
-import Loader from '../../layout/shared/Loader';
-import NotFound from '../../layout/shared/NotFound';
 import useStyles from './styles';
 
 const AdminUserList: React.FC = () => {

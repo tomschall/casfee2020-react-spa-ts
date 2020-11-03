@@ -3,10 +3,8 @@ import { Link as Linky } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import {
   Box,
-  Button,
   Divider,
   Grid,
-  Link,
   List,
   ListSubheader,
   ListItem,
@@ -16,8 +14,8 @@ import {
 } from '@material-ui/core';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
-import UserStatus from '../../../components/UserStatus';
-import Logout from '../../../components/Logout';
+import UserStatus from '../../UserStatus';
+import Logout from '../../Logout';
 
 import useStyles from './styles';
 

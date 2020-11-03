@@ -5,7 +5,7 @@ import {
   useAddChannelMutation,
   useInsertMessageMutation,
 } from '../../api/generated/graphql';
-import Loader from '../../layout/shared/Loader';
+import Loader from '../shared/Loader';
 import {
   Button,
   Checkbox,
@@ -29,16 +29,11 @@ import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import useStyles from './styles';
 import { useHistory } from 'react-router';
 
-// interface AddChannelModalProps {
-//   handleClose: Function;
-// }
-
 const AddChannel: React.FC = () => {
   const classes = useStyles();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
   const [open, setOpen] = React.useState(false);
   const [openAlert, setOpenAlert] = React.useState(true);
-  const [openSuccess, setOpenSuccess] = React.useState(true);
   const [channelName, setChannelName] = useState('');
   const [channelIsPrivate, setChannelIsPrivate] = useState(false);
   const { user } = useAuth0();
@@ -100,8 +95,6 @@ const AddChannel: React.FC = () => {
 
       setOpen(false);
       setChannelName('');
-
-      console.log('dataAddChannel', dataAddChannel);
 
       history.push(`/channel/${channelName.toLocaleLowerCase()}`);
     } catch (e) {

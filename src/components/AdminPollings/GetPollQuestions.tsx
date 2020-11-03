@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import {
-  Divider,
   List,
   ListItem,
   ListItemIcon,
@@ -12,8 +11,8 @@ import {
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import StopIcon from '@material-ui/icons/Stop';
-import Loader from '../../layout/shared/Loader';
-import NotFound from '../../layout/shared/NotFound';
+import Loader from '../shared/Loader';
+import NotFound from '../shared/NotFound';
 import useStyles from './styles';
 
 import { useWatchGetPollQuestionsSubscription } from '../../api/generated/graphql';

@@ -1,10 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Badge, Chip, Container, Grid, Tooltip, Box } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import PeopleIcon from '@material-ui/icons/People';
-import FaceIcon from '@material-ui/icons/Face';
-import Loader from '../../layout/shared/Loader';
 import { useGetUserIsTypingSubscription } from '../../api/generated/graphql';
 import useStyles from './styles';
 import { useRecoilState } from 'recoil';

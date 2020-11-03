@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 import { useGetChannelByNameQuery } from '../../api/generated/graphql';
 import { currentChannelState } from '../../atom';
 import Chat from '../Chat';
-import Loader from '../../layout/shared/Loader';
+import Loader from '../shared/Loader';
 
 const ChatApp: React.FC = (props) => {
   const [currentChannel, setCurrentChannel] = useRecoilState<any>(

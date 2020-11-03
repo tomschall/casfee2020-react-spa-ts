@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  Menu,
-  MenuItem,
-  styled,
-  CircularProgress,
-} from '@material-ui/core';
+import { MenuItem, CircularProgress } from '@material-ui/core';
 import {
   useValidateAndAddDirectMessageChannelMutation,
   useWatchUsersWhoHaveSubscribedToDirectMessageChannelSubscription,
@@ -19,7 +13,7 @@ import { useHistory } from 'react-router';
 
 const AddDirectMessageChannel: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const { isAuthenticated, user, isLoading } = useAuth0();
+  const { user } = useAuth0();
 
   const user_id = user.sub;
 

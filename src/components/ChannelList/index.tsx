@@ -14,7 +14,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import Loader from '../../layout/shared/Loader';
+import Loader from '../shared/Loader';
 import PeopleIcon from '@material-ui/icons/People';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import ExpandLess from '@material-ui/icons/ExpandLess';

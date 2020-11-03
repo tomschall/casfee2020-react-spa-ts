@@ -1,24 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useRecoilValue } from 'recoil';
 import {
   Badge,
   Checkbox,
   Collapse,
   FormControlLabel,
-  Link,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   Typography,
 } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
-import Loader from '../../layout/shared/Loader';
 import PeopleIcon from '@material-ui/icons/People';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import useStyles from './styles';
 
 import { getPollQuestionAnswers } from '../../atom';

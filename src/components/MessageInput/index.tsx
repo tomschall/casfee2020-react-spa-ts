@@ -11,7 +11,7 @@ import {
 } from '../../api/generated/graphql';
 import TypingIndicator from '../TypingIndicator';
 import { useRecoilState } from 'recoil';
-import { currentChannelState, giphyState } from '../../atom';
+import { giphyState } from '../../atom';
 import { IGif } from '@giphy/js-types';
 
 interface ChatInputProps {

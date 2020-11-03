@@ -1,11 +1,11 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Box, Divider, Grid } from '@material-ui/core';
-import UserStatus from '../../../components/UserStatus';
-import ChannelList from '../../../components/ChannelList';
-import DirectMessageUserList from '../../../components/DirectMessageUserList';
-import Logout from '../../../components/Logout';
-import AddChannel from '../../../components/AddChannel';
+import UserStatus from '../../UserStatus';
+import ChannelList from '../../ChannelList';
+import DirectMessageUserList from '../../DirectMessageUserList';
+import Logout from '../../Logout';
+import AddChannel from '../../AddChannel';
 import useStyles from './styles';
 
 const SideBar: React.FC<any> = () => {

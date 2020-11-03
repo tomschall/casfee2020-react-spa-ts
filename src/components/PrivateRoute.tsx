@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { withAuthenticationRequired } from '@auth0/auth0-react';
-import Loader from '../layout/shared/Loader';
+import Loader from './shared/Loader';
 
 interface PrivateRouteProps {
   component: any;

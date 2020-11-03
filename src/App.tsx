@@ -5,16 +5,14 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { theme } from './theme/theme';
 import { Box } from '@material-ui/core';
-
-import SignIn from './layout/shared/SignIn';
-import Loader from './layout/shared/Loader';
-import NotFound from './layout/shared/NotFound';
+import SignIn from './components/shared/SignIn';
+import Loader from './components/shared/Loader';
+import NotFound from './components/shared/NotFound';
 import PrivateRoute from './components/PrivateRoute';
-import AddChannelMembers from './layout/AddChannelMembers';
+import AddChannelMembers from './components/layout/AddChannelMembers';
 import AddDirectMessageChannel from './components/AddDirectMessageChannel';
-import ChatBoard from './layout/ChatBoard';
-import AdminBoard from './layout/AdminBoard';
-import GiphyGrid from './components/GiphyGrid';
+import ChatBoard from './components/layout/ChatBoard';
+import AdminBoard from './components/layout/AdminBoard';
 
 const App: React.FC = () => {
   const { isAuthenticated, user, isLoading } = useAuth0();

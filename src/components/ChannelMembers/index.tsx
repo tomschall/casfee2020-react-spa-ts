@@ -1,9 +1,6 @@
 import React from 'react';
 import { Avatar } from '@material-ui/core';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import MenuIcon from '@material-ui/icons/Menu';
-
 import useStyles from './styles';
 
 const ChannelMembers: React.FC = () => {

@@ -15,7 +15,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import useStyles from './styles';
-import Loader from '../../layout/shared/Loader';
+import Loader from '../shared/Loader';
 
 import { Link, useHistory } from 'react-router-dom';
 import {

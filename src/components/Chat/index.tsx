@@ -12,7 +12,7 @@ import {
 import { Box } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import MenuBar from '../../layout/shared/MenuBar';
+import MenuBar from '../shared/MenuBar';
 import useStyles from './styles';
 import { useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';

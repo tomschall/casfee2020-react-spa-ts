@@ -1,7 +1,7 @@
 import React from 'react';
 import useStyles from './styles';
 import { Box, Container, Grid, Typography } from '@material-ui/core';
-import Login from '../../../components/Login';
+import Login from '../../Login';
 
 const SignIn: React.FC = () => {
   const classes = useStyles();

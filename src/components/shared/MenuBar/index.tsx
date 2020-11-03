@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import clsx from 'clsx';
 import { theme } from '../../../theme/theme';
 import { useRecoilState } from 'recoil';
-import { currentChannelState, giphyState } from '../../../atom';
-import { IGif } from '@giphy/js-types';
+import { currentChannelState } from '../../../atom';
 import {
   AppBar,
   Box,
@@ -13,14 +12,11 @@ import {
   Drawer,
   Grid,
   Toolbar,
-  Fab,
-  Tooltip,
-  TextField,
 } from '@material-ui/core';
 import AddGif from '@material-ui/icons/Gif';
 import SideBar from '../SideBar';
-import MessageInput from '../../../components/MessageInput';
-import GiphyCarousel from '../../../components/GiphyCarousel';
+import MessageInput from '../../MessageInput';
+import GiphyCarousel from '../../GiphyCarousel';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ExpandMore from '@material-ui/icons/ExpandMore';
@@ -29,7 +25,6 @@ import FaceIcon from '@material-ui/icons/Face';
 import PeopleIcon from '@material-ui/icons/People';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import useStyles from './styles';
-import { useHistory } from 'react-router';
 
 interface MenuBarProps {
   channelId: number;
