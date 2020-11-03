@@ -1,9 +1,9 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import clsx from 'clsx';
-import { theme } from '../../../theme/theme';
+import { theme } from '../../theme/theme';
 import { useRecoilState } from 'recoil';
-import { currentChannelState } from '../../../atom';
+import { currentChannelState } from '../../atom';
 import {
   AppBar,
   Box,
@@ -14,9 +14,9 @@ import {
   Toolbar,
 } from '@material-ui/core';
 import AddGif from '@material-ui/icons/Gif';
-import SideBar from '../SideBar';
-import MessageInput from '../../MessageInput';
-import GiphyCarousel from '../../GiphyCarousel';
+import SideBar from './SideBar';
+import MessageInput from '../chat/MessageInput';
+import GiphyCarousel from './GiphyCarousel';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ExpandMore from '@material-ui/icons/ExpandMore';

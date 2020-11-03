@@ -14,8 +14,8 @@ import {
 } from '@material-ui/core';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
-import UserStatus from '../../UserStatus';
-import Logout from '../../Logout';
+import UserStatus from './UserStatus';
+import Logout from '../Logout';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({

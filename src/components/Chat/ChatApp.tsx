@@ -4,7 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useRecoilState } from 'recoil';
 import { useGetChannelByNameQuery } from '../../api/generated/graphql';
 import { currentChannelState } from '../../atom';
-import Chat from '../Chat';
+import Chat from './Chat';
 import Loader from '../shared/Loader';
 
 const ChatApp: React.FC = (props) => {

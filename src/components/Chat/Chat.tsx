@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, List, Button } from '@material-ui/core';
-import MessageList from '../MessageList';
-import PublishChannelPolling from '../AdminPollings/PublishPollQuestion';
+import MessageList from './MessageList';
+import PublishChannelPolling from '../adminPollings/PublishPollQuestion';
 import { Message } from '../../interfaces/message/message.interface';
 import {
   useWatchMessagesSubscription,

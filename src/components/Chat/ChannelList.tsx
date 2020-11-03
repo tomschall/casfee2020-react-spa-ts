@@ -20,7 +20,7 @@ import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
-import ChannelListMessageCounter from '../ChannelListMessageCounter';
+import ChannelListMessageCounter from './ChannelListMessageCounter';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({

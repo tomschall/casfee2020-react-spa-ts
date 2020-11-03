@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import NotFound from './';
+import NotFound from './NotFound';
 
 test('renders the app component', () => {
   const { container, getByText } = render(<NotFound />);

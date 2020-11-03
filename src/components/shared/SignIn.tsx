@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Container, Grid, Typography } from '@material-ui/core';
-import Login from '../../Login';
+import Login from '../Login';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({

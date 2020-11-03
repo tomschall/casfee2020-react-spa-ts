@@ -21,7 +21,7 @@ import {
   useWatchOnlineUsersSubscription,
 } from '../../api/generated/graphql';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
-import ChannelListMessageCounter from '../ChannelListMessageCounter';
+import ChannelListMessageCounter from './ChannelListMessageCounter';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({

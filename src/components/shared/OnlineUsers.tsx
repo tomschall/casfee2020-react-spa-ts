@@ -10,8 +10,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import { useWatchOnlineUsersSubscription } from '../api/generated/graphql';
-import { useSetUserOnlineMutation } from '../api/generated/graphql';
+import { useWatchOnlineUsersSubscription } from '../../api/generated/graphql';
+import { useSetUserOnlineMutation } from '../../api/generated/graphql';
 
 interface OnlineUsersProps {
   user_id: string;

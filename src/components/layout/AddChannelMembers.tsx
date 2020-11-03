@@ -1,16 +1,16 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
-import { theme } from '../../../theme/theme';
+import { theme } from '../../theme/theme';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Alert } from '@material-ui/lab';
 import { useAuth0 } from '@auth0/auth0-react';
 import {
   useWatchUsersWhoHaveNotSubscribedToChannelSubscription,
   useAddChannelUserMutation,
-} from '../../../api/generated/graphql';
+} from '../../api/generated/graphql';
 import { useRecoilState } from 'recoil';
-import { currentChannelState } from '../../../atom';
+import { currentChannelState } from '../../atom';
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/';

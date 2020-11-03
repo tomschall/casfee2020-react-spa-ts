@@ -8,7 +8,7 @@ import {
   useInsertMessageMutation,
   useSendTypingEventMutation,
 } from '../../api/generated/graphql';
-import TypingIndicator from '../TypingIndicator';
+import TypingIndicator from '../shared/TypingIndicator';
 import { useRecoilState } from 'recoil';
 import { giphyState } from '../../atom';
 import { IGif } from '@giphy/js-types';

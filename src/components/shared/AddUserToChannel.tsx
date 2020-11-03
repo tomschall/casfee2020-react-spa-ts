@@ -1,5 +1,5 @@
 import React from 'react';
-import { theme } from '../../../theme/theme';
+import { theme } from '../../theme/theme';
 import { Container, Grid } from '@material-ui/core/';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles } from '@material-ui/core/styles';

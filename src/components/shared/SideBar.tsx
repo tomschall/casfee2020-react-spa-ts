@@ -1,11 +1,11 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Box, Divider, Grid } from '@material-ui/core';
-import UserStatus from '../../UserStatus';
-import ChannelList from '../../ChannelList';
-import DirectMessageUserList from '../../DirectMessageUserList';
-import Logout from '../../Logout';
-import AddChannel from '../../AddChannel';
+import UserStatus from './UserStatus';
+import ChannelList from '../chat/ChannelList';
+import DirectMessageUserList from '../chat/DirectMessageUserList';
+import Logout from '../Logout';
+import AddChannel from '../chat/AddChannel';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({

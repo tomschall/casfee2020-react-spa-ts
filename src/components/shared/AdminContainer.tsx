@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { theme } from '../../../theme/theme';
+import { theme } from '../../theme/theme';
 import { Container, Divider, Grid, Typography } from '@material-ui/core/';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import AdminSidebar from '../AdminSidebar';
-import AdminUserList from '../../AdminUserList';
-import AdminPollings from '../../AdminPollings';
-import PollQuestions from '../../AdminPollings/PollQuestions';
-import NotFound from '../NotFound';
+import AdminSidebar from './AdminSidebar';
+import AdminUserList from '../admin/AdminUserList';
+import AdminPollings from '../adminPollings';
+import PollQuestions from '../adminPollings/PollQuestions';
+import NotFound from './NotFound';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({

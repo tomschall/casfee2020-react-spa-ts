@@ -10,7 +10,7 @@ import Loader from './components/shared/Loader';
 import NotFound from './components/shared/NotFound';
 import PrivateRoute from './components/PrivateRoute';
 import AddChannelMembers from './components/layout/AddChannelMembers';
-import AddDirectMessageChannel from './components/AddDirectMessageChannel';
+import AddDirectMessageChannel from './components/chat/AddDirectMessageChannel';
 import ChatBoard from './components/layout/ChatBoard';
 import AdminBoard from './components/layout/AdminBoard';
 
