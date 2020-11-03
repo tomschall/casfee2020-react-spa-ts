@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import moment from 'moment';
 import { isObject } from 'util';
 import { Message } from '../../interfaces/message/message.interface';
-import ThreadChannelButton from '../ThreadChannelButton';
+import ThreadChannelButton from '../thread/ThreadChannelButton';
 import {
   Avatar,
   Badge,

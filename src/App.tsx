@@ -9,7 +9,7 @@ import SignIn from './components/shared/SignIn';
 import Loader from './components/shared/Loader';
 import NotFound from './components/shared/NotFound';
 import PrivateRoute from './components/PrivateRoute';
-import AddChannelMembers from './components/layout/AddChannelMembers';
+import AddChannelMembers from './components/chat/AddChannelMembers';
 import AddDirectMessageChannel from './components/chat/AddDirectMessageChannel';
 import ChatBoard from './components/layout/ChatBoard';
 import AdminBoard from './components/layout/AdminBoard';
