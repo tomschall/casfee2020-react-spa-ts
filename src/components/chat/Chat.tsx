@@ -113,10 +113,10 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   return (
     <>
       <div className={classes.root}>
+        <Grid item xs={12} className={classes.messageContainer}>
+          <PublishChannelPolling />
+        </Grid>
         <Grid container>
-          <Grid item xs={12} className={classes.messageContainer}>
-            <PublishChannelPolling />
-          </Grid>
           <Grid item xs={12} className={classes.messageContainer}>
             {isPrivate && channelType !== Channel_Type_Enum.DirectMessage && (
               <Button type="button" onClick={navigateToAddChannelMembers}>

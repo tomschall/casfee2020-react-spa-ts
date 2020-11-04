@@ -218,3 +218,9 @@ subscription watchPollAnswerVotes($pollAnswerId: Int!) {
     votes
   }
 }
+
+subscription getPollQuestionState($pollQuestionId: Int!) {
+  poll_questions(where: { id: { _eq: $pollQuestionId } }) {
+    is_active
+  }
+}

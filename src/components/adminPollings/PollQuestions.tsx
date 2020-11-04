@@ -19,6 +19,7 @@ import {
   useWatchGetPollQuestionSubscription,
   useWatchGetPollAnswersSubscription,
   useAddAnswerToQuestionMutation,
+  useSetPublishPollQuestionStateMutation
 } from '../../api/generated/graphql';
 import { getPollQuestionAnswers } from '../../atom';
 import GetPublicChannels from './GetPublicChannels';
@@ -59,7 +60,9 @@ const useStyles = makeStyles((theme) => ({
 
 const PollQuestions: React.FC = () => {
   const classes = useStyles();
+
   const { register, errors } = useForm();
+
   const [answerText, setAnswerText] = React.useState({
     text: '',
   });
@@ -80,11 +83,41 @@ const PollQuestions: React.FC = () => {
     },
   });
 
+  console.log('useWatchGetPollAnswersSubscription', data);
+
+
+  const [pollQuestionActiveState, setPollQuestionActiveState] = React.useState<boolean>();
+
+
   const [addPollQuestionMutation, { error }] = useAddAnswerToQuestionMutation();
 
   const handleAnswerChange = (e: any) => {
     console.log(e.target.value);
     setAnswerText({ ...answerText, [e.target.id]: e.target.value });
+  };
+
+  const [setPollQuestionState] = useSetPublishPollQuestionStateMutation({
+    variables: {
+      pollQuestionId: pollQuestionId,
+      is_active: pollQuestionActiveState
+    },
+  });
+
+  const handleSetPollQuestionPublishState = async () => {
+    // console.log('set state clicked', getPollQuestion.data?.poll_question[0].is_active);
+    const getActivePollQuestionState = getPollQuestion.data?.poll_question[0].is_active;
+
+    try {
+      await setPollQuestionState({
+        variables: {
+          pollQuestionId: pollQuestionId,
+          is_active: !getActivePollQuestionState
+        },
+      })
+
+    } catch (e) {
+      console.log(error, 'error on mutation addPollQuestion');
+    }
   };
 
   const handleAddAnswer = async (e: any) => {
@@ -140,18 +173,21 @@ const PollQuestions: React.FC = () => {
                 variant="text"
                 color="primary"
                 startIcon={<PlayArrowIcon className={classes.play} />}
+                onClick={handleSetPollQuestionPublishState}
               >
-                Active
+                State: true
               </Button>
             ) : (
-              <Button
-                variant="text"
-                color="secondary"
-                startIcon={<StopIcon className={classes.stop} />}
-              >
-                Inactive
-              </Button>
-            )}
+                <Button
+                  variant="text"
+                  color="primary"
+                  startIcon={<PlayArrowIcon className={classes.stop} />}
+                  onClick={handleSetPollQuestionPublishState}
+                >
+                  State: False
+                </Button>
+              )}
+
           </Box>
           <FormGroup row>
             <TextField

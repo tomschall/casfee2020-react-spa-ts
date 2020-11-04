@@ -143,3 +143,18 @@ mutation setPollAnswerVote($pollAnswerId: Int!, $newVote: Int!) {
     }
   }
 }
+
+mutation setPublishPollQuestionState(
+  $pollQuestionId: Int!
+  $is_active: Boolean = false
+) {
+  setPollQuestionState: update_poll_questions(
+    where: { id: { _eq: $pollQuestionId } }
+    _set: { is_active: $is_active }
+  ) {
+    affected_rows
+    returning {
+      is_active
+    }
+  }
+}
