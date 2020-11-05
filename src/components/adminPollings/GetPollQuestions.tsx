@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import {
+  Button,
   List,
   ListItem,
   ListItemIcon,
@@ -13,7 +14,10 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import StopIcon from '@material-ui/icons/Stop';
 import Loader from '../shared/Loader';
 import NotFound from '../shared/NotFound';
-import { useWatchGetPollQuestionsSubscription } from '../../api/generated/graphql';
+import {
+  useWatchGetPollQuestionsSubscription,
+  useDeletePollQuestionMutation
+} from '../../api/generated/graphql';
 import { getPollQuestionAnswers } from '../../atom';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -42,9 +46,32 @@ const GetPollQuestions: React.FC<Props> = () => {
     getPollQuestionAnswers,
   );
 
+  const [deleteQuestion, { error: deleteError }] = useDeletePollQuestionMutation({
+    variables: {
+      pollQuestionId: pollQuestion
+    }
+  });
+
   const handleClick = (questionId: number) => {
     setPollQuestion(questionId);
   };
+
+  const handleQuestionDelete = async (questionId: number) => {
+    console.log('deleted', questionId);
+
+    if (!questionId) return;
+
+    try {
+      await deleteQuestion({
+        variables: {
+          pollQuestionId: questionId
+        }
+      })
+
+    } catch (error) {
+      console.log('error on delete poll question');
+    }
+  }
 
   if (loading) {
     return <Loader />;
@@ -70,8 +97,8 @@ const GetPollQuestions: React.FC<Props> = () => {
               {question.is_active ? (
                 <HowToVoteIcon color="secondary" />
               ) : (
-                <HowToVoteIcon />
-              )}
+                  <HowToVoteIcon />
+                )}
             </ListItemIcon>
             <ListItemText>
               <Link
@@ -90,10 +117,19 @@ const GetPollQuestions: React.FC<Props> = () => {
                 <PlayArrowIcon className={classes.play} />
               </ListItemIcon>
             ) : (
-              <ListItemIcon>
-                <StopIcon className={classes.stop} />
-              </ListItemIcon>
-            )}
+                <ListItemIcon>
+                  <StopIcon className={classes.stop} />
+                </ListItemIcon>
+              )}
+
+            <Button
+              value={question.id}
+              onClick={() => {
+                handleQuestionDelete(question.id);
+              }}
+            >
+              Delete
+            </Button>
           </ListItem>
         ))}
       </List>

@@ -158,3 +158,14 @@ mutation setPublishPollQuestionState(
     }
   }
 }
+
+mutation deletePollQuestion($pollQuestionId: Int!) {
+  delete_poll_anwers(where: { question_id: { _eq: $pollQuestionId } }) {
+    affected_rows
+  }
+  deletePollQuestion: delete_poll_questions(
+    where: { id: { _eq: $pollQuestionId }, is_active: { _neq: true } }
+  ) {
+    affected_rows
+  }
+}
