@@ -24,10 +24,15 @@ import {
 
 const GetPublicChannels: React.FC = () => {
   const [open, setOpen] = React.useState<boolean>(true);
+
   const [toggleCheckbox, setToggleCheckbox] = React.useState<boolean>();
+
   const getPublicChannels = useGetPublicChannelsQuery();
+
   const getChannelPolls = useGetChannelPollsQuery();
+
   const getPollQuestionId = useRecoilValue<number>(getPollQuestionAnswers);
+
   const [
     addPublishPollQuestionToChannelMutation,
     { data, loading, error },
@@ -37,7 +42,7 @@ const GetPublicChannels: React.FC = () => {
 
   const handleChange = async (e: any) => {
     setToggleCheckbox(!toggleCheckbox);
-    console.log(e.target.value, getPollQuestionId);
+    console.log('CHECKBOX TOGGLE', e.target.value, getPollQuestionId, toggleCheckbox);
 
     try {
       await addPublishPollQuestionToChannelMutation({
@@ -82,7 +87,7 @@ const GetPublicChannels: React.FC = () => {
                     onChange={handleChange}
                     name={channel.name}
                     size="medium"
-                    // disabled={toggleCheckbox}
+                  // disabled={toggleCheckbox}
                   />
                 }
                 label={channel.id + ' - ' + channel.name}

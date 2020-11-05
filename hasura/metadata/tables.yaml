@@ -243,6 +243,25 @@
   - name: poll_question
     using:
       foreign_key_constraint_on: question_id
+  insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      columns:
+      - votes
+      backend_only: false
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - id
+      - question_id
+      - votes
+      - text
+      - user_id
+      - created_at
+      - updated_at
+      filter: {}
   update_permissions:
   - role: user
     permission:

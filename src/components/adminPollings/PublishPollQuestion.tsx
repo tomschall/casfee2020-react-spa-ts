@@ -53,6 +53,8 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
     },
   });
 
+  console.log('useWatchChannelPollQuestionSubscription', data);
+
   const getPollAnswerVotes = useWatchPollAnswerVotesSubscription({
     variables: {
       pollAnswerId: parseInt(value, 10),
