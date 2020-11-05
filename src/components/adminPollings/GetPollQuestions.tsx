@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
   stop: {
     color: theme.palette.error.main,
   },
+  delete: {
+    width: '150px'
+  }
 }));
 
 interface Props {
@@ -121,15 +124,25 @@ const GetPollQuestions: React.FC<Props> = () => {
                   <StopIcon className={classes.stop} />
                 </ListItemIcon>
               )}
-
-            <Button
-              value={question.id}
-              onClick={() => {
-                handleQuestionDelete(question.id);
-              }}
-            >
-              Delete
-            </Button>
+            {!question.is_active ? (
+              <Button
+                className={classes.delete}
+                value={question.id}
+                onClick={() => {
+                  handleQuestionDelete(question.id);
+                }}
+              >
+                Delete
+              </Button>
+            ) : (
+                <Button
+                  className={classes.delete}
+                  value={question.id}
+                  disabled
+                >
+                  Active poll
+                </Button>
+              )}
           </ListItem>
         ))}
       </List>
