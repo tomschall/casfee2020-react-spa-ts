@@ -26,12 +26,12 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(5),
   },
   pollSubmit: {
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
   },
 }));
 
 interface PublishChannelProps {
-  data?: [] | undefined,
+  data?: [] | undefined;
 }
 
 const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
@@ -182,45 +182,45 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
           </form>
         </Paper>
       ) : (
-          <>
-            {data?.getChannelPoll[0] && (
-              <Paper className={classes.pollCard}>
-                <Box width="100%" mb={3}>
-                  <Typography variant="caption">
-                    Voting results! Total votes: {totalVotes()}
+        <>
+          {data?.getChannelPoll[0] && (
+            <Paper className={classes.pollCard}>
+              <Box width="100%" mb={3}>
+                <Typography variant="caption">
+                  Voting results! Total votes: {totalVotes()}
+                </Typography>
+                {data?.getChannelPoll.map((channelPoll) => (
+                  <Typography variant="h2" key={channelPoll.id}>
+                    {channelPoll.poll_question.text}
                   </Typography>
-                  {data?.getChannelPoll.map((channelPoll) => (
-                    <Typography variant="h2" key={channelPoll.id}>
-                      {channelPoll.poll_question.text}
-                    </Typography>
-                  ))}
-                </Box>
+                ))}
+              </Box>
 
-                {data?.getChannelPoll[0] &&
-                  data?.getChannelPoll[0].poll_question.poll_anwers
-                    .sort((a, b) => (a.id > b.id ? 1 : -1))
-                    .map((pollVotes) => {
-                      return (
-                        <Box
-                          key={pollVotes.id}
-                          width="100%"
-                          display="flex"
-                          alignItems="flex-start"
-                          flexDirection="column"
-                        >
-                          <Typography variant="body2">
-                            {pollVotes.text}
-                          </Typography>
-                          <LinearProgressWithLabel
-                            value={(100 * pollVotes.votes) / totalVotes()}
-                          />
-                        </Box>
-                      );
-                    })}
-              </Paper>
-            )}
-          </>
-        )}
+              {data?.getChannelPoll[0] &&
+                data?.getChannelPoll[0].poll_question.poll_anwers
+                  .sort((a, b) => (a.id > b.id ? 1 : -1))
+                  .map((pollVotes) => {
+                    return (
+                      <Box
+                        key={pollVotes.id}
+                        width="100%"
+                        display="flex"
+                        alignItems="flex-start"
+                        flexDirection="column"
+                      >
+                        <Typography variant="body2">
+                          {pollVotes.text}
+                        </Typography>
+                        <LinearProgressWithLabel
+                          value={(100 * pollVotes.votes) / totalVotes()}
+                        />
+                      </Box>
+                    );
+                  })}
+            </Paper>
+          )}
+        </>
+      )}
     </>
   );
 };

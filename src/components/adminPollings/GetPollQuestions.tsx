@@ -16,7 +16,7 @@ import Loader from '../shared/Loader';
 import NotFound from '../shared/NotFound';
 import {
   useWatchGetPollQuestionsSubscription,
-  useDeletePollQuestionMutation
+  useDeletePollQuestionMutation,
 } from '../../api/generated/graphql';
 import { getPollQuestionAnswers } from '../../atom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.error.main,
   },
   delete: {
-    width: '150px'
-  }
+    width: '150px',
+  },
 }));
 
 interface Props {
@@ -49,10 +49,13 @@ const GetPollQuestions: React.FC<Props> = () => {
     getPollQuestionAnswers,
   );
 
-  const [deleteQuestion, { error: deleteError }] = useDeletePollQuestionMutation({
+  const [
+    deleteQuestion,
+    { error: deleteError },
+  ] = useDeletePollQuestionMutation({
     variables: {
-      pollQuestionId: pollQuestion
-    }
+      pollQuestionId: pollQuestion,
+    },
   });
 
   const handleClick = (questionId: number) => {
@@ -60,21 +63,18 @@ const GetPollQuestions: React.FC<Props> = () => {
   };
 
   const handleQuestionDelete = async (questionId: number) => {
-    console.log('deleted', questionId);
-
     if (!questionId) return;
 
     try {
       await deleteQuestion({
         variables: {
-          pollQuestionId: questionId
-        }
-      })
-
-    } catch (error) {
+          pollQuestionId: questionId,
+        },
+      });
+    } catch (deleteError) {
       console.log('error on delete poll question');
     }
-  }
+  };
 
   if (loading) {
     return <Loader />;
@@ -86,7 +86,7 @@ const GetPollQuestions: React.FC<Props> = () => {
 
   return (
     <>
-      <Typography variant="h3">Poll list</Typography>
+      <Typography variant="h3">Poll list overview</Typography>
       <List className={classes.root}>
         {data?.questions.map((question) => (
           <ListItem
@@ -100,8 +100,8 @@ const GetPollQuestions: React.FC<Props> = () => {
               {question.is_active ? (
                 <HowToVoteIcon color="secondary" />
               ) : (
-                  <HowToVoteIcon />
-                )}
+                <HowToVoteIcon />
+              )}
             </ListItemIcon>
             <ListItemText>
               <Link
@@ -120,10 +120,10 @@ const GetPollQuestions: React.FC<Props> = () => {
                 <PlayArrowIcon className={classes.play} />
               </ListItemIcon>
             ) : (
-                <ListItemIcon>
-                  <StopIcon className={classes.stop} />
-                </ListItemIcon>
-              )}
+              <ListItemIcon>
+                <StopIcon className={classes.stop} />
+              </ListItemIcon>
+            )}
             {!question.is_active ? (
               <Button
                 className={classes.delete}
@@ -135,14 +135,10 @@ const GetPollQuestions: React.FC<Props> = () => {
                 Delete
               </Button>
             ) : (
-                <Button
-                  className={classes.delete}
-                  value={question.id}
-                  disabled
-                >
-                  Active poll
-                </Button>
-              )}
+              <Button className={classes.delete} value={question.id} disabled>
+                Active poll
+              </Button>
+            )}
           </ListItem>
         ))}
       </List>
