@@ -36,44 +36,31 @@ interface PublishChannelProps {
 
 const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
   const classes = useStyles();
-
   const [currentChannel, setCurrentChannelState] = useRecoilState(
     currentChannelState,
   );
-
   const [value, setValue] = React.useState('');
-
-  const [voteError, setVoteError] = React.useState(false);
-
+  const [voteError] = React.useState(false);
   const [hasVoted, setHasVoted] = React.useState(false);
-
   const { data, loading } = useWatchChannelPollQuestionSubscription({
     variables: {
       channelId: currentChannel.id,
     },
   });
-
-  console.log('useWatchChannelPollQuestionSubscription', data);
-
   const getPollAnswerVotes = useWatchPollAnswerVotesSubscription({
     variables: {
       pollAnswerId: parseInt(value, 10),
     },
   });
-
-  const [setPollAnswerVoteMutation, { error }] = useSetPollAnswerVoteMutation();
-
+  const [setPollAnswerVoteMutation] = useSetPollAnswerVoteMutation();
   const totalVotes = () => {
     let numbers: any = [];
     numbers =
       data?.getChannelPoll[0] !== undefined &&
       data?.getChannelPoll[0].poll_question.poll_anwers;
-
     const count: any = [];
     numbers.map((num: any) => count.push(num.votes));
-
     const result = count.reduce((a: any, b: any) => a + b);
-
     return result;
   };
 
@@ -111,6 +98,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
     setValue(e.target.value);
   };
 
+  // HANDLE SUBMIT
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     let currentPollAnswerVotes = await getPollAnswerVotes.data

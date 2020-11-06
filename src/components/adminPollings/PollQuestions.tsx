@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { useForm } from 'react-hook-form';
 import {
   Box,
@@ -24,7 +24,6 @@ import {
 import { getPollQuestionAnswers } from '../../atom';
 import GetPublicChannels from './GetPublicChannels';
 import Loader from '../../components/shared/Loader';
-
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -62,44 +61,27 @@ const useStyles = makeStyles((theme) => ({
 
 const PollQuestions: React.FC = () => {
   const classes = useStyles();
-
   const { register, errors } = useForm();
-
   const [answerText, setAnswerText] = React.useState({
     text: '',
   });
-
-  const [pollQuestionId, setPollQuestion] = useRecoilState(
-    getPollQuestionAnswers,
-  );
-
+  const pollQuestionId = useRecoilValue(getPollQuestionAnswers);
   const getPollQuestion = useWatchGetPollQuestionSubscription({
     variables: {
       pollQuestionId: pollQuestionId,
     },
   });
-
-  console.log('getPollQuestion', getPollQuestion);
-
   const { data } = useWatchGetPollAnswersSubscription({
     variables: {
       pollQuestionId: pollQuestionId,
     },
   });
-
-  console.log('useWatchGetPollAnswersSubscription', data);
-
-  const [pollQuestionActiveState, setPollQuestionActiveState] = React.useState<
-    boolean
-  >();
-
+  const [pollQuestionActiveState] = React.useState();
   const [addPollQuestionMutation, { error }] = useAddAnswerToQuestionMutation();
-
   const handleAnswerChange = (e: any) => {
     console.log(e.target.value);
     setAnswerText({ ...answerText, [e.target.id]: e.target.value });
   };
-
   const [setPollQuestionState] = useSetPublishPollQuestionStateMutation({
     variables: {
       pollQuestionId: pollQuestionId,
@@ -107,6 +89,7 @@ const PollQuestions: React.FC = () => {
     },
   });
 
+  // HANDLE SET POLL QUESTION PUBLISH STATE
   const handleSetPollQuestionPublishState = async () => {
     // console.log('set state clicked', getPollQuestion.data?.poll_question[0].is_active);
     const getActivePollQuestionState =
@@ -124,6 +107,7 @@ const PollQuestions: React.FC = () => {
     }
   };
 
+  // HANDLE ADD ANSWER
   const handleAddAnswer = async (e: any) => {
     e.preventDefault();
 

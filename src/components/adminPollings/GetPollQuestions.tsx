@@ -44,11 +44,9 @@ const GetPollQuestions: React.FC<Props> = () => {
   const { data, loading, error } = useWatchGetPollQuestionsSubscription({
     variables: {},
   });
-
   const [pollQuestion, setPollQuestion] = useRecoilState<any>(
     getPollQuestionAnswers,
   );
-
   const [
     deleteQuestion,
     { error: deleteError },
@@ -58,10 +56,10 @@ const GetPollQuestions: React.FC<Props> = () => {
     },
   });
 
+  // HANDLE SET POLL QUESTION ID
   const handleClick = (questionId: number) => {
     setPollQuestion(questionId);
   };
-
   const handleQuestionDelete = async (questionId: number) => {
     if (!questionId) return;
 
