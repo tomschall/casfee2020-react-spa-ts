@@ -6,22 +6,14 @@ import { IconButton, CircularProgress } from '@material-ui/core';
 import { useDeleteMessageMutation } from '../../api/generated/graphql';
 import { Alert } from '@material-ui/lab';
 import { deletedMessageState } from '../../atom';
-import { useRecoilState } from 'recoil';
-
-const useStyles = makeStyles((theme) => ({
-  root: {},
-}));
+import { useSetRecoilState } from 'recoil';
 
 interface DeleteMessageProps {
   messageId: number;
 }
 
 const DeleteMessage: React.FC<DeleteMessageProps> = ({ messageId }) => {
-  const classes = useStyles();
-  const { user } = useAuth0();
-  const [deletedMessage, setdeletedMessage] = useRecoilState<boolean>(
-    deletedMessageState,
-  );
+  const setdeletedMessage = useSetRecoilState<boolean>(deletedMessageState);
 
   const [
     deleteMessageMutation,
@@ -29,7 +21,6 @@ const DeleteMessage: React.FC<DeleteMessageProps> = ({ messageId }) => {
   ] = useDeleteMessageMutation();
 
   const handleDelete = (messageId: number) => {
-    console.log('delete message', messageId);
     deleteMessageMutation({
       variables: {
         message_id: messageId,
@@ -53,7 +44,6 @@ const DeleteMessage: React.FC<DeleteMessageProps> = ({ messageId }) => {
     data?.delete_message?.affected_rows !== undefined &&
     data?.delete_message?.affected_rows >= 0
   ) {
-    console.log('data', data);
     setdeletedMessage(true);
     return <Alert severity="success">Message has been deleted</Alert>;
   }
