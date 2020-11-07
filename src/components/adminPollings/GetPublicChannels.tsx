@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
 import {
-  Badge,
+  Box,
   Button,
   Checkbox,
   Collapse,
@@ -106,36 +106,52 @@ const GetPublicChannels: React.FC = () => {
           {getChannelPollQuestionPublishState.data?.getChannelPollQuestionPublishState.map(
             (questionState) => (
               <>
-                <p>
-                  <Switch
-                    checked={questionState.poll_question.is_active}
-                    onChange={handleChange}
-                    name={JSON.stringify(questionState.channel.name)}
-                    inputProps={{ 'aria-label': 'secondary checkbox' }}
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  flexDirection="row"
+                  flex={1}
+                >
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        value={questionState.channel_id}
+                        onClick={handleChange}
+                        name={questionState.channel.name}
+                        size="medium"
+                        // disabled={toggleCheckbox}
+                      />
+                    }
+                    label="Select channel"
                   />
-                  Channel ID: {questionState.channel_id}{' '}
-                  {questionState.channel.name}
-                  <Checkbox
-                    value={questionState.channel_id}
-                    onChange={handleChange}
-                    name={questionState.channel.name}
-                    size="medium"
-                    // disabled={toggleCheckbox}
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={questionState.poll_question.is_active}
+                        onChange={handleChange}
+                        name={JSON.stringify(questionState.channel.name)}
+                        inputProps={{ 'aria-label': 'secondary checkbox' }}
+                      />
+                    }
+                    label={questionState.channel.name}
                   />
-                </p>
-                <p>
-                  PollQuestionId: {questionState.poll_questions}{' '}
-                  {questionState.poll_question.text}
-                </p>
-                <p>
-                  Is published on channel:{' '}
-                  {questionState.poll_question.is_active}
-                </p>
-                <Button>
-                  {questionState.poll_questions === getPollQuestionId
-                    ? 'published'
-                    : 'inactive'}
-                </Button>
+
+                  <p>{questionState.poll_question.text}</p>
+                  <Button
+                    color={
+                      questionState.poll_questions === getPollQuestionId
+                        ? 'primary'
+                        : 'secondary'
+                    }
+                  >
+                    {questionState.poll_questions === getPollQuestionId ? (
+                      <>{questionState.channel.name}</>
+                    ) : (
+                      <>{questionState.channel.name}</>
+                    )}
+                  </Button>
+                </Box>
               </>
             ),
           )}
