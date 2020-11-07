@@ -200,7 +200,7 @@ const AddChannel: React.FC = () => {
                     onChange={handleChange}
                     autoComplete="off"
                     placeholder="Your channel name"
-                    id="standard-basic"
+                    id="add-channel-input"
                     label="Add a new channel"
                     fullWidth
                   />

@@ -29,6 +29,10 @@ graphql.schema.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.log
 
 # nestjs microservice
 /nestjs
+
+# nightwatch tests
+tests_output

@@ -123,7 +123,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
                 Add users to channel
               </Button>
             )}
-            <List>
+            <List id="message-list">
               <MessageList
                 messages={data?.messages as Message[]}
                 lastMessage={lastMessage}

@@ -14,6 +14,12 @@ mutation insertMessage($message: message_insert_input!) {
   }
 }
 
+mutation deleteMessage($message_id: Int) {
+  delete_message(where: { id: { _eq: $message_id } }) {
+    affected_rows
+  }
+}
+
 mutation setUserOnline($user_id: String!) {
   update_user(
     _set: { last_seen: "now()" }

@@ -62,10 +62,12 @@ npm run api:client:generate
 * If your docker containers are running, and you have to reinstall the whole project, stop
   them, the execute ./clean.sh script in the root folder of the project.
 
+## Tests
+### Tests with nightwatch
 
-
-
-
+```
+npx nightwatch nightwatch_tests
+```
 
 ## TODO:
 

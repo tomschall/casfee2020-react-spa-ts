@@ -10,7 +10,7 @@ import {
 } from '../../api/generated/graphql';
 import TypingIndicator from '../shared/TypingIndicator';
 import { useRecoilState } from 'recoil';
-import { giphyState } from '../../atom';
+import { giphyState, deletedMessageState } from '../../atom';
 import { IGif } from '@giphy/js-types';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -90,6 +90,9 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
   const { user } = useAuth0();
   const [text, setText] = useState('');
   const [gif, setGif] = useRecoilState<IGif | null>(giphyState);
+  const [deletedMessage, setdeletedMessage] = useRecoilState<boolean>(
+    deletedMessageState,
+  );
 
   const channelId = props.channelId;
 
@@ -118,7 +121,15 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (text === '' && gif === null) {
+
+    console.log('handleSubmit MessageInput');
+
+    if (text === '') {
+      return;
+    }
+
+    if (text.length > 2000) {
+      alert('Your text limit has reached the limit of 2000 characters');
       return;
     }
 
@@ -146,6 +157,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
 
     setText('');
     setGif(null);
+    setdeletedMessage(false);
   };
 
   return (
@@ -177,7 +189,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
           color="secondary"
           autoComplete="off"
           placeholder="Type your message here ..."
-          id="standard-basic"
+          id="chat-message-input"
           label={'Crackle your message here ...'}
           // fullWidth
           InputProps={{
@@ -191,11 +203,12 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
         />
 
         <Button
+          id="chat-message-button"
           size={setButtonSize()}
-          type={'submit'}
           variant="contained"
           endIcon={<Icon>send</Icon>}
           className={classes.messageButton}
+          type="submit"
         >
           Send
         </Button>
