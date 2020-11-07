@@ -58,7 +58,7 @@ const AdminContainer: React.FC = () => {
         <Divider />
         <Switch>
           <Route exact path="/dashboard/users" component={AdminUserList} />
-          <Route exact path="/dashboard/pollings" component={AdminPollings} />
+          <Route exact path="/dashboard" component={AdminPollings} />
           <Route exact path="/dashboard/pollings" component={AdminPollings} />
           <Route
             exact

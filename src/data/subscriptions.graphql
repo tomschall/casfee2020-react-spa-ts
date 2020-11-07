@@ -176,6 +176,21 @@ subscription WatchGetPollQuestions {
   }
 }
 
+subscription watchGetChannelPollQuestionPublishState {
+  getChannelPollQuestionPublishState: channel_poll {
+    channel_id
+    id
+    poll_questions
+    channel {
+      name
+    }
+    poll_question {
+      text
+      is_active
+    }
+  }
+}
+
 subscription watchGetPollQuestion($pollQuestionId: Int) {
   poll_question: poll_questions(where: { id: { _eq: $pollQuestionId } }) {
     id

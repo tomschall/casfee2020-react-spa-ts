@@ -2,6 +2,7 @@ import React from 'react';
 import { useRecoilValue } from 'recoil';
 import {
   Badge,
+  Button,
   Checkbox,
   Collapse,
   FormControlLabel,
@@ -10,6 +11,7 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
+  Switch,
 } from '@material-ui/core';
 import PeopleIcon from '@material-ui/icons/People';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
@@ -19,23 +21,26 @@ import { getPollQuestionAnswers } from '../../atom';
 import {
   useGetPublicChannelsQuery,
   useGetChannelPollsQuery,
+  useWatchGetChannelPollQuestionPublishStateSubscription,
   useAddPublishPollQuestionToChannelMutation,
 } from '../../api/generated/graphql';
 
 const GetPublicChannels: React.FC = () => {
   const [open, setOpen] = React.useState<boolean>(true);
-
   const [toggleCheckbox, setToggleCheckbox] = React.useState<boolean>();
-
   const getPublicChannels = useGetPublicChannelsQuery();
 
+  const getChannelPollQuestionPublishState = useWatchGetChannelPollQuestionPublishStateSubscription();
+  console.log('Question State: ', getChannelPollQuestionPublishState);
+
   const getChannelPolls = useGetChannelPollsQuery();
-
   const getPollQuestionId = useRecoilValue<number>(getPollQuestionAnswers);
-
   const [pollQuestionToChannel] = useAddPublishPollQuestionToChannelMutation();
-
-  console.log('getChannelPolls', getChannelPolls);
+  console.log(
+    'getChannelPolls',
+    getChannelPolls.data?.channelPoll[0].id,
+    getChannelPolls.data?.channelPoll[0].poll_questions,
+  );
 
   const handleChange = async (e: any) => {
     setToggleCheckbox(!toggleCheckbox);
@@ -74,7 +79,7 @@ const GetPublicChannels: React.FC = () => {
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" key={2}>
+        {/* <List component="div" key={2}>
           {getPublicChannels.data?.channels.map((channel, index: any) => (
             <ListItem button key={index}>
               <ListItemIcon>
@@ -96,6 +101,44 @@ const GetPublicChannels: React.FC = () => {
               />
             </ListItem>
           ))}
+          </List> */}
+        <List component="div" key={3}>
+          {getChannelPollQuestionPublishState.data?.getChannelPollQuestionPublishState.map(
+            (questionState) => (
+              <>
+                <p>
+                  <Switch
+                    checked={questionState.poll_question.is_active}
+                    onChange={handleChange}
+                    name={JSON.stringify(questionState.channel.name)}
+                    inputProps={{ 'aria-label': 'secondary checkbox' }}
+                  />
+                  Channel ID: {questionState.channel_id}{' '}
+                  {questionState.channel.name}
+                  <Checkbox
+                    value={questionState.channel_id}
+                    onChange={handleChange}
+                    name={questionState.channel.name}
+                    size="medium"
+                    // disabled={toggleCheckbox}
+                  />
+                </p>
+                <p>
+                  PollQuestionId: {questionState.poll_questions}{' '}
+                  {questionState.poll_question.text}
+                </p>
+                <p>
+                  Is published on channel:{' '}
+                  {questionState.poll_question.is_active}
+                </p>
+                <Button>
+                  {questionState.poll_questions === getPollQuestionId
+                    ? 'published'
+                    : 'inactive'}
+                </Button>
+              </>
+            ),
+          )}
         </List>
       </Collapse>
     </List>

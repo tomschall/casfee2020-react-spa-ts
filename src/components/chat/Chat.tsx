@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, List, Button } from '@material-ui/core';
+import { Box, Button, Grid, List } from '@material-ui/core';
 import MessageList from './MessageList';
 import PublishChannelPolling from '../adminPollings/PublishPollQuestion';
 import { Message } from '../../interfaces/message/message.interface';
@@ -9,7 +9,6 @@ import {
   useUpsertMessageCursorMutation,
 } from '../../api/generated/graphql';
 
-import { Box } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import MenuBar from '../shared/MenuBar';
@@ -39,6 +38,11 @@ const useStyles = makeStyles((theme) => ({
       paddingTop: theme.spacing(0),
       paddingBottom: theme.spacing(0),
     },
+  },
+  polling: {
+    position: 'fixed',
+    overflow: 'hidden',
+    flex: 1,
   },
 }));
 
@@ -112,7 +116,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
 
   return (
     <>
-      <div className={classes.root}>
+      <Box className={classes.root}>
         <Grid item xs={12} className={classes.messageContainer}>
           <PublishChannelPolling />
         </Grid>
@@ -139,7 +143,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
             />
           </Box>
         </Grid>
-      </div>
+      </Box>
     </>
   );
 };

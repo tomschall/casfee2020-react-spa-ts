@@ -63,22 +63,18 @@ const GetPollQuestions: React.FC<Props> = () => {
   const handleQuestionDelete = async (questionId: number) => {
     if (!questionId) return;
 
-    try {
-      await deleteQuestion({
-        variables: {
-          pollQuestionId: questionId,
-        },
-      });
-    } catch (deleteError) {
-      console.log('error on delete poll question');
-    }
+    await deleteQuestion({
+      variables: {
+        pollQuestionId: questionId,
+      },
+    });
   };
 
   if (loading) {
     return <Loader />;
   }
 
-  if (error) {
+  if (error || deleteError) {
     return <NotFound />;
   }
 
