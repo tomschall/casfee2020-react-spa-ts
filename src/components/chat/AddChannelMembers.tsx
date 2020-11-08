@@ -53,17 +53,12 @@ const AddChannelMembers: React.FC = () => {
   ] = useAddChannelUserMutation();
 
   const handleUsersToggle = async (event: any, user_id: string) => {
-    try {
-      await addChannelUserMutation({
-        variables: {
-          channel_id: currentChannel.id,
-          user_id,
-        },
-      });
-    } catch (error) {
-      console.log('error on mutation', error);
-      return;
-    }
+    await addChannelUserMutation({
+      variables: {
+        channel_id: currentChannel.id,
+        user_id,
+      },
+    });
   };
 
   const handleClick = () => {
