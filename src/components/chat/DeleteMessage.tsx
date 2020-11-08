@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
+import React from 'react';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import { makeStyles } from '@material-ui/core/styles';
 import { IconButton, CircularProgress } from '@material-ui/core';
 import { useDeleteMessageMutation } from '../../api/generated/graphql';
 import { Alert } from '@material-ui/lab';

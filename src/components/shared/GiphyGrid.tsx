@@ -23,7 +23,6 @@ const GiphyGrid: React.FC<any> = () => {
     gif: IGif,
     e: React.SyntheticEvent<HTMLElement, Event>,
   ) => {
-    console.log('gif', gif);
     e.preventDefault();
   };
 

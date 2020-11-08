@@ -86,7 +86,6 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   }, [data]);
 
   if (error) {
-    console.log('messages error', error);
     return <Alert severity="error">Messages could not be loaded.</Alert>;
   }
 

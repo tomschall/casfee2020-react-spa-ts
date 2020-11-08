@@ -45,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
   vspace: {
     marginBottom: theme.spacing(1),
   },
+  image: {
+    paddingBottom: '0.5rem',
+  },
 }));
 
 interface MessageProps {
@@ -113,7 +116,7 @@ const MessageList: React.FC<MessageProps> = ({
             {message.text}
           </Typography>
           {message?.image ? (
-            <Box height={100}>
+            <Box className={classes.image}>
               <img src={message.image} />
             </Box>
           ) : (

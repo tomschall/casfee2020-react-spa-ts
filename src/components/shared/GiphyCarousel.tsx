@@ -9,11 +9,8 @@ import { IGif } from '@giphy/js-types';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-  },
   giphySearchInput: {
-    marginBottom: theme.spacing(5),
+    marginBottom: theme.spacing(4),
     marginLeft: theme.spacing(2),
     minWidth: 200,
   },
