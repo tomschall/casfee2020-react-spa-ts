@@ -122,9 +122,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    console.log('handleSubmit MessageInput');
-
-    if (text === '') {
+    if (text === '' && gif === null) {
       return;
     }
 

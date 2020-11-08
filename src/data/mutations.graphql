@@ -29,15 +29,8 @@ mutation setUserOnline($user_id: String!) {
   }
 }
 
-mutation addChannel($name: String, $owner_id: String, $is_private: Boolean) {
-  insert_channel(
-    objects: {
-      name: $name
-      owner_id: $owner_id
-      is_private: $is_private
-      channel_type: CHAT_MESSAGE
-    }
-  ) {
+mutation addChannel($channel: channel_insert_input!) {
+  insert_channel(objects: [$channel]) {
     returning {
       id
       name

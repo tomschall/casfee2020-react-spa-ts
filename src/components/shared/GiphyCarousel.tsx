@@ -34,7 +34,10 @@ const GiphyCarousel: React.FC<GiphyCarouselProps> = ({ hideGiphyCarousel }) => {
 
   const [width, setWidth] = useState(window.innerWidth);
 
-  const onGifClick = (gif: any, e: any) => {
+  const onGifClick = (
+    gif: IGif,
+    e: React.SyntheticEvent<HTMLElement, Event>,
+  ) => {
     e.preventDefault();
     setGif(gif);
     hideGiphyCarousel();

@@ -3,6 +3,7 @@ import { GiphyFetch } from '@giphy/js-fetch-api';
 import { Grid } from '@giphy/react-components';
 import ResizeObserver from 'react-resize-observer';
 import { useHistory } from 'react-router';
+import { IGif } from '@giphy/js-types';
 
 const giphyFetch = new GiphyFetch('gNDqYmKTip2mgTRqQbS5BwslaLM8Jdq0');
 
@@ -18,7 +19,10 @@ const GiphyGrid: React.FC<any> = () => {
     history.push(`/channel/general`);
   };
 
-  const onGifClick = (gif: any, e: any) => {
+  const onGifClick = (
+    gif: IGif,
+    e: React.SyntheticEvent<HTMLElement, Event>,
+  ) => {
     console.log('gif', gif);
     e.preventDefault();
   };
