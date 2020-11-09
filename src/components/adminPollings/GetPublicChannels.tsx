@@ -35,11 +35,11 @@ const GetPublicChannels: React.FC = () => {
   const getChannelPolls = useGetChannelPollsQuery();
   const getPollQuestionId = useRecoilValue<number>(getPollQuestionAnswers);
   const [pollQuestionToChannel] = useAddPublishPollQuestionToChannelMutation();
-  console.log(
-    'getChannelPolls',
-    getChannelPolls.data?.channelPoll[0].id,
-    getChannelPolls.data?.channelPoll[0].poll_questions,
-  );
+  // console.log(
+  //   'getChannelPolls',
+  //   getChannelPolls.data?.channelPoll[0].id,
+  //   getChannelPolls.data?.channelPoll[0].poll_questions,
+  // );
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setToggleCheckbox(!toggleCheckbox);

@@ -120,18 +120,18 @@ const GetChannels: React.FC = () => {
             disablePadding
             className={classes.collapseOverlay}
           >
-            {data?.channel.map((kanal) => (
-              <ListItem button key={kanal.id}>
+            {data?.channel.map((chn) => (
+              <ListItem button key={chn.id}>
                 <ListItemIcon>
                   <StarBorder />
                 </ListItemIcon>
                 <ListItemText
-                  primary={kanal.name}
-                  onClick={() => handlePublishOnChannel(kanal.id)}
+                  primary={chn.name}
+                  onClick={() => handlePublishOnChannel(chn.id)}
                 />
                 <Button
-                  value={kanal.id}
-                  onClick={() => handleDeleteQuestionFromChannel(kanal.id)}
+                  value={chn.id}
+                  onClick={() => handleDeleteQuestionFromChannel(chn.id)}
                 >
                   Remove Channel
                 </Button>
