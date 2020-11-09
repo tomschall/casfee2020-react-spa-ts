@@ -88,7 +88,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
   };
 
   LinearProgressWithLabel.propTypes = {
-    value: totalVotes,
+    value: () => null,
   };
 
   // HANDLE EVENTS
