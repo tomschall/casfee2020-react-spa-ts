@@ -173,6 +173,11 @@ subscription WatchGetPollQuestions {
     updated_at
     owner_id
     is_active
+    channel_polls {
+      channel {
+        name
+      }
+    }
   }
 }
 

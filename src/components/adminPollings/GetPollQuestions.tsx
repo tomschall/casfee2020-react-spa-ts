@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.error.main,
   },
   delete: {
-    width: '150px',
+    width: 'auto',
   },
 }));
 
@@ -131,7 +131,12 @@ const GetPollQuestions: React.FC<Props> = () => {
               </Button>
             ) : (
               <Button className={classes.delete} value={question.id} disabled>
-                Active poll
+                {question?.channel_polls.map((chn) => (
+                  <>
+                    {chn.channel.name}
+                    <br />
+                  </>
+                ))}
               </Button>
             )}
             <GetChannels />

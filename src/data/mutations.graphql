@@ -168,3 +168,17 @@ mutation deletePollQuestion($pollQuestionId: Int!) {
     affected_rows
   }
 }
+
+mutation deletePollQuestionFromChannel(
+  $pollQuestionId: Int!
+  $channelId: Int!
+) {
+  delete_channel_poll(
+    where: {
+      poll_questions: { _eq: $pollQuestionId }
+      channel_id: { _eq: $channelId }
+    }
+  ) {
+    affected_rows
+  }
+}
