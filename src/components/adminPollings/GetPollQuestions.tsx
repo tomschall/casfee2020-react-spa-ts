@@ -134,7 +134,9 @@ const GetPollQuestions: React.FC<Props> = () => {
                         state: { fromDashboard: true },
                       }}
                     >
-                      <Typography variant="h3">{question.text}</Typography>
+                      <Typography style={{ marginLeft: 16 }} variant="h3">
+                        {question.text}
+                      </Typography>
                     </Link>
                   </ListItemText>
                 </Box>
