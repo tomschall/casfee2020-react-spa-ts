@@ -11,20 +11,23 @@ import {
   Chip,
   Drawer,
   Grid,
+  Popover,
   Toolbar,
 } from '@material-ui/core';
+import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import AddGif from '@material-ui/icons/Gif';
 import SideBar from './SideBar';
 import MessageInput from '../chat/MessageInput';
 import GiphyCarousel from './GiphyCarousel';
-
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import FaceIcon from '@material-ui/icons/Face';
 import PeopleIcon from '@material-ui/icons/People';
+import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import { makeStyles } from '@material-ui/core/styles';
+import PublishChannelPolling from '../adminPollings/PublishPollQuestion';
 
 const drawerWidth = '100%';
 
@@ -89,6 +92,11 @@ const useStyles = makeStyles((theme) => ({
   },
   giphyImage: {
     marginTop: theme.spacing(2),
+  },
+  popoverRoot: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 }));
 
@@ -168,6 +176,31 @@ const MenuBar: React.FC<MenuBarProps> = ({
                   label="+Gif"
                   onClick={handleGiphyClick}
                 />
+                <PopupState variant="popover" popupId="demo-popup-popover">
+                  {(popupState) => (
+                    <>
+                      <Chip
+                        {...bindTrigger(popupState)}
+                        variant="outlined"
+                        color="secondary"
+                        size="small"
+                        icon={<HowToVoteIcon color="secondary" />}
+                        label="Admin Polling"
+                      />
+                      <Popover
+                        anchorReference={'none'}
+                        classes={{
+                          root: classes.popoverRoot,
+                        }}
+                        {...bindPopover(popupState)}
+                      >
+                        <Box p={2}>
+                          <PublishChannelPolling />
+                        </Box>
+                      </Popover>
+                    </>
+                  )}
+                </PopupState>
                 <Box
                   style={{ display: showGiphyCarousel ? 'flex' : 'none' }}
                   className={classes.giphyImage}
