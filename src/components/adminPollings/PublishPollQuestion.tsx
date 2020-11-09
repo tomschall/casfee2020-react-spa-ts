@@ -106,19 +106,15 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
       currentPollAnswerVotes++;
     }
 
-    try {
-      if (currentPollAnswerVotes === undefined) return;
-      await setPollAnswerVoteMutation({
-        variables: {
-          pollAnswerId: parseInt(value),
-          newVote: currentPollAnswerVotes,
-        },
-      });
+    if (currentPollAnswerVotes === undefined) return;
+    await setPollAnswerVoteMutation({
+      variables: {
+        pollAnswerId: parseInt(value),
+        newVote: currentPollAnswerVotes,
+      },
+    });
 
-      setHasVoted(true);
-    } catch (e) {
-      console.log('error on mutation setVotes');
-    }
+    setHasVoted(true);
   };
 
   return (

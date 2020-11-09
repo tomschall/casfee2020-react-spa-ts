@@ -23,7 +23,7 @@ import {
 } from '../../api/generated/graphql';
 import { getPollQuestionAnswers } from '../../atom';
 import GetPublicChannels from './GetPublicChannels';
-import Loader from '../../components/shared/Loader';
+import Loader from '../shared/Loader';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PollQuestions: React.FC = () => {
+const PollAnswers: React.FC = () => {
   const classes = useStyles();
   const { register, errors } = useForm();
   const [answerText, setAnswerText] = React.useState({
@@ -261,4 +261,4 @@ const PollQuestions: React.FC = () => {
   );
 };
 
-export default PollQuestions;
+export default PollAnswers;

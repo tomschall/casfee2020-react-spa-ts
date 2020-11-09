@@ -44,23 +44,13 @@ const GetPublicChannels: React.FC = () => {
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setToggleCheckbox(!toggleCheckbox);
-    console.log(
-      'CHECKBOX TOGGLE',
-      e.target.value,
-      getPollQuestionId,
-      toggleCheckbox,
-    );
 
-    try {
-      await pollQuestionToChannel({
-        variables: {
-          channelID: parseInt(e.target.value),
-          pollQuestionID: getPollQuestionId,
-        },
-      });
-    } catch (e) {
-      console.log('error on pollQuestionToChannel mutation');
-    }
+    await pollQuestionToChannel({
+      variables: {
+        channelID: parseInt(e.target.value),
+        pollQuestionID: getPollQuestionId,
+      },
+    });
   };
 
   const handleCollapseClick = () => {
