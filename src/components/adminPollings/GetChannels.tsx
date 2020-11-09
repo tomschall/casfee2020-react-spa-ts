@@ -24,11 +24,10 @@ import Loader from '../../components/shared/Loader';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  collapseOverlay: {
-    // display: 'block',
-    // position: 'absolute',
-    // overflow: 'visible',
-    // backgroundColor: theme.palette.primary.dark,
+  root: {
+    // height: 200,
+    // maxHeight: 250,
+    // overflow: 'auto',
   },
 }));
 
@@ -115,11 +114,7 @@ const GetChannels: React.FC = () => {
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={open} timeout="auto">
-          <List
-            component="div"
-            disablePadding
-            className={classes.collapseOverlay}
-          >
+          <List component="div" disablePadding className={classes.root}>
             {data?.channel.map((chn) => (
               <ListItem button key={chn.id}>
                 <ListItemIcon>

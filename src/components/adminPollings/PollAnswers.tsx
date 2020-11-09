@@ -258,7 +258,6 @@ const PollAnswers: React.FC = () => {
           </FormGroup>
           <Divider className={classes.divider} />
           <GetChannels />
-          <GetPublicChannels />
         </Grid>
       </form>
     </>
