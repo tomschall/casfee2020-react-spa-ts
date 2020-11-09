@@ -99,6 +99,9 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
   // HANDLE SUBMIT
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    console.log('hasVoted', hasVoted);
+
     let currentPollAnswerVotes = await getPollAnswerVotes.data
       ?.pollAnswerVotes[0].votes;
 

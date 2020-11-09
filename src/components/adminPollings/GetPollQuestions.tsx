@@ -19,6 +19,7 @@ import {
   useDeletePollQuestionMutation,
 } from '../../api/generated/graphql';
 import { getPollQuestionAnswers } from '../../atom';
+import GetChannels from './GetChannels';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -133,6 +134,7 @@ const GetPollQuestions: React.FC<Props> = () => {
                 Active poll
               </Button>
             )}
+            <GetChannels />
           </ListItem>
         ))}
       </List>

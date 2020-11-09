@@ -23,6 +23,7 @@ import {
 } from '../../api/generated/graphql';
 import { getPollQuestionAnswers } from '../../atom';
 import GetPublicChannels from './GetPublicChannels';
+import GetChannels from './GetChannels';
 import Loader from '../shared/Loader';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -150,7 +151,7 @@ const PollAnswers: React.FC = () => {
           <Box
             display="flex"
             justifyContent="space-between"
-            alignItems="flex-start"
+            alignItems="flex-end"
             className={classes.root}
             mb={3}
             mt={0}
@@ -254,6 +255,7 @@ const PollAnswers: React.FC = () => {
             ))}
           </FormGroup>
           <Divider className={classes.divider} />
+          <GetChannels />
           <GetPublicChannels />
         </Grid>
       </form>

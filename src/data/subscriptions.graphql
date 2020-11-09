@@ -246,3 +246,10 @@ subscription getPollQuestionState($pollQuestionId: Int!) {
     is_active
   }
 }
+
+subscription watchGetChannels {
+  channel {
+    id
+    name
+  }
+}

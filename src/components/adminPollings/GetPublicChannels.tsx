@@ -13,7 +13,6 @@ import {
   Typography,
   Switch,
 } from '@material-ui/core';
-import PeopleIcon from '@material-ui/icons/People';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
@@ -64,35 +63,12 @@ const GetPublicChannels: React.FC = () => {
           <PeopleOutlineIcon />
         </ListItemIcon>
         <ListItemText>
-          <Typography variant="h6">Publish on channel</Typography>
+          <Typography variant="h6">Published questions on channel</Typography>
         </ListItemText>
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        {/* <List component="div" key={2}>
-          {getPublicChannels.data?.channels.map((channel, index: any) => (
-            <ListItem button key={index}>
-              <ListItemIcon>
-                <Badge variant="dot">
-                  <PeopleIcon />
-                </Badge>
-              </ListItemIcon>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value={channel.id}
-                    onChange={handleChange}
-                    name={channel.name}
-                    size="medium"
-                    // disabled={toggleCheckbox}
-                  />
-                }
-                label={channel.id + ' - ' + channel.name}
-              />
-            </ListItem>
-          ))}
-          </List> */}
-        <List component="div" key={3}>
+        <List component="div" key={3} disablePadding>
           {getChannelPollQuestionPublishState.data?.getChannelPollQuestionPublishState.map(
             (questionState) => (
               <>
@@ -103,19 +79,7 @@ const GetPublicChannels: React.FC = () => {
                   flexDirection="row"
                   flex={1}
                 >
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        value={questionState.channel_id}
-                        onChange={handleChange}
-                        name={questionState.channel.name}
-                        size="medium"
-                        // disabled={toggleCheckbox}
-                      />
-                    }
-                    label="Select channel"
-                  />
-                  <FormControlLabel
+                  {/* <FormControlLabel
                     control={
                       <Switch
                         checked={questionState?.poll_question?.is_active}
@@ -125,18 +89,21 @@ const GetPublicChannels: React.FC = () => {
                       />
                     }
                     label={questionState.channel.name}
-                  />
+                  /> */}
 
                   <p>{questionState?.poll_question?.text}</p>
                   <Button
                     color={
                       questionState.poll_questions === getPollQuestionId
-                        ? 'primary'
-                        : 'secondary'
+                        ? 'secondary'
+                        : 'primary'
                     }
                   >
                     {questionState.poll_questions === getPollQuestionId ? (
-                      <>{questionState.channel.name}</>
+                      <>
+                        These question is published on{' '}
+                        {questionState.channel.name}
+                      </>
                     ) : (
                       <>{questionState.channel.name}</>
                     )}
