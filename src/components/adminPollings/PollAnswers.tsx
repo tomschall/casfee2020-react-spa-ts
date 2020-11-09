@@ -13,6 +13,8 @@ import {
 } from '@material-ui/core';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import LockIcon from '@material-ui/icons/Lock';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 // import StopIcon from '@material-ui/icons/Stop';
 // import { useAuth0 } from '@auth0/auth0-react';
 import {
@@ -53,10 +55,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.dark,
   },
   play: {
-    color: theme.palette.success.main,
+    color: theme.palette.error.main,
   },
   stop: {
-    color: theme.palette.error.main,
+    color: theme.palette.success.main,
   },
 }));
 
@@ -164,19 +166,19 @@ const PollAnswers: React.FC = () => {
               <Button
                 variant="outlined"
                 color="secondary"
-                startIcon={<PlayArrowIcon className={classes.play} />}
+                startIcon={<LockIcon className={classes.play} />}
                 onClick={handleSetPollQuestionPublishState}
               >
-                Published
+                locked
               </Button>
             ) : (
               <Button
                 variant="text"
                 color="primary"
-                startIcon={<PlayArrowIcon className={classes.stop} />}
+                startIcon={<LockOpenIcon className={classes.stop} />}
                 onClick={handleSetPollQuestionPublishState}
               >
-                Not published
+                unlock
               </Button>
             )}
           </Box>

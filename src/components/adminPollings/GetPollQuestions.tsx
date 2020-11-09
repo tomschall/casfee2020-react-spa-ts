@@ -12,10 +12,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
-import StopIcon from '@material-ui/icons/Stop';
 import Loader from '../shared/Loader';
 import NotFound from '../shared/NotFound';
 import {
@@ -29,10 +27,10 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {},
   play: {
-    color: theme.palette.success.main,
+    color: theme.palette.error.main,
   },
   stop: {
-    color: theme.palette.error.main,
+    color: theme.palette.success.main,
   },
   delete: {
     width: 'auto',
