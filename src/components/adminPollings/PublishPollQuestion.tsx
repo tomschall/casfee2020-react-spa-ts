@@ -55,9 +55,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
   const [setPollAnswerVoteMutation] = useSetPollAnswerVoteMutation();
   const totalVotes = () => {
     let numbers: any = [];
-    numbers =
-      data?.getChannelPoll[0] !== undefined &&
-      data?.getChannelPoll[0].poll_question.poll_anwers;
+    numbers = data?.getChannelPoll[0]?.poll_question?.poll_anwers;
     const count: any = [];
     numbers.map((num: any) => count.push(num.votes));
     const result = count.reduce((a: any, b: any) => a + b);
@@ -99,7 +97,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
   };
 
   // HANDLE SUBMIT
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let currentPollAnswerVotes = await getPollAnswerVotes.data
       ?.pollAnswerVotes[0].votes;
@@ -129,7 +127,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
         <Paper className={classes.pollCard}>
           {data?.getChannelPoll.map((channelPoll) => (
             <Typography variant="h2" key={channelPoll.id}>
-              {channelPoll.poll_question.text}
+              {channelPoll?.poll_question?.text}
             </Typography>
           ))}
 
@@ -141,7 +139,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
                 value={value}
                 onChange={handleChange}
               >
-                {data?.getChannelPoll[0].poll_question.poll_anwers
+                {data?.getChannelPoll[0]?.poll_question?.poll_anwers
                   .sort((a, b) => (a.id > b.id ? 1 : -1))
                   .map((pollAnswer) => (
                     <FormControlLabel
@@ -179,32 +177,29 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
                 </Typography>
                 {data?.getChannelPoll.map((channelPoll) => (
                   <Typography variant="h2" key={channelPoll.id}>
-                    {channelPoll.poll_question.text}
+                    {channelPoll?.poll_question?.text}
                   </Typography>
                 ))}
               </Box>
 
-              {data?.getChannelPoll[0] &&
-                data?.getChannelPoll[0].poll_question.poll_anwers
-                  .sort((a, b) => (a.id > b.id ? 1 : -1))
-                  .map((pollVotes) => {
-                    return (
-                      <Box
-                        key={pollVotes.id}
-                        width="100%"
-                        display="flex"
-                        alignItems="flex-start"
-                        flexDirection="column"
-                      >
-                        <Typography variant="body2">
-                          {pollVotes.text}
-                        </Typography>
-                        <LinearProgressWithLabel
-                          value={(100 * pollVotes.votes) / totalVotes()}
-                        />
-                      </Box>
-                    );
-                  })}
+              {data?.getChannelPoll[0]?.poll_question?.poll_anwers
+                .sort((a, b) => (a.id > b.id ? 1 : -1))
+                .map((pollVotes) => {
+                  return (
+                    <Box
+                      key={pollVotes.id}
+                      width="100%"
+                      display="flex"
+                      alignItems="flex-start"
+                      flexDirection="column"
+                    >
+                      <Typography variant="body2">{pollVotes.text}</Typography>
+                      <LinearProgressWithLabel
+                        value={(100 * pollVotes.votes) / totalVotes()}
+                      />
+                    </Box>
+                  );
+                })}
             </Paper>
           )}
         </>

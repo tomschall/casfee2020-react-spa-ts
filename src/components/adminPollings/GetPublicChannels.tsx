@@ -42,7 +42,7 @@ const GetPublicChannels: React.FC = () => {
     getChannelPolls.data?.channelPoll[0].poll_questions,
   );
 
-  const handleChange = async (e: any) => {
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setToggleCheckbox(!toggleCheckbox);
     console.log(
       'CHECKBOX TOGGLE',
@@ -54,7 +54,7 @@ const GetPublicChannels: React.FC = () => {
     try {
       await pollQuestionToChannel({
         variables: {
-          channelID: e.target.value,
+          channelID: parseInt(e.target.value),
           pollQuestionID: getPollQuestionId,
         },
       });
@@ -117,7 +117,7 @@ const GetPublicChannels: React.FC = () => {
                     control={
                       <Switch
                         value={questionState.channel_id}
-                        onClick={handleChange}
+                        onChange={handleChange}
                         name={questionState.channel.name}
                         size="medium"
                         // disabled={toggleCheckbox}
@@ -128,7 +128,7 @@ const GetPublicChannels: React.FC = () => {
                   <FormControlLabel
                     control={
                       <Switch
-                        checked={questionState.poll_question.is_active}
+                        checked={questionState?.poll_question?.is_active}
                         onChange={handleChange}
                         name={JSON.stringify(questionState.channel.name)}
                         inputProps={{ 'aria-label': 'secondary checkbox' }}
@@ -137,7 +137,7 @@ const GetPublicChannels: React.FC = () => {
                     label={questionState.channel.name}
                   />
 
-                  <p>{questionState.poll_question.text}</p>
+                  <p>{questionState?.poll_question?.text}</p>
                   <Button
                     color={
                       questionState.poll_questions === getPollQuestionId
