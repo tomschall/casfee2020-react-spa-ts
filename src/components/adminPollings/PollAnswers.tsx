@@ -12,7 +12,6 @@ import {
   Typography,
 } from '@material-ui/core';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 // import StopIcon from '@material-ui/icons/Stop';
@@ -24,7 +23,6 @@ import {
   useSetPublishPollQuestionStateMutation,
 } from '../../api/generated/graphql';
 import { getPollQuestionAnswers } from '../../atom';
-import GetPublicChannels from './GetPublicChannels';
 import GetChannels from './GetChannels';
 import Loader from '../shared/Loader';
 import { makeStyles } from '@material-ui/core/styles';

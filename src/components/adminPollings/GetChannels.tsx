@@ -24,11 +24,7 @@ import Loader from '../../components/shared/Loader';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    // height: 200,
-    // maxHeight: 250,
-    // overflow: 'auto',
-  },
+  root: {},
 }));
 
 const GetChannels: React.FC = () => {
@@ -103,7 +99,7 @@ const GetChannels: React.FC = () => {
 
   return (
     <>
-      <List>
+      <List className={classes.root}>
         <ListItem button onClick={handleClick}>
           <ListItemIcon>
             <GroupAddOutlinedIcon />

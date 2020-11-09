@@ -5,7 +5,7 @@ import { Container, Divider, Grid, Typography } from '@material-ui/core/';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import AdminSidebar from './AdminSidebar';
 import AdminUserList from './AdminUserList';
-import AdminPollings from '../adminPollings';
+import PollingDashBoard from '../adminPollings/PollingDashBoard';
 import PollAnswers from '../adminPollings/PollAnswers';
 import NotFound from '../shared/NotFound';
 import { makeStyles } from '@material-ui/core/styles';
@@ -58,8 +58,12 @@ const AdminContainer: React.FC = () => {
         <Divider />
         <Switch>
           <Route exact path="/dashboard/users" component={AdminUserList} />
-          <Route exact path="/dashboard" component={AdminPollings} />
-          <Route exact path="/dashboard/pollings" component={AdminPollings} />
+          <Route exact path="/dashboard" component={PollingDashBoard} />
+          <Route
+            exact
+            path="/dashboard/pollings"
+            component={PollingDashBoard}
+          />
           <Route
             exact
             path="/dashboard/pollings/edit/question/:question"

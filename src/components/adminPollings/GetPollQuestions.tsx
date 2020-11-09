@@ -42,9 +42,9 @@ const useStyles = makeStyles((theme) => ({
   },
   pollListTitle: {
     display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    flex: 1,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    // flex: 1,
   },
   pollChannels: {
     display: 'flex',
@@ -118,19 +118,27 @@ const GetPollQuestions: React.FC<Props> = () => {
                     <HowToVoteIcon />
                   )}
                 </ListItemIcon>
-                <ListItemText>
-                  <Link
-                    to={{
-                      pathname:
-                        '/dashboard/pollings/edit/question/' + question.id,
-                      state: { fromDashboard: true },
-                    }}
-                  >
-                    <Typography variant="body2">
-                      {question.id} - {question.text}
-                    </Typography>
-                  </Link>
-                </ListItemText>
+                <Chip
+                  variant="outlined"
+                  size="small"
+                  color="primary"
+                  label={question.id}
+                />
+
+                <Box flex={20}>
+                  <ListItemText>
+                    <Link
+                      to={{
+                        pathname:
+                          '/dashboard/pollings/edit/question/' + question.id,
+                        state: { fromDashboard: true },
+                      }}
+                    >
+                      <Typography variant="h3">{question.text}</Typography>
+                    </Link>
+                  </ListItemText>
+                </Box>
+
                 {question.is_active ? (
                   <ListItemIcon>
                     <LockIcon className={classes.play} />
@@ -140,31 +148,40 @@ const GetPollQuestions: React.FC<Props> = () => {
                     <LockOpenIcon className={classes.stop} />
                   </ListItemIcon>
                 )}
-
                 {!question.is_active && (
-                  <Button
-                    className={classes.delete}
-                    value={question.id}
-                    onClick={() => {
-                      handleQuestionDelete(question.id);
-                    }}
-                  >
-                    Delete
-                  </Button>
+                  <>
+                    <Chip
+                      variant="outlined"
+                      size="small"
+                      color="primary"
+                      onClick={() => {
+                        handleQuestionDelete(question.id);
+                      }}
+                      label="Delete"
+                    />
+                  </>
                 )}
               </Box>
               <Box className={classes.pollChannels}>
                 <Box>
-                  {question?.channel_polls.map((chn) => (
-                    <Chip
-                      variant="outlined"
-                      size="small"
-                      color="secondary"
-                      label={chn.channel.name}
-                    />
-                  ))}
+                  {loading ? (
+                    <>
+                      <Loader />
+                    </>
+                  ) : (
+                    <>
+                      {question?.channel_polls.map((chn) => (
+                        <Chip
+                          style={{ marginTop: 8, marginRight: 8 }}
+                          variant="outlined"
+                          size="small"
+                          color="secondary"
+                          label={chn.channel.name}
+                        />
+                      ))}
+                    </>
+                  )}
                 </Box>
-
                 <GetChannels />
               </Box>
             </Box>

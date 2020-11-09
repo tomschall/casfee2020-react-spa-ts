@@ -47,7 +47,7 @@ interface AdminPollingsProps {
   title: string;
 }
 
-const AdminPollings: React.FC<AdminPollingsProps> = () => {
+const PollingDashBoard: React.FC<AdminPollingsProps> = () => {
   const classes = useStyles();
   const { user: userAuth0, isLoading: loadingAuth0 } = useAuth0();
   const [
@@ -150,4 +150,4 @@ const AdminPollings: React.FC<AdminPollingsProps> = () => {
   );
 };
 
-export default AdminPollings;
+export default PollingDashBoard;
