@@ -3,6 +3,7 @@ import moment from 'moment';
 import { isObject } from 'util';
 import { Message } from '../../interfaces/message/message.interface';
 import ThreadChannelButton from '../thread/ThreadChannelButton';
+import DeleteMessage from './DeleteMessage';
 import {
   Avatar,
   Badge,
@@ -14,6 +15,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useRecoilValue } from 'recoil';
+import { deletedMessageState } from '../../atom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
   vspace: {
     marginBottom: theme.spacing(1),
   },
+  image: {
+    paddingBottom: '0.5rem',
+  },
 }));
 
 interface MessageProps {
@@ -62,6 +68,8 @@ const MessageList: React.FC<MessageProps> = ({
   const classes = useStyles();
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const deletedMessage = useRecoilValue<boolean>(deletedMessageState);
 
   const scrollToBottom = () => {
     if (isObject(messagesEndRef) && messagesEndRef.current !== null) {
@@ -84,20 +92,31 @@ const MessageList: React.FC<MessageProps> = ({
         <Box component="div" display="flex" flexDirection="column" flex="1">
           <Box
             display="flex"
-            justifyContent="flex-start"
+            justifyContent="space-between"
             alignItems="flex-start"
           >
-            <Typography variant="caption">
-              <strong>{message.user.username} </strong>
-              <i>{moment(message.timestamp).fromNow()}</i>
-            </Typography>
-            <Divider className={classes.vspace} />
+            <Box
+              display="flex"
+              justifyContent="flex-start"
+              alignItems="flex-start"
+            >
+              <Typography variant="caption">
+                <strong>{message.user.username} </strong>
+                <i>{moment(message.timestamp).fromNow()}</i>
+              </Typography>
+              <Divider className={classes.vspace} />
+            </Box>
+            <Box>
+              <Typography variant="caption">
+                <DeleteMessage messageId={message.id} />
+              </Typography>
+            </Box>
           </Box>
           <Typography component="p" className={classes.messageText}>
             {message.text}
           </Typography>
           {message?.image ? (
-            <Box height={100}>
+            <Box className={classes.image}>
               <img src={message.image} />
             </Box>
           ) : (
@@ -117,7 +136,8 @@ const MessageList: React.FC<MessageProps> = ({
     <>
       {[...messages]?.reverse()?.map((message, i) => renderMessages(message))}
 
-      {lastMessage &&
+      {!deletedMessage &&
+      lastMessage &&
       preLastMessageId !== 0 &&
       preLastMessageId < lastMessage.id
         ? renderMessages(lastMessage)

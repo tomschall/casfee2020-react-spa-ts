@@ -6,7 +6,7 @@ export default {
       },
       '*::-webkit-scrollbar': {
         width: '1rem',
-        height: '1.5rem',
+        height: '1rem',
       },
       '*::-webkit-scrollbar-thumb': {
         backgroundColor: 'rgba(0,0,0,.5)',

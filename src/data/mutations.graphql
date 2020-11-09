@@ -14,6 +14,12 @@ mutation insertMessage($message: message_insert_input!) {
   }
 }
 
+mutation deleteMessage($message_id: Int) {
+  delete_message(where: { id: { _eq: $message_id } }) {
+    affected_rows
+  }
+}
+
 mutation setUserOnline($user_id: String!) {
   update_user(
     _set: { last_seen: "now()" }
@@ -23,15 +29,8 @@ mutation setUserOnline($user_id: String!) {
   }
 }
 
-mutation addChannel($name: String, $owner_id: String, $is_private: Boolean) {
-  insert_channel(
-    objects: {
-      name: $name
-      owner_id: $owner_id
-      is_private: $is_private
-      channel_type: CHAT_MESSAGE
-    }
-  ) {
+mutation addChannel($channel: channel_insert_input!) {
+  insert_channel(objects: [$channel]) {
     returning {
       id
       name

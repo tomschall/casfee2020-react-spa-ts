@@ -4,6 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import {
   useAddChannelMutation,
   useInsertMessageMutation,
+  Channel_Type_Enum,
 } from '../../api/generated/graphql';
 import Loader from '../shared/Loader';
 import {
@@ -86,52 +87,50 @@ const AddChannel: React.FC = () => {
     setOpenAlert(!openAlert);
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!channelName) return;
     setOpenAlert(true);
 
-    try {
-      const dataAddChannel = await addChannel({
-        variables: {
+    const dataAddChannel = await addChannel({
+      variables: {
+        channel: {
           owner_id: userAuth0.sub,
           name: channelName.toLocaleLowerCase(),
           is_private: channelIsPrivate,
+          channel_type: Channel_Type_Enum.ChatMessage,
         },
-      });
+      },
+    });
 
-      await sendMessage({
-        variables: {
-          message: {
-            user_id: user.sub,
-            text: `Welcome to channel ${dataAddChannel.data?.insert_channel?.returning[0]?.name}`,
-            channel_id: dataAddChannel.data?.insert_channel?.returning[0]?.id,
-          },
+    await sendMessage({
+      variables: {
+        message: {
+          user_id: user.sub,
+          text: `Welcome to channel ${dataAddChannel.data?.insert_channel?.returning[0]?.name}`,
+          channel_id: dataAddChannel.data?.insert_channel?.returning[0]?.id,
         },
-      });
+      },
+    });
 
-      setOpen(false);
-      setChannelName('');
+    setOpen(false);
+    setChannelName('');
 
-      history.push(`/channel/${channelName.toLocaleLowerCase()}`);
-    } catch (e) {
-      setChannelName('');
-      console.log('error on mutation');
-      return;
-    }
+    history.push(`/channel/${channelName.toLocaleLowerCase()}`);
   };
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChannelName(e.target.value);
   };
 
-  const handleIsPrivateChange = (e: any) => {
+  const handleIsPrivateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChannelIsPrivate(e.target.checked);
   };
 
   if (error) {
     console.log('error mutation', error);
+    setChannelName('');
   }
 
   return (
@@ -200,7 +199,7 @@ const AddChannel: React.FC = () => {
                     onChange={handleChange}
                     autoComplete="off"
                     placeholder="Your channel name"
-                    id="standard-basic"
+                    id="add-channel-input"
                     label="Add a new channel"
                     fullWidth
                   />

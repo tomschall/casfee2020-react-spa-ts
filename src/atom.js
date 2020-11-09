@@ -16,3 +16,8 @@ export const getPollQuestionAnswers = atom({
 export const giphyState = atom({
   key: 'giphyState',
 });
+
+export const deletedMessageState = atom({
+  key: 'deletedMessageState',
+  default: false,
+});

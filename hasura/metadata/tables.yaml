@@ -209,6 +209,12 @@
             is_private:
               _eq: false
       allow_aggregations: true
+  delete_permissions:
+  - role: user
+    permission:
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
 - table:
     schema: public
     name: message_cursor

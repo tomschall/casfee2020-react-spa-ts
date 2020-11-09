@@ -90,7 +90,6 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   }, [data]);
 
   if (error) {
-    console.log('messages error', error);
     return <Alert severity="error">Messages could not be loaded.</Alert>;
   }
 
@@ -127,7 +126,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
                 Add users to channel
               </Button>
             )}
-            <List>
+            <List id="message-list">
               <MessageList
                 messages={data?.messages as Message[]}
                 lastMessage={lastMessage}
