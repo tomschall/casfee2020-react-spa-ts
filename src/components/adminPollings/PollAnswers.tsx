@@ -14,13 +14,12 @@ import {
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
-// import StopIcon from '@material-ui/icons/Stop';
-// import { useAuth0 } from '@auth0/auth0-react';
 import {
   useWatchGetPollQuestionSubscription,
   useWatchGetPollAnswersSubscription,
   useAddAnswerToQuestionMutation,
   useSetPublishPollQuestionStateMutation,
+  useUpdatePollAnswerTextMutation,
 } from '../../api/generated/graphql';
 import { getPollQuestionAnswers } from '../../atom';
 import GetChannels from './GetChannels';
@@ -62,14 +61,20 @@ const useStyles = makeStyles((theme) => ({
 
 const PollAnswers: React.FC = () => {
   const classes = useStyles();
-  const { register, errors } = useForm();
   const [answerText, setAnswerText] = React.useState({
     text: '',
   });
+  const [answerTextUpdateId, setAnswerTextUpdateId] = React.useState<number>(0);
   const pollQuestionId = useRecoilValue(getPollQuestionAnswers);
   const getPollQuestion = useWatchGetPollQuestionSubscription({
     variables: {
       pollQuestionId: pollQuestionId,
+    },
+  });
+  const [updatePollAnswerTextMutation] = useUpdatePollAnswerTextMutation({
+    variables: {
+      text: answerText.text,
+      pollAnswerId: answerTextUpdateId,
     },
   });
   const { data } = useWatchGetPollAnswersSubscription({
@@ -79,16 +84,33 @@ const PollAnswers: React.FC = () => {
   });
   const [pollQuestionActiveState] = React.useState();
   const [addPollQuestionMutation, { error }] = useAddAnswerToQuestionMutation();
-  const handleAnswerChange = (e: any) => {
-    console.log(e.target.value);
-    setAnswerText({ ...answerText, [e.target.id]: e.target.value });
-  };
+
   const [setPollQuestionState] = useSetPublishPollQuestionStateMutation({
     variables: {
       pollQuestionId: pollQuestionId,
       is_active: pollQuestionActiveState,
     },
   });
+
+  const handleAnswerChange = (e: any) => {
+    setAnswerText({ ...answerText, [e.target.id]: e.target.value });
+    console.log('handleAnswerChange', answerText);
+  };
+
+  const handleUpdateAnswerText = async (answerId: number) => {
+    console.log('answertext new value', answerId, Object.values(answerText)[0]);
+
+    setAnswerTextUpdateId(answerId);
+
+    if (answerId === undefined) return;
+
+    await updatePollAnswerTextMutation({
+      variables: {
+        text: Object.values(answerText)[0],
+        pollAnswerId: answerId,
+      },
+    });
+  };
 
   // HANDLE SET POLL QUESTION PUBLISH STATE
   const handleSetPollQuestionPublishState = async () => {
@@ -109,7 +131,7 @@ const PollAnswers: React.FC = () => {
   };
 
   // HANDLE ADD ANSWER
-  const handleAddAnswer = async (e: any) => {
+  const handleAddAnswer = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -157,10 +179,12 @@ const PollAnswers: React.FC = () => {
             mt={0}
           >
             <Typography variant="h2">
-              {getPollQuestion.data?.poll_question[0].text}
+              {getPollQuestion?.data?.poll_question[0]?.text
+                ? getPollQuestion?.data?.poll_question[0]?.text
+                : 'no value'}
             </Typography>
 
-            {getPollQuestion.data?.poll_question[0].is_active ? (
+            {getPollQuestion?.data?.poll_question[0]?.is_active ? (
               <Button
                 variant="outlined"
                 color="secondary"
@@ -185,17 +209,9 @@ const PollAnswers: React.FC = () => {
               id="text"
               name="poll_answer"
               required
-              disabled={getPollQuestion.data?.poll_question[0].is_active}
+              disabled={getPollQuestion?.data?.poll_question[0]?.is_active}
               value={answerText.text}
               onChange={handleAnswerChange}
-              inputRef={register({
-                required: 'A poll title is required',
-                maxLength: {
-                  value: 10,
-                  message: 'Title must be shorter than 10 characters',
-                },
-              })}
-              error={errors.title ? true : false}
               size="medium"
               variant="outlined"
               color="secondary"
@@ -227,15 +243,15 @@ const PollAnswers: React.FC = () => {
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h3">Answers to these question</Typography>
-          <FormGroup>
-            {data?.poll_answers.map((answer) => (
+          {data?.poll_answers.map((answer) => (
+            <FormGroup row>
               <TextField
-                key={answer.id}
                 id={JSON.stringify(answer.id)}
+                key={answer.id}
+                name={answer.text + answer.id}
                 required
-                value=""
-                disabled={getPollQuestion.data?.poll_question[0].is_active}
-                // onChange={handleAnswerChange}
+                disabled={getPollQuestion.data?.poll_question[0]?.is_active}
+                onChange={handleAnswerChange}
                 size="medium"
                 variant="standard"
                 color="secondary"
@@ -252,8 +268,18 @@ const PollAnswers: React.FC = () => {
                   className: classes.messageInput,
                 }}
               />
-            ))}
-          </FormGroup>
+              <>
+                <Button
+                  variant="outlined"
+                  onClick={() => {
+                    handleUpdateAnswerText(answer.id);
+                  }}
+                >
+                  Test
+                </Button>
+              </>
+            </FormGroup>
+          ))}
           <Divider className={classes.divider} />
           <GetChannels />
         </Grid>

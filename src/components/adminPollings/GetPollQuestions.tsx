@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import {
   Box,
-  Button,
   Chip,
   List,
   ListItem,

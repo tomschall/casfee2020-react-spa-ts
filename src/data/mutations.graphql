@@ -182,3 +182,12 @@ mutation deletePollQuestionFromChannel(
     affected_rows
   }
 }
+
+mutation updatePollAnswerText($text: String!, $pollAnswerId: Int!) {
+  pollAnswerText: update_poll_anwers(where: {id: {_eq: $pollAnswerId}}, _set: {text: $text}) {
+    affected_rows
+    returning {
+      text
+    }
+  }
+}

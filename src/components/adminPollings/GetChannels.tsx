@@ -100,7 +100,7 @@ const GetChannels: React.FC = () => {
   return (
     <>
       <List className={classes.root}>
-        <ListItem button onClick={handleClick}>
+        <ListItem button onClick={handleClick} key={1}>
           <ListItemIcon>
             <GroupAddOutlinedIcon />
           </ListItemIcon>
