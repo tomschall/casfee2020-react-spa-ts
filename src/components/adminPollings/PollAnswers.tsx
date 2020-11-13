@@ -20,6 +20,7 @@ import {
   useAddAnswerToQuestionMutation,
   useSetPublishPollQuestionStateMutation,
   useUpdatePollAnswerTextMutation,
+  useDeletePollAnswerIdMutation,
 } from '../../api/generated/graphql';
 import { getPollQuestionAnswers } from '../../atom';
 import GetChannels from './GetChannels';
@@ -51,10 +52,10 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(0),
     backgroundColor: theme.palette.primary.dark,
   },
-  play: {
+  lock: {
     color: theme.palette.error.main,
   },
-  stop: {
+  unlock: {
     color: theme.palette.success.main,
   },
 }));
@@ -72,13 +73,12 @@ const PollAnswers: React.FC = () => {
   const pollQuestionId = useRecoilValue(getPollQuestionAnswers);
   const [pollQuestionActiveState] = React.useState();
 
+  // GRAPHQL MUTATIONS
   const getPollQuestion = useWatchGetPollQuestionSubscription({
     variables: {
       pollQuestionId: pollQuestionId,
     },
   });
-
-  // GRAPHQL MUTATIONS
   const [updatePollAnswerTextMutation] = useUpdatePollAnswerTextMutation({
     variables: {
       text: answerText.text,
@@ -97,24 +97,20 @@ const PollAnswers: React.FC = () => {
       is_active: pollQuestionActiveState,
     },
   });
+  const [deletePollAnswerIdMutation] = useDeletePollAnswerIdMutation({
+    variables: {
+      pollAnswerId: currentAnswerId,
+    },
+  });
 
   // EVENT HANDLING
   const handleAnswerChange = (index?: number, e?: any) => {
     setAnswerText({ text: e.target.value });
     setCurrentAnswerId(e.target.id);
     setUpdateEnabled(false);
-    console.log(
-      'handleAnswerChange',
-      e.target.value,
-      answerText.text,
-      answerTextUpdateId,
-      currentAnswerId,
-      updateEnabled,
-    );
   };
 
   const handleUpdateAnswerText = async (answerId: number) => {
-    console.log('answertext new value', answerId, Object.values(answerText)[0]);
     setAnswerTextUpdateId(answerId);
     setUpdateEnabled(true);
 
@@ -156,6 +152,14 @@ const PollAnswers: React.FC = () => {
     setAnswerText({ text: '' });
   };
 
+  const handleDeleteAnswer = async (answerId: number) => {
+    await deletePollAnswerIdMutation({
+      variables: {
+        pollAnswerId: answerId,
+      },
+    });
+  };
+
   if (getPollQuestion.loading) {
     return <Loader />;
   }
@@ -190,7 +194,7 @@ const PollAnswers: React.FC = () => {
             <Button
               variant="outlined"
               color="secondary"
-              startIcon={<LockIcon className={classes.play} />}
+              startIcon={<LockIcon className={classes.lock} />}
               onClick={handleSetPollQuestionPublishState}
             >
               locked
@@ -199,7 +203,7 @@ const PollAnswers: React.FC = () => {
             <Button
               variant="text"
               color="primary"
-              startIcon={<LockOpenIcon className={classes.stop} />}
+              startIcon={<LockOpenIcon className={classes.unlock} />}
               onClick={handleSetPollQuestionPublishState}
             >
               unlock
@@ -263,8 +267,8 @@ const PollAnswers: React.FC = () => {
         {data?.poll_answers
           .sort((a, b) => a.id - b.id)
           .map((answer) => (
-            <FormGroup row>
-              <Grid item xs={8}>
+            <FormGroup row key={answer.id}>
+              <Grid item xs={9}>
                 <TextField
                   key={answer.id}
                   name={answer.text + answer.id}
@@ -292,7 +296,7 @@ const PollAnswers: React.FC = () => {
                   }}
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <Box
                   display="flex"
                   justifyContent="flex-end"
@@ -323,6 +327,12 @@ const PollAnswers: React.FC = () => {
                     variant="outlined"
                     size="large"
                     color="secondary"
+                    disabled={
+                      getPollQuestion?.data?.poll_question[0]?.is_active
+                    }
+                    onClick={() => {
+                      handleDeleteAnswer(answer.id);
+                    }}
                   >
                     Delete
                   </Button>
