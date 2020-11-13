@@ -171,8 +171,9 @@ const GetPollQuestions: React.FC<Props> = () => {
                     </>
                   ) : (
                     <>
-                      {question?.channel_polls.map((chn) => (
+                      {question?.channel_polls.map((chn, index) => (
                         <Chip
+                          key={index}
                           style={{ marginTop: 8, marginRight: 8 }}
                           variant="outlined"
                           size="small"

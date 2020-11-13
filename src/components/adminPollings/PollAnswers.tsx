@@ -61,16 +61,24 @@ const useStyles = makeStyles((theme) => ({
 
 const PollAnswers: React.FC = () => {
   const classes = useStyles();
+
+  // STATES
   const [answerText, setAnswerText] = React.useState({
     text: '',
   });
   const [answerTextUpdateId, setAnswerTextUpdateId] = React.useState<number>(0);
+  const [currentAnswerId, setCurrentAnswerId] = React.useState<number>(0);
+  const [updateEnabled, setUpdateEnabled] = React.useState(true);
   const pollQuestionId = useRecoilValue(getPollQuestionAnswers);
+  const [pollQuestionActiveState] = React.useState();
+
   const getPollQuestion = useWatchGetPollQuestionSubscription({
     variables: {
       pollQuestionId: pollQuestionId,
     },
   });
+
+  // GRAPHQL MUTATIONS
   const [updatePollAnswerTextMutation] = useUpdatePollAnswerTextMutation({
     variables: {
       text: answerText.text,
@@ -82,9 +90,7 @@ const PollAnswers: React.FC = () => {
       pollQuestionId: pollQuestionId,
     },
   });
-  const [pollQuestionActiveState] = React.useState();
-  const [addPollQuestionMutation, { error }] = useAddAnswerToQuestionMutation();
-
+  const [addPollQuestionMutation] = useAddAnswerToQuestionMutation();
   const [setPollQuestionState] = useSetPublishPollQuestionStateMutation({
     variables: {
       pollQuestionId: pollQuestionId,
@@ -92,17 +98,27 @@ const PollAnswers: React.FC = () => {
     },
   });
 
-  const handleAnswerChange = (e: any) => {
-    setAnswerText({ ...answerText, [e.target.id]: e.target.value });
-    console.log('handleAnswerChange', answerText);
+  // EVENT HANDLING
+  const handleAnswerChange = (index?: number, e?: any) => {
+    setAnswerText({ text: e.target.value });
+    setCurrentAnswerId(e.target.id);
+    setUpdateEnabled(false);
+    console.log(
+      'handleAnswerChange',
+      e.target.value,
+      answerText.text,
+      answerTextUpdateId,
+      currentAnswerId,
+      updateEnabled,
+    );
   };
 
   const handleUpdateAnswerText = async (answerId: number) => {
     console.log('answertext new value', answerId, Object.values(answerText)[0]);
-
     setAnswerTextUpdateId(answerId);
+    setUpdateEnabled(true);
 
-    if (answerId === undefined) return;
+    if (answerId === undefined || answerText.text === '') return;
 
     await updatePollAnswerTextMutation({
       variables: {
@@ -110,42 +126,34 @@ const PollAnswers: React.FC = () => {
         pollAnswerId: answerId,
       },
     });
+    answerText.text = '';
   };
 
   // HANDLE SET POLL QUESTION PUBLISH STATE
   const handleSetPollQuestionPublishState = async () => {
-    // console.log('set state clicked', getPollQuestion.data?.poll_question[0].is_active);
     const getActivePollQuestionState =
       getPollQuestion.data?.poll_question[0].is_active;
 
-    try {
-      await setPollQuestionState({
-        variables: {
-          pollQuestionId: pollQuestionId,
-          is_active: !getActivePollQuestionState,
-        },
-      });
-    } catch (e) {
-      console.log(error, 'error on mutation addPollQuestion');
-    }
+    await setPollQuestionState({
+      variables: {
+        pollQuestionId: pollQuestionId,
+        is_active: !getActivePollQuestionState,
+      },
+    });
   };
 
   // HANDLE ADD ANSWER
   const handleAddAnswer = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    try {
-      if (answerText.text === '') return;
-      await addPollQuestionMutation({
-        variables: {
-          text: answerText.text,
-          pollQuestionId: pollQuestionId,
-        },
-      });
-      setAnswerText({ text: '' });
-    } catch (e) {
-      console.log(error, 'error on mutation addPollQuestion');
-    }
+    if (answerText.text === '') return;
+    await addPollQuestionMutation({
+      variables: {
+        text: answerText.text,
+        pollQuestionId: pollQuestionId,
+      },
+    });
+    setAnswerText({ text: '' });
   };
 
   if (getPollQuestion.loading) {
@@ -154,64 +162,68 @@ const PollAnswers: React.FC = () => {
 
   return (
     <>
-      <form
-        className={classes.form}
-        noValidate
-        autoComplete="off"
-        onSubmit={handleAddAnswer}
-      >
-        <Grid item xs={12}>
-          <Box mt={3} p={0}>
-            <Chip
-              color="secondary"
-              size="small"
+      <Grid item xs={12}>
+        <Box mt={3} p={0}>
+          <Chip
+            color="secondary"
+            size="small"
+            variant="outlined"
+            label={'Poll question id: ' + pollQuestionId}
+          />
+        </Box>
+
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="flex-end"
+          className={classes.root}
+          mb={3}
+          mt={0}
+        >
+          <Typography variant="h2">
+            {getPollQuestion?.data?.poll_question[0]?.text
+              ? getPollQuestion?.data?.poll_question[0]?.text
+              : 'no value'}
+          </Typography>
+
+          {getPollQuestion?.data?.poll_question[0]?.is_active ? (
+            <Button
               variant="outlined"
-              label={'Poll question id: ' + pollQuestionId}
-            />
-          </Box>
-
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="flex-end"
-            className={classes.root}
-            mb={3}
-            mt={0}
-          >
-            <Typography variant="h2">
-              {getPollQuestion?.data?.poll_question[0]?.text
-                ? getPollQuestion?.data?.poll_question[0]?.text
-                : 'no value'}
-            </Typography>
-
-            {getPollQuestion?.data?.poll_question[0]?.is_active ? (
-              <Button
-                variant="outlined"
-                color="secondary"
-                startIcon={<LockIcon className={classes.play} />}
-                onClick={handleSetPollQuestionPublishState}
-              >
-                locked
-              </Button>
-            ) : (
-              <Button
-                variant="text"
-                color="primary"
-                startIcon={<LockOpenIcon className={classes.stop} />}
-                onClick={handleSetPollQuestionPublishState}
-              >
-                unlock
-              </Button>
-            )}
-          </Box>
+              color="secondary"
+              startIcon={<LockIcon className={classes.play} />}
+              onClick={handleSetPollQuestionPublishState}
+            >
+              locked
+            </Button>
+          ) : (
+            <Button
+              variant="text"
+              color="primary"
+              startIcon={<LockOpenIcon className={classes.stop} />}
+              onClick={handleSetPollQuestionPublishState}
+            >
+              unlock
+            </Button>
+          )}
+        </Box>
+        <form
+          className={classes.form}
+          noValidate
+          autoComplete="off"
+          onSubmit={handleAddAnswer}
+        >
           <FormGroup row>
             <TextField
-              id="text"
+              key={getPollQuestion?.data?.poll_question[0]?.id}
               name="poll_answer"
               required
               disabled={getPollQuestion?.data?.poll_question[0]?.is_active}
-              value={answerText.text}
-              onChange={handleAnswerChange}
+              onChange={(e) =>
+                handleAnswerChange(
+                  getPollQuestion?.data?.poll_question[0]?.id,
+                  e,
+                )
+              }
               size="medium"
               variant="outlined"
               color="secondary"
@@ -239,51 +251,98 @@ const PollAnswers: React.FC = () => {
               Add answer
             </Button>
           </FormGroup>
-          <Divider className={classes.divider} />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h3">Answers to these question</Typography>
-          {data?.poll_answers.map((answer) => (
+        </form>
+        <Divider className={classes.divider} />
+      </Grid>
+      <Grid item xs={12}>
+        <Typography variant="h3">Answers to these question</Typography>
+        {data?.poll_answers
+          .sort((a, b) => a.id - b.id)
+          .map((answer) => (
             <FormGroup row>
-              <TextField
-                id={JSON.stringify(answer.id)}
-                key={answer.id}
-                name={answer.text + answer.id}
-                required
-                disabled={getPollQuestion.data?.poll_question[0]?.is_active}
-                onChange={handleAnswerChange}
-                size="medium"
-                variant="standard"
-                color="secondary"
-                autoComplete="off"
-                placeholder="Type your answers here ..."
-                label={answer.text}
-                fullWidth
-                InputProps={{
-                  classes: {
-                    input: classes.messageInput,
-                  },
-                }}
-                InputLabelProps={{
-                  className: classes.messageInput,
-                }}
-              />
-              <>
-                <Button
-                  variant="outlined"
-                  onClick={() => {
-                    handleUpdateAnswerText(answer.id);
+              <Grid item xs={8}>
+                <TextField
+                  key={answer.id}
+                  name={answer.text + answer.id}
+                  required
+                  disabled={getPollQuestion.data?.poll_question[0]?.is_active}
+                  onChange={(e) => {
+                    handleAnswerChange(answer?.id, e);
+                    setAnswerTextUpdateId(answer.id);
                   }}
+                  size="medium"
+                  variant="outlined"
+                  color="secondary"
+                  autoComplete="off"
+                  placeholder="Type your answers here ..."
+                  label={answer.text}
+                  fullWidth
+                  margin="dense"
+                  InputProps={{
+                    classes: {
+                      input: classes.messageInput,
+                    },
+                  }}
+                  InputLabelProps={{
+                    className: classes.messageInput,
+                  }}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <Box
+                  display="flex"
+                  justifyContent="flex-end"
+                  alignItems="center"
                 >
-                  Test
-                </Button>
-              </>
+                  <Button
+                    style={{ marginTop: '8px', marginLeft: '8px' }}
+                    key={answer.id}
+                    variant="contained"
+                    size="large"
+                    color="secondary"
+                    disabled={
+                      answer.id !== answerTextUpdateId
+                        ? true
+                        : false || updateEnabled === true
+                    }
+                    onBlur={() => {
+                      setUpdateEnabled(true);
+                    }}
+                    onClick={() => {
+                      handleUpdateAnswerText(answer.id);
+                    }}
+                  >
+                    Update
+                  </Button>
+                  <Button
+                    style={{ marginTop: '8px', marginLeft: '8px' }}
+                    variant="outlined"
+                    size="large"
+                    color="secondary"
+                  >
+                    Delete
+                  </Button>
+                  <Button
+                    style={{
+                      marginTop: '8px',
+                      marginLeft: '8px',
+                      whiteSpace: 'nowrap',
+                    }}
+                    variant="outlined"
+                    size="large"
+                    color="secondary"
+                    disabled={answer.votes !== undefined}
+                  >
+                    {answer.votes ? answer.votes : 'no votes'}
+                  </Button>
+                </Box>
+              </Grid>
             </FormGroup>
           ))}
-          <Divider className={classes.divider} />
-          <GetChannels />
-        </Grid>
-      </form>
+
+        <Divider className={classes.divider} />
+        <GetChannels />
+      </Grid>
     </>
   );
 };
