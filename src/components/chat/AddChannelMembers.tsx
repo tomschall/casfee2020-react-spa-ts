@@ -30,7 +30,7 @@ const AddChannelMembers: React.FC = () => {
     currentChannelState,
   );
 
-  const { user: userAuth0, isLoading: loadingAuth0 } = useAuth0();
+  const { isLoading: loadingAuth0 } = useAuth0();
 
   const {
     data: users,
@@ -65,7 +65,8 @@ const AddChannelMembers: React.FC = () => {
     history.push(`/channel/${currentChannel.name}`);
   };
 
-  if (error) console.log('error on user subscription', error);
+  if (error || addChannelUserError)
+    console.log('error on user subscription', error);
 
   return (
     <ThemeProvider theme={theme}>

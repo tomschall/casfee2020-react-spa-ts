@@ -127,6 +127,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
                 messages={data?.messages as Message[]}
                 lastMessage={lastMessage}
                 preLastMessageId={preLastMessageId}
+                user={user}
               />
             </List>
           </Grid>

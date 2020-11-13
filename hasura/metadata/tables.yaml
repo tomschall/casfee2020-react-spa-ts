@@ -209,6 +209,20 @@
             is_private:
               _eq: false
       allow_aggregations: true
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - channel_id
+      - image
+      - text
+      - user_id
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
   delete_permissions:
   - role: user
     permission:

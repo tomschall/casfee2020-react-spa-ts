@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 import { isObject } from 'util';
 import { Message } from '../../interfaces/message/message.interface';
 import ThreadChannelButton from '../thread/ThreadChannelButton';
 import DeleteMessage from './DeleteMessage';
+import UpdateMessage from './UpdateMessage';
 import {
   Avatar,
   Badge,
@@ -17,6 +18,8 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { useRecoilValue } from 'recoil';
 import { deletedMessageState } from '../../atom';
+import { User } from '../../api/generated/graphql';
+import { userInfo } from 'os';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,18 +57,24 @@ interface MessageProps {
   messages: Message[];
   lastMessage: any;
   preLastMessageId: number;
+  user: any;
 }
 
 const MessageList: React.FC<MessageProps> = ({
   messages,
   lastMessage,
   preLastMessageId,
+  user,
 }) => {
   useEffect(() => {
     scrollToBottom();
   });
 
   const classes = useStyles();
+  const [showUpdate, setShowUpdate] = useState<boolean>(false);
+  const [showUpdateMessageId, setShowUpdateMessageId] = useState<number | null>(
+    null,
+  );
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -75,6 +84,12 @@ const MessageList: React.FC<MessageProps> = ({
     if (isObject(messagesEndRef) && messagesEndRef.current !== null) {
       messagesEndRef.current.scrollIntoView();
     }
+  };
+
+  const handleShowUpdate = (message: Message) => {
+    if (message.user.auth0_user_id !== user.sub) return;
+    setShowUpdateMessageId(message.id);
+    setShowUpdate(!showUpdate);
   };
 
   const renderMessages = (message: Message) => {
@@ -108,12 +123,28 @@ const MessageList: React.FC<MessageProps> = ({
             </Box>
             <Box>
               <Typography variant="caption">
-                <DeleteMessage messageId={message.id} />
+                {showUpdate &&
+                showUpdateMessageId === message.id &&
+                user.sub === message.user.auth0_user_id ? (
+                  ''
+                ) : (
+                  <DeleteMessage messageId={message.id} />
+                )}
               </Typography>
             </Box>
           </Box>
-          <Typography component="p" className={classes.messageText}>
-            {message.text}
+          <Typography
+            component="div"
+            className={classes.messageText}
+            onClick={() => handleShowUpdate(message)}
+          >
+            {showUpdate &&
+            showUpdateMessageId === message.id &&
+            user.sub === message.user.auth0_user_id ? (
+              <UpdateMessage message={message} />
+            ) : (
+              message.text
+            )}
           </Typography>
           {message?.image ? (
             <Box className={classes.image}>
