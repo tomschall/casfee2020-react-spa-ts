@@ -224,6 +224,10 @@ const PollAnswers: React.FC = () => {
                   e,
                 )
               }
+              onClick={() => {
+                setCurrentAnswerId(0);
+                setAnswerTextUpdateId(0);
+              }}
               size="medium"
               variant="outlined"
               color="secondary"
