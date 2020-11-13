@@ -11,6 +11,7 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
@@ -71,7 +72,7 @@ const PollAnswers: React.FC = () => {
   const [currentAnswerId, setCurrentAnswerId] = React.useState<number>(0);
   const [updateEnabled, setUpdateEnabled] = React.useState(true);
   const pollQuestionId = useRecoilValue(getPollQuestionAnswers);
-  const [pollQuestionActiveState] = React.useState();
+  const [pollQuestionActiveState] = React.useState<boolean>();
 
   // GRAPHQL MUTATIONS
   const getPollQuestion = useWatchGetPollQuestionSubscription({
@@ -85,11 +86,13 @@ const PollAnswers: React.FC = () => {
       pollAnswerId: answerTextUpdateId,
     },
   });
-  const { data } = useWatchGetPollAnswersSubscription({
+  const { data, loading } = useWatchGetPollAnswersSubscription({
     variables: {
       pollQuestionId: pollQuestionId,
     },
   });
+  console.log(data);
+
   const [addPollQuestionMutation] = useAddAnswerToQuestionMutation();
   const [setPollQuestionState] = useSetPublishPollQuestionStateMutation({
     variables: {
@@ -108,6 +111,7 @@ const PollAnswers: React.FC = () => {
     setAnswerText({ text: e.target.value });
     setCurrentAnswerId(e.target.id);
     setUpdateEnabled(false);
+    console.log(index, e.target.value, answerText.text);
   };
 
   const handleUpdateAnswerText = async (answerId: number) => {
@@ -149,6 +153,7 @@ const PollAnswers: React.FC = () => {
         pollQuestionId: pollQuestionId,
       },
     });
+
     setAnswerText({ text: '' });
   };
 
@@ -160,7 +165,7 @@ const PollAnswers: React.FC = () => {
     });
   };
 
-  if (getPollQuestion.loading) {
+  if (getPollQuestion.loading || loading) {
     return <Loader />;
   }
 
@@ -220,6 +225,8 @@ const PollAnswers: React.FC = () => {
             <TextField
               key={getPollQuestion?.data?.poll_question[0]?.id}
               name="poll_answer"
+              defaultValue=""
+              value={answerText.text}
               required
               disabled={getPollQuestion?.data?.poll_question[0]?.is_active}
               onChange={(e) =>
@@ -264,95 +271,99 @@ const PollAnswers: React.FC = () => {
       </Grid>
       <Grid item xs={12}>
         <Typography variant="h3">Answers to these question</Typography>
-        {data?.poll_answers
-          .sort((a, b) => a.id - b.id)
-          .map((answer) => (
-            <FormGroup row key={answer.id}>
-              <Grid item xs={9}>
-                <TextField
-                  key={answer.id}
-                  name={answer.text + answer.id}
-                  required
-                  disabled={getPollQuestion.data?.poll_question[0]?.is_active}
-                  onChange={(e) => {
-                    handleAnswerChange(answer?.id, e);
-                    setAnswerTextUpdateId(answer.id);
-                  }}
-                  size="medium"
-                  variant="outlined"
-                  color="secondary"
-                  autoComplete="off"
-                  placeholder="Type your answers here ..."
-                  label={answer.text}
-                  fullWidth
-                  margin="dense"
-                  InputProps={{
-                    classes: {
-                      input: classes.messageInput,
-                    },
-                  }}
-                  InputLabelProps={{
-                    className: classes.messageInput,
-                  }}
-                />
-              </Grid>
-              <Grid item xs={3}>
-                <Box
-                  display="flex"
-                  justifyContent="flex-end"
-                  alignItems="center"
-                >
-                  <Button
-                    style={{ marginTop: '8px', marginLeft: '8px' }}
+        {data?.poll_answers.length === 0 ? (
+          <Alert severity="info">Please add an answer to the poll.</Alert>
+        ) : (
+          data?.poll_answers
+            .sort((a, b) => a.id - b.id)
+            .map((answer) => (
+              <FormGroup row key={answer.id}>
+                <Grid item xs={9}>
+                  <TextField
                     key={answer.id}
-                    variant="contained"
-                    size="large"
-                    color="secondary"
-                    disabled={
-                      answer.id !== answerTextUpdateId
-                        ? true
-                        : false || updateEnabled === true
-                    }
-                    onBlur={() => {
-                      setUpdateEnabled(true);
+                    name={answer.text + answer.id}
+                    required
+                    disabled={getPollQuestion.data?.poll_question[0]?.is_active}
+                    onChange={(e) => {
+                      handleAnswerChange(answer?.id, e);
+                      setAnswerTextUpdateId(answer.id);
                     }}
-                    onClick={() => {
-                      handleUpdateAnswerText(answer.id);
-                    }}
-                  >
-                    Update
-                  </Button>
-                  <Button
-                    style={{ marginTop: '8px', marginLeft: '8px' }}
+                    size="medium"
                     variant="outlined"
-                    size="large"
                     color="secondary"
-                    disabled={
-                      getPollQuestion?.data?.poll_question[0]?.is_active
-                    }
-                    onClick={() => {
-                      handleDeleteAnswer(answer.id);
+                    autoComplete="off"
+                    placeholder="Type your answers here ..."
+                    label={answer.text}
+                    fullWidth
+                    margin="dense"
+                    InputProps={{
+                      classes: {
+                        input: classes.messageInput,
+                      },
                     }}
-                  >
-                    Delete
-                  </Button>
-                  <Button
-                    style={{
-                      marginTop: '8px',
-                      marginLeft: '8px',
-                      whiteSpace: 'nowrap',
+                    InputLabelProps={{
+                      className: classes.messageInput,
                     }}
-                    variant="outlined"
-                    size="large"
-                    color="secondary"
-                    disabled={answer.votes !== undefined}
+                  />
+                </Grid>
+                <Grid item xs={3}>
+                  <Box
+                    display="flex"
+                    justifyContent="flex-end"
+                    alignItems="center"
                   >
-                    {answer.votes ? answer.votes : 'no votes'}
-                  </Button>
-                </Box>
-              </Grid>
-            </FormGroup>
-          ))}
+                    <Button
+                      style={{ marginTop: '8px', marginLeft: '8px' }}
+                      key={answer.id}
+                      variant="contained"
+                      size="large"
+                      color="secondary"
+                      disabled={
+                        answer.id !== answerTextUpdateId
+                          ? true
+                          : false || updateEnabled === true
+                      }
+                      onBlur={() => {
+                        setUpdateEnabled(true);
+                      }}
+                      onClick={() => {
+                        handleUpdateAnswerText(answer.id);
+                      }}
+                    >
+                      Update
+                    </Button>
+                    <Button
+                      style={{ marginTop: '8px', marginLeft: '8px' }}
+                      variant="outlined"
+                      size="large"
+                      color="secondary"
+                      disabled={
+                        getPollQuestion?.data?.poll_question[0]?.is_active
+                      }
+                      onClick={() => {
+                        handleDeleteAnswer(answer.id);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                    <Button
+                      style={{
+                        marginTop: '8px',
+                        marginLeft: '8px',
+                        whiteSpace: 'nowrap',
+                      }}
+                      variant="outlined"
+                      size="large"
+                      color="secondary"
+                      disabled={answer.votes !== undefined}
+                    >
+                      {answer.votes ? answer.votes : 'no votes'}
+                    </Button>
+                  </Box>
+                </Grid>
+              </FormGroup>
+            ))
+        )}
 
         <Divider className={classes.divider} />
         <GetChannels />
