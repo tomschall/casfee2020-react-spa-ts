@@ -14,6 +14,12 @@ mutation insertMessage($message: message_insert_input!) {
   }
 }
 
+mutation updateMessage($_eq: Int!, $text: String!) {
+  update_message(where: { id: { _eq: $_eq } }, _set: { text: $text }) {
+    affected_rows
+  }
+}
+
 mutation deleteMessage($message_id: Int) {
   delete_message(where: { id: { _eq: $message_id } }) {
     affected_rows

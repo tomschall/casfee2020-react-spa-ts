@@ -10,6 +10,7 @@ subscription watchMessages($channelId: Int!, $limit: Int) {
     timestamp
     user {
       username
+      auth0_user_id
     }
     channel {
       name
