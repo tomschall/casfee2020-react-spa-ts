@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRecoilState } from 'recoil';
+import { useAuth0 } from '@auth0/auth0-react';
 import { currentChannelState } from '../../atom.js';
 import Loader from '../shared/Loader';
 import {
@@ -18,6 +19,7 @@ import {
   useWatchPollAnswerVotesSubscription,
   useWatchCheckUserHasVotedSubscription,
   useSetPollAnswerVoteMutation,
+  useSetUserVotePollQuestionMutation,
 } from '../../api/generated/graphql';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -37,13 +39,14 @@ interface PublishChannelProps {
 
 const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
   const classes = useStyles();
+  const { user } = useAuth0();
   const [currentChannel, setCurrentChannelState] = useRecoilState(
     currentChannelState,
   );
   const [value, setValue] = React.useState('');
   const [voteError] = React.useState(false);
   const [hasVoted, setHasVoted] = React.useState(false);
-  const { data, loading } = useWatchChannelPollQuestionSubscription({
+  const { data } = useWatchChannelPollQuestionSubscription({
     variables: {
       channelId: currentChannel.id,
     },
@@ -62,22 +65,12 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
     const result = count.reduce((a: any, b: any) => a + b);
     return result;
   };
-
   const { data: userVotes } = useWatchCheckUserHasVotedSubscription({
     variables: {
       pollQuestionId: data?.getChannelPoll[0]?.poll_question?.id,
+      auth0UserId: user.sub,
     },
   });
-
-  if (loading) {
-    return <Loader />;
-  }
-
-  console.log(
-    'user has voted',
-    userVotes?.user_votes[0]?.poll_question_id,
-    data?.getChannelPoll[0]?.poll_question?.id,
-  );
 
   const LinearProgressWithLabel = (props: any) => {
     return (
@@ -104,12 +97,20 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
     value: () => null,
   };
 
+  const [setUserVotePollQuestionMutation] = useSetUserVotePollQuestionMutation({
+    variables: {
+      userName: user.username,
+      auth0UserId: user.sub,
+      pollQuestionId: data?.getChannelPoll[0]?.poll_question?.id,
+      pollAnswerId: parseInt(value),
+    },
+  });
+
   // HANDLE EVENTS
-  const handleChange = (e: any, value: any) => {
+  const handleChange = async (e: any, value: any) => {
     setValue(e.target.value);
   };
 
-  // HANDLE SUBMIT
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -130,8 +131,19 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
       },
     });
 
+    await setUserVotePollQuestionMutation({
+      variables: {
+        userName: user.nickname,
+        auth0UserId: user.sub,
+        pollQuestionId: data?.getChannelPoll[0]?.poll_question?.id,
+        pollAnswerId: parseInt(value),
+      },
+    });
+
     setHasVoted(true);
   };
+
+  console.log('user hase voted', userVotes?.user_votes[0]?.poll_question_id);
 
   return (
     <>

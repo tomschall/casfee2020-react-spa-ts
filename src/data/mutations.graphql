@@ -206,3 +206,21 @@ mutation deletePollAnswerId($pollAnswerId: Int!) {
     affected_rows
   }
 }
+
+mutation setUserVotePollQuestion(
+  $userName: String
+  $auth0UserId: String
+  $pollQuestionId: Int
+  $pollAnswerId: Int
+) {
+  insert_user_votes(
+    objects: {
+      username: $userName
+      auth0_user_id: $auth0UserId
+      poll_question_id: $pollQuestionId
+      poll_answer_id: $pollAnswerId
+    }
+  ) {
+    affected_rows
+  }
+}

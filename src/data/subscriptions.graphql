@@ -283,8 +283,16 @@ subscription watchChannelPollActiveState {
   }
 }
 
-subscription watchCheckUserHasVoted($pollQuestionId: Int) {
-  user_votes(where: { poll_question_id: { _eq: $pollQuestionId } }) {
+subscription watchCheckUserHasVoted(
+  $pollQuestionId: Int
+  $auth0UserId: String
+) {
+  user_votes(
+    where: {
+      poll_question_id: { _eq: $pollQuestionId }
+      auth0_user_id: { _eq: $auth0UserId }
+    }
+  ) {
     auth0_user_id
     poll_question_id
     poll_answer_id
