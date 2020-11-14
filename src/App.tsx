@@ -11,6 +11,7 @@ import NotFound from './components/shared/NotFound';
 import PrivateRoute from './components/PrivateRoute';
 import AddChannelMembers from './components/chat/AddChannelMembers';
 import AddDirectMessageChannel from './components/chat/AddDirectMessageChannel';
+import ThreadBoard from './components/layout/ThreadBoard';
 import ChatBoard from './components/layout/ChatBoard';
 import AdminBoard from './components/layout/AdminBoard';
 
@@ -57,6 +58,7 @@ const App: React.FC = () => {
               path="/addDirectMessageChannelMembers"
               component={AddDirectMessageChannel}
             />
+            <PrivateRoute path="/thread/:messageId" component={ThreadBoard} />
             <PrivateRoute path="/dashboard" component={AdminBoard} />
             <Route exact path="/404-not-found" component={NotFound} />
             <Redirect to="/404-not-found" />
@@ -66,6 +68,7 @@ const App: React.FC = () => {
             <Redirect exact from="/" to="/channel/general" />
             <Route path="/home" component={SignIn} />
             <PrivateRoute path="/channel/:channel" component={ChatBoard} />
+            <PrivateRoute path="/thread/:messageId" component={ThreadBoard} />
             <PrivateRoute path="/dashboard" component={AdminBoard} />
             <Route exact path="/404-not-found" component={NotFound} />
             <Redirect to="/404-not-found" />

@@ -73,11 +73,12 @@ const ChannelListMessageCounter: React.FC<ChannelListMessageCounterProps> = ({
     useWatchMessageCursorError ||
     auth0Error
   ) {
-    return (
-      <Alert severity="error">
-        Error in ChannelListMessageCounter Component
-      </Alert>
-    );
+    console.log('Error in ChannelListMessageCounter Component');
+    // return (
+    //   <Alert severity="error">
+    //     Error in ChannelListMessageCounter Component
+    //   </Alert>
+    // );
   }
 
   if (loading || useWatchMessageCursorLoading) {

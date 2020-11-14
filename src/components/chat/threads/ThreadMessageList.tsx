@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 import { isObject } from 'util';
-import { Message } from '../../interfaces/message/message.interface';
-import ThreadReply from './threads/ThreadReply';
-import ThreadReplyIn from './threads/ThreadReplyIn';
-import DeleteMessage from './DeleteMessage';
-import UpdateMessage from './UpdateMessage';
+import { Message } from '../../../interfaces/message/message.interface';
+
+import DeleteMessage from '../DeleteMessage';
+import UpdateMessage from '../UpdateMessage';
 import {
   Avatar,
   Badge,
@@ -18,7 +17,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useRecoilValue } from 'recoil';
-import { deletedMessageState } from '../../atom';
+import { deletedMessageState } from '../../../atom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,14 +51,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface MessageProps {
+interface ThreadMessageListProps {
   messages: Message[];
   lastMessage: any;
   preLastMessageId: number;
   user: any;
 }
 
-const MessageList: React.FC<MessageProps> = ({
+const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
   messages,
   lastMessage,
   preLastMessageId,
@@ -121,27 +120,17 @@ const MessageList: React.FC<MessageProps> = ({
               <Divider className={classes.vspace} />
             </Box>
             <Box>
-              <Box
-                display="flex"
-                justifyContent="flex-start"
-                alignItems="flex-start"
-              >
-                <Typography variant="caption">
-                  <ThreadReply message={message} />
-                </Typography>
-                <Typography variant="caption">
-                  {showUpdate &&
-                  showUpdateMessageId === message.id &&
-                  user.sub === message.user.auth0_user_id ? (
-                    ''
-                  ) : (
-                    <DeleteMessage messageId={message.id} />
-                  )}
-                </Typography>
-              </Box>
+              <Typography variant="caption">
+                {showUpdate &&
+                showUpdateMessageId === message.id &&
+                user.sub === message.user.auth0_user_id ? (
+                  ''
+                ) : (
+                  <DeleteMessage messageId={message.id} />
+                )}
+              </Typography>
             </Box>
           </Box>
-
           <Typography
             component="div"
             className={classes.messageText}
@@ -158,13 +147,6 @@ const MessageList: React.FC<MessageProps> = ({
           {message?.image ? (
             <Box className={classes.image}>
               <img src={message.image} />
-            </Box>
-          ) : (
-            ''
-          )}
-          {message?.channel_threads?.length ? (
-            <Box>
-              <ThreadReplyIn message={message} />
             </Box>
           ) : (
             ''
@@ -191,4 +173,4 @@ const MessageList: React.FC<MessageProps> = ({
   );
 };
 
-export default MessageList;
+export default ThreadMessageList;
