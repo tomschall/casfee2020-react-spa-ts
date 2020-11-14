@@ -453,3 +453,6 @@
       - last_typed_channel
       - username
       filter: {}
+- table:
+    schema: public
+    name: user_votes

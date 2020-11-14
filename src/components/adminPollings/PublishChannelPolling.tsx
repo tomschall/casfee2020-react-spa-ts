@@ -16,6 +16,7 @@ import {
 import {
   useWatchChannelPollQuestionSubscription,
   useWatchPollAnswerVotesSubscription,
+  useWatchCheckUserHasVotedSubscription,
   useSetPollAnswerVoteMutation,
 } from '../../api/generated/graphql';
 import { makeStyles } from '@material-ui/core/styles';
@@ -62,9 +63,21 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
     return result;
   };
 
+  const { data: userVotes } = useWatchCheckUserHasVotedSubscription({
+    variables: {
+      pollQuestionId: data?.getChannelPoll[0]?.poll_question?.id,
+    },
+  });
+
   if (loading) {
     return <Loader />;
   }
+
+  console.log(
+    'user has voted',
+    userVotes?.user_votes[0]?.poll_question_id,
+    data?.getChannelPoll[0]?.poll_question?.id,
+  );
 
   const LinearProgressWithLabel = (props: any) => {
     return (
@@ -122,7 +135,10 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
 
   return (
     <>
-      {data?.getChannelPoll[0] && hasVoted === false ? (
+      {data?.getChannelPoll[0] &&
+      hasVoted === false &&
+      userVotes?.user_votes[0]?.poll_question_id !==
+        data?.getChannelPoll[0]?.poll_question?.id ? (
         <Paper className={classes.pollCard}>
           {data?.getChannelPoll.map((channelPoll) => (
             <Typography variant="h2" key={channelPoll.id}>
