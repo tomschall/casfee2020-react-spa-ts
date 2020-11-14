@@ -119,13 +119,13 @@ const MenuBar: React.FC<MenuBarProps> = ({
   const [currentChannel, setCurrentChannel] = useRecoilState<any>(
     currentChannelState,
   );
-  const { data, loading, error } = useWatchChannelHasActivePollSubscription({
+  const { data } = useWatchChannelHasActivePollSubscription({
     variables: {
       currentChannelId: currentChannel.id,
     },
   });
 
-  console.log('has active poll?', data?.channel_poll.length, currentChannel);
+  console.log('has active poll?', data?.poll_questions.length, currentChannel);
 
   const [open, setOpen] = React.useState(false); // Sidebar default state
   const [showGiphyCarousel, setShowGiphyCarousel] = React.useState(false);
@@ -185,7 +185,7 @@ const MenuBar: React.FC<MenuBarProps> = ({
                   label="+Gif"
                   onClick={handleGiphyClick}
                 />
-                {data?.channel_poll?.length === 1 && (
+                {data?.poll_questions?.length === 1 && (
                   <PopupState variant="popover" popupId="demo-popup-popover">
                     {(popupState) => (
                       <>

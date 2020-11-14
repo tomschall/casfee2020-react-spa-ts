@@ -261,10 +261,12 @@ subscription watchGetChannels {
 }
 
 subscription watchChannelHasActivePoll($currentChannelId: Int!) {
-  channel_poll(where: { channel_id: { _eq: $currentChannelId } }) {
-    id
-    poll_question {
-      id
+  poll_questions(
+    where: {
+      channel_polls: { channel_id: { _eq: $currentChannelId } }
+      _and: { is_active: { _eq: true } }
     }
+  ) {
+    id
   }
 }
