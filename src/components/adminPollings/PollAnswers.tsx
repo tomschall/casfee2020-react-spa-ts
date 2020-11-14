@@ -65,6 +65,9 @@ const PollAnswers: React.FC = () => {
   const classes = useStyles();
 
   // STATES
+  const [answerNewText, setAnswerNewText] = React.useState({
+    text: '',
+  });
   const [answerText, setAnswerText] = React.useState({
     text: '',
   });
@@ -107,6 +110,13 @@ const PollAnswers: React.FC = () => {
   });
 
   // EVENT HANDLING
+  const handleNewAnswerChange = (index?: number, e?: any) => {
+    setAnswerNewText({ text: e.target.value });
+    setCurrentAnswerId(e.target.id);
+    setUpdateEnabled(false);
+    console.log(index, e.target.value, answerText.text);
+  };
+
   const handleAnswerChange = (index?: number, e?: any) => {
     setAnswerText({ text: e.target.value });
     setCurrentAnswerId(e.target.id);
@@ -146,15 +156,15 @@ const PollAnswers: React.FC = () => {
   const handleAddAnswer = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (answerText.text === '') return;
+    if (answerNewText.text === '') return;
     await addPollQuestionMutation({
       variables: {
-        text: answerText.text,
+        text: answerNewText.text,
         pollQuestionId: pollQuestionId,
       },
     });
 
-    setAnswerText({ text: '' });
+    setAnswerNewText({ text: '' });
   };
 
   const handleDeleteAnswer = async (answerId: number) => {
@@ -226,11 +236,11 @@ const PollAnswers: React.FC = () => {
               key={getPollQuestion?.data?.poll_question[0]?.id}
               name="poll_answer"
               defaultValue=""
-              value={answerText.text}
+              value={answerNewText.text}
               required
               disabled={getPollQuestion?.data?.poll_question[0]?.is_active}
               onChange={(e) =>
-                handleAnswerChange(
+                handleNewAnswerChange(
                   getPollQuestion?.data?.poll_question[0]?.id,
                   e,
                 )
@@ -278,7 +288,7 @@ const PollAnswers: React.FC = () => {
             .sort((a, b) => a.id - b.id)
             .map((answer) => (
               <FormGroup row key={answer.id}>
-                <Grid item xs={9}>
+                <Grid item xs={8}>
                   <TextField
                     key={answer.id}
                     name={answer.text + answer.id}
@@ -287,6 +297,10 @@ const PollAnswers: React.FC = () => {
                     onChange={(e) => {
                       handleAnswerChange(answer?.id, e);
                       setAnswerTextUpdateId(answer.id);
+                    }}
+                    onClick={() => {
+                      console.log('clicked');
+                      answerText.text = '';
                     }}
                     size="medium"
                     variant="outlined"
@@ -306,7 +320,7 @@ const PollAnswers: React.FC = () => {
                     }}
                   />
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                   <Box
                     display="flex"
                     justifyContent="flex-end"
@@ -325,6 +339,7 @@ const PollAnswers: React.FC = () => {
                       }
                       onBlur={() => {
                         setUpdateEnabled(true);
+                        console.log(updateEnabled);
                       }}
                       onClick={() => {
                         handleUpdateAnswerText(answer.id);
