@@ -27,7 +27,9 @@ import PeopleIcon from '@material-ui/icons/People';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import { makeStyles } from '@material-ui/core/styles';
-import PublishChannelPolling from '../adminPollings/PublishPollQuestion';
+import PublishChannelPolling from '../adminPollings/PublishChannelPolling';
+
+import { useWatchChannelHasActivePollSubscription } from '../../api/generated/graphql';
 
 const drawerWidth = '100%';
 
@@ -117,6 +119,13 @@ const MenuBar: React.FC<MenuBarProps> = ({
   const [currentChannel, setCurrentChannel] = useRecoilState<any>(
     currentChannelState,
   );
+  const { data, loading, error } = useWatchChannelHasActivePollSubscription({
+    variables: {
+      currentChannelId: currentChannel.id,
+    },
+  });
+
+  console.log('has active poll?', data?.channel_poll.length, currentChannel);
 
   const [open, setOpen] = React.useState(false); // Sidebar default state
   const [showGiphyCarousel, setShowGiphyCarousel] = React.useState(false);
@@ -176,31 +185,33 @@ const MenuBar: React.FC<MenuBarProps> = ({
                   label="+Gif"
                   onClick={handleGiphyClick}
                 />
-                <PopupState variant="popover" popupId="demo-popup-popover">
-                  {(popupState) => (
-                    <>
-                      <Chip
-                        {...bindTrigger(popupState)}
-                        variant="outlined"
-                        color="secondary"
-                        size="small"
-                        icon={<HowToVoteIcon color="secondary" />}
-                        label="Admin Polling"
-                      />
-                      <Popover
-                        anchorReference={'none'}
-                        classes={{
-                          root: classes.popoverRoot,
-                        }}
-                        {...bindPopover(popupState)}
-                      >
-                        <Box p={2}>
-                          <PublishChannelPolling />
-                        </Box>
-                      </Popover>
-                    </>
-                  )}
-                </PopupState>
+                {data?.channel_poll?.length === 1 && (
+                  <PopupState variant="popover" popupId="demo-popup-popover">
+                    {(popupState) => (
+                      <>
+                        <Chip
+                          {...bindTrigger(popupState)}
+                          variant="outlined"
+                          color="secondary"
+                          size="small"
+                          icon={<HowToVoteIcon color="secondary" />}
+                          label="Admin Polling"
+                        />
+                        <Popover
+                          anchorReference={'none'}
+                          classes={{
+                            root: classes.popoverRoot,
+                          }}
+                          {...bindPopover(popupState)}
+                        >
+                          <Box p={2}>
+                            <PublishChannelPolling />
+                          </Box>
+                        </Popover>
+                      </>
+                    )}
+                  </PopupState>
+                )}
                 <Box
                   style={{ display: showGiphyCarousel ? 'flex' : 'none' }}
                   className={classes.giphyImage}

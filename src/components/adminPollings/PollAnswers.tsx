@@ -63,8 +63,6 @@ const useStyles = makeStyles((theme) => ({
 
 const PollAnswers: React.FC = () => {
   const classes = useStyles();
-
-  // STATES
   const [answerNewText, setAnswerNewText] = React.useState({
     text: '',
   });
@@ -327,7 +325,11 @@ const PollAnswers: React.FC = () => {
                     alignItems="center"
                   >
                     <Button
-                      style={{ marginTop: '8px', marginLeft: '8px' }}
+                      style={{
+                        marginTop: '8px',
+                        marginLeft: '8px',
+                        maxWidth: '100px',
+                      }}
                       key={answer.id}
                       variant="contained"
                       size="large"
@@ -348,7 +350,11 @@ const PollAnswers: React.FC = () => {
                       Update
                     </Button>
                     <Button
-                      style={{ marginTop: '8px', marginLeft: '8px' }}
+                      style={{
+                        marginTop: '8px',
+                        marginLeft: '8px',
+                        maxWidth: '100px',
+                      }}
                       variant="outlined"
                       size="large"
                       color="secondary"
@@ -366,6 +372,8 @@ const PollAnswers: React.FC = () => {
                         marginTop: '8px',
                         marginLeft: '8px',
                         whiteSpace: 'nowrap',
+                        maxWidth: '100px',
+                        minWidth: '80px',
                       }}
                       variant="outlined"
                       size="large"
