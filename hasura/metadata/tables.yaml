@@ -456,3 +456,26 @@
 - table:
     schema: public
     name: user_votes
+  insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      columns:
+      - id
+      - username
+      - auth0_user_id
+      - poll_question_id
+      - poll_answer_id
+      - voted_at
+      backend_only: false
+  select_permissions:
+  - role: user
+    permission:
+      columns:
+      - id
+      - poll_answer_id
+      - poll_question_id
+      - auth0_user_id
+      - username
+      - voted_at
+      filter: {}
