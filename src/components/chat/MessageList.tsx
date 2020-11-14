@@ -19,6 +19,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { useRecoilValue } from 'recoil';
 import { deletedMessageState } from '../../atom';
+import { useParams } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,6 +77,7 @@ const MessageList: React.FC<MessageProps> = ({
   );
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { channel: channelName } = useParams();
 
   const deletedMessage = useRecoilValue<boolean>(deletedMessageState);
 
@@ -127,7 +129,7 @@ const MessageList: React.FC<MessageProps> = ({
                 alignItems="flex-start"
               >
                 <Typography variant="caption">
-                  <ThreadReply message={message} />
+                  <ThreadReply message={message} channelName={channelName} />
                 </Typography>
                 <Typography variant="caption">
                   {showUpdate &&
@@ -164,7 +166,7 @@ const MessageList: React.FC<MessageProps> = ({
           )}
           {message?.channel_threads?.length ? (
             <Box>
-              <ThreadReplyIn message={message} />
+              <ThreadReplyIn message={message} channelName={channelName} />
             </Box>
           ) : (
             ''

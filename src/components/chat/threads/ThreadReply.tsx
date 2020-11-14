@@ -12,10 +12,12 @@ const ThreadReply: React.FC<any> = (props) => {
   let history = useHistory();
 
   const renderMessages = () => {
-    history.push(`/thread/${props.message?.id}`);
+    history.push(`/channel/${props.channelName}/thread/${props.message?.id}`);
     // console.log('message', props.message);
     // console.log('param', props.message?.id);
   };
+
+  console.log(`/channel/${props.channelName}/thread/${props.message?.id}`);
 
   return (
     <div>

@@ -48,7 +48,12 @@ const App: React.FC = () => {
           <Switch>
             <Redirect exact from="/" to="/channel/general" />
             <Redirect exact from="/channel" to="/channel/general" />
+            <PrivateRoute
+              path="/channel/:channel/thread/:messageId"
+              component={ThreadBoard}
+            />
             <PrivateRoute path="/channel/:channel" component={ChatBoard} />
+
             <PrivateRoute path="/add-user-to-channel" component={ChatBoard} />
             <PrivateRoute
               path="/addChannelMembers"
@@ -58,7 +63,7 @@ const App: React.FC = () => {
               path="/addDirectMessageChannelMembers"
               component={AddDirectMessageChannel}
             />
-            <PrivateRoute path="/thread/:messageId" component={ThreadBoard} />
+
             <PrivateRoute path="/dashboard" component={AdminBoard} />
             <Route exact path="/404-not-found" component={NotFound} />
             <Redirect to="/404-not-found" />
@@ -67,8 +72,12 @@ const App: React.FC = () => {
           <Switch>
             <Redirect exact from="/" to="/channel/general" />
             <Route path="/home" component={SignIn} />
+            <PrivateRoute
+              path="/channel/:channel/thread/:messageId"
+              component={ThreadBoard}
+            />
             <PrivateRoute path="/channel/:channel" component={ChatBoard} />
-            <PrivateRoute path="/thread/:messageId" component={ThreadBoard} />
+
             <PrivateRoute path="/dashboard" component={AdminBoard} />
             <Route exact path="/404-not-found" component={NotFound} />
             <Redirect to="/404-not-found" />

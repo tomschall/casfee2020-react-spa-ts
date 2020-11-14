@@ -13,13 +13,13 @@ const ChatBoard: React.FC = () => {
     variables: { user_id },
   });
 
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     if (user.sub !== undefined) {
-  //       sendUserIsOnline();
-  //     }
-  //   }, 9000);
-  // }, []);
+  useEffect(() => {
+    setInterval(() => {
+      if (user.sub !== undefined) {
+        sendUserIsOnline();
+      }
+    }, 9000);
+  }, []);
 
   return (
     <Container maxWidth="xl">

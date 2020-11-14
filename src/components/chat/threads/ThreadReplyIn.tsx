@@ -32,14 +32,14 @@ const ThreadReplyIn: React.FC<any> = (props) => {
 
   useEffect(() => {
     console.log('message', props.message);
-    console.log(`/thread/${props.message?.id}`);
+    console.log(`/${props.channelName}/thread/${props.message?.id}`);
   }, []);
 
   return (
     <Typography component="div" className={classes.messageText}>
       <Link
         to={{
-          pathname: `/thread/${props.message?.id}`,
+          pathname: `/channel/${props.channelName}/thread/${props.message?.id}`,
         }}
       >
         xxx replies Last reply today at 6: 10 PM
