@@ -257,6 +257,9 @@ subscription watchGetChannels {
   channel {
     id
     name
+    channel_polls {
+      channel_id
+    }
   }
 }
 
@@ -268,5 +271,14 @@ subscription watchChannelHasActivePoll($currentChannelId: Int!) {
     }
   ) {
     id
+  }
+}
+
+subscription watchChannelPollActiveState {
+  channel_poll {
+    id
+    channel {
+      name
+    }
   }
 }

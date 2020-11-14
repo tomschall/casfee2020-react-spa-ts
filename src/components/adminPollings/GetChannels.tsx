@@ -3,6 +3,7 @@ import { useRecoilValue } from 'recoil';
 import { getPollQuestionAnswers } from '../../atom';
 import {
   useWatchGetChannelsSubscription,
+  useWatchChannelPollActiveStateSubscription,
   useAddPublishPollQuestionToChannelMutation,
   useDeletePollQuestionFromChannelMutation,
 } from '../../api/generated/graphql';
@@ -20,6 +21,7 @@ import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
+import StarIcon from '@material-ui/icons/Star';
 import Loader from '../../components/shared/Loader';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -30,9 +32,17 @@ const useStyles = makeStyles((theme) => ({
 const GetChannels: React.FC = () => {
   const classes = useStyles();
   const getPollQuestionId = useRecoilValue<number>(getPollQuestionAnswers);
-  const [channelID, setChannelID] = useState();
+  const [channelID, setChannelID] = useState<string>('');
   const [open, setOpen] = React.useState(false);
   const { data, loading, error } = useWatchGetChannelsSubscription();
+  const {
+    data: checkActiveChannelState,
+  } = useWatchChannelPollActiveStateSubscription({
+    variables: {},
+  });
+
+  console.log('CHECK CHANNEL ACTIVE STATE', checkActiveChannelState);
+
   const [pollQuestionToChannel] = useAddPublishPollQuestionToChannelMutation();
   const [
     deletePollQuestionFromChannelMutation,
@@ -114,7 +124,11 @@ const GetChannels: React.FC = () => {
             {data?.channel.map((chn) => (
               <ListItem button key={chn.id}>
                 <ListItemIcon>
-                  <StarBorder />
+                  {chn.channel_polls[0]?.channel_id === chn.id ? (
+                    <StarIcon color="secondary" />
+                  ) : (
+                    <StarBorder />
+                  )}
                 </ListItemIcon>
                 <ListItemText
                   primary={chn.name}

@@ -50,10 +50,7 @@ interface AdminPollingsProps {
 const PollingDashBoard: React.FC<AdminPollingsProps> = () => {
   const classes = useStyles();
   const { user: userAuth0, isLoading: loadingAuth0 } = useAuth0();
-  const [
-    addPollQuestionMutation,
-    { error, loading, called },
-  ] = useAddPollQuestionMutation();
+  const [addPollQuestionMutation] = useAddPollQuestionMutation();
   const [pollTitle, setPollTitle] = React.useState<{ title: string }>({
     title: '',
   });
@@ -79,21 +76,6 @@ const PollingDashBoard: React.FC<AdminPollingsProps> = () => {
       console.log('error on mutation addPollQuestion');
     }
   };
-
-  // const handleSnackBarClose = (event: any, reason: any) => {
-  //   if (reason == 'clickaway') {
-  //     return;
-  //   }
-  //   setOpenAlert(!openAlert);
-  // };
-
-  // if (loading) {
-  //   return <Loader />;
-  // }
-
-  // if (error) {
-  //   return <NotFound />;
-  // }
 
   return (
     <>
