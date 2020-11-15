@@ -103,7 +103,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
           <LinearProgress
             id={pollAnswerId}
             color={
-              userVote?.user_votes[0].poll_answer_id === props.answerId
+              userVote?.user_votes[0].poll_answer_id === props.answerid
                 ? 'secondary'
                 : 'primary'
             }
@@ -122,7 +122,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
 
   LinearProgressWithLabel.propTypes = {
     value: () => null,
-    answerId: pollAnswerId,
+    answerid: () => pollAnswerId,
   };
 
   // HANDLE EVENTS
@@ -157,9 +157,6 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
       },
     });
   };
-
-  console.log('selectedPollAnswerId', userVote?.user_votes[0].poll_answer_id);
-  console.log('user has voted', userVote?.user_votes[0]?.poll_answer_id);
 
   return (
     <>
@@ -213,17 +210,11 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
           {data?.getChannelPoll[0] && (
             <Paper className={classes.pollCard}>
               <Box mb={3}>
-                <Chip
-                  color="primary"
-                  variant="outlined"
-                  size="small"
-                  label={`Total votes: ${totalVotes()}`}
-                />
                 {data?.getChannelPoll.map((channelPoll) => (
                   <Typography
+                    key={channelPoll.id}
                     color="secondary"
                     variant="h2"
-                    key={channelPoll.id}
                   >
                     {channelPoll?.poll_question?.text}
                   </Typography>
@@ -240,15 +231,22 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
                       display="flex"
                       alignItems="flex-start"
                       flexDirection="column"
+                      mb={2}
                     >
                       <Typography variant="body2">{pollVotes.text}</Typography>
                       <LinearProgressWithLabel
                         value={(100 * pollVotes.votes) / totalVotes()}
-                        answerId={pollVotes.id}
+                        answerid={pollVotes.id}
                       />
                     </Box>
                   );
                 })}
+              <Chip
+                color="primary"
+                variant="outlined"
+                size="small"
+                label={`Total votes: ${totalVotes()}`}
+              />
             </Paper>
           )}
         </>
