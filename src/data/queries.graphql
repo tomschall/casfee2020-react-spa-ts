@@ -93,6 +93,12 @@ query getAuth0UserById($user_id: String) {
   }
 }
 
+query getChannelThreadId($message_id: Int!) {
+  channel_thread(where: { message_id: { _eq: $message_id } }) {
+    id
+  }
+}
+
 query getPollQuestions {
   questions: poll_questions {
     id

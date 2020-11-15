@@ -100,6 +100,35 @@ mutation upsertMessageCursor(
   }
 }
 
+mutation insertChannelThreadMessage(
+  $channel_thread_id: Int!
+  $message: String!
+  $user_id: String!
+  $image: String
+) {
+  insert_channel_thread_message(
+    objects: {
+      user_id: $user_id
+      channel_thread_id: $channel_thread_id
+      message: $message
+      image: $image
+    }
+  ) {
+    affected_rows
+    returning {
+      id
+      image
+      message
+      timestamp
+      user_id
+      user {
+        auth0_user_id
+        username
+      }
+    }
+  }
+}
+
 mutation addPollQuestion($text: String, $owner_id: String) {
   insert_poll_questions(objects: { text: $text, owner_id: $owner_id }) {
     affected_rows

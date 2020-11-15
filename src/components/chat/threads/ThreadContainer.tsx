@@ -1,12 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Grid, List, Container, useMediaQuery } from '@material-ui/core';
-import { Message } from '../../../interfaces/message/message.interface';
-import { Box } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
+import React from 'react';
+import { Grid, Container, useMediaQuery } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useRecoilState } from 'recoil';
-import { currentChannelState } from '../../../atom';
 import SideBar from '../../shared/SideBar';
 import { theme } from '../../../theme/theme';
 import Thread from './Thread';

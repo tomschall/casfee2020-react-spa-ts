@@ -17,7 +17,7 @@ const ThreadReply: React.FC<any> = (props) => {
     // console.log('param', props.message?.id);
   };
 
-  console.log(`/channel/${props.channelName}/thread/${props.message?.id}`);
+  // console.log(`/channel/${props.channelName}/thread/${props.message?.id}`);
 
   return (
     <div>

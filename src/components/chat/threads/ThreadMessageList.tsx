@@ -52,16 +52,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface ThreadMessageListProps {
-  messages: Message[];
-  lastMessage: any;
-  preLastMessageId: number;
+  messages: any[];
   user: any;
 }
 
 const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
   messages,
-  lastMessage,
-  preLastMessageId,
   user,
 }) => {
   useEffect(() => {
@@ -90,7 +86,9 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
     setShowUpdate(!showUpdate);
   };
 
-  const renderMessages = (message: Message) => {
+  console.log('messages', messages);
+
+  const renderMessages = (message: any) => {
     return (
       <ListItem key={message.id} className={classes.root}>
         <Box display="flex" justifyContent="flex-start" alignItems="flex-start">
@@ -120,7 +118,7 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
               <Divider className={classes.vspace} />
             </Box>
             <Box>
-              <Typography variant="caption">
+              {/* <Typography variant="caption">
                 {showUpdate &&
                 showUpdateMessageId === message.id &&
                 user.sub === message.user.auth0_user_id ? (
@@ -128,7 +126,7 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
                 ) : (
                   <DeleteMessage messageId={message.id} />
                 )}
-              </Typography>
+              </Typography> */}
             </Box>
           </Box>
           <Typography
@@ -141,7 +139,7 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
             user.sub === message.user.auth0_user_id ? (
               <UpdateMessage message={message} />
             ) : (
-              message.text
+              message.message
             )}
           </Typography>
           {message?.image ? (
@@ -159,13 +157,8 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
 
   return (
     <>
-      {[...messages]?.reverse()?.map((message, i) => renderMessages(message))}
-
-      {!deletedMessage &&
-      lastMessage &&
-      preLastMessageId !== 0 &&
-      preLastMessageId < lastMessage.id
-        ? renderMessages(lastMessage)
+      {messages
+        ? [...messages]?.reverse()?.map((message, i) => renderMessages(message))
         : ''}
 
       <div ref={messagesEndRef} />
