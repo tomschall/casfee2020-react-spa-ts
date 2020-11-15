@@ -207,7 +207,9 @@
       columns:
       - channel_thread_id
       - id
+      - image
       - message
+      - timestamp
       - user_id
       backend_only: false
   select_permissions:
@@ -216,7 +218,9 @@
       columns:
       - channel_thread_id
       - id
+      - image
       - message
+      - timestamp
       - user_id
       filter:
         _or:
@@ -240,7 +244,9 @@
   update_permissions:
   - role: user
     permission:
-      columns: []
+      columns:
+      - image
+      - message
       filter:
         user_id:
           _eq: X-Hasura-User-Id
