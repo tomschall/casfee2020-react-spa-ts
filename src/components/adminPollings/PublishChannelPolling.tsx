@@ -163,11 +163,10 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
       {userVote?.user_votes[0]?.poll_question_id !==
       data?.getChannelPoll[0]?.poll_question?.id ? (
         <Paper className={classes.pollCard}>
-          {data?.getChannelPoll.map((channelPoll) => (
-            <Typography variant="h2" key={channelPoll.id}>
-              {channelPoll?.poll_question?.text}
-            </Typography>
-          ))}
+          <Typography variant="caption">Anonymous poll</Typography>
+          <Typography variant="h2">
+            {data?.getChannelPoll[0].poll_question?.text}
+          </Typography>
 
           <form onSubmit={handleSubmit}>
             <FormControl component="fieldset">

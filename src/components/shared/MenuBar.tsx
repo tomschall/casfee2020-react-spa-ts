@@ -125,9 +125,6 @@ const MenuBar: React.FC<MenuBarProps> = ({
       currentChannelId: currentChannel.id,
     },
   });
-
-  console.log('has active poll?', data?.poll_questions.length, currentChannel);
-
   const [open, setOpen] = React.useState(false); // Sidebar default state
   const [showGiphyCarousel, setShowGiphyCarousel] = React.useState(false);
 
