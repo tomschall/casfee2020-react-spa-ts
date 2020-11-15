@@ -23,6 +23,7 @@ import {
   useSetUserVotePollQuestionMutation,
 } from '../../api/generated/graphql';
 import { makeStyles } from '@material-ui/core/styles';
+import { empty } from '@apollo/client';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -99,7 +100,16 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
         flexDirection="row"
       >
         <Box width="100%" mr={1}>
-          <LinearProgress variant="determinate" {...props} />
+          <LinearProgress
+            id={pollAnswerId}
+            color={
+              userVote?.user_votes[0].poll_answer_id === props.answerId
+                ? 'secondary'
+                : 'primary'
+            }
+            variant="determinate"
+            {...props}
+          />
         </Box>
         <Box minWidth={0}>
           <Typography variant="body2" color="textSecondary">
@@ -112,6 +122,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
 
   LinearProgressWithLabel.propTypes = {
     value: () => null,
+    answerId: pollAnswerId,
   };
 
   // HANDLE EVENTS
@@ -147,7 +158,8 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
     });
   };
 
-  console.log('user hase voted', userVote?.user_votes[0]?.poll_question_id);
+  console.log('selectedPollAnswerId', userVote?.user_votes[0].poll_answer_id);
+  console.log('user has voted', userVote?.user_votes[0]?.poll_answer_id);
 
   return (
     <>
@@ -202,7 +214,8 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
             <Paper className={classes.pollCard}>
               <Box mb={3}>
                 <Chip
-                  color="secondary"
+                  color="primary"
+                  variant="outlined"
                   size="small"
                   label={`Total votes: ${totalVotes()}`}
                 />
@@ -231,6 +244,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
                       <Typography variant="body2">{pollVotes.text}</Typography>
                       <LinearProgressWithLabel
                         value={(100 * pollVotes.votes) / totalVotes()}
+                        answerId={pollVotes.id}
                       />
                     </Box>
                   );
