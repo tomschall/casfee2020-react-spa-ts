@@ -6,6 +6,7 @@ import Loader from '../shared/Loader';
 import {
   Box,
   Button,
+  Chip,
   Radio,
   RadioGroup,
   FormControlLabel,
@@ -65,9 +66,8 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
   });
   const [setPollAnswerVoteMutation] = useSetPollAnswerVoteMutation();
   const totalVotes = () => {
-    let numbers: any = [];
-    numbers = data?.getChannelPoll[0]?.poll_question?.poll_anwers!;
-
+    let numbers: Array<any> = data?.getChannelPoll[0]?.poll_question
+      ?.poll_anwers!;
     const count: any = [];
     numbers.map((num: any) => count.push(num.votes));
     const result = count.reduce((a: number, b: number) => a + b);
@@ -99,12 +99,11 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
         flexDirection="row"
       >
         <Box width="100%" mr={1}>
-          {}
           <LinearProgress variant="determinate" {...props} />
         </Box>
         <Box minWidth={0}>
           <Typography variant="body2" color="textSecondary">
-            {props.selectedPollAnswerId.toFixed(1)}%
+            {props.value.toFixed(1)}%
           </Typography>
         </Box>
       </Box>
@@ -112,7 +111,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
   };
 
   LinearProgressWithLabel.propTypes = {
-    selectedPollAnswerId: () => null,
+    value: () => null,
   };
 
   // HANDLE EVENTS
@@ -152,9 +151,8 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
 
   return (
     <>
-      {data?.getChannelPoll[0] &&
-      userVote?.user_votes[0]?.poll_question_id !==
-        data?.getChannelPoll[0]?.poll_question?.id ? (
+      {userVote?.user_votes[0]?.poll_question_id !==
+      data?.getChannelPoll[0]?.poll_question?.id ? (
         <Paper className={classes.pollCard}>
           {data?.getChannelPoll.map((channelPoll) => (
             <Typography variant="h2" key={channelPoll.id}>
@@ -178,7 +176,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
                       value={pollAnswer.id}
                       control={
                         <Radio
-                          value={JSON.stringify(pollAnswer.id)}
+                          value={pollAnswer.id}
                           checked={selectedPollAnswerId === pollAnswer.id}
                           onChange={handleChange}
                         />
@@ -202,12 +200,18 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
         <>
           {data?.getChannelPoll[0] && (
             <Paper className={classes.pollCard}>
-              <Box width="100%" mb={3}>
-                <Typography variant="caption">
-                  Voting results! Total votes: {totalVotes()}
-                </Typography>
+              <Box mb={3}>
+                <Chip
+                  color="secondary"
+                  size="small"
+                  label={`Total votes: ${totalVotes()}`}
+                />
                 {data?.getChannelPoll.map((channelPoll) => (
-                  <Typography variant="h2" key={channelPoll.id}>
+                  <Typography
+                    color="secondary"
+                    variant="h2"
+                    key={channelPoll.id}
+                  >
                     {channelPoll?.poll_question?.text}
                   </Typography>
                 ))}
@@ -226,9 +230,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
                     >
                       <Typography variant="body2">{pollVotes.text}</Typography>
                       <LinearProgressWithLabel
-                        selectedPollAnswerId={
-                          (100 * pollVotes.votes) / totalVotes()
-                        }
+                        value={(100 * pollVotes.votes) / totalVotes()}
                       />
                     </Box>
                   );
