@@ -103,6 +103,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface MenuBarProps {
+  user: [];
   channelId: number;
   handleSetLastMessage: Function;
   preLastMessageId: number;
@@ -205,7 +206,12 @@ const MenuBar: React.FC<MenuBarProps> = ({
                           {...bindPopover(popupState)}
                         >
                           <Box p={2}>
-                            <PublishChannelPolling />
+                            <PublishChannelPolling
+                              user={[]}
+                              channelId={channelId}
+                              currentChannel={0}
+                              selectedPollAnswerId={0}
+                            />
                           </Box>
                         </Popover>
                       </>

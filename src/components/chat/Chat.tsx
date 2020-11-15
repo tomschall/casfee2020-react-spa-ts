@@ -133,6 +133,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
           </Grid>
           <Box maxWidth="xl" component="nav">
             <MenuBar
+              user={user.sub}
               channelId={channelId}
               handleSetLastMessage={handleSetLastMessage}
               preLastMessageId={preLastMessageId}

@@ -34,18 +34,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface PublishChannelProps {
-  data?: [] | undefined;
+  user: [];
+  channelId: number;
+  pollAnswerId?: number;
+  selectedPollAnswerId: number;
+  currentChannel: number;
 }
 
-const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
+const PublishChannelPolling: React.FC<PublishChannelProps> = ({
+  channelId,
+  pollAnswerId,
+}) => {
   const classes = useStyles();
   const { user } = useAuth0();
   const [currentChannel, setCurrentChannelState] = useRecoilState(
     currentChannelState,
   );
-  const [value, setValue] = React.useState('');
-  const [voteError] = React.useState(false);
-  const [hasVoted, setHasVoted] = React.useState(false);
+  const [selectedPollAnswerId, setSelectedPollAnswerId] = React.useState<
+    number
+  >(0);
   const { data } = useWatchChannelPollQuestionSubscription({
     variables: {
       channelId: currentChannel.id,
@@ -53,22 +60,32 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
   });
   const getPollAnswerVotes = useWatchPollAnswerVotesSubscription({
     variables: {
-      pollAnswerId: parseInt(value, 10),
+      pollAnswerId: selectedPollAnswerId,
     },
   });
   const [setPollAnswerVoteMutation] = useSetPollAnswerVoteMutation();
   const totalVotes = () => {
     let numbers: any = [];
-    numbers = data?.getChannelPoll[0]?.poll_question?.poll_anwers;
+    numbers = data?.getChannelPoll[0]?.poll_question?.poll_anwers!;
+
     const count: any = [];
     numbers.map((num: any) => count.push(num.votes));
-    const result = count.reduce((a: any, b: any) => a + b);
+    const result = count.reduce((a: number, b: number) => a + b);
     return result;
   };
-  const { data: userVotes } = useWatchCheckUserHasVotedSubscription({
+  const { data: userVote } = useWatchCheckUserHasVotedSubscription({
     variables: {
       pollQuestionId: data?.getChannelPoll[0]?.poll_question?.id,
       auth0UserId: user.sub,
+    },
+  });
+
+  const [setUserVotePollQuestionMutation] = useSetUserVotePollQuestionMutation({
+    variables: {
+      userName: user.username,
+      auth0UserId: user.sub,
+      pollQuestionId: data?.getChannelPoll[0]?.poll_question?.id,
+      pollAnswerId: selectedPollAnswerId,
     },
   });
 
@@ -82,11 +99,12 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
         flexDirection="row"
       >
         <Box width="100%" mr={1}>
+          {}
           <LinearProgress variant="determinate" {...props} />
         </Box>
         <Box minWidth={0}>
           <Typography variant="body2" color="textSecondary">
-            {props.value.toFixed(1)}%
+            {props.selectedPollAnswerId.toFixed(1)}%
           </Typography>
         </Box>
       </Box>
@@ -94,27 +112,16 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
   };
 
   LinearProgressWithLabel.propTypes = {
-    value: () => null,
+    selectedPollAnswerId: () => null,
   };
 
-  const [setUserVotePollQuestionMutation] = useSetUserVotePollQuestionMutation({
-    variables: {
-      userName: user.username,
-      auth0UserId: user.sub,
-      pollQuestionId: data?.getChannelPoll[0]?.poll_question?.id,
-      pollAnswerId: parseInt(value),
-    },
-  });
-
   // HANDLE EVENTS
-  const handleChange = async (e: any, value: any) => {
-    setValue(e.target.value);
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedPollAnswerId(parseInt(e.target.value));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log('hasVoted', hasVoted);
 
     let currentPollAnswerVotes = await getPollAnswerVotes.data
       ?.pollAnswerVotes[0].votes;
@@ -126,7 +133,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
     if (currentPollAnswerVotes === undefined) return;
     await setPollAnswerVoteMutation({
       variables: {
-        pollAnswerId: parseInt(value),
+        pollAnswerId: selectedPollAnswerId,
         newVote: currentPollAnswerVotes,
       },
     });
@@ -136,20 +143,17 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
         userName: user.nickname,
         auth0UserId: user.sub,
         pollQuestionId: data?.getChannelPoll[0]?.poll_question?.id,
-        pollAnswerId: parseInt(value),
+        pollAnswerId: selectedPollAnswerId,
       },
     });
-
-    setHasVoted(true);
   };
 
-  console.log('user hase voted', userVotes?.user_votes[0]?.poll_question_id);
+  console.log('user hase voted', userVote?.user_votes[0]?.poll_question_id);
 
   return (
     <>
       {data?.getChannelPoll[0] &&
-      hasVoted === false &&
-      userVotes?.user_votes[0]?.poll_question_id !==
+      userVote?.user_votes[0]?.poll_question_id !==
         data?.getChannelPoll[0]?.poll_question?.id ? (
         <Paper className={classes.pollCard}>
           {data?.getChannelPoll.map((channelPoll) => (
@@ -159,11 +163,11 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
           ))}
 
           <form onSubmit={handleSubmit}>
-            <FormControl component="fieldset" error={voteError}>
+            <FormControl component="fieldset">
               <RadioGroup
                 aria-label="poll"
                 name="poll"
-                value={value}
+                value={selectedPollAnswerId}
                 onChange={handleChange}
               >
                 {data?.getChannelPoll[0]?.poll_question?.poll_anwers
@@ -175,7 +179,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
                       control={
                         <Radio
                           value={JSON.stringify(pollAnswer.id)}
-                          checked={value === JSON.stringify(pollAnswer.id)}
+                          checked={selectedPollAnswerId === pollAnswer.id}
                           onChange={handleChange}
                         />
                       }
@@ -222,7 +226,9 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = () => {
                     >
                       <Typography variant="body2">{pollVotes.text}</Typography>
                       <LinearProgressWithLabel
-                        value={(100 * pollVotes.votes) / totalVotes()}
+                        selectedPollAnswerId={
+                          (100 * pollVotes.votes) / totalVotes()
+                        }
                       />
                     </Box>
                   );
