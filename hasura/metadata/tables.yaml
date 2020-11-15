@@ -112,7 +112,7 @@
   - role: user
     permission:
       check:
-        _and:
+        _or:
         - message:
             channel:
               user_channels:
@@ -120,12 +120,12 @@
                   _eq: X-Hasura-User-Id
         - message:
             channel:
-              owner_id:
-                _eq: X-Hasura-User-Id
-        - message:
-            channel:
               is_private:
                 _eq: false
+        - message:
+            channel:
+              owner_id:
+                _eq: X-Hasura-User-Id
       columns:
       - id
       - message_id
@@ -137,7 +137,7 @@
       - id
       - message_id
       filter:
-        _and:
+        _or:
         - message:
             channel:
               user_channels:
@@ -145,12 +145,12 @@
                   _eq: X-Hasura-User-Id
         - message:
             channel:
-              owner_id:
-                _eq: X-Hasura-User-Id
-        - message:
-            channel:
               is_private:
                 _eq: false
+        - message:
+            channel:
+              owner_id:
+                _eq: X-Hasura-User-Id
       allow_aggregations: true
   update_permissions:
   - role: user
