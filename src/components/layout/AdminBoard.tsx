@@ -4,7 +4,7 @@ import { Container } from '@material-ui/core';
 
 const AdminBoard: React.FC = () => {
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="lg">
       <AdminContainer />
     </Container>
   );

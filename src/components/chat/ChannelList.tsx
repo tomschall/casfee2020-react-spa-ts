@@ -98,7 +98,10 @@ const Channels: React.FC<any> = () => {
                 )}
                 {data?.name === currentChannel?.name ? (
                   <ListItemText>
-                    <Link to={'/channel/' + data.name}>
+                    <Link
+                      data-channelName="data.name"
+                      to={'/channel/' + data.name}
+                    >
                       <Typography variant="h6" color="secondary">
                         {data.name}
                       </Typography>
@@ -106,7 +109,10 @@ const Channels: React.FC<any> = () => {
                   </ListItemText>
                 ) : (
                   <React.Fragment>
-                    <Link to={'/channel/' + data.name}>
+                    <Link
+                      to={'/channel/' + data.name}
+                      data-channel-name={data.name}
+                    >
                       <ListItemText primary={data?.name} />
                     </Link>
                     <ChannelListMessageCounter channelId={data.id} />

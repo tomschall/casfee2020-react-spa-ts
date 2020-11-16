@@ -6,10 +6,13 @@ module.exports = {
       .pause(3000)
       .click('input[name=email]')
       .pause(500)
-      .setValue('input[name=email]', 'kimi@gmail.com')
+      .setValue('input[name=email]', 'tweets@webrooster.ch')
       .pause(500)
-      .setValue('input[name=password]', 'admin1234.$')
-      .pause(500)
+      .setValue('input[name=password]', '_Tweets_3ster');
+  },
+
+  'Insert message into channel': (browser) => {
+    browser
       .click('button[type=submit]')
       .waitForElementVisible('body')
       .assert.titleContains('Chicken Chat - CasFee 2020')
@@ -21,10 +24,19 @@ module.exports = {
         this.assert.equal(typeof element, 'object');
         this.assert.equal(
           element.value,
-          'thomas.schallert 6 days ago\nWelcome to general\nREPLY',
+          'webrooster 16 days ago\nGoile, wah?\nREPLY',
         );
         console.log('element', element.value);
-      })
+      });
+  },
+
+  'Select channel "testing"': (browser) => {
+    browser
+      .url('http://localhost:3000/channel/testing')
+      .waitForElementVisible('body')
+      .pause(3000)
+      .click('a[data-channel-name="testing"]')
+      .pause(3000)
       .end();
   },
 };
