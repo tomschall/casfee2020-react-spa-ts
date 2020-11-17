@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 
 interface ThreadMessageInputProps {
   channelId: number;
-  channel_thread_id: number;
+  channelThreadId: number | undefined;
 }
 
 const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
@@ -130,13 +130,13 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
       return;
     }
 
-    if (props.channel_thread_id === 0) {
+    if (props.channelThreadId === undefined) {
       return;
     }
 
     await sendMessage({
       variables: {
-        channel_thread_id: props.channel_thread_id,
+        channel_thread_id: props.channelThreadId,
         message: text,
         image: gif?.images?.fixed_width_small?.url,
         user_id: user.sub,
@@ -165,7 +165,7 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
         className={classes.form}
         onSubmit={handleSubmit}
       >
-        <TypingIndicator />
+        {/* <TypingIndicator /> */}
         <TextField
           value={text}
           autoFocus={true}

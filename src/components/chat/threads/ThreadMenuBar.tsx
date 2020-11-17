@@ -94,12 +94,12 @@ const useStyles = makeStyles((theme) => ({
 
 interface ThreadMenuBarProps {
   channelId: number;
-  channel_thread_id: number;
+  channelThreadId: number | undefined;
 }
 
 const ThreadMenuBar: React.FC<ThreadMenuBarProps> = ({
   channelId,
-  channel_thread_id,
+  channelThreadId,
 }) => {
   const { user } = useAuth0();
   const classes = useStyles();
@@ -150,13 +150,13 @@ const ThreadMenuBar: React.FC<ThreadMenuBarProps> = ({
                   variant="outlined"
                   size="small"
                   icon={
-                    currentChannel.is_private === true ? (
+                    currentChannel?.is_private === true ? (
                       <EnhancedEncryptionOutlinedIcon />
                     ) : (
                       <PeopleIcon color="secondary" />
                     )
                   }
-                  label={currentChannel.name}
+                  label={currentChannel?.name}
                 />
                 <Chip
                   variant="outlined"
@@ -203,8 +203,8 @@ const ThreadMenuBar: React.FC<ThreadMenuBarProps> = ({
               </Grid>
               <Grid item xs={12}>
                 <ThreadMessageInput
-                  channelId={currentChannel.id}
-                  channel_thread_id={channel_thread_id}
+                  channelId={currentChannel?.id}
+                  channelThreadId={channelThreadId}
                 />
               </Grid>
             </Grid>

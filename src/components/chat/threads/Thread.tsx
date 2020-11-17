@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, List } from '@material-ui/core';
-import { Message } from '../../../interfaces/message/message.interface';
+import { Grid, List, CircularProgress } from '@material-ui/core';
 import { Box } from '@material-ui/core';
 import { useHistory, useParams } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../../atom';
-import { useWatchChannelThreadMessagesSubscription } from '../../../api/generated/graphql';
+import {
+  useWatchChannelThreadMessagesSubscription,
+  useGetChannelThreadQuery,
+} from '../../../api/generated/graphql';
 import ThreadMessageList from './ThreadMessageList';
 import ThreadMenuBar from './ThreadMenuBar';
+import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,12 +45,13 @@ const Thread: React.FC = () => {
   const [limit, setLimit] = useState(20);
 
   const { user, error: auth0Error } = useAuth0();
+
   const [currentChannel, setCurrentChannel] = useRecoilState<any>(
     currentChannelState,
   );
   let history = useHistory();
 
-  const { messageId } = useParams();
+  const { messageId, channel } = useParams();
 
   const { data, loading, error } = useWatchChannelThreadMessagesSubscription({
     variables: {
@@ -56,16 +60,32 @@ const Thread: React.FC = () => {
     },
   });
 
+  const {
+    data: getChannelThreadData,
+    loading: getChannelThreadLoading,
+    error: getChannelThreadError,
+  } = useGetChannelThreadQuery({
+    variables: {
+      message_id: messageId,
+    },
+  });
+
   useEffect(() => {
-    console.log('Thread Component mounted');
+    if (currentChannel?.id === undefined) history.push(`/channel/${channel}`);
   }, []);
+
+  if (loading) return <CircularProgress />;
+
+  if (error) {
+    console.log('error', error);
+    return <Alert severity="error">Thread Error</Alert>;
+  }
 
   const handleIncreaseLimit = () => {
     setLimit(limit + 20);
   };
 
-  console.log('current channel', currentChannel);
-  console.log('data', data);
+  // console.log('getChannelThreadData', getChannelThreadData);
 
   return (
     <>
@@ -76,15 +96,15 @@ const Thread: React.FC = () => {
               <ThreadMessageList
                 messages={data?.channel_thread_message as any[]}
                 user={user}
+                channelThread={getChannelThreadData?.channel_thread[0]}
+                currentChannel={currentChannel}
               />
             </List>
           </Grid>
           <Box maxWidth="xl" component="nav">
             <ThreadMenuBar
-              channelId={currentChannel.id}
-              channel_thread_id={
-                data?.channel_thread_message[0]?.channel_thread_id ?? 0
-              }
+              channelId={currentChannel?.id}
+              channelThreadId={getChannelThreadData?.channel_thread[0]?.id}
             />
           </Box>
         </Grid>

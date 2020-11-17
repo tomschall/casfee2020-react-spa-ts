@@ -20,6 +20,12 @@ import { useRecoilValue } from 'recoil';
 import { deletedMessageState } from '../../../atom';
 
 const useStyles = makeStyles((theme) => ({
+  head: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    padding: theme.spacing(0),
+  },
   root: {
     display: 'flex',
     justifyContent: 'flex-start',
@@ -30,11 +36,21 @@ const useStyles = makeStyles((theme) => ({
     messageText: {
       paddingBottom: '1rem',
     },
+    reply: {
+      fontSize: 11,
+      paddingBottom: '1rem',
+      color: '#ffffff',
+    },
   },
   [theme.breakpoints.down('md')]: {
     messageText: {
       fontSize: 14,
       paddingBottom: '1rem',
+    },
+    reply: {
+      fontSize: 11,
+      paddingBottom: '1rem',
+      color: '#ffffff',
     },
   },
   [theme.breakpoints.down('sm')]: {
@@ -42,9 +58,21 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 12,
       paddingBottom: '1rem',
     },
+    reply: {
+      fontSize: 11,
+      paddingBottom: '1rem',
+      color: '#ffffff',
+    },
   },
   vspace: {
     marginBottom: theme.spacing(1),
+  },
+  vspaceTop: {
+    marginBottom: theme.spacing(3),
+  },
+  vspaceBottom: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(0),
   },
   image: {
     paddingBottom: '0.5rem',
@@ -54,15 +82,19 @@ const useStyles = makeStyles((theme) => ({
 interface ThreadMessageListProps {
   messages: any[];
   user: any;
+  channelThread: any;
+  currentChannel: any;
 }
 
 const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
   messages,
   user,
+  channelThread,
+  currentChannel,
 }) => {
   useEffect(() => {
     scrollToBottom();
-  });
+  }, [messages]);
 
   const classes = useStyles();
   const [showUpdate, setShowUpdate] = useState<boolean>(false);
@@ -86,7 +118,65 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
     setShowUpdate(!showUpdate);
   };
 
-  console.log('messages', messages);
+  // console.log('channelThread', channelThread);
+  // console.log('currentChannel', currentChannel);
+  // console.log('messages', messages);
+
+  const renderThreadInfo = (channelThread: any) => {
+    return (
+      <React.Fragment>
+        <Box>
+          <Typography variant="caption">
+            <strong>Thread - {currentChannel.name} </strong>
+          </Typography>
+        </Box>
+        <Divider className={classes.vspaceTop} />
+        <ListItem key={channelThread.message.id} className={classes.head}>
+          <Box
+            display="flex"
+            justifyContent="flex-start"
+            alignItems="flex-start"
+          >
+            <ListItemAvatar>
+              <ListItemIcon>
+                <Badge variant="dot">
+                  <Avatar alt="Username" src="https://picsum.photos/100" />
+                </Badge>
+              </ListItemIcon>
+            </ListItemAvatar>
+          </Box>
+          <Box component="div" display="flex" flexDirection="column" flex="1">
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              alignItems="flex-start"
+            >
+              <Box
+                display="flex"
+                justifyContent="flex-start"
+                alignItems="flex-start"
+              >
+                <Typography variant="caption">
+                  <strong>{channelThread.message.user.username} </strong>
+                  <i>{moment(channelThread.message.timestamp).fromNow()}</i>
+                </Typography>
+                <Divider className={classes.vspace} />
+              </Box>
+            </Box>
+            <Typography component="div" className={classes.messageText}>
+              {channelThread.message.text}
+            </Typography>
+          </Box>
+        </ListItem>
+        <Box className={classes.vspaceBottom}>
+          <Typography component="div" className={classes.reply}>
+            {messages.length}
+            {messages.length === 1 ? ' reply' : ' replies'}
+          </Typography>
+        </Box>
+      </React.Fragment>
+    );
+  };
 
   const renderMessages = (message: any) => {
     return (
@@ -142,7 +232,7 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
               message.message
             )}
           </Typography>
-          {message?.image ? (
+          {message.image ? (
             <Box className={classes.image}>
               <img src={message.image} />
             </Box>
@@ -157,8 +247,9 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
 
   return (
     <>
+      {channelThread ? renderThreadInfo(channelThread) : ''}
       {messages
-        ? [...messages]?.reverse()?.map((message, i) => renderMessages(message))
+        ? [...messages]?.reverse()?.map((message) => renderMessages(message))
         : ''}
 
       <div ref={messagesEndRef} />

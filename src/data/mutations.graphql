@@ -129,6 +129,24 @@ mutation insertChannelThreadMessage(
   }
 }
 
+mutation insertChannelThread($message_id: Int!) {
+  insert_channel_thread(objects: { message_id: $message_id }) {
+    returning {
+      message {
+        image
+        text
+        timestamp
+        id
+        user {
+          auth0_user_id
+          id
+          username
+        }
+      }
+    }
+  }
+}
+
 mutation addPollQuestion($text: String, $owner_id: String) {
   insert_poll_questions(objects: { text: $text, owner_id: $owner_id }) {
     affected_rows

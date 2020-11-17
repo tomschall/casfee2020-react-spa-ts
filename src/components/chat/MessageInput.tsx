@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { TextField, Button, Box } from '@material-ui/core';
 import { theme } from '../../theme/theme';
@@ -13,6 +13,7 @@ import { useRecoilState } from 'recoil';
 import { giphyState, deletedMessageState } from '../../atom';
 import { IGif } from '@giphy/js-types';
 import { makeStyles } from '@material-ui/core/styles';
+import { isObject } from 'util';
 
 const useStyles = makeStyles((theme) => ({
   root: {

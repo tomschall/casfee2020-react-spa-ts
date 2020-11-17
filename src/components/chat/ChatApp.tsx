@@ -7,7 +7,7 @@ import { currentChannelState } from '../../atom';
 import Chat from './Chat';
 import Loader from '../shared/Loader';
 
-const ChatApp: React.FC = (props) => {
+const ChatApp: React.FC = () => {
   const [currentChannel, setCurrentChannel] = useRecoilState<any>(
     currentChannelState,
   );
@@ -39,8 +39,6 @@ const ChatApp: React.FC = (props) => {
   if (error || channelError) {
     return <React.Fragment>Error: {error}</React.Fragment>;
   }
-
-  // TODO: REFACTOR PROPS
 
   return (
     <>

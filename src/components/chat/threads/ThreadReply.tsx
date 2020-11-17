@@ -1,27 +1,52 @@
 import React from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
-import { useRecoilState } from 'recoil';
-import { testState } from '../../../atom.js';
 import { IconButton } from '@material-ui/core';
 import ReplyIcon from '@material-ui/icons/Reply';
 import { useHistory } from 'react-router';
+import { useInsertChannelThreadMutation } from '../../../api/generated/graphql';
+import { Alert } from '@material-ui/lab';
 
-const ThreadReply: React.FC<any> = (props) => {
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
-  const [recoilTestState, setTestState] = useRecoilState<any>(testState);
-  let history = useHistory();
+interface ThreadReplyProps {
+  channelName: string;
+  message: any;
+}
 
-  const renderMessages = () => {
+const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
+  const history = useHistory();
+
+  const [
+    insertChannelThreadMutation,
+    { data, loading, error },
+  ] = useInsertChannelThreadMutation({
+    variables: {
+      message_id: props.message?.id,
+    },
+  });
+
+  const navigateToThreadChannel = () => {
     history.push(`/channel/${props.channelName}/thread/${props.message?.id}`);
-    // console.log('message', props.message);
-    // console.log('param', props.message?.id);
   };
 
-  // console.log(`/channel/${props.channelName}/thread/${props.message?.id}`);
+  const handleClick = async () => {
+    console.log('insertChannelThreadMutation');
+    await insertChannelThreadMutation();
+    navigateToThreadChannel();
+  };
+
+  if (error) return <Alert>Error in Thread Reply</Alert>;
+
+  if (props.message?.channel_threads?.length) {
+    return (
+      <div>
+        <IconButton onClick={() => navigateToThreadChannel()}>
+          <ReplyIcon fontSize="small" />
+        </IconButton>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <IconButton onClick={renderMessages}>
+      <IconButton onClick={handleClick}>
         <ReplyIcon fontSize="small" />
       </IconButton>
     </div>

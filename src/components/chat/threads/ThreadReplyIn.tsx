@@ -1,49 +1,59 @@
-import React, { useEffect } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
-import { useRecoilState } from 'recoil';
-import { testState } from '../../../atom.js';
-import { Typography, makeStyles } from '@material-ui/core';
+import React from 'react';
+import { Typography, makeStyles, Box } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
   [theme.breakpoints.up('md')]: {
     messageText: {
+      fontSize: 11,
       paddingBottom: '1rem',
     },
   },
   [theme.breakpoints.down('md')]: {
     messageText: {
-      fontSize: 14,
+      fontSize: 11,
       paddingBottom: '1rem',
     },
   },
   [theme.breakpoints.down('sm')]: {
     messageText: {
-      fontSize: 12,
+      fontSize: 11,
       paddingBottom: '1rem',
     },
+  },
+  link: {
+    color: '#ffffff',
   },
 }));
 
 const ThreadReplyIn: React.FC<any> = (props) => {
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
-  const [recoilTestState, setTestState] = useRecoilState<any>(testState);
   const classes = useStyles();
-
-  useEffect(() => {
-    console.log('message', props.message);
-    console.log(`/${props.channelName}/thread/${props.message?.id}`);
-  }, []);
 
   return (
     <Typography component="div" className={classes.messageText}>
       <Link
+        className={classes.link}
         to={{
           pathname: `/channel/${props.channelName}/thread/${props.message?.id}`,
         }}
       >
-        xxx replies Last reply today at 6: 10 PM
+        {`${
+          props.message?.channel_threads[0]?.channel_thread_messages_aggregate
+            .aggregate.count
+        } ${
+          props.message?.channel_threads[0]?.channel_thread_messages_aggregate
+            .aggregate.count === 1
+            ? 'reply'
+            : 'replies'
+        } `}
       </Link>
+      <i className={classes.lastReply}>
+        {`Last reply ${moment(
+          props.message?.channel_threads[0]?.channel_thread_messages[0]
+            ?.timestamp,
+        ).fromNow()}`}
+      </i>
     </Typography>
   );
 };

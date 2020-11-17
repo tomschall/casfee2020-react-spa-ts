@@ -17,6 +17,14 @@ subscription watchMessages($channelId: Int!, $limit: Int) {
     }
     channel_threads {
       id
+      channel_thread_messages_aggregate {
+        aggregate {
+          count(columns: message)
+        }
+      }
+      channel_thread_messages(limit: 1, order_by: { timestamp: desc }) {
+        timestamp
+      }
     }
   }
 }
@@ -29,6 +37,7 @@ subscription watchChannelThreadMessages($limit: Int!, $message_id: Int!) {
   ) {
     id
     message
+    image
     user {
       username
       id

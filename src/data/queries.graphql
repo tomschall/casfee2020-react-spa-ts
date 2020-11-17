@@ -93,9 +93,50 @@ query getAuth0UserById($user_id: String) {
   }
 }
 
-query getChannelThreadId($message_id: Int!) {
+query getChannelThreadId($message_id: Int) {
   channel_thread(where: { message_id: { _eq: $message_id } }) {
     id
+  }
+}
+
+query getChannelThreadParentMessage($limit: Int, $message_id: Int) {
+  channel_thread_message(
+    limit: $limit
+    order_by: { id: asc }
+    where: { channel_thread: { message_id: { _eq: $message_id } } }
+  ) {
+    channel_thread_id
+    timestamp
+    channel_thread {
+      message {
+        text
+        timestamp
+        image
+        id
+        user_id
+        user {
+          auth0_user_id
+          username
+        }
+      }
+    }
+  }
+}
+
+query getChannelThread($message_id: Int) {
+  channel_thread(where: { message_id: { _eq: $message_id } }) {
+    id
+    message {
+      id
+      image
+      text
+      timestamp
+      user {
+        auth0_user_id
+        id
+        username
+      }
+    }
   }
 }
 

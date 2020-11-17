@@ -68,7 +68,7 @@ const MessageList: React.FC<MessageProps> = ({
 }) => {
   useEffect(() => {
     scrollToBottom();
-  });
+  }, [messages]);
 
   const classes = useStyles();
   const [showUpdate, setShowUpdate] = useState<boolean>(false);
@@ -131,15 +131,18 @@ const MessageList: React.FC<MessageProps> = ({
                 <Typography variant="caption">
                   <ThreadReply message={message} channelName={channelName} />
                 </Typography>
-                <Typography variant="caption">
-                  {showUpdate &&
-                  showUpdateMessageId === message.id &&
-                  user.sub === message.user.auth0_user_id ? (
-                    ''
-                  ) : (
-                    <DeleteMessage messageId={message.id} />
-                  )}
-                </Typography>
+
+                {user.sub === message.user.auth0_user_id ? (
+                  <Typography variant="caption">
+                    {showUpdate && showUpdateMessageId === message.id ? (
+                      ''
+                    ) : (
+                      <DeleteMessage messageId={message.id} />
+                    )}
+                  </Typography>
+                ) : (
+                  ''
+                )}
               </Box>
             </Box>
           </Box>
