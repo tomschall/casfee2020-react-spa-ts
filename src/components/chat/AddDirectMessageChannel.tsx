@@ -31,24 +31,20 @@ const AddDirectMessageChannel: React.FC = () => {
 
   const [
     upsertMessageCursorMutation,
-    {
-      data: upsertMessageData,
-      loading: upsertMessageLoading,
-      error: upsertMessageError,
-    },
+    { error: upsertMessageError },
   ] = useUpsertMessageCursorMutation();
 
   const [
     sendMessage,
-    { data: sendUpdateMessageData },
+    { error: sendUpdateMessageError },
   ] = useInsertMessageMutation();
 
   const [
     validateAndAddDirectMessageChannelMutation,
-    { data: addDMData, loading: addDMLoading, error: addDMError },
+    { error: addDMError },
   ] = useValidateAndAddDirectMessageChannelMutation();
 
-  if (error || addDMError) {
+  if (error || addDMError || upsertMessageError || sendUpdateMessageError) {
     console.log('error', addDMError);
     return <Alert severity="error">Fetching users error...</Alert>;
   }
@@ -88,8 +84,6 @@ const AddDirectMessageChannel: React.FC = () => {
           user_id: dm_user,
         },
       });
-
-    console.log('data', data);
 
     history.push(`/channel/${data?.validateAndAddDirectMessageChannel?.name}`);
 

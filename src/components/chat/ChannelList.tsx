@@ -99,7 +99,7 @@ const Channels: React.FC<any> = () => {
                 {data?.name === currentChannel?.name ? (
                   <ListItemText>
                     <Link
-                      data-channelName="data.name"
+                      data-channel-name="data.name"
                       to={'/channel/' + data.name}
                     >
                       <Typography variant="h6" color="secondary">
