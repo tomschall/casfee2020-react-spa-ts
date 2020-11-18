@@ -8,6 +8,7 @@ const Login: React.FC<any> = () => {
   const checkAndLogin = () => {
     //localStorage.setItem('shouldLoad', 'true');
     loginWithRedirect();
+
   };
 
   return (

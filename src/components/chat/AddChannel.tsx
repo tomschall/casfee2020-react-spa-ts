@@ -10,8 +10,13 @@ import Loader from '../shared/Loader';
 import {
   Button,
   Checkbox,
+  Collapse,
   FormControlLabel,
   Grid,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   TextField,
   Typography,
   Snackbar,
@@ -19,11 +24,6 @@ import {
 } from '@material-ui/core';
 import { theme } from '../../theme/theme';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
 import AddCircle from '@material-ui/icons/AddCircle';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';

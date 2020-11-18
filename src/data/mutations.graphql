@@ -195,3 +195,79 @@ mutation setPollAnswerVote($pollAnswerId: Int!, $newVote: Int!) {
     }
   }
 }
+
+mutation setPublishPollQuestionState(
+  $pollQuestionId: Int!
+  $is_active: Boolean = false
+) {
+  setPollQuestionState: update_poll_questions(
+    where: { id: { _eq: $pollQuestionId } }
+    _set: { is_active: $is_active }
+  ) {
+    affected_rows
+    returning {
+      is_active
+    }
+  }
+}
+
+mutation deletePollQuestion($pollQuestionId: Int!) {
+  delete_poll_anwers(where: { question_id: { _eq: $pollQuestionId } }) {
+    affected_rows
+  }
+  deletePollQuestion: delete_poll_questions(
+    where: { id: { _eq: $pollQuestionId }, is_active: { _neq: true } }
+  ) {
+    affected_rows
+  }
+}
+
+mutation deletePollQuestionFromChannel(
+  $pollQuestionId: Int!
+  $channelId: Int!
+) {
+  delete_channel_poll(
+    where: {
+      poll_questions: { _eq: $pollQuestionId }
+      channel_id: { _eq: $channelId }
+    }
+  ) {
+    affected_rows
+  }
+}
+
+mutation updatePollAnswerText($text: String!, $pollAnswerId: Int!) {
+  pollAnswerText: update_poll_anwers(
+    where: { id: { _eq: $pollAnswerId } }
+    _set: { text: $text }
+  ) {
+    affected_rows
+    returning {
+      text
+    }
+  }
+}
+
+mutation deletePollAnswerId($pollAnswerId: Int!) {
+  delete_poll_anwers(where: { id: { _eq: $pollAnswerId } }) {
+    affected_rows
+  }
+}
+
+mutation setUserVotePollQuestion(
+  $userName: String
+  $auth0UserId: String
+  $pollQuestionId: Int
+  $pollAnswerId: Int
+) {
+  insert_user_votes(
+    objects: {
+      username: $userName
+      auth0_user_id: $auth0UserId
+      poll_question_id: $pollQuestionId
+      poll_answer_id: $pollAnswerId
+    }
+  ) {
+    affected_rows
+  }
+}
