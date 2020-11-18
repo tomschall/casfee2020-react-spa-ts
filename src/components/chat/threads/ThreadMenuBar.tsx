@@ -22,6 +22,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import FaceIcon from '@material-ui/icons/Face';
+import ChatIcon from '@material-ui/icons/Chat';
 import PeopleIcon from '@material-ui/icons/People';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import { makeStyles } from '@material-ui/core/styles';
@@ -157,6 +158,13 @@ const ThreadMenuBar: React.FC<ThreadMenuBarProps> = ({
                     )
                   }
                   label={currentChannel?.name}
+                />
+                <Chip
+                  variant="outlined"
+                  color="secondary"
+                  size="small"
+                  icon={<ChatIcon />}
+                  label="thread"
                 />
                 <Chip
                   variant="outlined"
