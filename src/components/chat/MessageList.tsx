@@ -167,7 +167,9 @@ const MessageList: React.FC<MessageProps> = ({
           ) : (
             ''
           )}
-          {message?.channel_threads?.length ? (
+          {message?.channel_threads?.length &&
+          message?.channel_threads[0]?.channel_thread_messages_aggregate
+            .aggregate.count >= 1 ? (
             <Box>
               <ThreadReplyIn message={message} channelName={channelName} />
             </Box>

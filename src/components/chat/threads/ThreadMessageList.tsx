@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 import { isObject } from 'util';
 import { ThreadMessage } from '../../../interfaces/message/message.interface';
-
+import ThreadInfo from './ThreadInfo';
 import DeleteMessage from '../DeleteMessage';
 import UpdateMessage from '../UpdateMessage';
 import {
@@ -19,7 +19,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useRecoilValue } from 'recoil';
 import { deletedMessageState } from '../../../atom';
 
-const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles((theme) => ({
   head: {
     display: 'flex',
     justifyContent: 'flex-start',
@@ -118,62 +118,6 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
     setShowUpdate(!showUpdate);
   };
 
-  const renderThreadInfo = (channelThread: any) => {
-    return (
-      <React.Fragment>
-        <Box>
-          <Typography variant="caption">
-            <strong>Thread - {currentChannel.name} </strong>
-          </Typography>
-        </Box>
-        <Divider className={classes.vspaceTop} />
-        <ListItem key={channelThread.message.id} className={classes.head}>
-          <Box
-            display="flex"
-            justifyContent="flex-start"
-            alignItems="flex-start"
-          >
-            <ListItemAvatar>
-              <ListItemIcon>
-                <Badge variant="dot">
-                  <Avatar alt="Username" src="https://picsum.photos/100" />
-                </Badge>
-              </ListItemIcon>
-            </ListItemAvatar>
-          </Box>
-          <Box component="div" display="flex" flexDirection="column" flex="1">
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="flex-start"
-            >
-              <Box
-                display="flex"
-                justifyContent="flex-start"
-                alignItems="flex-start"
-              >
-                <Typography variant="caption">
-                  <strong>{channelThread.message.user.username} </strong>
-                  <i>{moment(channelThread.message.timestamp).fromNow()}</i>
-                </Typography>
-                <Divider className={classes.vspace} />
-              </Box>
-            </Box>
-            <Typography component="div" className={classes.messageText}>
-              {channelThread.message.text}
-            </Typography>
-          </Box>
-        </ListItem>
-        <Box className={classes.vspaceBottom}>
-          <Typography component="div" className={classes.reply}>
-            {messages.length}
-            {messages.length === 1 ? ' reply' : ' replies'}
-          </Typography>
-        </Box>
-      </React.Fragment>
-    );
-  };
-
   const renderMessages = (message: ThreadMessage) => {
     return (
       <ListItem key={message.id} className={classes.root}>
@@ -244,7 +188,11 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
 
   return (
     <>
-      {channelThread ? renderThreadInfo(channelThread) : ''}
+      <ThreadInfo
+        messages={messages}
+        channelThread={channelThread}
+        currentChannel={currentChannel}
+      />
       {messages
         ? [...messages]
             ?.reverse()

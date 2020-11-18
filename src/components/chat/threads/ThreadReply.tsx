@@ -28,7 +28,6 @@ const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
   };
 
   const handleClick = async () => {
-    console.log('insertChannelThreadMutation');
     await insertChannelThreadMutation();
     navigateToThreadChannel();
   };
