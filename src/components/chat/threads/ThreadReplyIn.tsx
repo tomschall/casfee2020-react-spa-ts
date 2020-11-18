@@ -2,6 +2,7 @@ import React from 'react';
 import { Typography, makeStyles, Box } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import { Message } from '../../../interfaces/message/message.interface';
 
 const useStyles = makeStyles((theme) => ({
   [theme.breakpoints.up('md')]: {
@@ -27,7 +28,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ThreadReplyIn: React.FC<any> = (props) => {
+interface ThreadReplyInProps {
+  channelName: string;
+  message: Message;
+}
+
+const ThreadReplyIn: React.FC<ThreadReplyInProps> = ({
+  channelName,
+  message,
+}) => {
   const classes = useStyles();
 
   return (
@@ -35,14 +44,14 @@ const ThreadReplyIn: React.FC<any> = (props) => {
       <Link
         className={classes.link}
         to={{
-          pathname: `/channel/${props.channelName}/thread/${props.message?.id}`,
+          pathname: `/channel/${channelName}/thread/${message?.id}`,
         }}
       >
         {`${
-          props.message?.channel_threads[0]?.channel_thread_messages_aggregate
+          message?.channel_threads[0]?.channel_thread_messages_aggregate
             .aggregate.count
         } ${
-          props.message?.channel_threads[0]?.channel_thread_messages_aggregate
+          message?.channel_threads[0]?.channel_thread_messages_aggregate
             .aggregate.count === 1
             ? 'reply'
             : 'replies'
@@ -50,8 +59,7 @@ const ThreadReplyIn: React.FC<any> = (props) => {
       </Link>
       <i className={classes.lastReply}>
         {`Last reply ${moment(
-          props.message?.channel_threads[0]?.channel_thread_messages[0]
-            ?.timestamp,
+          message?.channel_threads[0]?.channel_thread_messages[0]?.timestamp,
         ).fromNow()}`}
       </i>
     </Typography>

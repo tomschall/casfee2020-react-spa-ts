@@ -4,10 +4,11 @@ import ReplyIcon from '@material-ui/icons/Reply';
 import { useHistory } from 'react-router';
 import { useInsertChannelThreadMutation } from '../../../api/generated/graphql';
 import { Alert } from '@material-ui/lab';
+import { Message } from '../../../interfaces/message/message.interface';
 
 interface ThreadReplyProps {
   channelName: string;
-  message: any;
+  message: Message;
 }
 
 const ThreadReply: React.FC<ThreadReplyProps> = (props) => {

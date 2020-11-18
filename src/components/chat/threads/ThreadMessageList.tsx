@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 import { isObject } from 'util';
-import { Message } from '../../../interfaces/message/message.interface';
+import { ThreadMessage } from '../../../interfaces/message/message.interface';
 
 import DeleteMessage from '../DeleteMessage';
 import UpdateMessage from '../UpdateMessage';
@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface ThreadMessageListProps {
-  messages: any[];
+  messages: ThreadMessage[];
   user: any;
   channelThread: any;
   currentChannel: any;
@@ -112,15 +112,11 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
     }
   };
 
-  const handleShowUpdate = (message: Message) => {
+  const handleShowUpdate = (message: ThreadMessage) => {
     if (message.user.auth0_user_id !== user.sub) return;
     setShowUpdateMessageId(message.id);
     setShowUpdate(!showUpdate);
   };
-
-  // console.log('channelThread', channelThread);
-  // console.log('currentChannel', currentChannel);
-  // console.log('messages', messages);
 
   const renderThreadInfo = (channelThread: any) => {
     return (
@@ -178,7 +174,7 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
     );
   };
 
-  const renderMessages = (message: any) => {
+  const renderMessages = (message: ThreadMessage) => {
     return (
       <ListItem key={message.id} className={classes.root}>
         <Box display="flex" justifyContent="flex-start" alignItems="flex-start">
@@ -224,13 +220,14 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
             className={classes.messageText}
             onClick={() => handleShowUpdate(message)}
           >
-            {showUpdate &&
+            {/* {showUpdate &&
             showUpdateMessageId === message.id &&
             user.sub === message.user.auth0_user_id ? (
               <UpdateMessage message={message} />
             ) : (
               message.message
-            )}
+            )} */}
+            {message.message}
           </Typography>
           {message.image ? (
             <Box className={classes.image}>
@@ -249,7 +246,9 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
     <>
       {channelThread ? renderThreadInfo(channelThread) : ''}
       {messages
-        ? [...messages]?.reverse()?.map((message) => renderMessages(message))
+        ? [...messages]
+            ?.reverse()
+            ?.map((message: ThreadMessage) => renderMessages(message))
         : ''}
 
       <div ref={messagesEndRef} />

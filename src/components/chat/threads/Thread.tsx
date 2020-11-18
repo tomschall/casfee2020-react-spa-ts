@@ -13,6 +13,7 @@ import {
 import ThreadMessageList from './ThreadMessageList';
 import ThreadMenuBar from './ThreadMenuBar';
 import { Alert } from '@material-ui/lab';
+import { ThreadMessage } from '../../../interfaces/message/message.interface';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -94,7 +95,7 @@ const Thread: React.FC = () => {
           <Grid item xs={12} className={classes.messageContainer}>
             <List id="message-list">
               <ThreadMessageList
-                messages={data?.channel_thread_message as any[]}
+                messages={data?.channel_thread_message as ThreadMessage[]}
                 user={user}
                 channelThread={getChannelThreadData?.channel_thread[0]}
                 currentChannel={currentChannel}
