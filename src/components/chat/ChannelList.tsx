@@ -21,6 +21,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import ChannelListMessageCounter from './ChannelListMessageCounter';
+import ThreadsLink from '../shared/ThreadsLink';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -64,6 +65,7 @@ const Channels: React.FC<any> = () => {
   return (
     <>
       <List className={classes.root}>
+        <ThreadsLink />
         <ListItem button onClick={handleClick}>
           <ListItemIcon>
             <PeopleOutlineIcon />
@@ -99,7 +101,7 @@ const Channels: React.FC<any> = () => {
                 {data?.name === currentChannel?.name ? (
                   <ListItemText>
                     <Link
-                      data-channel-name="data.name"
+                      data-channel-name={data.name}
                       to={'/channel/' + data.name}
                     >
                       <Typography variant="h6" color="secondary">

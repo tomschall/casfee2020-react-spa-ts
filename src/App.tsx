@@ -48,10 +48,12 @@ const App: React.FC = () => {
           <Switch>
             <Redirect exact from="/" to="/channel/general" />
             <Redirect exact from="/channel" to="/channel/general" />
+
             <PrivateRoute
               path="/channel/:channel/thread/:messageId"
               component={ThreadBoard}
             />
+            <PrivateRoute path="/channel/threads" component={ThreadBoard} />
             <PrivateRoute path="/channel/:channel" component={ChatBoard} />
 
             <PrivateRoute path="/add-user-to-channel" component={ChatBoard} />
@@ -76,6 +78,7 @@ const App: React.FC = () => {
               path="/channel/:channel/thread/:messageId"
               component={ThreadBoard}
             />
+            <PrivateRoute path="/channel/threads" component={ThreadBoard} />
             <PrivateRoute path="/channel/:channel" component={ChatBoard} />
 
             <PrivateRoute path="/dashboard" component={AdminBoard} />
