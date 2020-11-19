@@ -4,6 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import SideBar from '../../shared/SideBar';
 import { theme } from '../../../theme/theme';
 import Thread from './Thread';
+import ThreadListContainer from './ThreadListContainer';
+import { useParams } from 'react-router';
+import { ThreadParams } from '../../../interfaces/param.interface';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -29,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 const ThreadContainer: React.FC = () => {
   const classes = useStyles();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
+  const { channel } = useParams<ThreadParams>();
 
   return (
     <>
@@ -44,7 +48,7 @@ const ThreadContainer: React.FC = () => {
           </Grid>
         )}
         <Grid item xs={12}>
-          <Thread />
+          {channel ? <Thread /> : <ThreadListContainer />}
         </Grid>
       </Container>
     </>

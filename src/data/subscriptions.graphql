@@ -47,6 +47,44 @@ subscription watchChannelThreadMessages($limit: Int!, $message_id: Int!) {
   }
 }
 
+subscription watchThreads {
+  channel_thread(order_by: { id: desc }) {
+    id
+    message_id
+    message {
+      image
+      text
+      timestamp
+      id
+      user {
+        auth0_user_id
+        username
+      }
+      user_id
+      channel {
+        id
+        name
+      }
+    }
+    channel_thread_messages {
+      id
+      image
+      message
+      timestamp
+      user_id
+      user {
+        auth0_user_id
+        username
+      }
+    }
+    channel_thread_messages_aggregate {
+      aggregate {
+        count(columns: message)
+      }
+    }
+  }
+}
+
 subscription watchOnlineUsers {
   users: user_online(order_by: { username: asc }) {
     id
