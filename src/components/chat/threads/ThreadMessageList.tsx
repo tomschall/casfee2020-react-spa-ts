@@ -92,8 +92,8 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
   currentChannel,
 }) => {
   useEffect(() => {
-    scrollToBottom();
-  }, []);
+    //scrollToBottom();
+  }, [messages]);
 
   const classes = useStyles();
   const [showUpdate, setShowUpdate] = useState<boolean>(false);

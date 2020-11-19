@@ -48,7 +48,6 @@ interface ThreadListProps {
 }
 
 const ThreadList: React.FC<ThreadListProps> = ({ channelThread }) => {
-  console.log('channelThread', channelThread);
   const classes = useStyles();
 
   const [limit, setLimit] = useState(20);
@@ -74,8 +73,6 @@ const ThreadList: React.FC<ThreadListProps> = ({ channelThread }) => {
   const handleIncreaseLimit = () => {
     setLimit(limit + 20);
   };
-
-  // console.log('getChannelThreadData', getChannelThreadData);
 
   return (
     <>

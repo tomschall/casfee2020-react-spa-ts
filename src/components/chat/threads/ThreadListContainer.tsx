@@ -18,8 +18,6 @@ const ThreadListContainer: React.FC = () => {
     return <Alert severity="error">Thread Error</Alert>;
   }
 
-  console.log('data', data);
-
   return (
     <>
       {data?.channel_thread?.map((channelThread) => {
