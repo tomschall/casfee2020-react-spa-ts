@@ -32,7 +32,6 @@ const ChannelListMessageCounter: React.FC<ChannelListMessageCounterProps> = ({
   channelId,
 }) => {
   const classes = useStyles();
-  const [currentChannel] = useRecoilState<any>(currentChannelState);
   const { user, error: auth0Error } = useAuth0();
   const [count, setCount] = useState<number | undefined>(0);
 
@@ -67,17 +66,12 @@ const ChannelListMessageCounter: React.FC<ChannelListMessageCounterProps> = ({
     setCount(messageCounterArray?.length);
   }, [data, useWatchMessageCursorData]);
 
-  if (
-    error ||
-    !currentChannel?.name ||
-    useWatchMessageCursorError ||
-    auth0Error
-  ) {
+  if (error || useWatchMessageCursorError || auth0Error) {
     console.log(
       'Error in ChannelListMessageCounter Component',
       error,
       useWatchMessageCursorError,
-      !currentChannel?.name,
+
       auth0Error,
     );
     // return (

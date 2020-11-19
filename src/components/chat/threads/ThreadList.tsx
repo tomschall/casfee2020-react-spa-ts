@@ -21,7 +21,6 @@ import ThreadMessageInput from './ThreadMessageInput';
 const useStyles = makeStyles((theme) => ({
   root: {
     overflowY: 'scroll',
-    height: '75vh',
     marginTop: theme.spacing(5),
   },
   messageContainer: {
