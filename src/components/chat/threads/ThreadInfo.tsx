@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { ThreadMessage } from '../../../interfaces/message/message.interface';
+import { ThreadMessage } from '../../../interfaces/message.interface';
 import {
   Avatar,
   Badge,

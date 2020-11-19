@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
-import { isObject } from 'util';
-import { ThreadMessage } from '../../../interfaces/message/message.interface';
+import { ThreadMessage } from '../../../interfaces/message.interface';
 import ThreadInfo from './ThreadInfo';
 import DeleteMessage from '../DeleteMessage';
 import UpdateMessage from '../UpdateMessage';
@@ -107,7 +106,11 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
   const deletedMessage = useRecoilValue<boolean>(deletedMessageState);
 
   const scrollToBottom = () => {
-    if (isObject(messagesEndRef) && messagesEndRef.current !== null) {
+    if (
+      messagesEndRef !== null &&
+      typeof messagesEndRef === 'object' &&
+      messagesEndRef.current !== null
+    ) {
       messagesEndRef.current.scrollIntoView();
     }
   };

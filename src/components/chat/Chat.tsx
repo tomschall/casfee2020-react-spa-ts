@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Grid, List } from '@material-ui/core';
 import MessageList from './MessageList';
-import { Message } from '../../interfaces/message/message.interface';
+import { Message } from '../../interfaces/message.interface';
 import {
   useWatchMessagesSubscription,
   Channel_Type_Enum,

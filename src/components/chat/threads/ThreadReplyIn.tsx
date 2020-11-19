@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography, makeStyles, Box } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { Message } from '../../../interfaces/message/message.interface';
+import { Message } from '../../../interfaces/message.interface';
 
 const useStyles = makeStyles((theme) => ({
   [theme.breakpoints.up('md')]: {

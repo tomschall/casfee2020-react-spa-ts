@@ -13,7 +13,8 @@ import {
 import ThreadMessageList from './ThreadMessageList';
 import ThreadMenuBar from './ThreadMenuBar';
 import { Alert } from '@material-ui/lab';
-import { ThreadMessage } from '../../../interfaces/message/message.interface';
+import { ThreadMessage } from '../../../interfaces/message.interface';
+import { ThreadParams } from '../../../interfaces/param.interface';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,12 +53,12 @@ const Thread: React.FC = () => {
   );
   let history = useHistory();
 
-  const { messageId, channel } = useParams();
+  const { messageId, channel } = useParams<ThreadParams>();
 
   const { data, loading, error } = useWatchChannelThreadMessagesSubscription({
     variables: {
       limit,
-      message_id: messageId,
+      message_id: parseInt(messageId),
     },
   });
 
@@ -67,7 +68,7 @@ const Thread: React.FC = () => {
     error: getChannelThreadError,
   } = useGetChannelThreadQuery({
     variables: {
-      message_id: messageId,
+      message_id: parseInt(messageId),
     },
   });
 

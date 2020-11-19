@@ -4,7 +4,7 @@ import ReplyIcon from '@material-ui/icons/Reply';
 import { useHistory } from 'react-router';
 import { useInsertChannelThreadMutation } from '../../../api/generated/graphql';
 import { Alert } from '@material-ui/lab';
-import { Message } from '../../../interfaces/message/message.interface';
+import { Message } from '../../../interfaces/message.interface';
 
 interface ThreadReplyProps {
   channelName: string;

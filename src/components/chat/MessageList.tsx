@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
-import { isObject } from 'util';
-import { Message } from '../../interfaces/message/message.interface';
+import { Message } from '../../interfaces/message.interface';
 import ThreadReply from './threads/ThreadReply';
 import ThreadReplyIn from './threads/ThreadReplyIn';
 import DeleteMessage from './DeleteMessage';
@@ -20,6 +19,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useRecoilValue } from 'recoil';
 import { deletedMessageState } from '../../atom';
 import { useParams } from 'react-router';
+import { ChatParams } from '../../interfaces/param.interface';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,12 +77,16 @@ const MessageList: React.FC<MessageProps> = ({
   );
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { channel: channelName } = useParams();
+  const { channel: channelName } = useParams<ChatParams>();
 
   const deletedMessage = useRecoilValue<boolean>(deletedMessageState);
 
   const scrollToBottom = () => {
-    if (isObject(messagesEndRef) && messagesEndRef.current !== null) {
+    if (
+      messagesEndRef !== null &&
+      typeof messagesEndRef === 'object' &&
+      messagesEndRef.current !== null
+    ) {
       messagesEndRef.current.scrollIntoView();
     }
   };

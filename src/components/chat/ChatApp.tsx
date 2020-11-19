@@ -6,6 +6,7 @@ import { useGetChannelByNameQuery } from '../../api/generated/graphql';
 import { currentChannelState } from '../../atom';
 import Chat from './Chat';
 import Loader from '../shared/Loader';
+import { ChatParams } from '../../interfaces/param.interface';
 
 const ChatApp: React.FC = () => {
   const [currentChannel, setCurrentChannel] = useRecoilState<any>(
@@ -13,7 +14,7 @@ const ChatApp: React.FC = () => {
   );
 
   const { isAuthenticated, isLoading: isLoadingAuth0, error } = useAuth0();
-  const { channel: channelName } = useParams();
+  const { channel: channelName } = useParams<ChatParams>();
 
   const {
     data,
