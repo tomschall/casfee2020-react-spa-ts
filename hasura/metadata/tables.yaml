@@ -309,6 +309,7 @@
               _eq: false
       columns:
       - channel_id
+      - deleted
       - id
       - image
       - text
@@ -319,6 +320,7 @@
     permission:
       columns:
       - channel_id
+      - deleted
       - id
       - image
       - text
@@ -342,6 +344,7 @@
     permission:
       columns:
       - channel_id
+      - deleted
       - image
       - text
       - user_id

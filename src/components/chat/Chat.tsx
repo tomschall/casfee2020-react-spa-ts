@@ -75,17 +75,17 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
       loading: upsertMessageLoading,
       error: upsertMessageError,
     },
-  ] = useUpsertMessageCursorMutation({
-    variables: {
-      channel_id: channelId,
-      message_id: data?.messages[0]?.id ?? 0,
-      user_id: user.sub,
-    },
-  });
+  ] = useUpsertMessageCursorMutation();
 
   useEffect(() => {
-    if (data?.messages[0]?.id && data.messages[0].id > 0)
-      upsertMessageCursorMutation();
+    if (data?.messages[0]?.id)
+      upsertMessageCursorMutation({
+        variables: {
+          channel_id: channelId,
+          message_id: data?.messages[0]?.id,
+          user_id: user.sub,
+        },
+      });
   }, [data]);
 
   if (error) {

@@ -54,12 +54,11 @@ const ChannelListMessageCounter: React.FC<ChannelListMessageCounterProps> = ({
   });
 
   useEffect(() => {
-    let messageId = useWatchMessageCursorData?.message_cursor[0]?.message_id
-      ? useWatchMessageCursorData?.message_cursor[0]?.message_id
-      : 0;
+    let messageId =
+      useWatchMessageCursorData?.message_cursor[0]?.message_id ?? undefined;
 
     let messageCounterArray = data?.messages.filter((m) => {
-      if (messageId === 0) return false;
+      if (messageId === undefined) return false;
       return m.id > messageId;
     });
 
@@ -71,14 +70,8 @@ const ChannelListMessageCounter: React.FC<ChannelListMessageCounterProps> = ({
       'Error in ChannelListMessageCounter Component',
       error,
       useWatchMessageCursorError,
-
       auth0Error,
     );
-    // return (
-    //   <Alert severity="error">
-    //     Error in ChannelListMessageCounter Component
-    //   </Alert>
-    // );
   }
 
   if (loading || useWatchMessageCursorLoading) {
@@ -87,7 +80,7 @@ const ChannelListMessageCounter: React.FC<ChannelListMessageCounterProps> = ({
 
   return (
     <>
-      {count && count > 0 ? (
+      {count && count !== undefined ? (
         <div className={classes.root}>
           <Chip
             variant="outlined"
