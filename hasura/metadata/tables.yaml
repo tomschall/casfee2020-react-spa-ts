@@ -255,8 +255,13 @@
   - role: user
     permission:
       filter:
-        user_id:
-          _eq: X-Hasura-User-Id
+        _or:
+        - user_id:
+            _eq: X-Hasura-User-Id
+        - channel_thread:
+            message:
+              user_id:
+                _eq: X-Hasura-User-Id
 - table:
     schema: public
     name: channel_type

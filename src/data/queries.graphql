@@ -130,6 +130,7 @@ query getChannelThread($message_id: Int) {
       id
       image
       text
+      deleted
       timestamp
       user {
         auth0_user_id

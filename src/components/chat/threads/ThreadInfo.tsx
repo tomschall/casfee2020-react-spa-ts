@@ -104,7 +104,14 @@ const ThreadInfo: React.FC<ThreadInfoProps> = ({
             <ListItemAvatar>
               <ListItemIcon>
                 <Badge variant="dot">
-                  <Avatar alt="Username" src="https://picsum.photos/100" />
+                  {!channelThread.message.deleted ? (
+                    <Avatar alt="Username" src="https://picsum.photos/100" />
+                  ) : (
+                    <Avatar
+                      alt="Message has been removed"
+                      src={`${window.location.origin}/deleted.png`}
+                    />
+                  )}
                 </Badge>
               </ListItemIcon>
             </ListItemAvatar>
@@ -121,8 +128,14 @@ const ThreadInfo: React.FC<ThreadInfoProps> = ({
                 alignItems="flex-start"
               >
                 <Typography variant="caption">
-                  <strong>{channelThread.message.user.username} </strong>
-                  <i>{moment(channelThread.message.timestamp).fromNow()}</i>
+                  {!channelThread.message.deleted ? (
+                    <>
+                      <strong>{channelThread.message.user.username} </strong>
+                      <i>{moment(channelThread.message.timestamp).fromNow()}</i>
+                    </>
+                  ) : (
+                    <strong>Oh sorry it seems...</strong>
+                  )}
                 </Typography>
                 <Divider className={classes.vspace} />
               </Box>

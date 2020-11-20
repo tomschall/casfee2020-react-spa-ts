@@ -4,6 +4,7 @@ export interface Message {
   text: string;
   image: string;
   timestamp: Date;
+  deleted?: boolean;
   user?: any;
   channel?: any;
   channel_threads?: any;

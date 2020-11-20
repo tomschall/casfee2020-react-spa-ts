@@ -5,6 +5,7 @@ import ThreadReply from './threads/ThreadReply';
 import ThreadReplyIn from './threads/ThreadReplyIn';
 import DeleteMessage from './DeleteMessage';
 import UpdateMessage from './UpdateMessage';
+import ReplaceMessage from './ReplaceMessage';
 import {
   Avatar,
   Badge,
@@ -104,7 +105,14 @@ const MessageList: React.FC<MessageProps> = ({
           <ListItemAvatar>
             <ListItemIcon>
               <Badge variant="dot">
-                <Avatar alt="Username" src="https://picsum.photos/100" />
+                {!message.deleted ? (
+                  <Avatar alt="Username" src="https://picsum.photos/100" />
+                ) : (
+                  <Avatar
+                    alt="Message has been removed"
+                    src={`${window.location.origin}/deleted.png`}
+                  />
+                )}
               </Badge>
             </ListItemIcon>
           </ListItemAvatar>
@@ -121,8 +129,14 @@ const MessageList: React.FC<MessageProps> = ({
               alignItems="flex-start"
             >
               <Typography variant="caption">
-                <strong>{message.user.username} </strong>
-                <i>{moment(message.timestamp).fromNow()}</i>
+                {!message.deleted ? (
+                  <>
+                    <strong>{message.user.username} </strong>
+                    <i>{moment(message.timestamp).fromNow()}</i>
+                  </>
+                ) : (
+                  <strong>Oh sorry it seems...</strong>
+                )}
               </Typography>
               <Divider className={classes.vspace} />
             </Box>
@@ -135,15 +149,24 @@ const MessageList: React.FC<MessageProps> = ({
                 <Typography variant="caption">
                   <ThreadReply message={message} channelName={channelName} />
                 </Typography>
-
-                {user.sub === message.user.auth0_user_id ? (
-                  <Typography variant="caption">
-                    {showUpdate && showUpdateMessageId === message.id ? (
-                      ''
-                    ) : (
-                      <DeleteMessage messageId={message.id} />
+                {!message.deleted ? (
+                  <React.Fragment>
+                    {user.sub === message.user.auth0_user_id && (
+                      <Typography variant="caption">
+                        {!(
+                          showUpdate && showUpdateMessageId === message.id
+                        ) && (
+                          <React.Fragment>
+                            {message.channel_threads.length ? (
+                              <ReplaceMessage messageId={message.id} />
+                            ) : (
+                              <DeleteMessage messageId={message.id} />
+                            )}
+                          </React.Fragment>
+                        )}
+                      </Typography>
                     )}
-                  </Typography>
+                  </React.Fragment>
                 ) : (
                   ''
                 )}
@@ -158,7 +181,8 @@ const MessageList: React.FC<MessageProps> = ({
           >
             {showUpdate &&
             showUpdateMessageId === message.id &&
-            user.sub === message.user.auth0_user_id ? (
+            user.sub === message.user.auth0_user_id &&
+            message.deleted === false ? (
               <UpdateMessage message={message} />
             ) : (
               message.text

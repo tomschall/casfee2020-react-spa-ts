@@ -8,6 +8,7 @@ subscription watchMessages($channelId: Int!, $limit: Int) {
     text
     image
     timestamp
+    deleted
     user {
       username
       auth0_user_id
@@ -54,6 +55,7 @@ subscription watchThreads {
     message {
       image
       text
+      deleted
       timestamp
       id
       user {
