@@ -23,7 +23,6 @@ import {
   useSetUserVotePollQuestionMutation,
 } from '../../api/generated/graphql';
 import { makeStyles } from '@material-ui/core/styles';
-import { empty } from '@apollo/client';
 
 const useStyles = makeStyles((theme) => ({
   root: {},

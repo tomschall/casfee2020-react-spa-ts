@@ -57,7 +57,7 @@ interface Props {
   question_id?: number;
 }
 
-const GetPollQuestions: React.FC<Props> = () => {
+const GetPollQuestions: React.FC<Props> = ({ question_text, question_id }) => {
   const classes = useStyles();
   const { data, loading, error } = useWatchGetPollQuestionsSubscription({
     variables: {},

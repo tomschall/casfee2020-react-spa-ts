@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useForm } from 'react-hook-form';
 import {
   Box,
   Button,
-  Chip,
   Divider,
   FormGroup,
   Grid,
@@ -13,18 +12,17 @@ import {
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
-import LockIcon from '@material-ui/icons/Lock';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
 import {
   useWatchGetPollQuestionSubscription,
   useWatchGetPollAnswersSubscription,
   useAddAnswerToQuestionMutation,
-  useSetPublishPollQuestionStateMutation,
   useUpdatePollAnswerTextMutation,
   useDeletePollAnswerIdMutation,
 } from '../../api/generated/graphql';
 import { getPollQuestionAnswers } from '../../atom';
 import GetChannels from './GetChannels';
+import GetPollAnswerId from './GetPollAnswerId';
+import SetPollQuestionLockState from './SetPollQuestionLockState';
 import Loader from '../shared/Loader';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -74,8 +72,6 @@ const PollAnswers: React.FC = () => {
   const [updateEnabled, setUpdateEnabled] = React.useState(true);
   const pollQuestionId = useRecoilValue(getPollQuestionAnswers);
   const [pollQuestionActiveState] = React.useState<boolean>();
-
-  // GRAPHQL MUTATIONS
   const getPollQuestion = useWatchGetPollQuestionSubscription({
     variables: {
       pollQuestionId: pollQuestionId,
@@ -93,19 +89,23 @@ const PollAnswers: React.FC = () => {
     },
   });
   console.log(data);
-
   const [addPollQuestionMutation] = useAddAnswerToQuestionMutation();
-  const [setPollQuestionState] = useSetPublishPollQuestionStateMutation({
-    variables: {
-      pollQuestionId: pollQuestionId,
-      is_active: pollQuestionActiveState,
-    },
-  });
   const [deletePollAnswerIdMutation] = useDeletePollAnswerIdMutation({
     variables: {
       pollAnswerId: currentAnswerId,
     },
   });
+
+  useEffect(() => {}, [
+    answerText,
+    currentAnswerId,
+    updateEnabled,
+    pollQuestionId,
+    pollQuestionActiveState,
+    getPollQuestion,
+    updatePollAnswerTextMutation,
+    data,
+  ]);
 
   // EVENT HANDLING
   const handleNewAnswerChange = (index?: number, e?: any) => {
@@ -137,20 +137,6 @@ const PollAnswers: React.FC = () => {
     answerText.text = '';
   };
 
-  // HANDLE SET POLL QUESTION PUBLISH STATE
-  const handleSetPollQuestionPublishState = async () => {
-    const getActivePollQuestionState =
-      getPollQuestion.data?.poll_question[0].is_active;
-
-    await setPollQuestionState({
-      variables: {
-        pollQuestionId: pollQuestionId,
-        is_active: !getActivePollQuestionState,
-      },
-    });
-  };
-
-  // HANDLE ADD ANSWER
   const handleAddAnswer = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -181,12 +167,7 @@ const PollAnswers: React.FC = () => {
     <>
       <Grid item xs={12}>
         <Box mt={3} p={0}>
-          <Chip
-            color="secondary"
-            size="small"
-            variant="outlined"
-            label={'Poll question id: ' + pollQuestionId}
-          />
+          <GetPollAnswerId pollQuestionId={pollQuestionId} />
         </Box>
 
         <Box
@@ -203,25 +184,12 @@ const PollAnswers: React.FC = () => {
               : 'no value'}
           </Typography>
 
-          {getPollQuestion?.data?.poll_question[0]?.is_active ? (
-            <Button
-              variant="outlined"
-              color="secondary"
-              startIcon={<LockIcon className={classes.lock} />}
-              onClick={handleSetPollQuestionPublishState}
-            >
-              locked
-            </Button>
-          ) : (
-            <Button
-              variant="text"
-              color="primary"
-              startIcon={<LockOpenIcon className={classes.unlock} />}
-              onClick={handleSetPollQuestionPublishState}
-            >
-              unlock
-            </Button>
-          )}
+          <SetPollQuestionLockState
+            pollQuestionId={pollQuestionId}
+            setActiveState={
+              getPollQuestion?.data?.poll_question[0]?.is_active ? true : false
+            }
+          />
         </Box>
         <form
           className={classes.form}

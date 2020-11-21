@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   Box,
   Button,
@@ -48,12 +48,17 @@ interface AdminPollingsProps {
 }
 
 const PollingDashBoard: React.FC<AdminPollingsProps> = () => {
+  const inputRef = useRef();
   const classes = useStyles();
   const { user: userAuth0, isLoading: loadingAuth0 } = useAuth0();
   const [addPollQuestionMutation] = useAddPollQuestionMutation();
   const [pollTitle, setPollTitle] = React.useState<{ title: string }>({
     title: '',
   });
+
+  useEffect(() => {
+    // console.log('RENDER POLLING DASHBOARD', inputRef, pollTitle);
+  }, [inputRef, pollTitle]);
 
   const handleChange = (e: any) => {
     setPollTitle({ ...pollTitle, [e.target.id]: e.target.value });
@@ -62,19 +67,16 @@ const PollingDashBoard: React.FC<AdminPollingsProps> = () => {
   const handleAddTitle = async (e: any) => {
     e.preventDefault();
 
-    try {
-      if (pollTitle.title === '') return;
+    if (pollTitle.title === '') return;
 
-      await addPollQuestionMutation({
-        variables: {
-          text: pollTitle.title,
-          owner_id: userAuth0.sub,
-        },
-      });
-      setPollTitle({ title: '' });
-    } catch (e) {
-      console.log('error on mutation addPollQuestion');
-    }
+    await addPollQuestionMutation({
+      variables: {
+        text: pollTitle.title,
+        owner_id: userAuth0.sub,
+      },
+    });
+
+    setPollTitle({ title: '' });
   };
 
   return (
@@ -92,6 +94,7 @@ const PollingDashBoard: React.FC<AdminPollingsProps> = () => {
           <FormGroup>
             <TextField
               id="title"
+              inputRef={inputRef}
               required
               value={pollTitle.title}
               onChange={handleChange}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { getPollQuestionAnswers } from '../../atom';
 import {
@@ -41,7 +41,7 @@ const GetChannels: React.FC = () => {
     variables: {},
   });
 
-  console.log('CHECK CHANNEL ACTIVE STATE', checkActiveChannelState);
+  useEffect(() => {}, [checkActiveChannelState, open, channelID, data]);
 
   const [pollQuestionToChannel] = useAddPublishPollQuestionToChannelMutation();
   const [
