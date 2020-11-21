@@ -17,7 +17,6 @@ import AddGif from '@material-ui/icons/Gif';
 import SideBar from '../../shared/SideBar';
 import ThreadMessageInput from './ThreadMessageInput';
 import GiphyCarousel from '../../shared/GiphyCarousel';
-
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import ExpandLess from '@material-ui/icons/ExpandLess';
@@ -94,14 +93,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface ThreadMenuBarProps {
-  channelId: number;
   channelThreadId: number | undefined;
 }
 
-const ThreadMenuBar: React.FC<ThreadMenuBarProps> = ({
-  channelId,
-  channelThreadId,
-}) => {
+const ThreadMenuBar: React.FC<ThreadMenuBarProps> = ({ channelThreadId }) => {
   const { user } = useAuth0();
   const classes = useStyles();
   const matches = useMediaQuery(theme.breakpoints.up('md'));

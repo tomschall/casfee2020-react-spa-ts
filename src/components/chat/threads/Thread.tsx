@@ -76,9 +76,9 @@ const Thread: React.FC = () => {
     if (currentChannel?.id === undefined) history.push(`/channel/${channel}`);
   }, []);
 
-  if (loading) return <CircularProgress />;
+  if (loading || getChannelThreadLoading) return <CircularProgress />;
 
-  if (error) {
+  if (error || getChannelThreadError) {
     console.log('error', error);
     return <Alert severity="error">Thread Error</Alert>;
   }
@@ -105,7 +105,6 @@ const Thread: React.FC = () => {
           </Grid>
           <Box maxWidth="xl" component="nav">
             <ThreadMenuBar
-              channelId={currentChannel?.id}
               channelThreadId={getChannelThreadData?.channel_thread[0]?.id}
             />
           </Box>

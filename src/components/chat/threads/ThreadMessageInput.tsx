@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { TextField, Button, Box } from '@material-ui/core';
+import { TextField, Button, Box, Chip } from '@material-ui/core';
 import { theme } from '../../../theme/theme';
 import Icon from '@material-ui/core/Icon';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -13,11 +13,13 @@ import { useRecoilState } from 'recoil';
 import { giphyState, deletedMessageState } from '../../../atom';
 import { IGif } from '@giphy/js-types';
 import { makeStyles } from '@material-ui/core/styles';
+import GiphyCarousel from '../../shared/GiphyCarousel';
+import AddGif from '@material-ui/icons/Gif';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
   },
   giphyImage: {
@@ -93,6 +95,8 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
     deletedMessageState,
   );
 
+  const [showGiphyCarousel, setShowGiphyCarousel] = React.useState(false);
+
   const channelId = props.channelId;
 
   const [
@@ -148,8 +152,26 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
     setdeletedMessage(false);
   };
 
+  const handleGiphyClick = () => {
+    setShowGiphyCarousel(!showGiphyCarousel);
+  };
+
+  const hideGiphyCarousel = () => {
+    setShowGiphyCarousel(false);
+  };
+
   return (
     <div className={classes.root}>
+      <Box>
+        <Chip
+          variant="outlined"
+          color="primary"
+          size="small"
+          icon={<AddGif />}
+          label="+Gif"
+          onClick={handleGiphyClick}
+        />
+      </Box>
       <Box className={classes.giphyImage}>
         {gif && (
           <img
@@ -159,13 +181,24 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
           />
         )}
       </Box>
+      <Box>
+        <Box
+          style={{ display: showGiphyCarousel ? 'flex' : 'none' }}
+          className={classes.giphyImage}
+          order={1}
+          flex="1"
+          justifyContent="flex-end"
+          alignItems="flex-end"
+        >
+          <GiphyCarousel hideGiphyCarousel={() => hideGiphyCarousel()} />
+        </Box>
+      </Box>
       <form
         noValidate
         autoComplete="off"
         className={classes.form}
         onSubmit={handleSubmit}
       >
-        {/* <TypingIndicator /> */}
         <TextField
           value={text}
           autoFocus={true}

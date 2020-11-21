@@ -147,8 +147,8 @@ const ThreadInfo: React.FC<ThreadInfoProps> = ({
         </ListItem>
         <Box className={classes.vspaceBottom}>
           <Typography component="div" className={classes.reply}>
-            {messages.length}
-            {messages.length === 1 ? ' reply' : ' replies'}
+            {messages?.length}
+            {messages?.length === 1 ? ' reply' : ' replies'}
           </Typography>
         </Box>
       </React.Fragment>
