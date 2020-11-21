@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import { useForm } from 'react-hook-form';
 import {
   Box,
   Button,
@@ -17,12 +16,12 @@ import {
   useWatchGetPollAnswersSubscription,
   useAddAnswerToQuestionMutation,
   useUpdatePollAnswerTextMutation,
-  useDeletePollAnswerIdMutation,
 } from '../../api/generated/graphql';
 import { getPollQuestionAnswers } from '../../atom';
 import GetChannels from './GetChannels';
 import GetPollAnswerId from './GetPollAnswerId';
 import SetPollQuestionLockState from './SetPollQuestionLockState';
+import DeleteAnswer from './DeleteAnswer';
 import Loader from '../shared/Loader';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -69,7 +68,6 @@ const PollAnswers: React.FC = () => {
   });
   const [answerTextUpdateId, setAnswerTextUpdateId] = React.useState<number>(0);
   const [currentAnswerId, setCurrentAnswerId] = React.useState<number>(0);
-  const [updateEnabled, setUpdateEnabled] = React.useState(true);
   const pollQuestionId = useRecoilValue(getPollQuestionAnswers);
   const [pollQuestionActiveState] = React.useState<boolean>();
   const getPollQuestion = useWatchGetPollQuestionSubscription({
@@ -90,16 +88,10 @@ const PollAnswers: React.FC = () => {
   });
   console.log(data);
   const [addPollQuestionMutation] = useAddAnswerToQuestionMutation();
-  const [deletePollAnswerIdMutation] = useDeletePollAnswerIdMutation({
-    variables: {
-      pollAnswerId: currentAnswerId,
-    },
-  });
 
   useEffect(() => {}, [
     answerText,
     currentAnswerId,
-    updateEnabled,
     pollQuestionId,
     pollQuestionActiveState,
     getPollQuestion,
@@ -111,20 +103,17 @@ const PollAnswers: React.FC = () => {
   const handleNewAnswerChange = (index?: number, e?: any) => {
     setAnswerNewText({ text: e.target.value });
     setCurrentAnswerId(e.target.id);
-    setUpdateEnabled(false);
     console.log(index, e.target.value, answerText.text);
   };
 
   const handleAnswerChange = (index?: number, e?: any) => {
     setAnswerText({ text: e.target.value });
     setCurrentAnswerId(e.target.id);
-    setUpdateEnabled(false);
     console.log(index, e.target.value, answerText.text);
   };
 
   const handleUpdateAnswerText = async (answerId: number) => {
     setAnswerTextUpdateId(answerId);
-    setUpdateEnabled(true);
 
     if (answerId === undefined || answerText.text === '') return;
 
@@ -149,14 +138,6 @@ const PollAnswers: React.FC = () => {
     });
 
     setAnswerNewText({ text: '' });
-  };
-
-  const handleDeleteAnswer = async (answerId: number) => {
-    await deletePollAnswerIdMutation({
-      variables: {
-        pollAnswerId: answerId,
-      },
-    });
   };
 
   if (getPollQuestion.loading || loading) {
@@ -302,39 +283,21 @@ const PollAnswers: React.FC = () => {
                       variant="contained"
                       size="large"
                       color="secondary"
-                      disabled={
-                        answer.id !== answerTextUpdateId
-                          ? true
-                          : false || updateEnabled === true
-                      }
-                      onBlur={() => {
-                        setUpdateEnabled(true);
-                        console.log(updateEnabled);
-                      }}
+                      disabled={answer.id !== answerTextUpdateId ? true : false}
                       onClick={() => {
                         handleUpdateAnswerText(answer.id);
                       }}
                     >
                       Update
                     </Button>
-                    <Button
-                      style={{
-                        marginTop: '8px',
-                        marginLeft: '8px',
-                        maxWidth: '100px',
-                      }}
-                      variant="outlined"
-                      size="large"
-                      color="secondary"
-                      disabled={
+                    <DeleteAnswer
+                      answerId={answer.id}
+                      setActiveState={
                         getPollQuestion?.data?.poll_question[0]?.is_active
+                          ? true
+                          : false
                       }
-                      onClick={() => {
-                        handleDeleteAnswer(answer.id);
-                      }}
-                    >
-                      Delete
-                    </Button>
+                    />
                     <Button
                       style={{
                         marginTop: '8px',
