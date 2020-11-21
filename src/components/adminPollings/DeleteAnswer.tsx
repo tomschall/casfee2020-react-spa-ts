@@ -5,7 +5,6 @@ import { Button } from '@material-ui/core';
 interface DeleteAnswerProps {
   answerId: number;
   setActiveState: boolean;
-  // onClick: () => void;
 }
 
 const DeleteAnswer: React.FC<DeleteAnswerProps> = ({
@@ -19,6 +18,7 @@ const DeleteAnswer: React.FC<DeleteAnswerProps> = ({
   });
 
   console.log('answerId', answerId, setActiveState);
+  useEffect(() => {}, [answerId, setActiveState]);
 
   const handleDeleteAnswer = async (answerId: number) => {
     await deletePollAnswerIdMutation({

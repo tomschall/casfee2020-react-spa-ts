@@ -9,20 +9,17 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import {
   useWatchGetPollQuestionSubscription,
-  useWatchGetPollAnswersSubscription,
   useAddAnswerToQuestionMutation,
   useUpdatePollAnswerTextMutation,
 } from '../../api/generated/graphql';
 import { getPollQuestionAnswers } from '../../atom';
 import GetChannels from './GetChannels';
 import GetPollAnswerId from './GetPollAnswerId';
+import PollAnswerList from './PollAnswerList';
 import SetPollQuestionLockState from './SetPollQuestionLockState';
-import DeleteAnswer from './DeleteAnswer';
-import Loader from '../shared/Loader';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -81,12 +78,7 @@ const PollAnswers: React.FC = () => {
       pollAnswerId: answerTextUpdateId,
     },
   });
-  const { data, loading } = useWatchGetPollAnswersSubscription({
-    variables: {
-      pollQuestionId: pollQuestionId,
-    },
-  });
-  console.log(data);
+
   const [addPollQuestionMutation] = useAddAnswerToQuestionMutation();
 
   useEffect(() => {}, [
@@ -96,34 +88,12 @@ const PollAnswers: React.FC = () => {
     pollQuestionActiveState,
     getPollQuestion,
     updatePollAnswerTextMutation,
-    data,
   ]);
 
-  // EVENT HANDLING
   const handleNewAnswerChange = (index?: number, e?: any) => {
     setAnswerNewText({ text: e.target.value });
     setCurrentAnswerId(e.target.id);
     console.log(index, e.target.value, answerText.text);
-  };
-
-  const handleAnswerChange = (index?: number, e?: any) => {
-    setAnswerText({ text: e.target.value });
-    setCurrentAnswerId(e.target.id);
-    console.log(index, e.target.value, answerText.text);
-  };
-
-  const handleUpdateAnswerText = async (answerId: number) => {
-    setAnswerTextUpdateId(answerId);
-
-    if (answerId === undefined || answerText.text === '') return;
-
-    await updatePollAnswerTextMutation({
-      variables: {
-        text: Object.values(answerText)[0],
-        pollAnswerId: answerId,
-      },
-    });
-    answerText.text = '';
   };
 
   const handleAddAnswer = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -139,10 +109,6 @@ const PollAnswers: React.FC = () => {
 
     setAnswerNewText({ text: '' });
   };
-
-  if (getPollQuestion.loading || loading) {
-    return <Loader />;
-  }
 
   return (
     <>
@@ -182,7 +148,6 @@ const PollAnswers: React.FC = () => {
             <TextField
               key={getPollQuestion?.data?.poll_question[0]?.id}
               name="poll_answer"
-              defaultValue=""
               value={answerNewText.text}
               required
               disabled={getPollQuestion?.data?.poll_question[0]?.is_active}
@@ -227,98 +192,7 @@ const PollAnswers: React.FC = () => {
         <Divider className={classes.divider} />
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="h3">Answers to these question</Typography>
-        {data?.poll_answers.length === 0 ? (
-          <Alert severity="info">Please add an answer to the poll.</Alert>
-        ) : (
-          data?.poll_answers
-            .sort((a, b) => a.id - b.id)
-            .map((answer) => (
-              <FormGroup row key={answer.id}>
-                <Grid item xs={8}>
-                  <TextField
-                    key={answer.id}
-                    name={answer.text + answer.id}
-                    required
-                    disabled={getPollQuestion.data?.poll_question[0]?.is_active}
-                    onChange={(e) => {
-                      handleAnswerChange(answer?.id, e);
-                      setAnswerTextUpdateId(answer.id);
-                    }}
-                    onClick={() => {
-                      console.log('clicked');
-                      answerText.text = '';
-                    }}
-                    size="medium"
-                    variant="outlined"
-                    color="secondary"
-                    autoComplete="off"
-                    placeholder="Type your answers here ..."
-                    label={answer.text}
-                    fullWidth
-                    margin="dense"
-                    InputProps={{
-                      classes: {
-                        input: classes.messageInput,
-                      },
-                    }}
-                    InputLabelProps={{
-                      className: classes.messageInput,
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <Box
-                    display="flex"
-                    justifyContent="flex-end"
-                    alignItems="center"
-                  >
-                    <Button
-                      style={{
-                        marginTop: '8px',
-                        marginLeft: '8px',
-                        maxWidth: '100px',
-                      }}
-                      key={answer.id}
-                      variant="contained"
-                      size="large"
-                      color="secondary"
-                      disabled={answer.id !== answerTextUpdateId ? true : false}
-                      onClick={() => {
-                        handleUpdateAnswerText(answer.id);
-                      }}
-                    >
-                      Update
-                    </Button>
-                    <DeleteAnswer
-                      answerId={answer.id}
-                      setActiveState={
-                        getPollQuestion?.data?.poll_question[0]?.is_active
-                          ? true
-                          : false
-                      }
-                    />
-                    <Button
-                      style={{
-                        marginTop: '8px',
-                        marginLeft: '8px',
-                        whiteSpace: 'nowrap',
-                        maxWidth: '100px',
-                        minWidth: '80px',
-                      }}
-                      variant="outlined"
-                      size="large"
-                      color="secondary"
-                      disabled={answer.votes !== undefined}
-                    >
-                      {answer.votes ? answer.votes : 'no votes'}
-                    </Button>
-                  </Box>
-                </Grid>
-              </FormGroup>
-            ))
-        )}
-
+        <PollAnswerList pollQuestionId={pollQuestionId} />
         <Divider className={classes.divider} />
         <GetChannels />
       </Grid>

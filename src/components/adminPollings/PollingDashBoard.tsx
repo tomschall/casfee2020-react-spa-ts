@@ -48,7 +48,6 @@ interface AdminPollingsProps {
 }
 
 const PollingDashBoard: React.FC<AdminPollingsProps> = () => {
-  const inputRef = useRef();
   const classes = useStyles();
   const { user: userAuth0, isLoading: loadingAuth0 } = useAuth0();
   const [addPollQuestionMutation] = useAddPollQuestionMutation();
@@ -58,7 +57,7 @@ const PollingDashBoard: React.FC<AdminPollingsProps> = () => {
 
   useEffect(() => {
     // console.log('RENDER POLLING DASHBOARD', inputRef, pollTitle);
-  }, [inputRef, pollTitle]);
+  }, [pollTitle]);
 
   const handleChange = (e: any) => {
     setPollTitle({ ...pollTitle, [e.target.id]: e.target.value });
@@ -94,7 +93,6 @@ const PollingDashBoard: React.FC<AdminPollingsProps> = () => {
           <FormGroup>
             <TextField
               id="title"
-              inputRef={inputRef}
               required
               value={pollTitle.title}
               onChange={handleChange}
