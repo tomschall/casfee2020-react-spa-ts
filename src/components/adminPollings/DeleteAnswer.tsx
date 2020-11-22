@@ -17,7 +17,6 @@ const DeleteAnswer: React.FC<DeleteAnswerProps> = ({
     },
   });
 
-  console.log('answerId', answerId, setActiveState);
   useEffect(() => {}, [answerId, setActiveState]);
 
   const handleDeleteAnswer = async (answerId: number) => {

@@ -2,6 +2,7 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import { useAuth0 } from '@auth0/auth0-react';
 import { currentChannelState } from '../../atom.js';
+import ResultGraph from './ResultGraph';
 import Loader from '../shared/Loader';
 import {
   Box,
@@ -11,7 +12,6 @@ import {
   RadioGroup,
   FormControlLabel,
   FormControl,
-  LinearProgress,
   Paper,
   Typography,
 } from '@material-ui/core';
@@ -89,42 +89,6 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
     },
   });
 
-  const LinearProgressWithLabel = (props: any) => {
-    return (
-      <Box
-        width="100%"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        flexDirection="row"
-      >
-        <Box width="100%" mr={1}>
-          <LinearProgress
-            id={pollAnswerId}
-            color={
-              userVote?.user_votes[0].poll_answer_id === props.answerid
-                ? 'secondary'
-                : 'primary'
-            }
-            variant="determinate"
-            {...props}
-          />
-        </Box>
-        <Box minWidth={0}>
-          <Typography variant="body2" color="textSecondary">
-            {props.value.toFixed(1)}%
-          </Typography>
-        </Box>
-      </Box>
-    );
-  };
-
-  LinearProgressWithLabel.propTypes = {
-    value: () => null,
-    answerid: () => pollAnswerId,
-  };
-
-  // HANDLE EVENTS
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedPollAnswerId(parseInt(e.target.value));
   };
@@ -221,24 +185,15 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
 
               {data?.getChannelPoll[0]?.poll_question?.poll_anwers
                 .sort((a, b) => (a.id > b.id ? 1 : -1))
-                .map((pollVotes) => {
-                  return (
-                    <Box
-                      key={pollVotes.id}
-                      width="100%"
-                      display="flex"
-                      alignItems="flex-start"
-                      flexDirection="column"
-                      mb={2}
-                    >
-                      <Typography variant="body2">{pollVotes.text}</Typography>
-                      <LinearProgressWithLabel
-                        value={(100 * pollVotes.votes) / totalVotes()}
-                        answerid={pollVotes.id}
-                      />
-                    </Box>
-                  );
-                })}
+                .map((pollVotes) => (
+                  <ResultGraph
+                    answerId={pollVotes.id}
+                    pollVotes={pollVotes.votes}
+                    text={pollVotes.text}
+                    currentChannel={currentChannel}
+                    totalVotes={totalVotes()}
+                  />
+                ))}
               <Chip
                 color="primary"
                 variant="outlined"
