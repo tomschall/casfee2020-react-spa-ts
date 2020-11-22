@@ -23,7 +23,6 @@ import SetPollQuestionLockState from './SetPollQuestionLockState';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
   divider: {
     marginTop: theme.spacing(5),
     marginBottom: theme.spacing(5),
@@ -46,12 +45,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginLeft: theme.spacing(0),
     backgroundColor: theme.palette.primary.dark,
-  },
-  lock: {
-    color: theme.palette.error.main,
-  },
-  unlock: {
-    color: theme.palette.success.main,
   },
 }));
 
@@ -121,7 +114,6 @@ const PollAnswers: React.FC = () => {
           display="flex"
           justifyContent="space-between"
           alignItems="flex-end"
-          className={classes.root}
           mb={3}
           mt={0}
         >

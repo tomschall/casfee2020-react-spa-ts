@@ -23,25 +23,6 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.secondary.dark,
     },
   },
-  messageButton: {
-    [theme.breakpoints.down('md')]: {
-      width: '100%',
-      size: 'small',
-    },
-    [theme.breakpoints.up('md')]: {
-      size: 'large',
-      width: '25%',
-    },
-    marginTop: theme.spacing(2),
-    marginLeft: theme.spacing(0),
-    backgroundColor: theme.palette.primary.dark,
-  },
-  lock: {
-    color: theme.palette.error.main,
-  },
-  unlock: {
-    color: theme.palette.success.main,
-  },
 }));
 
 interface PollAnswerListProps {
@@ -64,7 +45,6 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
       pollQuestionId: pollQuestionId,
     },
   });
-
   const [updatePollAnswerTextMutation] = useUpdatePollAnswerTextMutation({
     variables: {
       text: answerText.text,
@@ -76,7 +56,6 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
 
   const handleAnswerChange = (index?: number, e?: any) => {
     setAnswerText({ text: e.target.value });
-    console.log(index, e.target.value, answerText.text);
   };
 
   const handleUpdateAnswerText = async (answerId: number) => {

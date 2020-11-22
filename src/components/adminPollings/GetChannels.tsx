@@ -61,7 +61,7 @@ const GetChannels: React.FC = () => {
   if (loading) {
     return (
       <Box
-        width="315px"
+        width="100%"
         display="flex"
         justifyContent="center"
         alignItems="center"
