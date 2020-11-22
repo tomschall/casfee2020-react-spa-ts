@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-
 import { useAddPollQuestionMutation } from '../../api/generated/graphql';
 import {
   Box,
@@ -14,10 +13,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  divider: {
-    marginTop: theme.spacing(5),
-    marginBottom: theme.spacing(5),
-  },
   form: {},
   messageInput: {
     floatingLabelFocusStyle: {
