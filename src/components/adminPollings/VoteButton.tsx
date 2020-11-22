@@ -14,9 +14,6 @@ interface VoteButtonProps {
 
 const VoteButton: React.FC<VoteButtonProps> = ({ enabled }) => {
   const classes = useStyles();
-
-  console.log('button enabled', enabled);
-
   return (
     <>
       <Button

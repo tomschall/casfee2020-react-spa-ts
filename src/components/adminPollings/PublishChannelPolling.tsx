@@ -4,10 +4,10 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { currentChannelState } from '../../atom.js';
 import ResultGraph from './ResultGraph';
 import VoteButton from './VoteButton';
+import ShowTotalVotes from './ShowTotalVotes';
 import Loader from '../shared/Loader';
 import {
   Box,
-  Chip,
   Radio,
   RadioGroup,
   FormControlLabel,
@@ -23,10 +23,8 @@ import {
   useSetUserVotePollQuestionMutation,
 } from '../../api/generated/graphql';
 import { makeStyles } from '@material-ui/core/styles';
-import { storeValueIsStoreObject } from '@apollo/client/cache/inmemory/helpers';
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
   pollCard: {
     padding: theme.spacing(5),
   },
@@ -89,14 +87,8 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
   });
 
   useEffect(() => {
-    console.log(
-      'PublishChannelPolling did mount!',
-      selectedPollAnswerId,
-      voteEnabled,
-    );
     if (selectedPollAnswerId > 0) {
       setVoteEnabled(false);
-      console.log('is vote enabled', voteEnabled);
     }
   }, [
     currentChannel,
@@ -113,7 +105,6 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log('selectedPollAnswerId', selectedPollAnswerId);
     if (selectedPollAnswerId === 0) return;
 
     let currentPollAnswerVotes = await getPollAnswerVotes.data
@@ -211,12 +202,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
                     totalVotes={totalVotes()}
                   />
                 ))}
-              <Chip
-                color="primary"
-                variant="outlined"
-                size="small"
-                label={`Total votes: ${totalVotes()}`}
-              />
+              <ShowTotalVotes totalVotes={totalVotes()} />
             </Paper>
           )}
         </>
