@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useWatchChannelPollQuestionSubscription } from '../../api/generated/graphql';
 import { Box, LinearProgress, Typography } from '@material-ui/core';
 
 interface ResultGraphProps {
@@ -17,12 +16,6 @@ const ResultGraph: React.FC<ResultGraphProps> = ({
   currentChannel,
   totalVotes,
 }) => {
-  const { data } = useWatchChannelPollQuestionSubscription({
-    variables: {
-      channelId: currentChannel,
-    },
-  });
-
   const LinearProgressWithLabel = (props: any) => {
     return (
       <Box

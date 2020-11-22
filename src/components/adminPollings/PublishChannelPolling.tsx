@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { useAuth0 } from '@auth0/auth0-react';
 import { currentChannelState } from '../../atom.js';
@@ -79,7 +79,6 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
       auth0UserId: user.sub,
     },
   });
-
   const [setUserVotePollQuestionMutation] = useSetUserVotePollQuestionMutation({
     variables: {
       userName: user.username,
@@ -88,6 +87,10 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
       pollAnswerId: selectedPollAnswerId,
     },
   });
+
+  useEffect(() => {
+    console.log('PublishChannelPolling did mount!');
+  }, [currentChannel, getPollAnswerVotes, data]);
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedPollAnswerId(parseInt(e.target.value));
@@ -187,6 +190,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
                 .sort((a, b) => (a.id > b.id ? 1 : -1))
                 .map((pollVotes) => (
                   <ResultGraph
+                    key={pollVotes.id}
                     answerId={pollVotes.id}
                     pollVotes={pollVotes.votes}
                     text={pollVotes.text}
