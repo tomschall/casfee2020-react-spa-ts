@@ -90,13 +90,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
     if (selectedPollAnswerId > 0) {
       setVoteEnabled(false);
     }
-  }, [
-    currentChannel,
-    getPollAnswerVotes,
-    data,
-    selectedPollAnswerId,
-    voteEnabled,
-  ]);
+  }, [getPollAnswerVotes, data, selectedPollAnswerId, voteEnabled]);
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedPollAnswerId(parseInt(e.target.value));

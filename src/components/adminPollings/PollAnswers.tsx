@@ -80,7 +80,6 @@ const PollAnswers: React.FC = () => {
     pollQuestionId,
     pollQuestionActiveState,
     getPollQuestion,
-    updatePollAnswerTextMutation,
   ]);
 
   const handleNewAnswerChange = (index?: number, e?: any) => {
