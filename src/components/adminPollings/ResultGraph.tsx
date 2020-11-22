@@ -5,7 +5,6 @@ interface ResultGraphProps {
   answerId: number;
   pollVotes: number;
   text: string;
-  currentChannel: number;
   totalVotes: any;
 }
 
@@ -13,7 +12,6 @@ const ResultGraph: React.FC<ResultGraphProps> = ({
   answerId,
   pollVotes,
   text,
-  currentChannel,
   totalVotes,
 }) => {
   const LinearProgressWithLabel = (props: any) => {

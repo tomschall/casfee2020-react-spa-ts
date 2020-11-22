@@ -3,10 +3,10 @@ import { useRecoilState } from 'recoil';
 import { useAuth0 } from '@auth0/auth0-react';
 import { currentChannelState } from '../../atom.js';
 import ResultGraph from './ResultGraph';
+import VoteButton from './VoteButton';
 import Loader from '../shared/Loader';
 import {
   Box,
-  Button,
   Chip,
   Radio,
   RadioGroup,
@@ -23,14 +23,12 @@ import {
   useSetUserVotePollQuestionMutation,
 } from '../../api/generated/graphql';
 import { makeStyles } from '@material-ui/core/styles';
+import { storeValueIsStoreObject } from '@apollo/client/cache/inmemory/helpers';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
   pollCard: {
     padding: theme.spacing(5),
-  },
-  pollSubmit: {
-    marginTop: theme.spacing(3),
   },
 }));
 
@@ -48,13 +46,15 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
 }) => {
   const classes = useStyles();
   const { user } = useAuth0();
+  // console.log('user', user);
+  const [voteEnabled, setVoteEnabled] = React.useState<boolean>(true);
   const [currentChannel, setCurrentChannelState] = useRecoilState(
     currentChannelState,
   );
   const [selectedPollAnswerId, setSelectedPollAnswerId] = React.useState<
     number
   >(0);
-  const { data } = useWatchChannelPollQuestionSubscription({
+  const { data, loading } = useWatchChannelPollQuestionSubscription({
     variables: {
       channelId: currentChannel.id,
     },
@@ -89,8 +89,22 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
   });
 
   useEffect(() => {
-    console.log('PublishChannelPolling did mount!');
-  }, [currentChannel, getPollAnswerVotes, data]);
+    console.log(
+      'PublishChannelPolling did mount!',
+      selectedPollAnswerId,
+      voteEnabled,
+    );
+    if (selectedPollAnswerId > 0) {
+      setVoteEnabled(false);
+      console.log('is vote enabled', voteEnabled);
+    }
+  }, [
+    currentChannel,
+    getPollAnswerVotes,
+    data,
+    selectedPollAnswerId,
+    voteEnabled,
+  ]);
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedPollAnswerId(parseInt(e.target.value));
@@ -98,6 +112,9 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    console.log('selectedPollAnswerId', selectedPollAnswerId);
+    if (selectedPollAnswerId === 0) return;
 
     let currentPollAnswerVotes = await getPollAnswerVotes.data
       ?.pollAnswerVotes[0].votes;
@@ -123,6 +140,10 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
       },
     });
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -159,14 +180,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
                     />
                   ))}
               </RadioGroup>
-              <Button
-                type="submit"
-                variant="contained"
-                color="secondary"
-                className={classes.pollSubmit}
-              >
-                Vote
-              </Button>
+              <VoteButton enabled={voteEnabled} />
             </FormControl>
           </form>
         </Paper>
@@ -194,7 +208,6 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
                     answerId={pollVotes.id}
                     pollVotes={pollVotes.votes}
                     text={pollVotes.text}
-                    currentChannel={currentChannel}
                     totalVotes={totalVotes()}
                   />
                 ))}
