@@ -3,6 +3,7 @@ import { Box, LinearProgress, Typography } from '@material-ui/core';
 
 interface ResultGraphProps {
   answerId: number;
+  userVote: number | undefined;
   pollVotes: number;
   text: string;
   totalVotes: any;
@@ -10,6 +11,7 @@ interface ResultGraphProps {
 
 const ResultGraph: React.FC<ResultGraphProps> = ({
   answerId,
+  userVote,
   pollVotes,
   text,
   totalVotes,
@@ -26,7 +28,7 @@ const ResultGraph: React.FC<ResultGraphProps> = ({
         <Box width="100%" mr={1}>
           <LinearProgress
             id={answerId}
-            color={answerId === props.answerid ? 'secondary' : 'primary'}
+            color={userVote === answerId ? 'secondary' : 'primary'}
             variant="determinate"
             {...props}
           />

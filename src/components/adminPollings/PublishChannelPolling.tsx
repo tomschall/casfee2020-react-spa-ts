@@ -76,6 +76,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
       auth0UserId: user.sub,
     },
   });
+
   const [setUserVotePollQuestionMutation] = useSetUserVotePollQuestionMutation({
     variables: {
       userName: user.username,
@@ -89,7 +90,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
     if (selectedPollAnswerId > 0) {
       setVoteEnabled(false);
     }
-  }, [getPollAnswerVotes, data, selectedPollAnswerId, voteEnabled]);
+  }, [getPollAnswerVotes, userVote, selectedPollAnswerId, voteEnabled]);
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedPollAnswerId(parseInt(e.target.value));
@@ -190,6 +191,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
                   <ResultGraph
                     key={pollVotes.id}
                     answerId={pollVotes.id}
+                    userVote={userVote?.user_votes[0]?.poll_answer_id}
                     pollVotes={pollVotes.votes}
                     text={pollVotes.text}
                     totalVotes={totalVotes()}
