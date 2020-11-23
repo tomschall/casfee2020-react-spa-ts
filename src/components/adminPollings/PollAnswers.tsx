@@ -185,6 +185,10 @@ const PollAnswers: React.FC = () => {
       <Grid item xs={12}>
         <PollAnswerList pollQuestionId={pollQuestionId} />
         <Divider className={classes.divider} />
+        <Typography variant="h3">Channels with active polls:</Typography>
+        <Typography variant="caption">
+          Click on chip to set actual question to channel:
+        </Typography>
         <GetChannels />
       </Grid>
     </>
