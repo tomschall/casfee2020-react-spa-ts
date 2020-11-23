@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { GiphyFetch } from '@giphy/js-fetch-api';
-import { currentChannelState, giphyState } from '../../atom';
+import { giphyState } from '../../atom';
 import { TextField } from '@material-ui/core';
 import { Carousel } from '@giphy/react-components';
-import { useHistory } from 'react-router';
 import { IGif } from '@giphy/js-types';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -13,6 +12,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(4),
     marginLeft: theme.spacing(2),
     minWidth: 200,
+  },
+  giphyCarousel: {
+    maxWidth: '650px',
   },
 }));
 
@@ -24,12 +26,8 @@ interface GiphyCarouselProps {
 
 const GiphyCarousel: React.FC<GiphyCarouselProps> = ({ hideGiphyCarousel }) => {
   const classes = useStyles();
-  const [currentChannel] = useRecoilState<any>(currentChannelState);
-  const history = useHistory();
   const [gif, setGif] = useRecoilState<IGif | null>(giphyState);
   const [giphySearchString, setGiphySearchString] = useState('');
-
-  const [width, setWidth] = useState(window.innerWidth);
 
   const onGifClick = (
     gif: IGif,

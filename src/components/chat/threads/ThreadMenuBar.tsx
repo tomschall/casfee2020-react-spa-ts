@@ -208,6 +208,7 @@ const ThreadMenuBar: React.FC<ThreadMenuBarProps> = ({ channelThreadId }) => {
                 <ThreadMessageInput
                   channelId={currentChannel?.id}
                   channelThreadId={channelThreadId}
+                  showSingleChip={false}
                 />
               </Grid>
             </Grid>

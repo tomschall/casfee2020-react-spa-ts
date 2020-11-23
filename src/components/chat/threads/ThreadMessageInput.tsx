@@ -19,6 +19,11 @@ import AddGif from '@material-ui/icons/Gif';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  rootSingleChip: {
+    display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
@@ -58,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
 interface ThreadMessageInputProps {
   channelId: number;
   channelThreadId: number | undefined;
+  showSingleChip: boolean;
 }
 
 const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
@@ -161,18 +167,24 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
   };
 
   return (
-    <div className={classes.root}>
-      <Box>
-        <Chip
-          variant="outlined"
-          color="primary"
-          size="small"
-          icon={<AddGif />}
-          label="+Gif"
-          onClick={handleGiphyClick}
-        />
-      </Box>
-      <Box className={classes.giphyImage}>
+    <div
+      className={props.showSingleChip ? classes.rootSingleChip : classes.root}
+    >
+      {props.showSingleChip ? (
+        <Box>
+          <Chip
+            variant="outlined"
+            color="primary"
+            size="small"
+            icon={<AddGif />}
+            label="+Gif"
+            onClick={handleGiphyClick}
+          />
+        </Box>
+      ) : (
+        ''
+      )}
+      <Box className={gif ? classes.giphyImage : ''}>
         {gif && (
           <img
             className={classes.image}
@@ -201,7 +213,7 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
       >
         <TextField
           value={text}
-          autoFocus={true}
+          autoFocus={false}
           onChange={(e) => {
             handleTyping(e.target.value);
           }}
