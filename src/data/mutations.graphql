@@ -132,6 +132,12 @@ mutation insertChannelThreadMessage(
   }
 }
 
+mutation deleteThreadMessage($message_id: Int!) {
+  delete_channel_thread_message(where: { id: { _eq: $message_id } }) {
+    affected_rows
+  }
+}
+
 mutation insertChannelThread($message_id: Int!) {
   insert_channel_thread(objects: { message_id: $message_id }) {
     returning {

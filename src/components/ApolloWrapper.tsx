@@ -24,7 +24,12 @@ export type ApolloHeadersType = {
 };
 
 const ApolloWrapper: React.FC<any> = ({ children }) => {
-  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const {
+    isAuthenticated,
+    getAccessTokenSilently,
+    error,
+    loginWithRedirect,
+  } = useAuth0();
 
   const getHeaders = async () => {
     const headers = {} as ApolloHeadersType;
@@ -78,6 +83,8 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
 
   /* Create Apollo Client */
   const client = new ApolloClient({ link, cache });
+
+  if (error) loginWithRedirect();
 
   return <ApolloHooksProvider client={client}>{children}</ApolloHooksProvider>;
 };

@@ -21,3 +21,8 @@ export const deletedMessageState = atom({
   key: 'deletedMessageState',
   default: false,
 });
+
+export const deletedThreadMessageState = atom({
+  key: 'deletedThreadMessageState',
+  default: false,
+});

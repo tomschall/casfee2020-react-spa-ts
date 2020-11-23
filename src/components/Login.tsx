@@ -6,9 +6,7 @@ const Login: React.FC<any> = () => {
   const { loginWithRedirect } = useAuth0();
 
   const checkAndLogin = () => {
-    //localStorage.setItem('shouldLoad', 'true');
     loginWithRedirect();
-
   };
 
   return (

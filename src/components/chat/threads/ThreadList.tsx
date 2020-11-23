@@ -70,12 +70,13 @@ const ThreadList: React.FC<ThreadListProps> = ({ channelThread }) => {
                 user={user}
                 channelThread={channelThread}
                 currentChannel={channelThread.message.channel}
+                isThreadList={true}
               />
 
               <ThreadMessageInput
                 channelId={channelThread.message?.id}
                 channelThreadId={channelThread.id}
-                showSingleChip={true}
+                isThreadList={true}
               />
             </List>
           </Grid>

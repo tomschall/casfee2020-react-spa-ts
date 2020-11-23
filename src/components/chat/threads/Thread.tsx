@@ -100,6 +100,7 @@ const Thread: React.FC = () => {
                 user={user}
                 channelThread={getChannelThreadData?.channel_thread[0]}
                 currentChannel={currentChannel}
+                isThreadList={false}
               />
             </List>
           </Grid>

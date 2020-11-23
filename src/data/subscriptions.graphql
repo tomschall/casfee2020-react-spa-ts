@@ -42,6 +42,7 @@ subscription watchChannelThreadMessages($limit: Int!, $message_id: Int!) {
     user {
       username
       id
+      auth0_user_id
     }
     channel_thread_id
     timestamp

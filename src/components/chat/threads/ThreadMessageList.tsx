@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import moment from 'moment';
 import { ThreadMessage } from '../../../interfaces/message.interface';
 import ThreadInfo from './ThreadInfo';
-import DeleteMessage from '../DeleteMessage';
-import UpdateMessage from '../UpdateMessage';
+import ThreadDeleteMessage from './ThreadDeleteMessage';
 import {
   Avatar,
   Badge,
@@ -15,8 +14,6 @@ import {
   Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useRecoilValue } from 'recoil';
-import { deletedMessageState } from '../../../atom';
 
 export const useStyles = makeStyles((theme) => ({
   head: {
@@ -83,6 +80,7 @@ interface ThreadMessageListProps {
   user: any;
   channelThread: any;
   currentChannel: any;
+  isThreadList: boolean;
 }
 
 const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
@@ -90,20 +88,15 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
   user,
   channelThread,
   currentChannel,
+  isThreadList,
 }) => {
   useEffect(() => {
-    //scrollToBottom();
+    if (!isThreadList) scrollToBottom();
   }, [messages]);
 
   const classes = useStyles();
-  const [showUpdate, setShowUpdate] = useState<boolean>(false);
-  const [showUpdateMessageId, setShowUpdateMessageId] = useState<number | null>(
-    null,
-  );
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const deletedMessage = useRecoilValue<boolean>(deletedMessageState);
 
   const scrollToBottom = () => {
     if (
@@ -113,12 +106,6 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
     ) {
       messagesEndRef.current.scrollIntoView();
     }
-  };
-
-  const handleShowUpdate = (message: ThreadMessage) => {
-    if (message.user.auth0_user_id !== user.sub) return;
-    setShowUpdateMessageId(message.id);
-    setShowUpdate(!showUpdate);
   };
 
   const renderMessages = (message: ThreadMessage) => {
@@ -151,29 +138,16 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
               <Divider className={classes.vspace} />
             </Box>
             <Box>
-              {/* <Typography variant="caption">
-                {showUpdate &&
-                showUpdateMessageId === message.id &&
-                user.sub === message.user.auth0_user_id ? (
-                  ''
+              <Typography variant="caption">
+                {user.sub === message.user.auth0_user_id ? (
+                  <ThreadDeleteMessage messageId={message.id} />
                 ) : (
-                  <DeleteMessage messageId={message.id} />
+                  ''
                 )}
-              </Typography> */}
+              </Typography>
             </Box>
           </Box>
-          <Typography
-            component="div"
-            className={classes.messageText}
-            onClick={() => handleShowUpdate(message)}
-          >
-            {/* {showUpdate &&
-            showUpdateMessageId === message.id &&
-            user.sub === message.user.auth0_user_id ? (
-              <UpdateMessage message={message} />
-            ) : (
-              message.message
-            )} */}
+          <Typography component="div" className={classes.messageText}>
             {message.message}
           </Typography>
           {message.image ? (

@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
 interface ThreadMessageInputProps {
   channelId: number;
   channelThreadId: number | undefined;
-  showSingleChip: boolean;
+  isThreadList: boolean;
 }
 
 const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
@@ -167,10 +167,8 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
   };
 
   return (
-    <div
-      className={props.showSingleChip ? classes.rootSingleChip : classes.root}
-    >
-      {props.showSingleChip ? (
+    <div className={props.isThreadList ? classes.rootSingleChip : classes.root}>
+      {props.isThreadList ? (
         <Box>
           <Chip
             variant="outlined"
