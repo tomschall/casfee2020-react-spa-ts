@@ -52,12 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface Props {
-  question_text?: string;
-  question_id?: number;
-}
-
-const GetPollQuestions: React.FC<Props> = () => {
+const GetPollQuestions: React.FC = () => {
   const classes = useStyles();
   const { data, loading, error } = useWatchGetPollQuestionsSubscription({
     variables: {},

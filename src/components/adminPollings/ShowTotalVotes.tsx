@@ -12,7 +12,7 @@ const ShowTotalVotes: React.FC<ShowTotalVotesProps> = ({ totalVotes }) => {
         color="primary"
         variant="outlined"
         size="small"
-        label={`Total votess: ${totalVotes}`}
+        label={`Total votes: ${totalVotes}`}
       />
     </>
   );

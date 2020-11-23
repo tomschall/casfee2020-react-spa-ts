@@ -75,7 +75,7 @@ const GetChannels: React.FC = () => {
     });
 
     if (deleteError) {
-      console.log('error on delete remove question from channel');
+      console.log('error on delete question from channel');
     }
   };
 

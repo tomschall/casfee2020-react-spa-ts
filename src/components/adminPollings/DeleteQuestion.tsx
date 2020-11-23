@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDeletePollQuestionMutation } from '../../api/generated/graphql';
 import { Button } from '@material-ui/core';
-import { theme } from '../../theme/theme';
 
 interface DeleteAnswerProps {
   questionId: number;

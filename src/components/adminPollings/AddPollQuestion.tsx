@@ -36,8 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AddPollQuestion: React.FC = () => {
   const classes = useStyles();
-  const { user: userAuth0, isLoading: loadingAuth0 } = useAuth0();
-
+  const { user: userAuth0 } = useAuth0();
   const [addPollQuestionMutation] = useAddPollQuestionMutation();
   const [pollTitle, setPollTitle] = React.useState<{ title: string }>({
     title: '',

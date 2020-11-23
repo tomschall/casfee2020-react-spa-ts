@@ -23,7 +23,7 @@ const VoteButton: React.FC<VoteButtonProps> = ({ enabled }) => {
         className={classes.pollSubmit}
         disabled={enabled}
       >
-        Vote
+        {enabled ? 'Choose Your Answer' : 'Vote'}
       </Button>
     </>
   );
