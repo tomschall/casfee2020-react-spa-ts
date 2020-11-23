@@ -7,33 +7,12 @@ import {
   useAddPublishPollQuestionToChannelMutation,
   useDeletePollQuestionFromChannelMutation,
 } from '../../api/generated/graphql';
-import {
-  Button,
-  Box,
-  Collapse,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-} from '@material-ui/core';
-import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
-import StarIcon from '@material-ui/icons/Star';
+import { Box, Chip } from '@material-ui/core';
 import Loader from '../../components/shared/Loader';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme) => ({
-  root: {},
-}));
 
 const GetChannels: React.FC = () => {
-  const classes = useStyles();
   const getPollQuestionId = useRecoilValue<number>(getPollQuestionAnswers);
-  const [channelID, setChannelID] = useState<string>('');
-  const [open, setOpen] = React.useState(false);
+  const [channelId, setChannelID] = useState<string>('');
   const { data, loading, error } = useWatchGetChannelsSubscription();
   const {
     data: checkActiveChannelState,
@@ -41,7 +20,9 @@ const GetChannels: React.FC = () => {
     variables: {},
   });
 
-  useEffect(() => {}, [checkActiveChannelState, open, channelID, data]);
+  useEffect(() => {
+    console.log('GET CHANNEL MOUTED', getPollQuestionId);
+  }, [checkActiveChannelState, channelId, data, getPollQuestionId]);
 
   const [pollQuestionToChannel] = useAddPublishPollQuestionToChannelMutation();
   const [
@@ -50,13 +31,9 @@ const GetChannels: React.FC = () => {
   ] = useDeletePollQuestionFromChannelMutation({
     variables: {
       pollQuestionId: getPollQuestionId,
-      channelId: parseInt(channelID),
+      channelId: parseInt(channelId),
     },
   });
-
-  const handleClick = () => {
-    setOpen(!open);
-  };
 
   if (loading) {
     return (
@@ -84,8 +61,6 @@ const GetChannels: React.FC = () => {
         pollQuestionID: getPollQuestionId,
       },
     });
-
-    setOpen(!open);
   };
 
   const handleDeleteQuestionFromChannel = async (kanalId: number) => {
@@ -109,42 +84,31 @@ const GetChannels: React.FC = () => {
 
   return (
     <>
-      <List className={classes.root}>
-        <ListItem button onClick={handleClick} key={1}>
-          <ListItemIcon>
-            <GroupAddOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText>
-            <Typography variant="h6">Publish on channel</Typography>
-          </ListItemText>
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={open} timeout="auto">
-          <List component="div" disablePadding className={classes.root}>
-            {data?.channel.map((chn) => (
-              <ListItem button key={chn.id}>
-                <ListItemIcon>
-                  {chn.channel_polls[0]?.channel_id === chn.id ? (
-                    <StarIcon color="secondary" />
-                  ) : (
-                    <StarBorder />
-                  )}
-                </ListItemIcon>
-                <ListItemText
-                  primary={chn.name}
-                  onClick={() => handlePublishOnChannel(chn.id)}
-                />
-                <Button
-                  value={chn.id}
-                  onClick={() => handleDeleteQuestionFromChannel(chn.id)}
-                >
-                  Remove Channel
-                </Button>
-              </ListItem>
-            ))}
-          </List>
-        </Collapse>
-      </List>
+      <Box
+        display="flex"
+        justifyContent="flex-start"
+        alignItems="flex-start"
+        flexDirection="column"
+      >
+        {data?.channel
+          .sort((a, b) => a.id - b.id)
+          .map((chn) => (
+            <Chip
+              key={chn.id}
+              onClick={() => handlePublishOnChannel(chn.id)}
+              onDelete={() => handleDeleteQuestionFromChannel(chn.id)}
+              style={{ marginTop: 8, marginRight: 8 }}
+              variant="outlined"
+              size="small"
+              color={
+                chn.channel_polls[0]?.channel_id === chn.id
+                  ? 'secondary'
+                  : 'primary'
+              }
+              label={chn.name}
+            />
+          ))}
+      </Box>
     </>
   );
 };

@@ -31,6 +31,7 @@ interface PollAnswerListProps {
 
 const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
   const classes = useStyles();
+  const [updateEnabled, setUpdateEnabled] = React.useState(true);
   const [answerTextUpdateId, setAnswerTextUpdateId] = React.useState<number>(0);
   const [answerText, setAnswerText] = React.useState({
     text: '',
@@ -52,16 +53,22 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
     },
   });
 
-  useEffect(() => {}, [answerTextUpdateId, answerText, data]);
+  useEffect(() => {}, [answerTextUpdateId, answerText.text, data]);
 
   const handleAnswerChange = (index?: number, e?: any) => {
     setAnswerText({ text: e.target.value });
+    setUpdateEnabled(false);
+    console.log('answerText', answerText.text);
   };
 
   const handleUpdateAnswerText = async (answerId: number) => {
     setAnswerTextUpdateId(answerId);
+    console.log(answerText.text);
 
-    if (answerId === undefined || answerText.text === '') return;
+    if (answerId === undefined || answerText.text === '') {
+      setUpdateEnabled(true);
+      return;
+    }
 
     await updatePollAnswerTextMutation({
       variables: {
@@ -70,6 +77,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
       },
     });
     answerText.text = '';
+    setUpdateEnabled(true);
   };
 
   if (getPollQuestion.loading || loading) {
@@ -94,7 +102,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                   disabled={getPollQuestion?.data?.poll_question[0].is_active}
                   onChange={(e) => {
                     handleAnswerChange(answer?.id, e);
-                    // setAnswerTextUpdateId(answer.id);
+                    setAnswerTextUpdateId(answer.id);
                   }}
                   size="medium"
                   variant="outlined"
@@ -130,7 +138,11 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                     variant="contained"
                     size="large"
                     color="secondary"
-                    disabled={getPollQuestion?.data?.poll_question[0].is_active}
+                    disabled={
+                      answer.id !== answerTextUpdateId
+                        ? true
+                        : false || updateEnabled === true
+                    }
                     onClick={() => {
                       handleUpdateAnswerText(answer.id);
                     }}
@@ -151,7 +163,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                       marginLeft: '8px',
                       whiteSpace: 'nowrap',
                       maxWidth: '100px',
-                      minWidth: '80px',
+                      minWidth: '100px',
                     }}
                     variant="outlined"
                     size="large"
