@@ -66,7 +66,6 @@ const GetPollQuestions: React.FC<Props> = () => {
     getPollQuestionAnswers,
   );
   const handleClick = (questionId: number) => {
-    console.log('questionid', questionId);
     setPollQuestion(questionId);
   };
 

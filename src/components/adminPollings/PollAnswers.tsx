@@ -65,13 +65,6 @@ const PollAnswers: React.FC = () => {
       pollQuestionId: pollQuestionId,
     },
   });
-  const [updatePollAnswerTextMutation] = useUpdatePollAnswerTextMutation({
-    variables: {
-      text: answerText.text,
-      pollAnswerId: answerTextUpdateId,
-    },
-  });
-
   const [addPollQuestionMutation] = useAddAnswerToQuestionMutation();
 
   useEffect(() => {}, [
@@ -85,7 +78,6 @@ const PollAnswers: React.FC = () => {
   const handleNewAnswerChange = (index?: number, e?: any) => {
     setAnswerNewText({ text: e.target.value });
     setCurrentAnswerId(e.target.id);
-    console.log(index, e.target.value, answerText.text);
   };
 
   const handleAddAnswer = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -148,10 +140,6 @@ const PollAnswers: React.FC = () => {
                   e,
                 )
               }
-              onClick={() => {
-                setCurrentAnswerId(0);
-                setAnswerTextUpdateId(0);
-              }}
               size="medium"
               variant="outlined"
               color="secondary"

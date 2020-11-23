@@ -20,9 +20,12 @@ const GetChannels: React.FC = () => {
     variables: {},
   });
 
-  useEffect(() => {
-    console.log('GET CHANNEL MOUTED', getPollQuestionId);
-  }, [checkActiveChannelState, channelId, data, getPollQuestionId]);
+  useEffect(() => {}, [
+    checkActiveChannelState,
+    channelId,
+    data,
+    getPollQuestionId,
+  ]);
 
   const [pollQuestionToChannel] = useAddPublishPollQuestionToChannelMutation();
   const [
@@ -53,8 +56,6 @@ const GetChannels: React.FC = () => {
   }
 
   const handlePublishOnChannel = async (kanalId: number) => {
-    console.log('handleChange clicked', kanalId, getPollQuestionId);
-
     await pollQuestionToChannel({
       variables: {
         channelID: kanalId,
@@ -64,11 +65,7 @@ const GetChannels: React.FC = () => {
   };
 
   const handleDeleteQuestionFromChannel = async (kanalId: number) => {
-    console.log(
-      'handleDeleteQuestionFromChannel clicked',
-      kanalId,
-      getPollQuestionId,
-    );
+    if (kanalId === undefined) return;
 
     await deletePollQuestionFromChannelMutation({
       variables: {

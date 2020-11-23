@@ -21,16 +21,10 @@ const DeleteQuestion: React.FC<DeleteAnswerProps> = ({
     },
   });
 
-  console.log(questionId, tobeDeleted, channelPollState);
-
-  useEffect(() => {
-    console.log('setActiveState', tobeDeleted);
-  }, [tobeDeleted]);
+  useEffect(() => {}, [tobeDeleted]);
 
   const handleQuestionDelete = async (questionId: number) => {
     if (!questionId) return;
-
-    console.log('question delete', questionId);
 
     await deleteQuestion({
       variables: {
@@ -51,9 +45,9 @@ const DeleteQuestion: React.FC<DeleteAnswerProps> = ({
         </Button>
       ) : (
         <Button
-          variant="outlined"
+          variant="contained"
           size="small"
-          color="primary"
+          color="secondary"
           onClick={() => {
             handleQuestionDelete(questionId);
           }}

@@ -58,12 +58,10 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
   const handleAnswerChange = (index?: number, e?: any) => {
     setAnswerText({ text: e.target.value });
     setUpdateEnabled(false);
-    console.log('answerText', answerText.text);
   };
 
   const handleUpdateAnswerText = async (answerId: number) => {
     setAnswerTextUpdateId(answerId);
-    console.log(answerText.text);
 
     if (answerId === undefined || answerText.text === '') {
       setUpdateEnabled(true);

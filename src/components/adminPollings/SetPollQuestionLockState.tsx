@@ -31,15 +31,7 @@ const SetPollQuestionLockState: React.FC<SetPollQuestionLockStateProps> = ({
     },
   });
 
-  console.log('ACTIVE STATE', setActiveState);
-
-  useEffect(() => {
-    console.log(
-      'SetPollQuestionLockState did mount',
-      pollQuestionId,
-      setActiveState,
-    );
-  }, [pollQuestionId, setActiveState]);
+  useEffect(() => {}, [pollQuestionId, setActiveState]);
 
   const handleSetPollQuestionPublishState = async () => {
     await setPollQuestionState({

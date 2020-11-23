@@ -44,7 +44,6 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
 }) => {
   const classes = useStyles();
   const { user } = useAuth0();
-  // console.log('user', user);
   const [voteEnabled, setVoteEnabled] = React.useState<boolean>(true);
   const [currentChannel, setCurrentChannelState] = useRecoilState(
     currentChannelState,

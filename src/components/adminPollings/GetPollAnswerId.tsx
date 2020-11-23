@@ -8,9 +8,7 @@ interface GetPollAnswerIdProps {
 const GetPollAnswerId: React.FC<GetPollAnswerIdProps> = ({
   pollQuestionId,
 }) => {
-  useEffect(() => {
-    console.log('GetPollAnswerId did mount');
-  }, [pollQuestionId]);
+  useEffect(() => {}, [pollQuestionId]);
 
   return (
     <>
