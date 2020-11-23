@@ -327,6 +327,7 @@ subscription watchGetChannels {
       channel_id
       poll_question {
         id
+        text
       }
     }
   }

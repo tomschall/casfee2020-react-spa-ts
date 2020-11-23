@@ -7,7 +7,7 @@ import {
   useAddPublishPollQuestionToChannelMutation,
   useDeletePollQuestionFromChannelMutation,
 } from '../../api/generated/graphql';
-import { Box, Chip } from '@material-ui/core';
+import { Box, Chip, Typography } from '@material-ui/core';
 import Loader from '../../components/shared/Loader';
 
 const GetChannels: React.FC = () => {
@@ -87,23 +87,55 @@ const GetChannels: React.FC = () => {
         alignItems="flex-start"
         flexDirection="column"
       >
+        <Typography variant="h3">Channels with active polls:</Typography>
+        <Typography variant="caption">
+          Click on chip to set actual question to channel:
+        </Typography>
         {data?.channel
           .sort((a, b) => a.id - b.id)
-          .map((chn) => (
-            <Chip
-              key={chn.id}
-              onClick={() => handlePublishOnChannel(chn.id)}
-              onDelete={() => handleDeleteQuestionFromChannel(chn.id)}
-              style={{ marginTop: 8, marginRight: 8 }}
-              variant="outlined"
-              size="small"
-              color={
-                chn.channel_polls[0]?.channel_id === chn.id
-                  ? 'secondary'
-                  : 'primary'
-              }
-              label={chn.name}
-            />
+          .map((chn, index) => (
+            <>
+              <Box
+                display="flex"
+                justifyContent="flex-start"
+                alignItems="flex-start"
+              >
+                <Chip
+                  key={chn.id}
+                  onClick={() => handlePublishOnChannel(chn.id)}
+                  onDelete={() => handleDeleteQuestionFromChannel(chn.id)}
+                  style={{ marginTop: 8, marginRight: 8 }}
+                  variant="outlined"
+                  size="small"
+                  color={
+                    chn.channel_polls[0]?.channel_id === chn.id
+                      ? 'secondary'
+                      : 'primary'
+                  }
+                  label={chn.name}
+                />
+                <Chip
+                  key={chn.id}
+                  variant={
+                    chn.channel_polls[0]?.poll_question?.text
+                      ? 'default'
+                      : 'outlined'
+                  }
+                  color={
+                    chn.channel_polls[0]?.poll_question?.text
+                      ? 'secondary'
+                      : 'primary'
+                  }
+                  label={
+                    chn.channel_polls[0]?.poll_question?.text
+                      ? chn.channel_polls[0]?.poll_question?.text
+                      : 'No poll set.'
+                  }
+                  style={{ marginTop: 8, marginRight: 8 }}
+                  size="small"
+                />
+              </Box>
+            </>
           ))}
       </Box>
     </>

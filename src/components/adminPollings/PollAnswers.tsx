@@ -13,7 +13,6 @@ import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import {
   useWatchGetPollQuestionSubscription,
   useAddAnswerToQuestionMutation,
-  useUpdatePollAnswerTextMutation,
 } from '../../api/generated/graphql';
 import { getPollQuestionAnswers } from '../../atom';
 import GetChannels from './GetChannels';
@@ -65,6 +64,7 @@ const PollAnswers: React.FC = () => {
       pollQuestionId: pollQuestionId,
     },
   });
+
   const [addPollQuestionMutation] = useAddAnswerToQuestionMutation();
 
   useEffect(() => {}, [
@@ -173,10 +173,6 @@ const PollAnswers: React.FC = () => {
       <Grid item xs={12}>
         <PollAnswerList pollQuestionId={pollQuestionId} />
         <Divider className={classes.divider} />
-        <Typography variant="h3">Channels with active polls:</Typography>
-        <Typography variant="caption">
-          Click on chip to set actual question to channel:
-        </Typography>
         <GetChannels />
       </Grid>
     </>
