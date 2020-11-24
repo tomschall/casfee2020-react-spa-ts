@@ -1,18 +1,23 @@
 import React from 'react';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import { IconButton, CircularProgress } from '@material-ui/core';
+import { IconButton, CircularProgress, makeStyles } from '@material-ui/core';
 import { useDeleteThreadMessageMutation } from '../../../api/generated/graphql';
 import { Alert } from '@material-ui/lab';
-import { deletedThreadMessageState } from '../../../atom';
-import { useSetRecoilState } from 'recoil';
 
 interface ThreadDeleteMessageProps {
   messageId: number;
 }
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: 'unset',
+  },
+}));
+
 const ThreadDeleteMessage: React.FC<ThreadDeleteMessageProps> = ({
   messageId,
 }) => {
+  const classes = useStyles();
   const [
     deleteThreadMessageMutation,
     { data, loading, error },
@@ -39,7 +44,10 @@ const ThreadDeleteMessage: React.FC<ThreadDeleteMessageProps> = ({
   }
 
   return (
-    <IconButton onClick={() => handleDelete(messageId)}>
+    <IconButton
+      className={classes.root}
+      onClick={() => handleDelete(messageId)}
+    >
       <HighlightOffIcon fontSize="small" />
     </IconButton>
   );

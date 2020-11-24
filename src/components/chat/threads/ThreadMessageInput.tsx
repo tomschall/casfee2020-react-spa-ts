@@ -25,7 +25,15 @@ const useStyles = makeStyles((theme) => ({
   rootSingleChip: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
+  },
+  giphyVisible: {
+    marginTop: theme.spacing(2),
+    display: 'flex',
+    justifyContent: 'flex-start',
+  },
+  giphyHidden: {
+    display: 'none',
+    marginTop: theme.spacing(2),
   },
   giphyImage: {
     marginTop: theme.spacing(2),
@@ -193,12 +201,10 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
       </Box>
       <Box>
         <Box
-          style={{ display: showGiphyCarousel ? 'flex' : 'none' }}
-          className={classes.giphyImage}
+          className={
+            showGiphyCarousel ? classes.giphyVisible : classes.giphyHidden
+          }
           order={1}
-          flex="1"
-          justifyContent="flex-end"
-          alignItems="flex-end"
         >
           <GiphyCarousel hideGiphyCarousel={() => hideGiphyCarousel()} />
         </Box>
