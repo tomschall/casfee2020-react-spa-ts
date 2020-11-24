@@ -326,6 +326,10 @@ subscription watchGetChannels {
     name
     channel_polls {
       channel_id
+      poll_question {
+        id
+        text
+      }
     }
   }
 }
