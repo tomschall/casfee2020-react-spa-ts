@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { getPollQuestionAnswers } from '../../atom';
 import {
@@ -7,41 +7,18 @@ import {
   useAddPublishPollQuestionToChannelMutation,
   useDeletePollQuestionFromChannelMutation,
 } from '../../api/generated/graphql';
-import {
-  Button,
-  Box,
-  Collapse,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-} from '@material-ui/core';
-import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
-import StarIcon from '@material-ui/icons/Star';
+import { Box, Chip, Typography } from '@material-ui/core';
 import Loader from '../../components/shared/Loader';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme) => ({
-  root: {},
-}));
 
 const GetChannels: React.FC = () => {
-  const classes = useStyles();
   const getPollQuestionId = useRecoilValue<number>(getPollQuestionAnswers);
-  const [channelID, setChannelID] = useState<string>('');
-  const [open, setOpen] = React.useState(false);
+  const [channelId, setChannelID] = useState<string>('');
   const { data, loading, error } = useWatchGetChannelsSubscription();
   const {
     data: checkActiveChannelState,
   } = useWatchChannelPollActiveStateSubscription({
     variables: {},
   });
-
-  console.log('CHECK CHANNEL ACTIVE STATE', checkActiveChannelState);
 
   const [pollQuestionToChannel] = useAddPublishPollQuestionToChannelMutation();
   const [
@@ -50,18 +27,14 @@ const GetChannels: React.FC = () => {
   ] = useDeletePollQuestionFromChannelMutation({
     variables: {
       pollQuestionId: getPollQuestionId,
-      channelId: parseInt(channelID),
+      channelId: parseInt(channelId),
     },
   });
-
-  const handleClick = () => {
-    setOpen(!open);
-  };
 
   if (loading) {
     return (
       <Box
-        width="315px"
+        width="100%"
         display="flex"
         justifyContent="center"
         alignItems="center"
@@ -72,28 +45,20 @@ const GetChannels: React.FC = () => {
   }
 
   if (error) {
-    return <p>Error loading getChanngels</p>;
+    return <p>Error loading.</p>;
   }
 
   const handlePublishOnChannel = async (kanalId: number) => {
-    console.log('handleChange clicked', kanalId, getPollQuestionId);
-
     await pollQuestionToChannel({
       variables: {
         channelID: kanalId,
         pollQuestionID: getPollQuestionId,
       },
     });
-
-    setOpen(!open);
   };
 
   const handleDeleteQuestionFromChannel = async (kanalId: number) => {
-    console.log(
-      'handleDeleteQuestionFromChannel clicked',
-      kanalId,
-      getPollQuestionId,
-    );
+    if (kanalId === undefined) return;
 
     await deletePollQuestionFromChannelMutation({
       variables: {
@@ -103,48 +68,68 @@ const GetChannels: React.FC = () => {
     });
 
     if (deleteError) {
-      console.log('error on delete remove question from channel');
+      console.log('error on delete question from channel');
     }
   };
 
   return (
     <>
-      <List className={classes.root}>
-        <ListItem button onClick={handleClick} key={1}>
-          <ListItemIcon>
-            <GroupAddOutlinedIcon />
-          </ListItemIcon>
-          <ListItemText>
-            <Typography variant="h6">Publish on channel</Typography>
-          </ListItemText>
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={open} timeout="auto">
-          <List component="div" disablePadding className={classes.root}>
-            {data?.channel.map((chn) => (
-              <ListItem button key={chn.id}>
-                <ListItemIcon>
-                  {chn.channel_polls[0]?.channel_id === chn.id ? (
-                    <StarIcon color="secondary" />
-                  ) : (
-                    <StarBorder />
-                  )}
-                </ListItemIcon>
-                <ListItemText
-                  primary={chn.name}
-                  onClick={() => handlePublishOnChannel(chn.id)}
-                />
-                <Button
-                  value={chn.id}
-                  onClick={() => handleDeleteQuestionFromChannel(chn.id)}
-                >
-                  Remove Channel
-                </Button>
-              </ListItem>
-            ))}
-          </List>
-        </Collapse>
-      </List>
+      <Box
+        display="flex"
+        justifyContent="flex-start"
+        alignItems="flex-start"
+        flexDirection="column"
+        pb={1}
+        mb={5}
+      >
+        <Typography variant="h3">Channels with active polls:</Typography>
+        <Typography variant="caption">
+          Click on chip to set actual question to channel:
+        </Typography>
+        {data?.channel
+          .sort((a, b) => a.id - b.id)
+          .map((chn, index) => (
+            <Box
+              key={index}
+              display="flex"
+              justifyContent="flex-start"
+              alignItems="flex-start"
+            >
+              <Chip
+                onClick={() => handlePublishOnChannel(chn.id)}
+                onDelete={() => handleDeleteQuestionFromChannel(chn.id)}
+                style={{ marginTop: 8, marginRight: 8 }}
+                variant="outlined"
+                size="small"
+                color={
+                  chn.channel_polls[0]?.channel_id === chn.id
+                    ? 'secondary'
+                    : 'primary'
+                }
+                label={chn.name}
+              />
+              <Chip
+                variant={
+                  chn.channel_polls[0]?.poll_question?.text
+                    ? 'default'
+                    : 'outlined'
+                }
+                color={
+                  chn.channel_polls[0]?.poll_question?.text
+                    ? 'secondary'
+                    : 'primary'
+                }
+                label={
+                  chn.channel_polls[0]?.poll_question?.text
+                    ? chn.channel_polls[0]?.poll_question?.text
+                    : 'No poll set.'
+                }
+                style={{ marginTop: 8, marginRight: 8 }}
+                size="small"
+              />
+            </Box>
+          ))}
+      </Box>
     </>
   );
 };

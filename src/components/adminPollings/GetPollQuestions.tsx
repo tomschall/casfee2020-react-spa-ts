@@ -1,63 +1,58 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import {
+  Accordion,
+  AccordionActions,
+  AccordionDetails,
+  AccordionSummary,
   Box,
+  Button,
   Chip,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
+  Divider,
   Typography,
 } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
-import LockIcon from '@material-ui/icons/Lock';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
-import Loader from '../shared/Loader';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import NotFound from '../shared/NotFound';
-import {
-  useWatchGetPollQuestionsSubscription,
-  useDeletePollQuestionMutation,
-} from '../../api/generated/graphql';
+import { useWatchGetPollQuestionsSubscription } from '../../api/generated/graphql';
 import { getPollQuestionAnswers } from '../../atom';
+import DeleteQuestion from './DeleteQuestion';
+import ShowPollQuestionLockState from './ShowPollQuestionLockState';
 import GetChannels from './GetChannels';
+import Loader from '../shared/Loader';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    width: '100%',
+  },
   play: {
     color: theme.palette.error.main,
   },
   stop: {
     color: theme.palette.success.main,
   },
-  delete: {
-    width: 'auto',
+
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
   },
-  pollList: {
-    width: '100%',
-    padding: theme.spacing(4),
-    backgroundColor: '#101652',
-  },
-  pollListTitle: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    // flex: 1,
-  },
-  pollChannels: {
-    display: 'flex',
-    justifyContent: 'space-between',
+
+  details: {
     alignItems: 'flex-start',
+  },
+  column: {
+    flexBasis: '100%',
+  },
+  helper: {
+    borderLeft: `2px solid ${theme.palette.divider}`,
+    padding: theme.spacing(1, 2),
   },
 }));
 
-interface Props {
-  question_text?: string;
-  question_id?: number;
-}
-
-const GetPollQuestions: React.FC<Props> = () => {
+const GetPollQuestions: React.FC = () => {
   const classes = useStyles();
   const { data, loading, error } = useWatchGetPollQuestionsSubscription({
     variables: {},
@@ -65,131 +60,145 @@ const GetPollQuestions: React.FC<Props> = () => {
   const [pollQuestion, setPollQuestion] = useRecoilState<any>(
     getPollQuestionAnswers,
   );
-  const [
-    deleteQuestion,
-    { error: deleteError },
-  ] = useDeletePollQuestionMutation({
-    variables: {
-      pollQuestionId: pollQuestion,
-    },
-  });
 
-  // HANDLE SET POLL QUESTION ID
   const handleClick = (questionId: number) => {
     setPollQuestion(questionId);
   };
-  const handleQuestionDelete = async (questionId: number) => {
-    if (!questionId) return;
 
-    await deleteQuestion({
-      variables: {
-        pollQuestionId: questionId,
-      },
-    });
-  };
+  useEffect(() => {}, [pollQuestion, data]);
 
   if (loading) {
     return <Loader />;
   }
 
-  if (error || deleteError) {
+  if (error) {
     return <NotFound />;
   }
 
   return (
     <>
-      <Typography variant="h3">Poll list overview</Typography>
-      <List className={classes.root}>
-        {data?.questions.map((question) => (
-          <ListItem
-            key={question.id}
-            component="li"
-            onClick={() => {
-              handleClick(question.id);
-            }}
-          >
-            <Box className={classes.pollList}>
-              <Box className={classes.pollListTitle}>
-                <ListItemIcon>
-                  {question.is_active ? (
-                    <HowToVoteIcon color="secondary" />
-                  ) : (
-                    <HowToVoteIcon />
-                  )}
-                </ListItemIcon>
-                <Chip
-                  variant="outlined"
-                  size="small"
-                  color="primary"
-                  label={question.id}
-                />
+      <div className={classes.root}>
+        <Box display="flex" justifyContent="flex-start" alignItems="center">
+          <Typography variant="h3">Poll list overview:</Typography>
+          <Chip
+            variant="outlined"
+            size="small"
+            color="primary"
+            label={'Total polls: ' + data?.questions.length}
+            style={{ marginLeft: '8px' }}
+          />
+        </Box>
 
-                <Box flex={20}>
-                  <ListItemText>
+        {data?.questions.length === 0 ? (
+          <Alert severity="info">Please add a new question.</Alert>
+        ) : (
+          data?.questions
+            .sort((a, b) => a.id + b.id)
+            .map((question) => (
+              <Accordion key={question.id} defaultExpanded={false}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls={question.text}
+                  id={question.text}
+                >
+                  <Box
+                    display="flex"
+                    justifyContent="flex-start"
+                    alignItems="center"
+                    className={classes.column}
+                  >
+                    <Chip
+                      variant="outlined"
+                      size="small"
+                      color="primary"
+                      label={question.id}
+                    />
+                    {question.is_active ? (
+                      <HowToVoteIcon color="secondary" />
+                    ) : (
+                      <HowToVoteIcon />
+                    )}
+
                     <Link
+                      onClick={() => {
+                        handleClick(question.id);
+                      }}
                       to={{
                         pathname:
                           '/dashboard/pollings/edit/question/' + question.id,
                         state: { fromDashboard: true },
                       }}
                     >
-                      <Typography style={{ marginLeft: 16 }} variant="h3">
+                      <Typography
+                        style={{ marginLeft: 16 }}
+                        className={classes.heading}
+                      >
                         {question.text}
                       </Typography>
                     </Link>
-                  </ListItemText>
-                </Box>
-
-                {question.is_active ? (
-                  <ListItemIcon>
-                    <LockIcon className={classes.play} />
-                  </ListItemIcon>
-                ) : (
-                  <ListItemIcon>
-                    <LockOpenIcon className={classes.stop} />
-                  </ListItemIcon>
-                )}
-                {!question.is_active && (
-                  <>
-                    <Chip
-                      variant="outlined"
-                      size="small"
-                      color="primary"
-                      onClick={() => {
-                        handleQuestionDelete(question.id);
-                      }}
-                      label="Delete"
+                  </Box>
+                  <Box
+                    display="flex"
+                    justifyContent="flex-start"
+                    alignItems="center"
+                    className={classes.column}
+                  >
+                    <ShowPollQuestionLockState
+                      setActiveState={question.is_active}
                     />
-                  </>
-                )}
-              </Box>
-              <Box className={classes.pollChannels}>
-                <Box>
-                  {loading ? (
-                    <>
-                      <Loader />
-                    </>
-                  ) : (
-                    <>
-                      {question?.channel_polls.map((chn, index) => (
-                        <Chip
-                          key={index}
-                          style={{ marginTop: 8, marginRight: 8 }}
-                          variant="outlined"
-                          size="small"
-                          color="secondary"
-                          label={chn.channel.name}
-                        />
-                      ))}
-                    </>
-                  )}
-                </Box>
-                <GetChannels />
-              </Box>
-            </Box>
-          </ListItem>
-        ))}
-      </List>
+                  </Box>
+                </AccordionSummary>
+                <AccordionDetails className={classes.details}>
+                  <div className={classes.column}>
+                    <Typography
+                      variant="caption"
+                      style={{ display: 'flex', width: '100%' }}
+                    >
+                      This poll is published on:
+                    </Typography>
+                    {question?.channel_polls.map((chn, index) => (
+                      <Chip
+                        key={chn.channel.name + index}
+                        style={{ marginTop: 8, marginRight: 8 }}
+                        variant="outlined"
+                        size="small"
+                        color="secondary"
+                        label={chn.channel.name}
+                      />
+                    ))}
+                  </div>
+                  <div
+                    className={clsx(classes.column, classes.helper)}
+                    onMouseEnter={() => {
+                      handleClick(question.id);
+                    }}
+                  >
+                    <Typography variant="caption">
+                      Where you want to publish this poll? Orange colored
+                      channels has an active poll.
+                    </Typography>
+                    <GetChannels />
+                  </div>
+                </AccordionDetails>
+                <Divider />
+                <AccordionActions>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    href={`/dashboard/pollings/edit/question/${question.id}`}
+                  >
+                    Edit
+                  </Button>
+
+                  <DeleteQuestion
+                    questionId={question.id}
+                    setActiveState={question.is_active}
+                  />
+                </AccordionActions>
+              </Accordion>
+            ))
+        )}
+      </div>
     </>
   );
 };
