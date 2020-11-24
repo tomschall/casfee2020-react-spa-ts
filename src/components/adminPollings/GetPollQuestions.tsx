@@ -182,20 +182,14 @@ const GetPollQuestions: React.FC = () => {
                 </AccordionDetails>
                 <Divider />
                 <AccordionActions>
-                  <Link
-                    onClick={() => {
-                      handleClick(question.id);
-                    }}
-                    to={{
-                      pathname:
-                        '/dashboard/pollings/edit/question/' + question.id,
-                      state: { fromDashboard: true },
-                    }}
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    href={`/dashboard/pollings/edit/question/${question.id}`}
                   >
-                    <Button variant="contained" color="secondary">
-                      Edit
-                    </Button>
-                  </Link>
+                    Edit
+                  </Button>
+
                   <DeleteQuestion
                     questionId={question.id}
                     setActiveState={question.is_active}
