@@ -71,6 +71,10 @@ const useStyles = makeStyles((theme) => ({
   image: {
     paddingBottom: '0.5rem',
   },
+  avatar: {
+    backgroundColor: '#000000',
+    color: '#F57C00',
+  },
 }));
 
 interface ThreadInfoProps {
@@ -105,7 +109,11 @@ const ThreadInfo: React.FC<ThreadInfoProps> = ({
               <ListItemIcon>
                 <Badge variant="dot">
                   {!channelThread.message.deleted ? (
-                    <Avatar alt="Username" src="https://picsum.photos/100" />
+                    <Avatar className={classes.avatar}>
+                      {channelThread.message.user.username
+                        .substring(0, 2)
+                        .toUpperCase()}
+                    </Avatar>
                   ) : (
                     <Avatar
                       alt="Message has been removed"

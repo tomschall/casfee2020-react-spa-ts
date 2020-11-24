@@ -73,6 +73,10 @@ export const useStyles = makeStyles((theme) => ({
   image: {
     paddingBottom: '0.5rem',
   },
+  avatar: {
+    backgroundColor: '#000000',
+    color: '#F57C00',
+  },
 }));
 
 interface ThreadMessageListProps {
@@ -115,7 +119,9 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
           <ListItemAvatar>
             <ListItemIcon>
               <Badge variant="dot">
-                <Avatar alt="Username" src="https://picsum.photos/100" />
+                <Avatar className={classes.avatar}>
+                  {message.user.username.substring(0, 2).toUpperCase()}
+                </Avatar>
               </Badge>
             </ListItemIcon>
           </ListItemAvatar>
