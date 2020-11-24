@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Box,
@@ -70,14 +70,6 @@ const PollAnswers: React.FC = () => {
   });
 
   const [addPollQuestionMutation] = useAddAnswerToQuestionMutation();
-
-  useEffect(() => {}, [
-    answerTextUpdateId,
-    answerText,
-    currentAnswerId,
-    pollQuestionActiveState,
-    getPollQuestion,
-  ]);
 
   const handleNewAnswerChange = (index?: number, e?: any) => {
     setAnswerNewText({ text: e.target.value });

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   useWatchGetPollAnswersSubscription,
   useUpdatePollAnswerTextMutation,
@@ -7,6 +7,7 @@ import {
 import {
   Box,
   Button,
+  Chip,
   FormGroup,
   Grid,
   TextField,
@@ -53,8 +54,6 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
     },
   });
 
-  useEffect(() => {}, [answerTextUpdateId, answerText.text, data]);
-
   const handleAnswerChange = (index?: number, e?: any) => {
     setAnswerText({ text: e.target.value });
     setUpdateEnabled(false);
@@ -84,7 +83,16 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
 
   return (
     <>
-      <Typography variant="h3">Answers to these question</Typography>
+      <Box display="flex" justifyContent="flex-start" alignItems="center">
+        <Typography variant="h3">Answers to these question</Typography>
+        <Chip
+          variant="outlined"
+          size="small"
+          color="primary"
+          label={'Total answers: ' + data?.poll_answers.length}
+          style={{ marginLeft: '16px' }}
+        />
+      </Box>
       {data?.poll_answers.length === 0 ? (
         <Alert severity="info">Please add an answer to the poll.</Alert>
       ) : (

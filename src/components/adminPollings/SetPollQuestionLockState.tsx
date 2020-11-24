@@ -4,6 +4,7 @@ import {
   useWatchGetPollAnswersSubscription,
   useSetPublishPollQuestionStateMutation,
 } from '../../api/generated/graphql';
+import Loader from '../shared/Loader';
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { makeStyles } from '@material-ui/core/styles';
@@ -27,6 +28,9 @@ const SetPollQuestionLockState: React.FC<SetPollQuestionLockStateProps> = ({
   setActiveState,
 }) => {
   const classes = useStyles();
+  const [readyToPublish, setReadyToPublish] = React.useState<boolean>(
+    setActiveState,
+  );
   const [setPollQuestionState] = useSetPublishPollQuestionStateMutation({
     variables: {
       pollQuestionId: pollQuestionId,
@@ -39,7 +43,14 @@ const SetPollQuestionLockState: React.FC<SetPollQuestionLockStateProps> = ({
     },
   });
 
-  console.log('data', data);
+  useEffect(() => {
+    const totalAnswers = data?.poll_answers?.length;
+    if (totalAnswers && totalAnswers > 1) {
+      setReadyToPublish(false);
+    } else {
+      setReadyToPublish(true);
+    }
+  }, [readyToPublish, data]);
 
   const handleSetPollQuestionPublishState = async () => {
     await setPollQuestionState({
@@ -50,11 +61,16 @@ const SetPollQuestionLockState: React.FC<SetPollQuestionLockStateProps> = ({
     });
   };
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <>
       <Button
         variant="outlined"
         color="secondary"
+        disabled={readyToPublish}
         startIcon={
           setActiveState ? (
             <LockIcon className={classes.lock} />
