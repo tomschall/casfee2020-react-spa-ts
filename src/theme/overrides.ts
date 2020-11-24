@@ -75,4 +75,9 @@ export default {
       boxShadow: 'none',
     },
   },
+  MuiIconButton: {
+    root: {
+      padding: '3px',
+    },
+  },
 };

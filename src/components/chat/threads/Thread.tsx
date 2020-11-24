@@ -60,6 +60,7 @@ const Thread: React.FC = () => {
       limit,
       message_id: parseInt(messageId),
     },
+    fetchPolicy: 'network-only',
   });
 
   const {

@@ -226,7 +226,7 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
           color="secondary"
           autoComplete="off"
           placeholder="Type your message here ..."
-          id="chat-message-input"
+          id={`chat-message-input-${props.channelThreadId}`}
           label={'Crackle your message here ...'}
           // fullWidth
           InputProps={{
@@ -240,7 +240,7 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
         />
 
         <Button
-          id="chat-message-button"
+          id={`chat-message-button-${props.channelThreadId}`}
           size={setButtonSize()}
           variant="contained"
           endIcon={<Icon>send</Icon>}
