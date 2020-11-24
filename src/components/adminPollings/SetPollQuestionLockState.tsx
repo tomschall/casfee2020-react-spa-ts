@@ -68,10 +68,10 @@ const SetPollQuestionLockState: React.FC<SetPollQuestionLockStateProps> = ({
   return (
     <>
       <Button
-        variant="outlined"
+        variant={readyToPublish ? 'outlined' : 'contained'}
         color="secondary"
         disabled={readyToPublish}
-        startIcon={
+        endIcon={
           setActiveState ? (
             <LockIcon className={classes.lock} />
           ) : (
