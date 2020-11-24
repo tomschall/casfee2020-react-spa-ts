@@ -349,6 +349,11 @@ subscription watchChannelPollActiveState {
     id
     channel {
       name
+      channel_polls {
+        poll_question {
+          created_at
+        }
+      }
     }
   }
 }

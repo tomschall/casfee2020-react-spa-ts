@@ -91,7 +91,6 @@ const GetChannels: React.FC<GetChannelsProps> = ({ questionId }) => {
         alignItems="flex-start"
         flexDirection="column"
         pb={1}
-        mb={5}
       >
         <Typography variant="h3">Channels with active polls:</Typography>
         <Typography variant="caption">

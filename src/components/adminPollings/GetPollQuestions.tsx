@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import moment from 'moment';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -139,12 +140,20 @@ const GetPollQuestions: React.FC = () => {
                   </Box>
                   <Box
                     display="flex"
-                    justifyContent="flex-start"
+                    justifyContent="flex-end"
                     alignItems="center"
                     className={classes.column}
                   >
                     <ShowPollQuestionLockState
                       setActiveState={question.is_active}
+                    />
+                    <Chip
+                      variant="outlined"
+                      color="primary"
+                      size="small"
+                      label={`Created at | ${moment(question.created_at).format(
+                        'DD-MM-YYYY | hh:mm:ss',
+                      )}`}
                     />
                   </Box>
                 </AccordionSummary>
