@@ -9,10 +9,7 @@ interface ReplaceMessageProps {
 }
 
 const ReplaceMessage: React.FC<ReplaceMessageProps> = ({ messageId }) => {
-  const [
-    updateMessageMutation,
-    { data, loading, error },
-  ] = useUpdateMessageMutation();
+  const [updateMessageMutation, { data, error }] = useUpdateMessageMutation();
 
   const handleReplace = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -24,10 +21,6 @@ const ReplaceMessage: React.FC<ReplaceMessageProps> = ({ messageId }) => {
       },
     });
   };
-
-  if (loading) {
-    return <CircularProgress />;
-  }
 
   if (
     error ||

@@ -13,10 +13,7 @@ interface DeleteMessageProps {
 const DeleteMessage: React.FC<DeleteMessageProps> = ({ messageId }) => {
   const setdeletedMessage = useSetRecoilState<boolean>(deletedMessageState);
 
-  const [
-    deleteMessageMutation,
-    { data, loading, error },
-  ] = useDeleteMessageMutation();
+  const [deleteMessageMutation, { data, error }] = useDeleteMessageMutation();
 
   const handleDelete = (messageId: number) => {
     deleteMessageMutation({
@@ -25,10 +22,6 @@ const DeleteMessage: React.FC<DeleteMessageProps> = ({ messageId }) => {
       },
     });
   };
-
-  if (loading) {
-    return <CircularProgress />;
-  }
 
   if (
     error ||
@@ -43,7 +36,6 @@ const DeleteMessage: React.FC<DeleteMessageProps> = ({ messageId }) => {
     data?.delete_message?.affected_rows >= 0
   ) {
     setdeletedMessage(true);
-    return <Alert severity="success">Message has been deleted</Alert>;
   }
 
   return (

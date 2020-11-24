@@ -13,7 +13,7 @@ const ThreadDeleteMessage: React.FC<ThreadDeleteMessageProps> = ({
 }) => {
   const [
     deleteThreadMessageMutation,
-    { data, loading, error },
+    { data, error },
   ] = useDeleteThreadMessageMutation();
 
   const handleDelete = (messageId: number) => {
@@ -23,10 +23,6 @@ const ThreadDeleteMessage: React.FC<ThreadDeleteMessageProps> = ({
       },
     });
   };
-
-  if (loading) {
-    return <CircularProgress />;
-  }
 
   if (
     error ||
