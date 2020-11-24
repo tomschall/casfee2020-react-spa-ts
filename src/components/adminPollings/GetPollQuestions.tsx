@@ -78,7 +78,17 @@ const GetPollQuestions: React.FC = () => {
   return (
     <>
       <div className={classes.root}>
-        <Typography variant="h3">Poll list overview: </Typography>
+        <Box display="flex" justifyContent="flex-start" alignItems="center">
+          <Typography variant="h3">Poll list overview:</Typography>
+          <Chip
+            variant="outlined"
+            size="small"
+            color="primary"
+            label={'Total polls: ' + data?.questions.length}
+            style={{ marginLeft: '8px' }}
+          />
+        </Box>
+
         {data?.questions.length === 0 ? (
           <Alert severity="info">Please add a new question.</Alert>
         ) : (

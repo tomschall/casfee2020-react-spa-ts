@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useParams } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -14,7 +14,6 @@ import {
   useWatchGetPollQuestionSubscription,
   useAddAnswerToQuestionMutation,
 } from '../../api/generated/graphql';
-import { getPollQuestionAnswers } from '../../atom';
 import GetChannels from './GetChannels';
 import GetPollAnswerId from './GetPollAnswerId';
 import PollAnswerList from './PollAnswerList';
@@ -47,6 +46,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+interface ParamType {
+  question: string;
+}
+
 const PollAnswers: React.FC = () => {
   const classes = useStyles();
   const [answerNewText, setAnswerNewText] = React.useState({
@@ -57,20 +60,21 @@ const PollAnswers: React.FC = () => {
   });
   const [answerTextUpdateId, setAnswerTextUpdateId] = React.useState<number>(0);
   const [currentAnswerId, setCurrentAnswerId] = React.useState<number>(0);
-  const pollQuestionId = useRecoilValue(getPollQuestionAnswers);
+  const { question: pollQuestionId } = useParams<ParamType>();
   const [pollQuestionActiveState] = React.useState<boolean>();
+
   const getPollQuestion = useWatchGetPollQuestionSubscription({
     variables: {
-      pollQuestionId: pollQuestionId,
+      pollQuestionId: parseInt(pollQuestionId),
     },
   });
 
   const [addPollQuestionMutation] = useAddAnswerToQuestionMutation();
 
   useEffect(() => {}, [
+    answerTextUpdateId,
     answerText,
     currentAnswerId,
-    pollQuestionId,
     pollQuestionActiveState,
     getPollQuestion,
   ]);
@@ -87,7 +91,7 @@ const PollAnswers: React.FC = () => {
     await addPollQuestionMutation({
       variables: {
         text: answerNewText.text,
-        pollQuestionId: pollQuestionId,
+        pollQuestionId: parseInt(pollQuestionId),
       },
     });
 
@@ -98,7 +102,7 @@ const PollAnswers: React.FC = () => {
     <>
       <Grid item xs={12}>
         <Box mt={3} p={0}>
-          <GetPollAnswerId pollQuestionId={pollQuestionId} />
+          <GetPollAnswerId pollQuestionId={parseInt(pollQuestionId)} />
         </Box>
 
         <Box
@@ -115,7 +119,7 @@ const PollAnswers: React.FC = () => {
           </Typography>
 
           <SetPollQuestionLockState
-            pollQuestionId={pollQuestionId}
+            pollQuestionId={parseInt(pollQuestionId)}
             setActiveState={
               getPollQuestion?.data?.poll_question[0]?.is_active ? true : false
             }
@@ -171,7 +175,7 @@ const PollAnswers: React.FC = () => {
         <Divider className={classes.divider} />
       </Grid>
       <Grid item xs={12}>
-        <PollAnswerList pollQuestionId={pollQuestionId} />
+        <PollAnswerList pollQuestionId={parseInt(pollQuestionId)} />
         <Divider className={classes.divider} />
         <GetChannels />
       </Grid>

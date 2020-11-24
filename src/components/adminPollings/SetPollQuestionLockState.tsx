@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { Button } from '@material-ui/core';
-import { useSetPublishPollQuestionStateMutation } from '../../api/generated/graphql';
+import {
+  useWatchGetPollAnswersSubscription,
+  useSetPublishPollQuestionStateMutation,
+} from '../../api/generated/graphql';
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { makeStyles } from '@material-ui/core/styles';
@@ -30,8 +33,13 @@ const SetPollQuestionLockState: React.FC<SetPollQuestionLockStateProps> = ({
       is_active: setActiveState,
     },
   });
+  const { data, loading } = useWatchGetPollAnswersSubscription({
+    variables: {
+      pollQuestionId: pollQuestionId,
+    },
+  });
 
-  useEffect(() => {}, [pollQuestionId, setActiveState]);
+  console.log('data', data);
 
   const handleSetPollQuestionPublishState = async () => {
     await setPollQuestionState({
