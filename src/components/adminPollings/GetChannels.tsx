@@ -20,13 +20,6 @@ const GetChannels: React.FC = () => {
     variables: {},
   });
 
-  useEffect(() => {}, [
-    checkActiveChannelState,
-    channelId,
-    data,
-    getPollQuestionId,
-  ]);
-
   const [pollQuestionToChannel] = useAddPublishPollQuestionToChannelMutation();
   const [
     deletePollQuestionFromChannelMutation,
@@ -52,7 +45,7 @@ const GetChannels: React.FC = () => {
   }
 
   if (error) {
-    return <p>Error loading getChanngels</p>;
+    return <p>Error loading.</p>;
   }
 
   const handlePublishOnChannel = async (kanalId: number) => {
@@ -94,48 +87,45 @@ const GetChannels: React.FC = () => {
         {data?.channel
           .sort((a, b) => a.id - b.id)
           .map((chn, index) => (
-            <>
-              <Box
-                display="flex"
-                justifyContent="flex-start"
-                alignItems="flex-start"
-              >
-                <Chip
-                  key={chn.id}
-                  onClick={() => handlePublishOnChannel(chn.id)}
-                  onDelete={() => handleDeleteQuestionFromChannel(chn.id)}
-                  style={{ marginTop: 8, marginRight: 8 }}
-                  variant="outlined"
-                  size="small"
-                  color={
-                    chn.channel_polls[0]?.channel_id === chn.id
-                      ? 'secondary'
-                      : 'primary'
-                  }
-                  label={chn.name}
-                />
-                <Chip
-                  key={chn.id}
-                  variant={
-                    chn.channel_polls[0]?.poll_question?.text
-                      ? 'default'
-                      : 'outlined'
-                  }
-                  color={
-                    chn.channel_polls[0]?.poll_question?.text
-                      ? 'secondary'
-                      : 'primary'
-                  }
-                  label={
-                    chn.channel_polls[0]?.poll_question?.text
-                      ? chn.channel_polls[0]?.poll_question?.text
-                      : 'No poll set.'
-                  }
-                  style={{ marginTop: 8, marginRight: 8 }}
-                  size="small"
-                />
-              </Box>
-            </>
+            <Box
+              key={index}
+              display="flex"
+              justifyContent="flex-start"
+              alignItems="flex-start"
+            >
+              <Chip
+                onClick={() => handlePublishOnChannel(chn.id)}
+                onDelete={() => handleDeleteQuestionFromChannel(chn.id)}
+                style={{ marginTop: 8, marginRight: 8 }}
+                variant="outlined"
+                size="small"
+                color={
+                  chn.channel_polls[0]?.channel_id === chn.id
+                    ? 'secondary'
+                    : 'primary'
+                }
+                label={chn.name}
+              />
+              <Chip
+                variant={
+                  chn.channel_polls[0]?.poll_question?.text
+                    ? 'default'
+                    : 'outlined'
+                }
+                color={
+                  chn.channel_polls[0]?.poll_question?.text
+                    ? 'secondary'
+                    : 'primary'
+                }
+                label={
+                  chn.channel_polls[0]?.poll_question?.text
+                    ? chn.channel_polls[0]?.poll_question?.text
+                    : 'No poll set.'
+                }
+                style={{ marginTop: 8, marginRight: 8 }}
+                size="small"
+              />
+            </Box>
           ))}
       </Box>
     </>

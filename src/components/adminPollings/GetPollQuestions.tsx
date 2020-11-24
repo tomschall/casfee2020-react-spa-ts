@@ -60,6 +60,7 @@ const GetPollQuestions: React.FC = () => {
   const [pollQuestion, setPollQuestion] = useRecoilState<any>(
     getPollQuestionAnswers,
   );
+
   const handleClick = (questionId: number) => {
     setPollQuestion(questionId);
   };
@@ -77,7 +78,7 @@ const GetPollQuestions: React.FC = () => {
   return (
     <>
       <div className={classes.root}>
-        <Typography variant="h3">Poll list overview</Typography>
+        <Typography variant="h3">Poll list overview: </Typography>
         {data?.questions.length === 0 ? (
           <Alert severity="info">Please add a new question.</Alert>
         ) : (
@@ -147,7 +148,7 @@ const GetPollQuestions: React.FC = () => {
                     </Typography>
                     {question?.channel_polls.map((chn, index) => (
                       <Chip
-                        key={index}
+                        key={chn.channel.name + index}
                         style={{ marginTop: 8, marginRight: 8 }}
                         variant="outlined"
                         size="small"
