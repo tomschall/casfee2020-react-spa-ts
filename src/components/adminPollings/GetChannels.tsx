@@ -10,7 +10,12 @@ import {
 import { Box, Chip, Typography } from '@material-ui/core';
 import Loader from '../../components/shared/Loader';
 
-const GetChannels: React.FC = () => {
+interface GetChannelsProps {
+  questionId: number;
+}
+
+const GetChannels: React.FC<GetChannelsProps> = ({ questionId }) => {
+  const [questionIdState, setQuestionIdState] = React.useState(questionId);
   const getPollQuestionId = useRecoilValue<number>(getPollQuestionAnswers);
   const [channelId, setChannelID] = useState<string>('');
   const { data, loading, error } = useWatchGetChannelsSubscription();
@@ -19,6 +24,8 @@ const GetChannels: React.FC = () => {
   } = useWatchChannelPollActiveStateSubscription({
     variables: {},
   });
+
+  console.log('GETPOLLQUESTIONID', getPollQuestionId, questionId);
 
   const [pollQuestionToChannel] = useAddPublishPollQuestionToChannelMutation();
   const [
@@ -30,6 +37,10 @@ const GetChannels: React.FC = () => {
       channelId: parseInt(channelId),
     },
   });
+
+  useEffect(() => {
+    setQuestionIdState(questionId);
+  }, [questionId, questionIdState]);
 
   if (loading) {
     return (
@@ -96,6 +107,12 @@ const GetChannels: React.FC = () => {
               alignItems="flex-start"
             >
               <Chip
+                disabled={
+                  chn.channel_polls[0]?.poll_question?.id !== questionIdState &&
+                  chn.channel_polls[0]?.poll_question?.id !== undefined
+                    ? true
+                    : false
+                }
                 onClick={() => handlePublishOnChannel(chn.id)}
                 onDelete={() => handleDeleteQuestionFromChannel(chn.id)}
                 style={{ marginTop: 8, marginRight: 8 }}

@@ -177,7 +177,7 @@ const GetPollQuestions: React.FC = () => {
                       Where you want to publish this poll? Orange colored
                       channels has an active poll.
                     </Typography>
-                    <GetChannels />
+                    <GetChannels questionId={question.id} />
                   </div>
                 </AccordionDetails>
                 <Divider />
