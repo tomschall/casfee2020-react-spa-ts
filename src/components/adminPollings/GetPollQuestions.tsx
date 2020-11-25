@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import moment from 'moment';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -65,8 +66,6 @@ const GetPollQuestions: React.FC = () => {
     setPollQuestion(questionId);
   };
 
-  useEffect(() => {}, [pollQuestion, data]);
-
   if (loading) {
     return <Loader />;
   }
@@ -78,14 +77,13 @@ const GetPollQuestions: React.FC = () => {
   return (
     <>
       <div className={classes.root}>
-        <Box display="flex" justifyContent="flex-start" alignItems="center">
+        <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography variant="h3">Poll list overview:</Typography>
           <Chip
             variant="outlined"
             size="small"
             color="primary"
             label={'Total polls: ' + data?.questions.length}
-            style={{ marginLeft: '8px' }}
           />
         </Box>
 
@@ -113,7 +111,7 @@ const GetPollQuestions: React.FC = () => {
                       color="primary"
                       label={question.id}
                     />
-                    {question.is_active ? (
+                    {question?.channel_polls.length > 0 ? (
                       <HowToVoteIcon color="secondary" />
                     ) : (
                       <HowToVoteIcon />
@@ -139,12 +137,20 @@ const GetPollQuestions: React.FC = () => {
                   </Box>
                   <Box
                     display="flex"
-                    justifyContent="flex-start"
+                    justifyContent="flex-end"
                     alignItems="center"
                     className={classes.column}
                   >
                     <ShowPollQuestionLockState
                       setActiveState={question.is_active}
+                    />
+                    <Chip
+                      variant="outlined"
+                      color="primary"
+                      size="small"
+                      label={`Created at | ${moment(question.created_at).format(
+                        'DD-MM-YYYY | hh:mm:ss',
+                      )}`}
                     />
                   </Box>
                 </AccordionSummary>
@@ -177,7 +183,7 @@ const GetPollQuestions: React.FC = () => {
                       Where you want to publish this poll? Orange colored
                       channels has an active poll.
                     </Typography>
-                    <GetChannels />
+                    <GetChannels questionId={question.id} />
                   </div>
                 </AccordionDetails>
                 <Divider />
