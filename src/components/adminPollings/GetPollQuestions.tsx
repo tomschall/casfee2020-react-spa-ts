@@ -66,8 +66,6 @@ const GetPollQuestions: React.FC = () => {
     setPollQuestion(questionId);
   };
 
-  useEffect(() => {}, [pollQuestion, data]);
-
   if (loading) {
     return <Loader />;
   }
@@ -113,7 +111,7 @@ const GetPollQuestions: React.FC = () => {
                       color="primary"
                       label={question.id}
                     />
-                    {question.is_active ? (
+                    {question?.channel_polls.length > 0 ? (
                       <HowToVoteIcon color="secondary" />
                     ) : (
                       <HowToVoteIcon />

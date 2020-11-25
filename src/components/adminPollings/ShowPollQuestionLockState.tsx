@@ -6,10 +6,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
-  play: {
+  locked: {
     color: theme.palette.error.main,
   },
-  stop: {
+  unlocked: {
     color: theme.palette.success.main,
   },
 }));
@@ -33,9 +33,9 @@ const ShowPollQuestionLockState: React.FC<ShowPollQuestionLockStateProps> = ({
         color="primary"
         icon={
           setActiveState ? (
-            <LockIcon className={classes.play} />
+            <LockIcon className={classes.locked} />
           ) : (
-            <LockOpenIcon className={classes.stop} />
+            <LockOpenIcon className={classes.unlocked} />
           )
         }
         label={setActiveState ? 'locked' : 'unlocked'}
