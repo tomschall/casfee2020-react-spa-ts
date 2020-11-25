@@ -8,7 +8,7 @@ import {
   ListItemText,
   Typography,
 } from '@material-ui/core';
-import PeopleIcon from '@material-ui/icons/People';
+import ForumOutlinedIcon from '@material-ui/icons/ForumOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 
@@ -33,7 +33,7 @@ const ThreadsLink: React.FC<any> = () => {
     <>
       <ListItem button>
         <ListItemIcon>
-          <PeopleIcon color="secondary" />
+          <ForumOutlinedIcon color="secondary" />
         </ListItemIcon>
         <ListItemText>
           <Link to="/channel/threads">
