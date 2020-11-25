@@ -79,14 +79,13 @@ const GetPollQuestions: React.FC = () => {
   return (
     <>
       <div className={classes.root}>
-        <Box display="flex" justifyContent="flex-start" alignItems="center">
+        <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography variant="h3">Poll list overview:</Typography>
           <Chip
             variant="outlined"
             size="small"
             color="primary"
             label={'Total polls: ' + data?.questions.length}
-            style={{ marginLeft: '8px' }}
           />
         </Box>
 

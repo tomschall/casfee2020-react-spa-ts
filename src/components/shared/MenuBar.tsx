@@ -202,7 +202,12 @@ const MenuBar: React.FC<MenuBarProps> = ({
                           }}
                           {...bindPopover(popupState)}
                         >
-                          <Box p={2}>
+                          <Box
+                            display="flex"
+                            justifyContent="center"
+                            p={2}
+                            style={{ minWidth: '30vw' }}
+                          >
                             <PublishChannelPolling
                               user={[]}
                               channelId={channelId}
