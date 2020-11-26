@@ -179,7 +179,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
         <TypingIndicator />
         <TextField
           value={text}
-          autoFocus={true}
+          autoFocus={false}
           onChange={(e) => {
             handleTyping(e.target.value);
           }}
