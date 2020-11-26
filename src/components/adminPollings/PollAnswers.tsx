@@ -169,7 +169,7 @@ const PollAnswers: React.FC = () => {
       <Grid item xs={12}>
         <PollAnswerList pollQuestionId={parseInt(pollQuestionId)} />
         <Divider className={classes.divider} />
-        <GetChannels />
+        <GetChannels questionId={currentAnswerId} />
       </Grid>
     </>
   );

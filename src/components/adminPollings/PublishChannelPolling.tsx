@@ -26,6 +26,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   pollCard: {
+    width: '100%',
     padding: theme.spacing(5),
   },
 }));
