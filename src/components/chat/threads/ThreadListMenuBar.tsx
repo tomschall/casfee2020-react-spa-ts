@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { TextField, Button, Box } from '@material-ui/core';
+import { TextField, Button, Box, Chip } from '@material-ui/core';
 import { theme } from '../../../theme/theme';
 import Icon from '@material-ui/core/Icon';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -13,6 +13,9 @@ import { giphyState, deletedMessageState } from '../../../atom';
 import { IGif } from '@giphy/js-types';
 import { makeStyles } from '@material-ui/core/styles';
 import GiphyCarousel from '../../shared/GiphyCarousel';
+import AddGif from '@material-ui/icons/Gif';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ThreadDrawer from './ThreadDrawer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,14 +67,29 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: 55,
     paddingRight: theme.spacing(1),
   },
+  toolbar: {
+    [theme.breakpoints.up('md')]: {
+      paddingTop: theme.spacing(5),
+      paddingBottom: theme.spacing(5),
+    },
+    [theme.breakpoints.down('md')]: {
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1),
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
+    },
+    borderTop: 1,
+    borderTopStyle: 'solid',
+    borderTopColor: theme.palette.primary.dark,
+  },
 }));
 
-interface ThreadMessageInputProps {
+interface ThreadListMenuBarProps {
   channelId: number;
   channelThreadId: number | undefined;
 }
 
-const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
+const ThreadListMenuBar: React.FC<ThreadListMenuBarProps> = (props) => {
   const classes = useStyles();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -101,6 +119,7 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
 
   const { user } = useAuth0();
   const [text, setText] = useState('');
+  const [open, setOpen] = React.useState(false);
   const [gif, setGif] = useRecoilState<IGif | null>(giphyState);
   const [deletedMessage, setdeletedMessage] = useRecoilState<boolean>(
     deletedMessageState,
@@ -163,12 +182,63 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
     setdeletedMessage(false);
   };
 
+  const handleGiphyClick = () => {
+    setShowGiphyCarousel(!showGiphyCarousel);
+  };
+
   const hideGiphyCarousel = () => {
     setShowGiphyCarousel(false);
   };
 
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div className={classes.rootSingleChip}>
+      <Box
+        display="flex"
+        flex="1"
+        justifyContent="space-between"
+        alignItems="flex-start"
+      >
+        <Box>
+          <Chip
+            variant="outlined"
+            color="primary"
+            size="small"
+            icon={<AddGif />}
+            label="+Gif"
+            onClick={handleGiphyClick}
+          />
+        </Box>
+        <Box style={{ flex: 1 }}>
+          {matches === false && (
+            <Box
+              order={1}
+              display="flex"
+              flex="1"
+              justifyContent="flex-end"
+              alignItems="flex-end"
+            >
+              <Chip
+                variant="default"
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                label="Menu"
+                clickable
+                size="small"
+                color="secondary"
+                icon={<ExpandLess />}
+              />
+            </Box>
+          )}
+        </Box>
+      </Box>
       <Box className={gif ? classes.giphyImage : ''}>
         {gif && (
           <img
@@ -229,8 +299,9 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
           Send
         </Button>
       </form>
+      <ThreadDrawer open={open} handleDrawerClose={handleDrawerClose} />
     </div>
   );
 };
 
-export default ThreadMessageInput;
+export default ThreadListMenuBar;

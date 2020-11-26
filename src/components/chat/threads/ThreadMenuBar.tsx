@@ -4,27 +4,18 @@ import clsx from 'clsx';
 import { theme } from '../../../theme/theme';
 import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../../atom';
-import {
-  AppBar,
-  Box,
-  Container,
-  Chip,
-  Drawer,
-  Grid,
-  Toolbar,
-} from '@material-ui/core';
+import { AppBar, Box, Container, Chip, Grid, Toolbar } from '@material-ui/core';
 import AddGif from '@material-ui/icons/Gif';
-import SideBar from '../../shared/SideBar';
 import ThreadMessageInput from './ThreadMessageInput';
 import GiphyCarousel from '../../shared/GiphyCarousel';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import ExpandMore from '@material-ui/icons/ExpandMore';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import FaceIcon from '@material-ui/icons/Face';
 import ChatIcon from '@material-ui/icons/Chat';
 import PeopleIcon from '@material-ui/icons/People';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import { makeStyles } from '@material-ui/core/styles';
+import ThreadDrawer from './ThreadDrawer';
 
 const drawerWidth = '100%';
 
@@ -59,33 +50,6 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
-  },
-  menuButton: {
-    marginTop: theme.spacing(5),
-    flex: '1',
-  },
-  menuButtonHidden: {
-    display: 'none',
-  },
-  drawerPaper: {
-    height: '100vh',
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.easeInOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: drawerWidth,
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  fab: {
-    margin: theme.spacing(2),
   },
   giphyImage: {
     marginTop: theme.spacing(2),
@@ -208,46 +172,12 @@ const ThreadMenuBar: React.FC<ThreadMenuBarProps> = ({ channelThreadId }) => {
                 <ThreadMessageInput
                   channelId={currentChannel?.id}
                   channelThreadId={channelThreadId}
-                  isThreadList={false}
                 />
               </Grid>
             </Grid>
           </Container>
         </Toolbar>
-
-        <Drawer
-          variant="temporary"
-          elevation={10}
-          anchor="bottom"
-          classes={{
-            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-          }}
-          open={open}
-        >
-          <Toolbar className={classes.toolbar}>
-            <Container maxWidth="xl" disableGutters>
-              <SideBar />
-              <Box
-                order={1}
-                display="flex"
-                justifyContent="flex-end"
-                alignItems="flex-end"
-              >
-                <Chip
-                  variant="default"
-                  aria-label="open drawer"
-                  onClick={handleDrawerClose}
-                  label="Menu"
-                  clickable
-                  size="small"
-                  color="secondary"
-                  icon={<ExpandMore />}
-                  className={clsx(classes.menuButton, open)}
-                />
-              </Box>
-            </Container>
-          </Toolbar>
-        </Drawer>
+        <ThreadDrawer open={open} handleDrawerClose={handleDrawerClose} />
       </AppBar>
     </>
   );

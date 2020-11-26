@@ -84,8 +84,6 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
   /* Create Apollo Client */
   const client = new ApolloClient({ link, cache });
 
-  if (error) loginWithRedirect();
-
   return <ApolloHooksProvider client={client}>{children}</ApolloHooksProvider>;
 };
 

@@ -6,7 +6,7 @@ import { useWatchChannelThreadMessagesSubscription } from '../../../api/generate
 import ThreadMessageList from './ThreadMessageList';
 import { Alert } from '@material-ui/lab';
 import { ThreadMessage } from '../../../interfaces/message.interface';
-import ThreadMessageInput from './ThreadMessageInput';
+import ThreadListMenuBar from './ThreadListMenuBar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,10 +73,9 @@ const ThreadList: React.FC<ThreadListProps> = ({ channelThread }) => {
                 isThreadList={true}
               />
 
-              <ThreadMessageInput
+              <ThreadListMenuBar
                 channelId={channelThread.message?.id}
                 channelThreadId={channelThread.id}
-                isThreadList={true}
               />
             </List>
           </Grid>
