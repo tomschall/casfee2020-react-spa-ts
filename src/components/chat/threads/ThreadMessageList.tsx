@@ -32,32 +32,17 @@ export const useStyles = makeStyles((theme) => ({
     messageText: {
       paddingBottom: '1rem',
     },
-    reply: {
-      fontSize: 11,
-      paddingBottom: '1rem',
-      color: '#ffffff',
-    },
   },
   [theme.breakpoints.down('md')]: {
     messageText: {
       fontSize: 14,
       paddingBottom: '1rem',
     },
-    reply: {
-      fontSize: 11,
-      paddingBottom: '1rem',
-      color: '#ffffff',
-    },
   },
   [theme.breakpoints.down('sm')]: {
     messageText: {
       fontSize: 12,
       paddingBottom: '1rem',
-    },
-    reply: {
-      fontSize: 11,
-      paddingBottom: '1rem',
-      color: '#ffffff',
     },
   },
   vspace: {
@@ -74,8 +59,8 @@ export const useStyles = makeStyles((theme) => ({
     paddingBottom: '0.5rem',
   },
   avatar: {
-    backgroundColor: '#000000',
-    color: '#F57C00',
+    backgroundColor: theme.palette.background.default,
+    color: theme.palette.secondary.main,
   },
 }));
 

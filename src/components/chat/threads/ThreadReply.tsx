@@ -5,6 +5,13 @@ import { useHistory } from 'react-router';
 import { useInsertChannelThreadMutation } from '../../../api/generated/graphql';
 import { Alert } from '@material-ui/lab';
 import { Message } from '../../../interfaces/message.interface';
+import { makeStyles } from '@material-ui/core/styles';
+
+export const useStyles = makeStyles((theme) => ({
+  reply: {
+    transform: 'scaleX(-1)',
+  },
+}));
 
 interface ThreadReplyProps {
   channelName: string;
@@ -12,6 +19,8 @@ interface ThreadReplyProps {
 }
 
 const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
+  const classes = useStyles();
+
   const history = useHistory();
 
   const [
@@ -38,7 +47,7 @@ const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
     return (
       <div>
         <IconButton onClick={() => navigateToThreadChannel()}>
-          <ReplyIcon fontSize="small" />
+          <ReplyIcon fontSize="small" className={classes.reply} />
         </IconButton>
       </div>
     );
@@ -47,7 +56,7 @@ const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
   return (
     <div>
       <IconButton onClick={handleClick}>
-        <ReplyIcon fontSize="small" />
+        <ReplyIcon fontSize="small" className={classes.reply} />
       </IconButton>
     </div>
   );
