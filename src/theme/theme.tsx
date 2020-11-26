@@ -5,13 +5,13 @@ import overrides from './overrides';
 export const theme = createMuiTheme({
   palette: {
     common: {
-      black: '#212121',
+      black: '#000000',
       white: '#f9cd8b',
     },
     type: 'dark',
     background: {
       paper: '#141c6b',
-      default: '#131a5d',
+      default: '#0c103b',
     },
     primary: {
       light: '#81D4FA',
