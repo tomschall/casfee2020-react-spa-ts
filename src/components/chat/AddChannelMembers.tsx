@@ -23,6 +23,7 @@ import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../atom';
 import { useHistory } from 'react-router-dom';
 import Loader from '../shared/Loader';
+import Logo from '../shared/Logo';
 import { makeStyles } from '@material-ui/core/';
 
 const useStyles = makeStyles((theme) => ({
@@ -89,12 +90,15 @@ const AddChannelMembers: React.FC = () => {
     <>
       <Container maxWidth="sm" className={classes.root}>
         <Grid item xs={12}>
+          <Box display="flex" justifyContent="center" alignItems="center">
+            <Logo />
+          </Box>
           <Box
             display="flex"
             justifyContent="center"
-            alignItems="flex-start"
+            alignItems="center"
             flexDirection="column"
-            mt={5}
+            mt={0}
             mb={5}
           >
             <Typography id="simple-modal-title" variant="h2">
@@ -162,7 +166,7 @@ const AddChannelMembers: React.FC = () => {
               size="large"
               onClick={handleClick}
             >
-              Cancel
+              Back to channel
             </Button>
           </Box>
         </Grid>

@@ -10,6 +10,7 @@ import {
   List,
   ListItem,
   ListItemIcon,
+  ListItemText,
   Typography,
 } from '@material-ui/core';
 import {
@@ -23,6 +24,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useHistory } from 'react-router';
 import Loader from '../shared/Loader';
+import Logo from '../shared/Logo';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -118,16 +120,20 @@ const AddDirectMessageChannel: React.FC = () => {
     history.push(`/channel/general`);
   };
 
+  console.log(users?.user.length);
+
   return (
     <>
       <Container maxWidth="sm">
         <Grid item xs={12}>
+          <Box display="flex" justifyContent="center" alignItems="center">
+            <Logo />
+          </Box>
           <Box
             display="flex"
             justifyContent="center"
-            alignItems="flex-start"
+            alignItems="center"
             flexDirection="column"
-            mt={5}
             mb={5}
           >
             <Typography variant="h2">Send direct message</Typography>
@@ -161,10 +167,12 @@ const AddDirectMessageChannel: React.FC = () => {
                           </Avatar>
                         </Badge>
                       </ListItemIcon>
-                      {dm_user?.username}
+                      <ListItemText primary={dm_user?.username} />
                     </ListItem>
                   ) : (
-                    false
+                    <Alert severity={'error'}>
+                      All users added to channel. Nothing to do here!
+                    </Alert>
                   );
                 })}
             </List>
@@ -179,7 +187,7 @@ const AddDirectMessageChannel: React.FC = () => {
               size="large"
               onClick={handleClick}
             >
-              Cancel
+              Back to Channel
             </Button>
           </Box>
         </Grid>
