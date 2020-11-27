@@ -19,7 +19,7 @@ const ChatBoard: React.FC = () => {
         sendUserIsOnline();
       }
     }, 9000);
-  }, []);
+  }, [sendUserIsOnline, user.sub]);
 
   return (
     <Container maxWidth="xl">

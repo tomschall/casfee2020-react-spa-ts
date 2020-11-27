@@ -2,11 +2,14 @@ export default {
   MuiCssBaseline: {
     '@global': {
       '*': {
-        'scrollbar-width': '1.5rem',
+        'scrollbar-width': '1rem',
       },
       '*::-webkit-scrollbar': {
-        width: '1rem',
+        width: '.5rem',
         height: '1rem',
+      },
+      '*::-webkit-scrollbar-track': {
+        '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)',
       },
       '*::-webkit-scrollbar-thumb': {
         backgroundColor: 'rgba(0,0,0,.5)',
