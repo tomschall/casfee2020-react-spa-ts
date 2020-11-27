@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
     },
     [theme.breakpoints.up('md')]: {
-      width: '100%',
+      width: 'auto',
     },
     marginTop: theme.spacing(3),
   },

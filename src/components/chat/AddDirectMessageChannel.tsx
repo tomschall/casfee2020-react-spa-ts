@@ -1,5 +1,17 @@
 import React, { useState } from 'react';
-import { MenuItem, CircularProgress } from '@material-ui/core';
+import {
+  Avatar,
+  Badge,
+  Box,
+  Button,
+  Container,
+  Divider,
+  Grid,
+  List,
+  ListItem,
+  ListItemIcon,
+  Typography,
+} from '@material-ui/core';
 import {
   useValidateAndAddDirectMessageChannelMutation,
   useWatchUsersWhoHaveSubscribedToDirectMessageChannelSubscription,
@@ -10,8 +22,21 @@ import { Alert } from '@material-ui/lab';
 import { v4 as uuidv4 } from 'uuid';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useHistory } from 'react-router';
+import Loader from '../shared/Loader';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  avatar: {
+    backgroundColor: '#000000',
+    color: '#F57C00',
+  },
+  spacer: {
+    marginTop: theme.spacing(5),
+  },
+}));
 
 const AddDirectMessageChannel: React.FC = () => {
+  const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const { user } = useAuth0();
 
@@ -50,7 +75,7 @@ const AddDirectMessageChannel: React.FC = () => {
   }
 
   if (loading) {
-    return <CircularProgress />;
+    return <Loader />;
   }
 
   const handleAddUser = async (user_id: string, dm_user: string) => {
@@ -86,7 +111,6 @@ const AddDirectMessageChannel: React.FC = () => {
       });
 
     history.push(`/channel/${data?.validateAndAddDirectMessageChannel?.name}`);
-
     // TODO: add backend_only flag for addDirectMessageChannel mutation to hasura
   };
 
@@ -95,29 +119,72 @@ const AddDirectMessageChannel: React.FC = () => {
   };
 
   return (
-    <React.Fragment>
-      <button type="button" onClick={handleClick}>
-        back to general channel...
-      </button>
-      <p id="simple-modal-description">
-        {users && users.user.length > 0
-          ? 'Select users that you wanna send direct messages to.'
-          : 'At the moment there are no more users to select. You have to select them from the direct message sidebar.'}
-      </p>
-      {users &&
-        users.user.map((dm_user: any, index) => {
-          return dm_user.user_channels.length === 0 ? (
-            <MenuItem
-              key={index}
-              onClick={() => handleAddUser(user_id, dm_user?.auth0_user_id)}
+    <>
+      <Container maxWidth="sm">
+        <Grid item xs={12}>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="flex-start"
+            flexDirection="column"
+            mt={5}
+            mb={5}
+          >
+            <Typography variant="h2">Send direct message</Typography>
+            <Typography
+              color="secondary"
+              variant="caption"
+              id="simple-modal-description"
             >
-              {dm_user?.username} ({dm_user?.auth0_user_id})
-            </MenuItem>
-          ) : (
-            false
-          );
-        })}
-    </React.Fragment>
+              {users && users.user.length > 0
+                ? 'Select users that you wanna send direct messages to.'
+                : 'At the moment there are no more users to select. You have to select them from the direct message sidebar.'}
+            </Typography>
+          </Box>
+          <Box mb={5}>
+            <Divider className={classes.spacer} />
+            <List className={classes.spacer}>
+              {users &&
+                users.user.map((dm_user: any, index) => {
+                  return dm_user.user_channels.length === 0 ? (
+                    <ListItem
+                      button
+                      key={index}
+                      onClick={() =>
+                        handleAddUser(user_id, dm_user?.auth0_user_id)
+                      }
+                    >
+                      <ListItemIcon>
+                        <Badge variant="dot">
+                          <Avatar className={classes.avatar}>
+                            {dm_user?.username.substring(0, 2).toUpperCase()}
+                          </Avatar>
+                        </Badge>
+                      </ListItemIcon>
+                      {dm_user?.username}
+                    </ListItem>
+                  ) : (
+                    false
+                  );
+                })}
+            </List>
+            <Divider className={classes.spacer} />
+          </Box>
+        </Grid>
+        <Grid item xs={12}>
+          <Box display="flex" justifyContent="center" mt={5}>
+            <Button
+              variant="contained"
+              color="secondary"
+              size="large"
+              onClick={handleClick}
+            >
+              Cancel
+            </Button>
+          </Box>
+        </Grid>
+      </Container>
+    </>
   );
 };
 

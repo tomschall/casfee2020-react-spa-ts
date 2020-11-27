@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   messageContainer: {
     [theme.breakpoints.up('lg')]: {
-      padding: theme.spacing(10),
+      padding: theme.spacing(5),
       paddingTop: theme.spacing(5),
       paddingBottom: theme.spacing(0),
     },
@@ -63,7 +63,7 @@ const ThreadList: React.FC<ThreadListProps> = ({ channelThread }) => {
     <>
       <div className={classes.root}>
         <Grid container>
-          <Grid item xs={10} className={classes.messageContainer}>
+          <Grid item xs={12} className={classes.messageContainer}>
             <List>
               <ThreadMessageList
                 messages={data?.channel_thread_message as ThreadMessage[]}

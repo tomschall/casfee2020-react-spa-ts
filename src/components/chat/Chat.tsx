@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Grid, List } from '@material-ui/core';
+import { Box, Button, Grid, List, Typography } from '@material-ui/core';
 import MessageList from './MessageList';
 import { Message } from '../../interfaces/message.interface';
 import {
@@ -9,8 +9,9 @@ import {
 } from '../../api/generated/graphql';
 
 import Alert from '@material-ui/lab/Alert';
-import CircularProgress from '@material-ui/core/CircularProgress';
+// import CircularProgress from '@material-ui/core/CircularProgress';
 import MenuBar from '../shared/MenuBar';
+import Loader from '../shared/Loader';
 import { useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -93,7 +94,24 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   }
 
   if (loading) {
-    return <CircularProgress />;
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        flexDirection="column"
+        alignItems="center"
+        style={{ height: '100vh' }}
+      >
+        <Box>
+          <Loader />
+        </Box>
+        <Box mt={2}>
+          <Typography color="secondary" variant="caption">
+            Please wait!
+          </Typography>
+        </Box>
+      </Box>
+    );
   }
 
   if (data) {
