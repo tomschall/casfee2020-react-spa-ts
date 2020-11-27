@@ -1,9 +1,19 @@
 import React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { ThemeProvider } from '@material-ui/core/styles';
-import { theme } from '../../theme/theme';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { Alert } from '@material-ui/lab';
+import {
+  Avatar,
+  Badge,
+  Box,
+  Button,
+  Container,
+  Divider,
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Typography,
+} from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
 import {
   useWatchUsersWhoHaveNotSubscribedToChannelSubscription,
@@ -11,13 +21,20 @@ import {
 } from '../../api/generated/graphql';
 import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../atom';
-import { List, ListItem, ListItemText } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import Loader from '../shared/Loader';
 import { makeStyles } from '@material-ui/core/';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
+    overflowY: 'scroll',
+  },
+  avatar: {
+    backgroundColor: '#000000',
+    color: '#F57C00',
+  },
+  spacer: {
+    marginTop: theme.spacing(5),
   },
 }));
 
@@ -69,34 +86,47 @@ const AddChannelMembers: React.FC = () => {
     console.log('error on user subscription', error);
 
   return (
-    <ThemeProvider theme={theme}>
-      <div className={classes.root}>
-        <CssBaseline />
-        <React.Fragment>
-          <div>
-            <h2 id="simple-modal-title">
-              Add users to channel ({currentChannel.name})
-            </h2>
+    <>
+      <Container maxWidth="sm" className={classes.root}>
+        <Grid item xs={12}>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="flex-start"
+            flexDirection="column"
+            mt={5}
+            mb={5}
+          >
+            <Typography id="simple-modal-title" variant="h2">
+              Add users to {currentChannel.name}
+            </Typography>
+            <Typography
+              color="secondary"
+              variant="caption"
+              id="simple-modal-description"
+            >
+              {users && users.user.length > 0
+                ? 'Select users that you wanna add to this channel.'
+                : 'All users have subscribed to this channel.'}
+            </Typography>
+          </Box>
+          <Box>
             {error && (
               <Alert severity={'error'}>
                 Error - something weird happened...
               </Alert>
             )}
 
-            {(loadingAuth0 || loading) && <CircularProgress />}
+            {(loadingAuth0 || loading) && <Loader />}
 
             {!(loadingAuth0 || loading || error) && (
-              <React.Fragment>
-                <button type="button" onClick={handleClick}>
-                  back to channel: {currentChannel.name}
-                </button>
-                <p id="simple-modal-description">
-                  {users && users.user.length > 0
-                    ? 'Select users that you wanna add to this channel.'
-                    : 'All users have subscribed to this channel.'}
-                </p>
-
-                <List component="nav" aria-label="secondary mailbox folders">
+              <>
+                <Divider className={classes.spacer} />
+                <List
+                  component="nav"
+                  aria-label="secondary mailbox folders"
+                  className={classes.spacer}
+                >
                   {users &&
                     users.user.map((u: any, index) => {
                       return (
@@ -107,17 +137,37 @@ const AddChannelMembers: React.FC = () => {
                             handleUsersToggle(event, u.auth0_user_id)
                           }
                         >
+                          <ListItemIcon>
+                            <Badge variant="dot">
+                              <Avatar className={classes.avatar}>
+                                {u?.username.substring(0, 2).toUpperCase()}
+                              </Avatar>
+                            </Badge>
+                          </ListItemIcon>
                           <ListItemText primary={u.username} />
                         </ListItem>
                       );
                     })}
                 </List>
-              </React.Fragment>
+                <Divider className={classes.spacer} />
+              </>
             )}
-          </div>
-        </React.Fragment>
-      </div>
-    </ThemeProvider>
+          </Box>
+        </Grid>
+        <Grid item xs={12}>
+          <Box display="flex" justifyContent="center" mt={5}>
+            <Button
+              variant="contained"
+              color="secondary"
+              size="large"
+              onClick={handleClick}
+            >
+              Cancel
+            </Button>
+          </Box>
+        </Grid>
+      </Container>
+    </>
   );
 };
 
