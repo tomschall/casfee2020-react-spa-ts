@@ -76,10 +76,11 @@ const AddDirectMessageChannel: React.FC = () => {
   useEffect(() => {
     const checkUserSubscriptions = async () => {
       return data?.user.filter((u) => {
-        const part = u.user_channels.filter((user_channel) => {
-          return user_channel.channel.user_channels.length === 1;
-        });
-        return part.length === 0;
+        return (
+          u.user_channels.filter((user_channel) => {
+            return user_channel.channel.user_channels.length === 1;
+          }).length === 0
+        );
       });
     };
     const check = async () => {
