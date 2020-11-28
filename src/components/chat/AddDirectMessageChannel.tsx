@@ -120,7 +120,13 @@ const AddDirectMessageChannel: React.FC = () => {
     history.push(`/channel/general`);
   };
 
-  console.log(users?.user.length);
+  const checkIfEveryUserHasSubscribed = () => {
+    return users?.user
+      .map((user) => {
+        return user.user_channels.length === 1;
+      })
+      .every((currentValue) => currentValue === true);
+  };
 
   return (
     <>
@@ -136,46 +142,50 @@ const AddDirectMessageChannel: React.FC = () => {
             flexDirection="column"
             mb={5}
           >
-            <Typography variant="h2">Send direct message</Typography>
+            <Typography variant="h2">Add a user</Typography>
             <Typography
               color="secondary"
               variant="caption"
               id="simple-modal-description"
             >
-              {users && users.user.length > 0
+              {!checkIfEveryUserHasSubscribed()
                 ? 'Select users that you wanna send direct messages to.'
-                : 'At the moment there are no more users to select. You have to select them from the direct message sidebar.'}
+                : ''}
             </Typography>
           </Box>
           <Box mb={5}>
             <Divider className={classes.spacer} />
-            <List className={classes.spacer}>
-              {users &&
-                users.user.map((dm_user: any, index) => {
+            {!checkIfEveryUserHasSubscribed() ? (
+              <List className={classes.spacer}>
+                {users?.user.map((dm_user: any, index) => {
                   return dm_user.user_channels.length === 0 ? (
                     <ListItem
                       button
                       key={index}
                       onClick={() =>
-                        handleAddUser(user_id, dm_user?.auth0_user_id)
+                        handleAddUser(user_id, dm_user.auth0_user_id)
                       }
                     >
                       <ListItemIcon>
                         <Badge variant="dot">
                           <Avatar className={classes.avatar}>
-                            {dm_user?.username.substring(0, 2).toUpperCase()}
+                            {dm_user.username.substring(0, 2).toUpperCase()}
                           </Avatar>
                         </Badge>
                       </ListItemIcon>
-                      <ListItemText primary={dm_user?.username} />
+                      <ListItemText primary={dm_user.username} />
                     </ListItem>
                   ) : (
-                    <Alert severity={'error'}>
-                      All users added to channel. Nothing to do here!
-                    </Alert>
+                    false
                   );
                 })}
-            </List>
+              </List>
+            ) : (
+              <Alert severity={'success'}>
+                All users have been added. U can send a message, by clicking on
+                the user in the menu sidebar in direct messages.
+              </Alert>
+            )}
             <Divider className={classes.spacer} />
           </Box>
         </Grid>

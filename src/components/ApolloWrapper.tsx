@@ -35,7 +35,7 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
     const headers = {} as ApolloHeadersType;
     if (isAuthenticated) {
       const token = await getAccessTokenSilently();
-      // console.log('token', token);
+      //console.log('token', token);
       headers.Authorization = `Bearer ${token}`;
     }
     return headers;
