@@ -53,8 +53,9 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: '0.5rem',
   },
   avatar: {
-    backgroundColor: '#000000',
+    backgroundColor: '#0a0b1a',
     color: '#F57C00',
+    fontSize: 12,
   },
 }));
 
@@ -105,7 +106,7 @@ const MessageList: React.FC<MessageProps> = ({
   const renderMessages = (message: Message) => {
     return (
       <ListItem key={message.id} className={classes.root}>
-        <Box display="flex" justifyContent="flex-start" alignItems="flex-start">
+        <Box display="flex" justifyContent="flex-start" alignItems="center">
           <ListItemAvatar>
             <ListItemIcon>
               <Badge variant="dot">

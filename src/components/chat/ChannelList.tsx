@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { theme } from '../../theme/theme';
 import { useWatchChannelsSubscription } from '../../api/generated/graphql';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
 import { useRecoilState } from 'recoil';
@@ -22,6 +23,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import ChannelListMessageCounter from './ChannelListMessageCounter';
 import ThreadsLink from '../shared/ThreadsLink';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -41,8 +43,8 @@ const useStyles = makeStyles((theme) => ({
 const Channels: React.FC<any> = () => {
   const classes = useStyles();
   const [currentChannel] = useRecoilState<any>(currentChannelState);
-
   const [open, setOpen] = React.useState(true);
+  const matches = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleClick = () => {
     setOpen(!open);

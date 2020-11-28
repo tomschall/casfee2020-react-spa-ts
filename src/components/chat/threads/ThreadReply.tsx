@@ -38,7 +38,7 @@ const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
     return (
       <div>
         <IconButton onClick={() => navigateToThreadChannel()}>
-          <ReplyIcon fontSize="small" />
+          <ReplyIcon fontSize="small" style={{ transform: 'scaleX(-1)' }} />
         </IconButton>
       </div>
     );
@@ -47,7 +47,7 @@ const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
   return (
     <div>
       <IconButton onClick={handleClick}>
-        <ReplyIcon fontSize="small" />
+        <ReplyIcon fontSize="small" style={{ transform: 'scaleX(-1)' }} />
       </IconButton>
     </div>
   );
