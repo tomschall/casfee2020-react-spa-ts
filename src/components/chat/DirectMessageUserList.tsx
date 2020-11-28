@@ -47,6 +47,10 @@ const useStyles = makeStyles((theme) => ({
   link: {
     color: '#f9cd8b',
   },
+  avatar: {
+    backgroundColor: '#000000',
+    color: '#F57C00',
+  },
 }));
 
 interface DirectMessageUserListProps {
@@ -147,7 +151,11 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
                       data.user_channels[0]?.user.auth0_user_id,
                     )}
                   >
-                    <Avatar alt="Username" src="/chicken-chat-logo.svg" />
+                    <Avatar className={classes.avatar}>
+                      {data.user_channels[0]?.user.username
+                        .substring(0, 2)
+                        .toUpperCase()}
+                    </Avatar>
                   </Badge>
                 </ListItemIcon>
               </ListItem>
