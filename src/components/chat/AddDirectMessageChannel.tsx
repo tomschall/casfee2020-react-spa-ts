@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Avatar,
   Badge,
@@ -42,12 +42,14 @@ const AddDirectMessageChannel: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { user } = useAuth0();
 
+  const [users, setUsers] = useState<any>(null);
+
   const user_id = user.sub;
 
   let history = useHistory();
 
   const {
-    data: users,
+    data,
     loading,
     error,
   } = useWatchUsersWhoHaveSubscribedToDirectMessageChannelSubscription({
@@ -70,6 +72,23 @@ const AddDirectMessageChannel: React.FC = () => {
     validateAndAddDirectMessageChannelMutation,
     { error: addDMError },
   ] = useValidateAndAddDirectMessageChannelMutation();
+
+  useEffect(() => {
+    const checkUserSubscriptions = async () => {
+      return data?.user.filter((u) => {
+        return (
+          u.user_channels.filter((user_channel) => {
+            return user_channel.channel.user_channels.length === 1;
+          }).length === 0
+        );
+      });
+    };
+    const check = async () => {
+      const users = await checkUserSubscriptions();
+      setUsers(users);
+    };
+    check();
+  }, [data]);
 
   if (error || addDMError || upsertMessageError || sendUpdateMessageError) {
     console.log('error', addDMError);
@@ -120,8 +139,6 @@ const AddDirectMessageChannel: React.FC = () => {
     history.push(`/channel/general`);
   };
 
-  console.log(users?.user.length);
-
   return (
     <>
       <Container maxWidth="sm">
@@ -136,46 +153,48 @@ const AddDirectMessageChannel: React.FC = () => {
             flexDirection="column"
             mb={5}
           >
-            <Typography variant="h2">Send direct message</Typography>
+            <Typography variant="h2">Add a user</Typography>
             <Typography
               color="secondary"
               variant="caption"
               id="simple-modal-description"
             >
-              {users && users.user.length > 0
+              {users?.length
                 ? 'Select users that you wanna send direct messages to.'
-                : 'At the moment there are no more users to select. You have to select them from the direct message sidebar.'}
+                : ''}
             </Typography>
           </Box>
           <Box mb={5}>
             <Divider className={classes.spacer} />
-            <List className={classes.spacer}>
-              {users &&
-                users.user.map((dm_user: any, index) => {
-                  return dm_user.user_channels.length === 0 ? (
+            {users?.length ? (
+              <List className={classes.spacer}>
+                {users?.map((dm_user: any, index: any) => {
+                  return (
                     <ListItem
                       button
                       key={index}
                       onClick={() =>
-                        handleAddUser(user_id, dm_user?.auth0_user_id)
+                        handleAddUser(user_id, dm_user.auth0_user_id)
                       }
                     >
                       <ListItemIcon>
                         <Badge variant="dot">
                           <Avatar className={classes.avatar}>
-                            {dm_user?.username.substring(0, 2).toUpperCase()}
+                            {dm_user.username.substring(0, 2).toUpperCase()}
                           </Avatar>
                         </Badge>
                       </ListItemIcon>
-                      <ListItemText primary={dm_user?.username} />
+                      <ListItemText primary={dm_user.username} />
                     </ListItem>
-                  ) : (
-                    <Alert severity={'error'}>
-                      All users added to channel. Nothing to do here!
-                    </Alert>
                   );
                 })}
-            </List>
+              </List>
+            ) : (
+              <Alert severity={'success'}>
+                All users have been added. U can send a message, by clicking on
+                the user in the menu sidebar in direct messages.
+              </Alert>
+            )}
             <Divider className={classes.spacer} />
           </Box>
         </Grid>

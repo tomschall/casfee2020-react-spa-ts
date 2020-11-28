@@ -169,6 +169,12 @@ subscription watchUsersWhoHaveSubscribedToDirectMessageChannel(
       channel_id
       channel {
         name
+        user_channels(where: { user: { auth0_user_id: { _eq: $user_id } } }) {
+          user {
+            auth0_user_id
+            username
+          }
+        }
       }
     }
   }
