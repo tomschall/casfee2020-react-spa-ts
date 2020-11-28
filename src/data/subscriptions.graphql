@@ -154,26 +154,6 @@ subscription watchUsersWhoHaveNotSubscribedToChannel(
   }
 }
 
-# subscription watchUsersWhoHaveSubscribedToDirectMessageChannel(
-#   $user_id: String!
-# ) {
-#   user(
-#     where: { auth0_user_id: { _neq: $user_id } }
-#     order_by: { username: asc }
-#   ) {
-#     auth0_user_id
-#     username
-#     user_channels(
-#       where: { channel: { channel_type: { _eq: DIRECT_MESSAGE } } }
-#     ) {
-#       channel_id
-#       channel {
-#         name
-#       }
-#     }
-#   }
-# }
-
 subscription watchUsersWhoHaveSubscribedToDirectMessageChannel(
   $user_id: String!
 ) {

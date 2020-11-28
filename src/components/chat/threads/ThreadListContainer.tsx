@@ -22,7 +22,8 @@ const ThreadListContainer: React.FC = () => {
   return (
     <>
       {data?.channel_thread?.map((channelThread, index) => {
-        return <ThreadList key={index} channelThread={channelThread} />;
+        if (channelThread.channel_thread_messages.length)
+          return <ThreadList key={index} channelThread={channelThread} />;
       })}
       <Box className={classes.root}></Box>
     </>
