@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Avatar,
   Badge,
@@ -42,12 +42,14 @@ const AddDirectMessageChannel: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { user } = useAuth0();
 
+  const [users, setUsers] = useState<any>(null);
+
   const user_id = user.sub;
 
   let history = useHistory();
 
   const {
-    data: users,
+    data,
     loading,
     error,
   } = useWatchUsersWhoHaveSubscribedToDirectMessageChannelSubscription({
@@ -70,6 +72,22 @@ const AddDirectMessageChannel: React.FC = () => {
     validateAndAddDirectMessageChannelMutation,
     { error: addDMError },
   ] = useValidateAndAddDirectMessageChannelMutation();
+
+  useEffect(() => {
+    const checkUserSubscriptions = async () => {
+      return data?.user.filter((u) => {
+        const part = u.user_channels.filter((user_channel) => {
+          return user_channel.channel.user_channels.length === 1;
+        });
+        return part.length === 0;
+      });
+    };
+    const check = async () => {
+      const users = await checkUserSubscriptions();
+      setUsers(users);
+    };
+    check();
+  }, [data]);
 
   if (error || addDMError || upsertMessageError || sendUpdateMessageError) {
     console.log('error', addDMError);
@@ -120,14 +138,6 @@ const AddDirectMessageChannel: React.FC = () => {
     history.push(`/channel/general`);
   };
 
-  const checkIfEveryUserHasSubscribed = () => {
-    return users?.user
-      .map((user) => {
-        return user.user_channels.length === 1;
-      })
-      .every((currentValue) => currentValue === true);
-  };
-
   return (
     <>
       <Container maxWidth="sm">
@@ -148,17 +158,17 @@ const AddDirectMessageChannel: React.FC = () => {
               variant="caption"
               id="simple-modal-description"
             >
-              {!checkIfEveryUserHasSubscribed()
+              {users?.length
                 ? 'Select users that you wanna send direct messages to.'
                 : ''}
             </Typography>
           </Box>
           <Box mb={5}>
             <Divider className={classes.spacer} />
-            {!checkIfEveryUserHasSubscribed() ? (
+            {users?.length ? (
               <List className={classes.spacer}>
-                {users?.user.map((dm_user: any, index) => {
-                  return dm_user.user_channels.length === 0 ? (
+                {users?.map((dm_user: any, index: any) => {
+                  return (
                     <ListItem
                       button
                       key={index}
@@ -175,8 +185,6 @@ const AddDirectMessageChannel: React.FC = () => {
                       </ListItemIcon>
                       <ListItemText primary={dm_user.username} />
                     </ListItem>
-                  ) : (
-                    false
                   );
                 })}
               </List>
