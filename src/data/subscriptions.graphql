@@ -327,7 +327,7 @@ subscription getPollQuestionState($pollQuestionId: Int!) {
 }
 
 subscription watchGetChannels {
-  channel {
+  channel(where: { is_private: { _eq: false } }) {
     id
     name
     channel_polls {
