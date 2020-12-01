@@ -14,8 +14,6 @@ import { IGif } from '@giphy/js-types';
 import { makeStyles } from '@material-ui/core/styles';
 import GiphyCarousel from '../../shared/GiphyCarousel';
 import AddGif from '@material-ui/icons/Gif';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ThreadDrawer from './ThreadDrawer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -84,12 +82,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface ThreadListMenuBarProps {
+interface ThreadListInputContainerProps {
   channelId: number;
   channelThreadId: number | undefined;
 }
 
-const ThreadListMenuBar: React.FC<ThreadListMenuBarProps> = (props) => {
+const ThreadListInputContainer: React.FC<ThreadListInputContainerProps> = (
+  props,
+) => {
   const classes = useStyles();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -119,7 +119,6 @@ const ThreadListMenuBar: React.FC<ThreadListMenuBarProps> = (props) => {
 
   const { user } = useAuth0();
   const [text, setText] = useState('');
-  const [open, setOpen] = React.useState(false);
   const [gif, setGif] = useRecoilState<IGif | null>(giphyState);
   const [deletedMessage, setdeletedMessage] = useRecoilState<boolean>(
     deletedMessageState,
@@ -190,14 +189,6 @@ const ThreadListMenuBar: React.FC<ThreadListMenuBarProps> = (props) => {
     setShowGiphyCarousel(false);
   };
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
   return (
     <div className={classes.rootSingleChip}>
       <Box
@@ -215,28 +206,6 @@ const ThreadListMenuBar: React.FC<ThreadListMenuBarProps> = (props) => {
             label="+Gif"
             onClick={handleGiphyClick}
           />
-        </Box>
-        <Box style={{ flex: 1 }}>
-          {matches === false && (
-            <Box
-              order={1}
-              display="flex"
-              flex="1"
-              justifyContent="flex-end"
-              alignItems="flex-end"
-            >
-              <Chip
-                variant="default"
-                aria-label="open drawer"
-                onClick={handleDrawerOpen}
-                label="Menu"
-                clickable
-                size="small"
-                color="secondary"
-                icon={<ExpandLess />}
-              />
-            </Box>
-          )}
         </Box>
       </Box>
       <Box className={gif ? classes.giphyImage : ''}>
@@ -299,9 +268,8 @@ const ThreadListMenuBar: React.FC<ThreadListMenuBarProps> = (props) => {
           Send
         </Button>
       </form>
-      <ThreadDrawer open={open} handleDrawerClose={handleDrawerClose} />
     </div>
   );
 };
 
-export default ThreadListMenuBar;
+export default ThreadListInputContainer;

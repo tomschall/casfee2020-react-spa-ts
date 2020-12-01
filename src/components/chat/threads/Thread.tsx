@@ -11,7 +11,7 @@ import {
   useGetChannelThreadQuery,
 } from '../../../api/generated/graphql';
 import ThreadMessageList from './ThreadMessageList';
-import ThreadMenuBar from './ThreadMenuBar';
+import ThreadInputContainer from './ThreadInputContainer';
 import { Alert } from '@material-ui/lab';
 import { ThreadMessage } from '../../../interfaces/message.interface';
 import { ThreadParams } from '../../../interfaces/param.interface';
@@ -19,7 +19,7 @@ import { ThreadParams } from '../../../interfaces/param.interface';
 const useStyles = makeStyles((theme) => ({
   root: {
     overflowY: 'scroll',
-    height: '75vh',
+    height: '70vh',
     marginTop: theme.spacing(5),
   },
   messageContainer: {
@@ -106,7 +106,7 @@ const Thread: React.FC = () => {
             </List>
           </Grid>
           <Box maxWidth="xl" component="nav">
-            <ThreadMenuBar
+            <ThreadInputContainer
               channelThreadId={getChannelThreadData?.channel_thread[0]?.id}
             />
           </Box>
