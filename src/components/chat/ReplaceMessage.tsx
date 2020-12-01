@@ -32,7 +32,7 @@ const ReplaceMessage: React.FC<ReplaceMessageProps> = ({ messageId }) => {
 
   return (
     <IconButton onClick={handleReplace}>
-      <HighlightOffIcon fontSize="small" />
+      <HighlightOffIcon color="primary" fontSize="small" />
     </IconButton>
   );
 };
