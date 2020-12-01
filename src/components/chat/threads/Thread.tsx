@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     overflowY: 'scroll',
     height: '70vh',
     marginTop: theme.spacing(5),
+    padding: theme.spacing(3),
   },
   messageContainer: {
     [theme.breakpoints.up('lg')]: {

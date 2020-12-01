@@ -32,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginTop: theme.spacing(5),
-    flex: '1',
+    // marginRight: theme.spacing(0),
+    // flex: '1',
   },
   menuButtonHidden: {
     display: 'none',
@@ -89,14 +90,14 @@ const MenuBarDrawer: React.FC<MenuBarDrawerProps> = ({
           <Box
             order={1}
             display="flex"
-            justifyContent="flex-end"
-            alignItems="flex-end"
+            justifyContent="center"
+            alignItems="center"
           >
             <Chip
               variant="default"
               aria-label="open drawer"
               onClick={handleDrawerClose}
-              label="Menu"
+              label="Close"
               clickable
               size="small"
               color="secondary"

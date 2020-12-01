@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   treeView: {
-    overflowY: 'scroll',
+    overflowY: 'hidden',
     maxHeight: '50vh',
     marginRight: theme.spacing(0),
     marginLeft: theme.spacing(0),
