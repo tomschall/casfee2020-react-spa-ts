@@ -54,7 +54,6 @@ export const theme = createMuiTheme({
     MuiChip: {
       style: {
         padding: 3,
-        marginRight: 8,
       },
     },
     MuiList: {
@@ -70,6 +69,9 @@ export const theme = createMuiTheme({
     MuiPaper: {
       draggable: false,
       elevation: 0,
+      style: {
+        overflow: 'hidden',
+      },
     },
     MuiAppBar: {
       style: {
