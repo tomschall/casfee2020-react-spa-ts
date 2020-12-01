@@ -50,8 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
   messageButton: {
     [theme.breakpoints.down('md')]: {
-      width: '100%',
-      size: 'small',
+      display: 'none',
     },
     [theme.breakpoints.up('md')]: {
       size: 'large',
