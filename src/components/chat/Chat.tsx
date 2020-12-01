@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Box, Button, Grid, List, Typography } from '@material-ui/core';
 import MessageList from './MessageList';
 import { Message } from '../../interfaces/message.interface';
@@ -19,7 +19,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     overflowY: 'scroll',
-    height: '75vh',
+    maxHeight: '81vh',
     marginTop: theme.spacing(5),
   },
   messageContainer: {
@@ -59,6 +59,8 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   const { user, error: auth0Error } = useAuth0();
   let history = useHistory();
 
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
   let preLastMessageId = 0;
 
   const { data, loading, error } = useWatchMessagesSubscription({
@@ -78,6 +80,12 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
     },
   ] = useUpsertMessageCursorMutation();
 
+  const scrollToBottom = () => {
+    if (typeof messagesEndRef === 'object') {
+      messagesEndRef?.current?.scrollIntoView();
+    }
+  };
+
   useEffect(() => {
     if (data?.messages[0]?.id)
       upsertMessageCursorMutation({
@@ -87,6 +95,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
           user_id: user.sub,
         },
       });
+    scrollToBottom();
   }, [data]);
 
   if (error) {
@@ -148,6 +157,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
                 user={user}
               />
             </List>
+            <div ref={messagesEndRef} />
           </Grid>
           <Box maxWidth="xl" component="nav">
             <MenuBar

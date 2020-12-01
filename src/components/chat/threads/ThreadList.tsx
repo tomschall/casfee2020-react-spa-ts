@@ -40,7 +40,6 @@ const ThreadList: React.FC<ThreadListProps> = ({ channelThread }) => {
           user={user}
           channelThread={channelThread}
           currentChannel={channelThread.message.channel}
-          isThreadList={true}
         />
         <ThreadListInputContainer
           channelId={channelThread.message?.id}

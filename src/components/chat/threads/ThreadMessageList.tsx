@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import moment from 'moment';
 import { ThreadMessage } from '../../../interfaces/message.interface';
 import ThreadInfo from './ThreadInfo';
@@ -84,7 +84,6 @@ interface ThreadMessageListProps {
   user: any;
   channelThread: any;
   currentChannel: any;
-  isThreadList: boolean;
 }
 
 const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
@@ -92,27 +91,10 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
   user,
   channelThread,
   currentChannel,
-  isThreadList,
 }) => {
-  useEffect(() => {
-    if (!isThreadList) scrollToBottom();
-  }, [messages]);
-
   const classes = useStyles();
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    if (
-      messagesEndRef !== null &&
-      typeof messagesEndRef === 'object' &&
-      messagesEndRef.current !== null
-    ) {
-      messagesEndRef.current.scrollIntoView();
-    }
-  };
-
-  const renderMessages = (message: ThreadMessage) => {
+  const renderMessage = (message: ThreadMessage) => {
     return (
       <ListItem key={message.id} className={classes.root}>
         <Box display="flex" justifyContent="flex-start" alignItems="flex-start">
@@ -179,10 +161,8 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
       {messages
         ? [...messages]
             ?.reverse()
-            ?.map((message: ThreadMessage) => renderMessages(message))
+            ?.map((message: ThreadMessage) => renderMessage(message))
         : ''}
-
-      <div ref={messagesEndRef} />
     </>
   );
 };

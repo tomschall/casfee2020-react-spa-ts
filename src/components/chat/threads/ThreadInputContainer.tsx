@@ -23,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
   root: {},
   toolbar: {
     [theme.breakpoints.up('md')]: {
-      paddingTop: theme.spacing(5),
-      paddingBottom: theme.spacing(5),
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
     },
     [theme.breakpoints.down('md')]: {
       paddingLeft: theme.spacing(1),

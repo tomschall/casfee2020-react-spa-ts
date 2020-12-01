@@ -7,17 +7,20 @@ import { currentChannelState } from '../../atom';
 import {
   AppBar,
   Box,
-  Chip,
   Container,
+  Chip,
+  Drawer,
   Grid,
   Popover,
   Toolbar,
 } from '@material-ui/core';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import AddGif from '@material-ui/icons/Gif';
+import SideBar from './SideBar';
 import MessageInput from '../chat/MessageInput';
 import GiphyCarousel from './GiphyCarousel';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import FaceIcon from '@material-ui/icons/Face';
 import PeopleIcon from '@material-ui/icons/People';
@@ -62,6 +65,13 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+  },
+  menuButton: {
+    marginTop: theme.spacing(5),
+    flex: '1',
+  },
+  menuButtonHidden: {
+    display: 'none',
   },
   drawerPaper: {
     height: '100vh',
@@ -256,7 +266,6 @@ const MenuBar: React.FC<MenuBarProps> = ({
             </Grid>
           </Container>
         </Toolbar>
-
         <MenuBarDrawer open={open} handleDrawerClose={handleDrawerClose} />
       </AppBar>
     </>

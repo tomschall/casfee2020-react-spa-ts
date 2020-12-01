@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Grid, List, CircularProgress } from '@material-ui/core';
 import { Box } from '@material-ui/core';
 import { useHistory, useParams } from 'react-router-dom';
@@ -19,7 +19,8 @@ import { ThreadParams } from '../../../interfaces/param.interface';
 const useStyles = makeStyles((theme) => ({
   root: {
     overflowY: 'scroll',
-    height: '70vh',
+    height: '80vh',
+    maxHeight: '80vh',
     marginTop: theme.spacing(5),
     padding: theme.spacing(3),
   },
@@ -44,10 +45,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Thread: React.FC = () => {
   const classes = useStyles();
-
   const [limit, setLimit] = useState(20);
-
   const { user, error: auth0Error } = useAuth0();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const [currentChannel, setCurrentChannel] = useRecoilState<any>(
     currentChannelState,
@@ -74,6 +74,22 @@ const Thread: React.FC = () => {
     },
   });
 
+  const handleIncreaseLimit = () => {
+    setLimit(limit + 20);
+  };
+
+  const scrollToBottom = () => {
+    if (typeof messagesEndRef === 'object') {
+      messagesEndRef?.current?.scrollIntoView();
+    }
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      scrollToBottom();
+    }, 200);
+  }, [data]);
+
   useEffect(() => {
     if (currentChannel?.id === undefined) history.push(`/channel/${channel}`);
   }, []);
@@ -84,10 +100,6 @@ const Thread: React.FC = () => {
     console.log('error', error);
     return <Alert severity="error">Thread Error</Alert>;
   }
-
-  const handleIncreaseLimit = () => {
-    setLimit(limit + 20);
-  };
 
   // console.log('getChannelThreadData', getChannelThreadData);
 
@@ -102,9 +114,9 @@ const Thread: React.FC = () => {
                 user={user}
                 channelThread={getChannelThreadData?.channel_thread[0]}
                 currentChannel={currentChannel}
-                isThreadList={false}
               />
             </List>
+            <div ref={messagesEndRef} />
           </Grid>
           <Box maxWidth="xl" component="nav">
             <ThreadInputContainer

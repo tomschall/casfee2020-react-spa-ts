@@ -22,7 +22,7 @@ const ChatBoard: React.FC = () => {
   }, []);
 
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" disableGutters>
       <ThreadContainer />
     </Container>
   );

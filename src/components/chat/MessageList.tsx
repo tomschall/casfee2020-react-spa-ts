@@ -72,30 +72,15 @@ const MessageList: React.FC<MessageProps> = ({
   preLastMessageId,
   user,
 }) => {
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
   const classes = useStyles();
   const [showUpdate, setShowUpdate] = useState<boolean>(false);
   const [showUpdateMessageId, setShowUpdateMessageId] = useState<number | null>(
     null,
   );
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   const { channel: channelName } = useParams<ChatParams>();
 
   const deletedMessage = useRecoilValue<boolean>(deletedMessageState);
-
-  const scrollToBottom = () => {
-    if (
-      messagesEndRef !== null &&
-      typeof messagesEndRef === 'object' &&
-      messagesEndRef.current !== null
-    ) {
-      messagesEndRef.current.scrollIntoView();
-    }
-  };
 
   const handleShowUpdate = (message: Message) => {
     if (message.user.auth0_user_id !== user.sub) return;
@@ -103,7 +88,7 @@ const MessageList: React.FC<MessageProps> = ({
     setShowUpdate(!showUpdate);
   };
 
-  const renderMessages = (message: Message) => {
+  const renderMessage = (message: Message) => {
     return (
       <ListItem key={message.id} className={classes.root}>
         <Box display="flex" justifyContent="flex-start" alignItems="center">
@@ -219,16 +204,14 @@ const MessageList: React.FC<MessageProps> = ({
 
   return (
     <>
-      {[...messages]?.reverse()?.map((message, i) => renderMessages(message))}
+      {[...messages]?.reverse()?.map((message, i) => renderMessage(message))}
 
       {!deletedMessage &&
       lastMessage &&
       preLastMessageId !== 0 &&
       preLastMessageId < lastMessage.id
-        ? renderMessages(lastMessage)
+        ? renderMessage(lastMessage)
         : ''}
-
-      <div ref={messagesEndRef} />
     </>
   );
 };
