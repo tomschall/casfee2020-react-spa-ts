@@ -34,7 +34,7 @@ const ThreadDeleteMessage: React.FC<ThreadDeleteMessageProps> = ({
 
   return (
     <IconButton onClick={() => handleDelete(messageId)}>
-      <HighlightOffIcon fontSize="small" />
+      <HighlightOffIcon color="primary" fontSize="small" />
     </IconButton>
   );
 };

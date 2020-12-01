@@ -40,7 +40,7 @@ const DeleteMessage: React.FC<DeleteMessageProps> = ({ messageId }) => {
 
   return (
     <IconButton onClick={() => handleDelete(messageId)}>
-      <HighlightOffIcon fontSize="small" />
+      <HighlightOffIcon color="primary" fontSize="small" />
     </IconButton>
   );
 };
