@@ -8,8 +8,7 @@ import {
   makeStyles,
   Toolbar,
 } from '@material-ui/core';
-import { useHistory } from 'react-router';
-import SideBar from '../../shared/SideBar';
+import SideBar from './SideBar';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
 const drawerWidth = '100%';
@@ -63,16 +62,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface ThreadDrawerProps {
+interface MenuBarDrawerProps {
   open: boolean;
   handleDrawerClose: any;
 }
 
-const ThreadDrawer: React.FC<ThreadDrawerProps> = ({
+const MenuBarDrawer: React.FC<MenuBarDrawerProps> = ({
   open,
   handleDrawerClose,
 }) => {
-  const history = useHistory();
   const classes = useStyles();
 
   return (
@@ -112,4 +110,4 @@ const ThreadDrawer: React.FC<ThreadDrawerProps> = ({
   );
 };
 
-export default ThreadDrawer;
+export default MenuBarDrawer;

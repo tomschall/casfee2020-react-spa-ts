@@ -15,7 +15,7 @@ import ChatIcon from '@material-ui/icons/Chat';
 import PeopleIcon from '@material-ui/icons/People';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import { makeStyles } from '@material-ui/core/styles';
-import ThreadDrawer from './ThreadDrawer';
+import MenuBarDrawer from '../../shared/MenuBarDrawer';
 
 const drawerWidth = '100%';
 
@@ -179,7 +179,7 @@ const ThreadInputContainer: React.FC<ThreadInputContainerProps> = ({
             </Grid>
           </Container>
         </Toolbar>
-        <ThreadDrawer open={open} handleDrawerClose={handleDrawerClose} />
+        <MenuBarDrawer open={open} handleDrawerClose={handleDrawerClose} />
       </AppBar>
     </>
   );

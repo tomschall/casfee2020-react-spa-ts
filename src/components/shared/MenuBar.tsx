@@ -30,6 +30,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import PublishChannelPolling from '../adminPollings/PublishChannelPolling';
 
 import { useWatchChannelHasActivePollSubscription } from '../../api/generated/graphql';
+import MenuBarDrawer from './MenuBarDrawer';
 
 const drawerWidth = '100%';
 
@@ -266,39 +267,7 @@ const MenuBar: React.FC<MenuBarProps> = ({
           </Container>
         </Toolbar>
 
-        <Drawer
-          variant="temporary"
-          elevation={10}
-          anchor="bottom"
-          classes={{
-            paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-          }}
-          open={open}
-        >
-          <Toolbar className={classes.toolbar}>
-            <Container maxWidth="xl" disableGutters>
-              <SideBar />
-              <Box
-                order={1}
-                display="flex"
-                justifyContent="flex-end"
-                alignItems="flex-end"
-              >
-                <Chip
-                  variant="default"
-                  aria-label="open drawer"
-                  onClick={handleDrawerClose}
-                  label="Menu"
-                  clickable
-                  size="small"
-                  color="secondary"
-                  icon={<ExpandMore />}
-                  className={clsx(classes.menuButton, open)}
-                />
-              </Box>
-            </Container>
-          </Toolbar>
-        </Drawer>
+        <MenuBarDrawer open={open} handleDrawerClose={handleDrawerClose} />
       </AppBar>
     </>
   );

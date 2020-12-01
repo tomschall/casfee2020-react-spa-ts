@@ -5,7 +5,7 @@ import { AppBar, Box, Container, Chip, Grid, Toolbar } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import { makeStyles } from '@material-ui/core/styles';
-import ThreadDrawer from './ThreadDrawer';
+import MenuBarDrawer from '../../shared/MenuBarDrawer';
 
 const drawerWidth = '100%';
 
@@ -94,7 +94,7 @@ const ThreadMenuBar: React.FC<ThreadMenuBarProps> = ({ channelThreadId }) => {
           </Grid>
         </Container>
       </Toolbar>
-      <ThreadDrawer open={open} handleDrawerClose={handleDrawerClose} />
+      <MenuBarDrawer open={open} handleDrawerClose={handleDrawerClose} />
     </AppBar>
   );
 };
