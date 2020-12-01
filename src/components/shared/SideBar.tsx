@@ -41,7 +41,10 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     [theme.breakpoints.down('md')]: {
-      width: '50%',
+      width: '150px',
+    },
+    [theme.breakpoints.up('md')]: {
+      width: '200px',
     },
   },
 }));
@@ -66,7 +69,6 @@ const SideBar: React.FC<any> = () => {
             <img
               alt="The Great Chicken Fest"
               src="/the-great-chicken-fest.svg"
-              width="300"
               className={classes.logo}
             />
           </Grid>
