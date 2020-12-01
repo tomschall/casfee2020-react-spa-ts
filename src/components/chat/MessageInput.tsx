@@ -13,7 +13,6 @@ import { useRecoilState } from 'recoil';
 import { giphyState, deletedMessageState } from '../../atom';
 import { IGif } from '@giphy/js-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { isObject } from 'util';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,8 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
   messageButton: {
     [theme.breakpoints.down('md')]: {
-      width: '100%',
-      size: 'small',
+      display: 'none',
     },
     [theme.breakpoints.up('md')]: {
       size: 'large',
@@ -68,6 +66,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
     switch (matches) {
       case true:
         return 'medium';
+
       case false:
         return 'small';
 
@@ -190,7 +189,6 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
           placeholder="Type your message here ..."
           id="chat-message-input"
           label={'Crackle your message here ...'}
-          // fullWidth
           InputProps={{
             classes: {
               input: classes.messageInput,
