@@ -28,8 +28,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   treeView: {
-    overflowY: 'scroll',
-    maxHeight: '50vh',
+    overflowY: 'hidden',
+    maxHeight: '100vh',
     marginRight: theme.spacing(0),
     marginLeft: theme.spacing(0),
     paddingRight: theme.spacing(0),
@@ -38,6 +38,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  logo: {
+    [theme.breakpoints.down('md')]: {
+      width: '50%',
+    },
   },
 }));
 
@@ -62,6 +67,7 @@ const SideBar: React.FC<any> = () => {
               alt="The Great Chicken Fest"
               src="/the-great-chicken-fest.svg"
               width="300"
+              className={classes.logo}
             />
           </Grid>
         </Grid>
