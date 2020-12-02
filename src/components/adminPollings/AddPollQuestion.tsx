@@ -76,6 +76,7 @@ const AddPollQuestion: React.FC = () => {
       >
         <FormGroup>
           <TextField
+            id="title"
             required
             value={pollTitle.title}
             onChange={handleChange}
