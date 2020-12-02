@@ -37,12 +37,13 @@ yarn dev:start
 
 #### Users for testing
 
-- For login take the following users
-  email: michael@michael.ch
-  email: silvan1@silvan.ch
-  email: kimi@gmail.com
-  email: webrooster@webrooster.ch
-  pw: admin1234.$
+For login take the following users
+
+- email: michael@michael.ch
+- email: silvan1@silvan.ch
+- email: kimi@gmail.com
+- email: webrooster@webrooster.ch
+- pw for all users: admin1234.$
 
 * [Frontend](http://localhost:3000)
 * [Backend](http://localhost:8080/console)
@@ -51,7 +52,7 @@ yarn dev:start
 
 ##### Start Hasura Console
 
-- If you want to add tables or metadata, please use hasura console, changes will be tracked automatically:
+If you want to add tables or metadata, please use hasura console, changes will be tracked automatically:
 
 ```shell script
 yarn api:hasura:console
@@ -59,7 +60,7 @@ yarn api:hasura:console
 
 #### Export metadata and migrations manually
 
-- In the project root folder delete hasura folder, the run following commands
+In the project root folder delete hasura folder, the run following commands
 
 ```shell script
 hasura init
@@ -78,8 +79,8 @@ npm run api:client:generate
 
 ### Complete reinstall
 
-- If your docker containers are running, and you have to reinstall the whole project, stop
-  them, the execute ./clean.sh script in the root folder of the project.
+If your docker containers are running, and you have to reinstall the whole project, stop
+them, the execute ./clean.sh script in the root folder of the project.
 
 ## Tests
 
