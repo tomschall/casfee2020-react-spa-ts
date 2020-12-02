@@ -8,7 +8,7 @@ test('renders the app component', () => {
   <div>
     <div
       class="MuiBox-root MuiBox-root-1"
-      style="height: 100vh; background-color: rgb(19, 26, 93);"
+      style="height: 100vh; background-color: rgb(12, 16, 59);"
     >
       <div
         class="MuiBox-root MuiBox-root-3"
