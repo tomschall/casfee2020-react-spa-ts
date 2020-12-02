@@ -9,18 +9,15 @@ import {
   Box,
   Container,
   Chip,
-  Drawer,
   Grid,
   Popover,
   Toolbar,
 } from '@material-ui/core';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import AddGif from '@material-ui/icons/Gif';
-import SideBar from './SideBar';
 import MessageInput from '../chat/MessageInput';
 import GiphyCarousel from './GiphyCarousel';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import ExpandMore from '@material-ui/icons/ExpandMore';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import FaceIcon from '@material-ui/icons/Face';
 import PeopleIcon from '@material-ui/icons/People';
@@ -28,7 +25,6 @@ import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import PublishChannelPolling from '../adminPollings/PublishChannelPolling';
-
 import { useWatchChannelHasActivePollSubscription } from '../../api/generated/graphql';
 import MenuBarDrawer from './MenuBarDrawer';
 

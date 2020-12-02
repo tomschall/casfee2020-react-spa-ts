@@ -85,9 +85,7 @@ const Thread: React.FC = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      scrollToBottom();
-    }, 200);
+    scrollToBottom();
   }, [data]);
 
   useEffect(() => {
