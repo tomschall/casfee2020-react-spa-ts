@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  ApolloProvider as ApolloHooksProvider,
-  HttpOptions,
-} from '@apollo/react-hooks';
+import { ApolloProvider, HttpOptions } from '@apollo/react-hooks';
 import { getMainDefinition } from 'apollo-utilities';
 import { useAuth0 } from '@auth0/auth0-react';
 import {
@@ -84,7 +81,7 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
   /* Create Apollo Client */
   const client = new ApolloClient({ link, cache });
 
-  return <ApolloHooksProvider client={client}>{children}</ApolloHooksProvider>;
+  return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };
 
 export default ApolloWrapper;
