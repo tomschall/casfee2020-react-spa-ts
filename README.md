@@ -39,8 +39,8 @@ yarn dev:start
 
 For login take the following users
 
-- email: michael@michael.ch
-- email: silvan1@silvan.ch
+- email: michael@michael.ch (admin)
+- email: silvan1@silvan.ch (admin)
 - email: kimi@gmail.com
 - email: webrooster@webrooster.ch
 - pw for all users: admin1234.$
