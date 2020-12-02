@@ -49,12 +49,12 @@
     "uuid": "^8.3.0"
   },
   "scripts": {
-    "dev:start": "yarn run api:hasura:migrations:apply && npm run api:client:generate && yarn start",
+    "dev:start": "yarn run api:hasura:migrations:apply && yarn api:client:generate && yarn start",
     "api:hasura:migrations:apply": "hasura --envfile ../.env --project hasura migrate apply && hasura --envfile ../.env --project hasura metadata apply",
     "api:hasura:console": "hasura --envfile ../.env --project hasura console",
     "api:client:generate": "DEBUG=true rimraf src/api/generated/* && graphql-codegen --config codegen.js",
     "start": "react-scripts start",
-    "build": "npm run api:client:generate && react-scripts build",
+    "build": "yarn api:client:generate && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
