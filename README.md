@@ -88,3 +88,14 @@ npm run api:client:generate
 ```
 npx nightwatch nightwatch_tests
 ```
+
+## Additional features
+
+- typing indicator
+- number of users are online
+- direct message users online status
+- inline edit your own chat- and direct messages
+- when a message with a thread get's deleted, there's an additonal info on the message and the thread gets not deleted
+- add giphy's to your chat and direct messages
+- add default message to your channel on creation
+- show number of new messages in sidebar - for this feature the user must have visited the channel at least once, thread messages are not counted at the moment

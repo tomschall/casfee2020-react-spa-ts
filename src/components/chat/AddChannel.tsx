@@ -108,7 +108,7 @@ const AddChannel: React.FC = () => {
     await sendMessage({
       variables: {
         message: {
-          user_id: user.sub,
+          user_id: 'admin',
           text: `Welcome to channel ${dataAddChannel.data?.insert_channel?.returning[0]?.name}`,
           channel_id: dataAddChannel.data?.insert_channel?.returning[0]?.id,
         },
