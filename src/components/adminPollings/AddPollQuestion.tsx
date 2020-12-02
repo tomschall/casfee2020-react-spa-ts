@@ -76,7 +76,6 @@ const AddPollQuestion: React.FC = () => {
       >
         <FormGroup>
           <TextField
-            id="title"
             required
             value={pollTitle.title}
             onChange={handleChange}
@@ -87,6 +86,7 @@ const AddPollQuestion: React.FC = () => {
             placeholder="Type your question here ..."
             label="Add a meaningful question"
             fullWidth
+            data-testid="pollquestion_title"
             InputProps={{
               classes: {
                 input: classes.messageInput,

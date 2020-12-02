@@ -1,11 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import AddPollQuestion from '../AddPollQuestion';
 import { useAuth0 } from '@auth0/auth0-react';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, fireEvent } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-import { waitForAll } from 'recoil';
 
 const user = {
   email: 'johndoe@me.com',
@@ -15,18 +13,18 @@ const user = {
 
 jest.mock('@auth0/auth0-react');
 
-describe('Add poll question', () => {
-  describe('add valid input', () => {
+describe('AddPollQuestion', () => {
+  describe('Add valid input', () => {
     beforeEach(() => {
       useAuth0.mockReturnValue({
         isAuthenticated: true,
         user,
-        // logout: jest.fn(),
-        // loginWithRedirect: jest.fn(),
+        logout: jest.fn(),
+        loginWithRedirect: jest.fn(),
       });
     });
 
-    it('add question', async () => {
+    it('Add question text', async () => {
       const mockOnSubmit = jest.fn();
       const { getByTestId, getByRole } = await render(
         <MockedProvider>
@@ -35,9 +33,37 @@ describe('Add poll question', () => {
       );
 
       await act(async () => {
-        const field = getByTestId('title').querySelector('input');
-        fireEvent.change(field, { target: { value: 'An was hats gelegen?' } });
-        fireEvent.click(getByRole('button'));
+        const field = getByTestId('pollquestion_title').querySelector('input');
+        await fireEvent.change(field, {
+          target: { value: 'To be or not to be. Thats the question' },
+        });
+        await fireEvent.click(getByRole('button'));
+      });
+    });
+  });
+
+  describe('Add invalid input', () => {
+    beforeEach(() => {
+      useAuth0.mockReturnValue({
+        isAuthenticated: true,
+        user,
+        logout: jest.fn(),
+        loginWithRedirect: jest.fn(),
+      });
+    });
+
+    it('Return without text', async () => {
+      const mockOnSubmit = jest.fn();
+      const { getByTestId, getByRole } = await render(
+        <MockedProvider>
+          <AddPollQuestion mockOnSubmit={mockOnSubmit} />
+        </MockedProvider>,
+      );
+
+      await act(async () => {
+        const field = getByTestId('pollquestion_title').querySelector('input');
+        await fireEvent.change(field, { target: { value: '' } });
+        await fireEvent.click(getByRole('button'));
       });
     });
   });
