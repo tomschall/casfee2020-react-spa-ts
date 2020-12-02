@@ -9,7 +9,13 @@ It is built using React, Apollo and Hasura with Postgres DB.
 - yarn
 - Auth0 account, project and key (See: documentation/auth0.md)
 - Docker & docker-compose
-- [Hasura CLI](https://hasura.io/docs/1.0/graphql/core/hasura-cli/install-hasura-cli.html)
+- [Hasura CLI v1.3.1](https://hasura.io/docs/1.0/graphql/core/hasura-cli/install-hasura-cli.html)
+
+Please install hasura-cli version 1.3.1 or downgrade from higher version with following command
+
+```shell script
+hasura update-cli --version 1.3.1
+```
 
 ## Usage
 
