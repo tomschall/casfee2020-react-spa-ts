@@ -20,6 +20,12 @@ It is built using React, Apollo and Hasura with Postgres DB.
 ### Installation
 
 ```shell script
+# Clone repo
+git clone https://github.com/tomschall/casfee2020-react-spa-ts.git
+# Go to project directory
+cd casfee2020-react-spa-ts
+# Checkout develop branch
+git checkout develop
 # Clone nestjs microservice for hasura actions
 git clone https://github.com/tomschall/casfee2020-nestjs.git nestjs
 # Install all dependencies
