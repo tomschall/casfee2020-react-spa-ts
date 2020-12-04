@@ -14,6 +14,7 @@ import {
   Toolbar,
 } from '@material-ui/core';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
+import { useWatchChannelHasActivePollSubscription } from '../../api/generated/graphql';
 import AddGif from '@material-ui/icons/Gif';
 import MessageInput from '../chat/MessageInput';
 import GiphyCarousel from './GiphyCarousel';
@@ -23,10 +24,10 @@ import FaceIcon from '@material-ui/icons/Face';
 import PeopleIcon from '@material-ui/icons/People';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
-import { makeStyles } from '@material-ui/core/styles';
 import PublishChannelPolling from '../adminPollings/PublishChannelPolling';
-import { useWatchChannelHasActivePollSubscription } from '../../api/generated/graphql';
 import MenuBarDrawer from './MenuBarDrawer';
+import MobileMenu from '../chat/MobileMenu';
+import { makeStyles } from '@material-ui/core/styles';
 
 const drawerWidth = '100%';
 
@@ -34,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
   root: {},
   toolbar: {
     [theme.breakpoints.up('md')]: {
-      paddingTop: theme.spacing(5),
-      paddingBottom: theme.spacing(5),
+      paddingTop: theme.spacing(1),
+      paddingBottom: theme.spacing(1),
     },
     [theme.breakpoints.down('md')]: {
       paddingLeft: theme.spacing(1),
@@ -151,8 +152,9 @@ const MenuBar: React.FC<MenuBarProps> = ({
         <Toolbar className={classes.toolbar}>
           <Container maxWidth="xl" disableGutters>
             <Grid container>
-              <Grid item xs={9}>
-                <Chip
+              <Grid item xs={12}>
+                <MobileMenu />
+                {/* <Chip
                   variant="outlined"
                   color="primary"
                   size="small"
@@ -216,7 +218,7 @@ const MenuBar: React.FC<MenuBarProps> = ({
                       </>
                     )}
                   </PopupState>
-                )}
+                )} */}
                 <Box
                   style={{ display: showGiphyCarousel ? 'flex' : 'none' }}
                   className={classes.giphyImage}

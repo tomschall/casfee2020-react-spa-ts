@@ -36,6 +36,7 @@ export const theme = createMuiTheme({
       dark: '#222',
     },
   },
+
   shape: {
     borderRadius: 2,
   },
