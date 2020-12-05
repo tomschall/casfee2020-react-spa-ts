@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   root: {},
   toolbar: {
     [theme.breakpoints.up('md')]: {
-      paddingTop: theme.spacing(2),
+      paddingTop: theme.spacing(5),
       paddingBottom: theme.spacing(3),
     },
     [theme.breakpoints.down('md')]: {
@@ -127,6 +127,8 @@ const MenuBar: React.FC<MenuBarProps> = ({
   const [showGiphyCarousel, setShowGiphyCarousel] = React.useState(false);
 
   const handleDrawerOpen = () => {
+    console.log('drawer open called');
+
     setOpen(true);
   };
 
@@ -162,6 +164,7 @@ const MenuBar: React.FC<MenuBarProps> = ({
                       ? data?.poll_questions[0]?.text
                       : ''
                   }
+                  handleDrawerOpen={handleDrawerOpen}
                 />
                 {/* <Chip
                   variant="outlined"

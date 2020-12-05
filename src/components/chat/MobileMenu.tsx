@@ -49,6 +49,7 @@ interface MobileMenuProps {
   channelName: string;
   isPrivate: boolean;
   pollQuestion: string;
+  handleDrawerOpen: () => void;
 }
 
 const MobileMenu: React.FC<MobileMenuProps> = ({
@@ -56,9 +57,14 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
   channelName,
   isPrivate,
   pollQuestion,
+  handleDrawerOpen,
 }) => {
   const actions = [
-    { icon: <MenuIcon />, name: `Menu` },
+    {
+      icon: <MenuIcon onClick={handleDrawerOpen} />,
+      type: 'menu',
+      name: `Menu`,
+    },
     {
       icon:
         pollQuestion !== '' ? (
@@ -66,22 +72,25 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
         ) : (
           <HowToVoteIcon />
         ),
+      type: 'poll',
       name: `${pollQuestion}`,
     },
     {
       icon: isPrivate ? <EnhancedEncryptionOutlinedIcon /> : <People />,
+      type: 'channel',
       name: `${channelName}`,
     },
-    { icon: <Person />, name: `${nickname}` },
+    { icon: <Person />, type: 'user', name: `${nickname}` },
   ];
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [hidden, setHidden] = React.useState(false);
 
-  const handleHiddenChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setHidden(event.target.checked);
-  };
+  // const handleHiddenChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   console.log(event.target.checked);
+  //   setHidden(event.target.checked);
+  // };
 
   const handleClose = () => {
     setOpen(false);
@@ -108,10 +117,14 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           {actions.map((action) => (
             <SpeedDialAction
               tooltipOpen
-              key={action.name}
+              key={action.type}
               icon={action.icon}
               tooltipTitle={action.name}
-              onClick={handleClose}
+              onClick={(e) => {
+                // e.stopPropagation();
+                console.log(action.type);
+                handleClose();
+              }}
               className={classes.actions}
             />
           ))}
