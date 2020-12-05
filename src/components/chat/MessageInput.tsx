@@ -25,8 +25,9 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     display: 'flex',
-    marginTop: theme.spacing(2),
-    marginLeft: theme.spacing(10),
+    marginTop: theme.spacing(0),
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(12),
     flexDirection: 'column',
     flexGrow: 1,
   },
@@ -36,14 +37,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   messageButton: {
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none',
     },
     [theme.breakpoints.up('md')]: {
       size: 'large',
       width: '25%',
     },
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(3),
     marginLeft: theme.spacing(0),
     backgroundColor: theme.palette.primary.dark,
   },

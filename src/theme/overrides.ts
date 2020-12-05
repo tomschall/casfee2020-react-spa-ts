@@ -21,19 +21,28 @@ export default {
       },
     },
   },
+  MuiBackdrop: {
+    root: {
+      backgroundColor: 'rgb(0 0 0 / 90%)',
+    },
+  },
   MuiFab: {
     root: {
-      borderRadius: 3,
+      borderRadius: 0,
     },
     primary: {
       color: '#fff',
-      backgroundColor: 'rgba(255, 255, 255, .1)',
+      // backgroundColor: 'rgba(255, 255, 255, .1)',
       boxShadow: 'none',
     },
     label: {},
   },
   MuiSpeedDial: {
-    direction: 'right',
+    direction: 'left',
+    directionUp: { marginBottom: 0 },
+    actions: {
+      backgroundColor: 'transparent',
+    },
   },
   MuiSpeedDialAction: {
     fab: {
@@ -44,16 +53,14 @@ export default {
       },
     },
     staticTooltip: {
-      // backgroundColor: 'red',
+      // opacity: 1,
     },
     tooltipOpen: true,
     tooltipPlacement: 'top-end',
-    tooltipPlacementLeft: {
-      right: 'unset',
-    },
+    tooltipPlacementLeft: {},
     staticTooltipLabel: {
-      left: '100%',
-      backgroundColor: 'none',
+      right: '100%',
+      whiteSpace: 'nowrap',
     },
   },
   MuiTableCell: {

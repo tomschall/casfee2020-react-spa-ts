@@ -348,6 +348,7 @@ subscription watchChannelHasActivePoll($currentChannelId: Int!) {
     }
   ) {
     id
+    text
   }
 }
 

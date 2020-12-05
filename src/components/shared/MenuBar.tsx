@@ -35,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
   root: {},
   toolbar: {
     [theme.breakpoints.up('md')]: {
-      paddingTop: theme.spacing(1),
-      paddingBottom: theme.spacing(1),
+      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(3),
     },
     [theme.breakpoints.down('md')]: {
       paddingLeft: theme.spacing(1),
@@ -153,7 +153,16 @@ const MenuBar: React.FC<MenuBarProps> = ({
           <Container maxWidth="xl" disableGutters>
             <Grid container>
               <Grid item xs={12}>
-                <MobileMenu />
+                <MobileMenu
+                  nickname={user.nickname}
+                  channelName={currentChannel.name}
+                  isPrivate={currentChannel?.is_private}
+                  pollQuestion={
+                    data?.poll_questions[0]?.text
+                      ? data?.poll_questions[0]?.text
+                      : ''
+                  }
+                />
                 {/* <Chip
                   variant="outlined"
                   color="primary"
@@ -232,7 +241,7 @@ const MenuBar: React.FC<MenuBarProps> = ({
                   />
                 </Box>
               </Grid>
-              <Grid item style={{ flex: 1 }}>
+              {/* <Grid item style={{ flex: 1 }}>
                 {matches === false && (
                   <Box
                     order={1}
@@ -253,7 +262,7 @@ const MenuBar: React.FC<MenuBarProps> = ({
                     />
                   </Box>
                 )}
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>
                 <MessageInput
                   channelId={channelId}
