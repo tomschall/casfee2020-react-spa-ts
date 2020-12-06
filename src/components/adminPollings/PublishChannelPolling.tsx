@@ -28,6 +28,11 @@ const useStyles = makeStyles((theme) => ({
   pollCard: {
     width: '100%',
     padding: theme.spacing(5),
+    [theme.breakpoints.down('md')]: {
+      transform: 'scale(50%)',
+      padding: theme.spacing(2),
+      minWidth: '100%',
+    },
   },
 }));
 
@@ -49,9 +54,10 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
   const [currentChannel, setCurrentChannelState] = useRecoilState(
     currentChannelState,
   );
-  const [selectedPollAnswerId, setSelectedPollAnswerId] = React.useState<
-    number
-  >(0);
+  const [
+    selectedPollAnswerId,
+    setSelectedPollAnswerId,
+  ] = React.useState<number>(0);
   const { data, loading } = useWatchChannelPollQuestionSubscription({
     variables: {
       channelId: currentChannel.id,
@@ -174,16 +180,23 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
         <>
           {data?.getChannelPoll[0] && (
             <Paper className={classes.pollCard}>
-              <Box mb={3}>
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                flexDirection="row"
+                mb={3}
+              >
                 {data?.getChannelPoll.map((channelPoll) => (
                   <Typography
                     key={channelPoll.id}
                     color="secondary"
                     variant="h2"
+                    style={{ marginTop: 0 }}
                   >
                     {channelPoll?.poll_question?.text}
                   </Typography>
                 ))}
+                <ShowTotalVotes totalVotes={totalVotes()} />
               </Box>
 
               {data?.getChannelPoll[0]?.poll_question?.poll_anwers
@@ -198,7 +211,6 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
                     totalVotes={totalVotes()}
                   />
                 ))}
-              <ShowTotalVotes totalVotes={totalVotes()} />
             </Paper>
           )}
         </>

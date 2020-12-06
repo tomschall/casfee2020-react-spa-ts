@@ -1,10 +1,9 @@
 import React from 'react';
-import { Box, Popover } from '@material-ui/core';
+import { Box, Button, Popover } from '@material-ui/core';
 import { useWatchChannelHasActivePollSubscription } from '../../api/generated/graphql';
 import PopupState, { bindPopover } from 'material-ui-popup-state';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import Loader from '../shared/Loader';
 import PublishChannelPolling from '../adminPollings/PublishChannelPolling';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -19,6 +18,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  popupWidth: {
+    minWidth: '40vw',
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '90vw',
+    },
+  },
 }));
 
 interface PollPopUpProps {
@@ -29,13 +34,17 @@ const PollPopUp: React.FC<PollPopUpProps> = ({ channelId }) => {
   const classes = useStyles();
   const { data, loading } = useWatchChannelHasActivePollSubscription({
     variables: {
-      currentChannelId: channelId, //currentChannel.id,
+      currentChannelId: channelId,
     },
   });
   const popupState = usePopupState({
     variant: 'popover',
     popupId: 'demoPopper',
   });
+
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <>
       {data?.poll_questions?.length === 1 ? (
@@ -54,8 +63,9 @@ const PollPopUp: React.FC<PollPopUpProps> = ({ channelId }) => {
                 <Box
                   display="flex"
                   justifyContent="center"
+                  flexDirection="column"
                   p={2}
-                  style={{ minWidth: '30vw' }}
+                  className={classes.popupWidth}
                 >
                   <PublishChannelPolling
                     user={[]}
@@ -63,6 +73,13 @@ const PollPopUp: React.FC<PollPopUpProps> = ({ channelId }) => {
                     currentChannel={0}
                     selectedPollAnswerId={0}
                   />
+                  <Button
+                    aria-label="close"
+                    onClick={popupState.close}
+                    style={{ marginLeft: '16px', maxWidth: '10vw' }}
+                  >
+                    Close
+                  </Button>
                 </Box>
               </Popover>
             </>
