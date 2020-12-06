@@ -9,12 +9,13 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   giphySearchInput: {
-    marginBottom: theme.spacing(4),
-    marginLeft: theme.spacing(2),
-    minWidth: 200,
+    display: 'flex',
+    flex: 1,
+    paddingBottom: theme.spacing(2),
   },
   giphyCarousel: {
-    maxWidth: '650px',
+    display: 'flex',
+    padding: theme.spacing(3),
   },
 }));
 
@@ -49,7 +50,7 @@ const GiphyCarousel: React.FC<GiphyCarouselProps> = ({ hideGiphyCarousel }) => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <Carousel
         key={giphySearchString}
         fetchGifs={fetchGifs}
@@ -64,7 +65,7 @@ const GiphyCarousel: React.FC<GiphyCarouselProps> = ({ hideGiphyCarousel }) => {
         variant="outlined"
         onChange={handleOnChange}
       />
-    </React.Fragment>
+    </>
   );
 };
 

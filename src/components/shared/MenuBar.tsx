@@ -15,15 +15,10 @@ import {
 } from '@material-ui/core';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import { useWatchChannelHasActivePollSubscription } from '../../api/generated/graphql';
-import AddGif from '@material-ui/icons/Gif';
 import MessageInput from '../chat/MessageInput';
 import GiphyCarousel from './GiphyCarousel';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import FaceIcon from '@material-ui/icons/Face';
-import PeopleIcon from '@material-ui/icons/People';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
-import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import PublishChannelPolling from '../adminPollings/PublishChannelPolling';
 import MenuBarDrawer from './MenuBarDrawer';
 import MobileMenu from '../chat/MobileMenu';
@@ -91,6 +86,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2),
   },
   giphyImage: {
+    padding: theme.spacing(1),
     marginTop: theme.spacing(2),
   },
   popoverRoot: {
@@ -165,37 +161,11 @@ const MenuBar: React.FC<MenuBarProps> = ({
                       : ''
                   }
                   handleDrawerOpen={handleDrawerOpen}
+                  handleGiphyClick={handleGiphyClick}
                 />
-                {/* <Chip
-                  variant="outlined"
-                  color="primary"
-                  size="small"
-                  icon={<FaceIcon />}
-                  label={user.nickname}
-                />
-                <Chip
-                  color="secondary"
-                  variant="outlined"
-                  size="small"
-                  icon={
-                    currentChannel.is_private === true ? (
-                      <EnhancedEncryptionOutlinedIcon />
-                    ) : (
-                      <PeopleIcon color="secondary" />
-                    )
-                  }
-                  label={currentChannel.name}
-                />
-                <Chip
-                  variant="outlined"
-                  color="primary"
-                  size="small"
-                  icon={<AddGif />}
-                  label="+Gif"
-                  onClick={handleGiphyClick}
-                />
-                {data?.poll_questions?.length === 1 && (
-                  <PopupState variant="popover" popupId="demo-popup-popover">
+
+                {/* {data?.poll_questions?.length === 1 && (
+                  <PopupState variant="popover" popupId="demoPopper">
                     {(popupState) => (
                       <>
                         <Chip
@@ -207,7 +177,8 @@ const MenuBar: React.FC<MenuBarProps> = ({
                           label="Admin Polling"
                         />
                         <Popover
-                          anchorReference={'none'}
+                          anchorReference={'none'} // set popup center window
+                          anchorEl={'popper'}
                           classes={{
                             root: classes.popoverRoot,
                           }}
@@ -231,47 +202,27 @@ const MenuBar: React.FC<MenuBarProps> = ({
                     )}
                   </PopupState>
                 )} */}
-                <Box
-                  style={{ display: showGiphyCarousel ? 'flex' : 'none' }}
-                  className={classes.giphyImage}
-                  order={1}
-                  flex="1"
-                  justifyContent="flex-end"
-                  alignItems="flex-end"
-                >
-                  <GiphyCarousel
-                    hideGiphyCarousel={() => hideGiphyCarousel()}
-                  />
-                </Box>
               </Grid>
-              {/* <Grid item style={{ flex: 1 }}>
-                {matches === false && (
-                  <Box
-                    order={1}
-                    display="flex"
-                    flex="1"
-                    justifyContent="flex-end"
-                    alignItems="flex-end"
-                  >
-                    <Chip
-                      variant="default"
-                      aria-label="open drawer"
-                      onClick={handleDrawerOpen}
-                      label="Menu"
-                      clickable
-                      size="small"
-                      color="secondary"
-                      icon={<ExpandLess />}
-                    />
-                  </Box>
-                )}
-              </Grid> */}
               <Grid item xs={12}>
                 <MessageInput
                   channelId={channelId}
                   handleSetLastMessage={handleSetLastMessage}
                   preLastMessageId={preLastMessageId}
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <Box
+                  style={{ display: showGiphyCarousel ? 'block' : 'none' }}
+                  className={classes.giphyImage}
+                  order={1}
+                  flex="1"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                >
+                  <GiphyCarousel
+                    hideGiphyCarousel={() => hideGiphyCarousel()}
+                  />
+                </Box>
               </Grid>
             </Grid>
           </Container>

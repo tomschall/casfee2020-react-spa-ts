@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Backdrop from '@material-ui/core/Backdrop';
+import { Backdrop, Typography } from '@material-ui/core';
 import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
@@ -88,9 +88,18 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
     {
       icon:
         pollQuestion !== '' ? (
-          <HowToVoteIcon color="primary" />
+          <HowToVoteIcon
+            color="primary"
+            onClick={() => {
+              console.log('poll clicked; how to open popup?');
+            }}
+          />
         ) : (
-          <HowToVoteIcon />
+          <HowToVoteIcon
+            onClick={() => {
+              console.log('poll clicked');
+            }}
+          />
         ),
       type: 'poll',
       state: pollQuestion !== '' ? false : true,
