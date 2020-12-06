@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { TextField, Button, Box, Chip } from '@material-ui/core';
+import {
+  TextField,
+  Button,
+  Box,
+  Chip,
+  Container,
+  Grid,
+} from '@material-ui/core';
 import { theme } from '../../../theme/theme';
 import Icon from '@material-ui/core/Icon';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -24,11 +31,10 @@ const useStyles = makeStyles((theme) => ({
   rootSingleChip: {
     display: 'flex',
     flexDirection: 'column',
+    flex: 1,
   },
   giphyVisible: {
     marginTop: theme.spacing(2),
-    display: 'flex',
-    justifyContent: 'flex-start',
   },
   giphyHidden: {
     display: 'none',
@@ -189,85 +195,84 @@ const ThreadListInputContainer: React.FC<ThreadListInputContainerProps> = (
   };
 
   return (
-    <div className={classes.rootSingleChip}>
-      <Box
-        display="flex"
-        flex="1"
-        justifyContent="space-between"
-        alignItems="flex-start"
-      >
-        <Box>
-          <Chip
-            variant="outlined"
-            color="primary"
-            size="small"
-            icon={<AddGif />}
-            label="+Gif"
-            onClick={handleGiphyClick}
-          />
-        </Box>
-      </Box>
-      <Box className={gif ? classes.giphyImage : ''}>
-        {gif && (
-          <img
-            className={classes.image}
-            src={gif?.images?.fixed_width_small?.url}
-            onClick={() => setGif(null)}
-          />
-        )}
-      </Box>
-      <Box>
-        <Box
-          className={
-            showGiphyCarousel ? classes.giphyVisible : classes.giphyHidden
-          }
-          order={1}
-        >
-          <GiphyCarousel hideGiphyCarousel={() => hideGiphyCarousel()} />
-        </Box>
-      </Box>
-      <form
-        noValidate
-        autoComplete="off"
-        className={classes.form}
-        onSubmit={handleSubmit}
-      >
-        <TextField
-          value={text}
-          autoFocus={false}
-          onChange={(e) => {
-            handleTyping(e.target.value);
-          }}
-          size={setTextFieldSize()}
-          variant="outlined"
-          color="secondary"
-          autoComplete="off"
-          placeholder="Type your message here ..."
-          id={`chat-message-input-${props.channelThreadId}`}
-          label={'Crackle your message here ...'}
-          // fullWidth
-          InputProps={{
-            classes: {
-              input: classes.messageInput,
-            },
-          }}
-          InputLabelProps={{
-            className: classes.messageInput,
-          }}
-        />
+    <>
+      <li>
+        <Container maxWidth="lg">
+          <Grid item xs={12}>
+            <Chip
+              variant="outlined"
+              color="primary"
+              size="small"
+              icon={<AddGif />}
+              label="+Gif"
+              onClick={handleGiphyClick}
+            />
+          </Grid>
+          <Grid item xs={12} className={gif ? classes.giphyImage : ''}>
+            {gif && (
+              <img
+                className={classes.image}
+                alt={gif?.bitly_url}
+                src={gif?.images?.fixed_width_small?.url}
+                onClick={() => setGif(null)}
+              />
+            )}
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            className={
+              showGiphyCarousel ? classes.giphyVisible : classes.giphyHidden
+            }
+          >
+            <GiphyCarousel hideGiphyCarousel={() => hideGiphyCarousel()} />
+          </Grid>
+          <Grid item xs={12}>
+            <form
+              noValidate
+              autoComplete="off"
+              className={classes.form}
+              onSubmit={handleSubmit}
+            >
+              <TextField
+                value={text}
+                autoFocus={false}
+                onChange={(e) => {
+                  handleTyping(e.target.value);
+                }}
+                size={setTextFieldSize()}
+                variant="outlined"
+                color="secondary"
+                autoComplete="off"
+                placeholder="Type your message here ..."
+                id={`chat-message-input-${props.channelThreadId}`}
+                label={'Crackle your message here ...'}
+                // fullWidth
+                InputProps={{
+                  classes: {
+                    input: classes.messageInput,
+                  },
+                }}
+                InputLabelProps={{
+                  className: classes.messageInput,
+                }}
+              />
 
-        <Button
-          id={`chat-message-button-${props.channelThreadId}`}
-          size={setButtonSize()}
-          variant="contained"
-          endIcon={<Icon>send</Icon>}
-          className={classes.messageButton}
-          type="submit"
-        >
-          Send
-        </Button>
-      </form>
-    </div>
+              <Button
+                id={`chat-message-button-${props.channelThreadId}`}
+                size={setButtonSize()}
+                variant="contained"
+                endIcon={<Icon>send</Icon>}
+                className={classes.messageButton}
+                type="submit"
+              >
+                Send
+              </Button>
+            </form>
+          </Grid>
+        </Container>
+      </li>
+    </>
   );
 };
 

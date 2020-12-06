@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
     overflowY: 'scroll',
     height: '90vh',
     marginTop: theme.spacing(5),
+    marginBottom: theme.spacing(5),
   },
   end: {
     marginBottom: '2rem',

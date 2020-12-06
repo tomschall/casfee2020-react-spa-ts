@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, Button, Grid, List, Typography } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  List,
+  Typography,
+} from '@material-ui/core';
 import MessageList from './MessageList';
 import { Message } from '../../interfaces/message.interface';
 import {
@@ -145,9 +152,20 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
         <Grid container>
           <Grid item xs={12} className={classes.messageContainer}>
             {isPrivate && channelType !== Channel_Type_Enum.DirectMessage && (
-              <Button type="button" onClick={navigateToAddChannelMembers}>
-                Add users to channel
-              </Button>
+              <Box
+                display="flex"
+                justifyContent="center"
+                style={{ marginBottom: '20px' }}
+              >
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  type="button"
+                  onClick={navigateToAddChannelMembers}
+                >
+                  Add users to channel
+                </Button>
+              </Box>
             )}
             <List id="message-list">
               <MessageList

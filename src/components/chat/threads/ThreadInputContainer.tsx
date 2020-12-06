@@ -132,11 +132,13 @@ const ThreadInputContainer: React.FC<ThreadInputContainerProps> = ({
                   color="primary"
                   size="small"
                   icon={<AddGif />}
-                  label="+Gif"
+                  label="+Giff"
                   onClick={handleGiphyClick}
                 />
+              </Grid>
+              <Grid item xs={12}>
                 <Box
-                  style={{ display: showGiphyCarousel ? 'flex' : 'none' }}
+                  style={{ display: showGiphyCarousel ? 'block' : 'none' }}
                   className={classes.giphyImage}
                   order={1}
                   flex="1"

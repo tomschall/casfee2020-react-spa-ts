@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { GiphyFetch } from '@giphy/js-fetch-api';
 import { giphyState } from '../../atom';
-import { TextField } from '@material-ui/core';
+import { Box, TextField } from '@material-ui/core';
 import { Carousel } from '@giphy/react-components';
 import { IGif } from '@giphy/js-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -55,20 +55,22 @@ const GiphyCarousel: React.FC<GiphyCarouselProps> = ({ hideGiphyCarousel }) => {
 
   return (
     <>
-      <Carousel
-        key={giphySearchString}
-        fetchGifs={fetchGifs}
-        onGifClick={onGifClick}
-        gifHeight={50}
-        gutter={6}
-      />
-      <TextField
-        className={classes.giphySearchInput}
-        size="small"
-        label="Search giphy ..."
-        variant="standard"
-        onChange={handleOnChange}
-      />
+      <Box display="flex" flexDirection="column" style={{ maxWidth: '100%' }}>
+        <Carousel
+          key={giphySearchString}
+          fetchGifs={fetchGifs}
+          onGifClick={onGifClick}
+          gifHeight={50}
+          gutter={6}
+        />
+        <TextField
+          className={classes.giphySearchInput}
+          size="small"
+          label="Search giphy ..."
+          variant="standard"
+          onChange={handleOnChange}
+        />
+      </Box>
     </>
   );
 };
