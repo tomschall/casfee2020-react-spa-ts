@@ -142,7 +142,15 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
       {userVote?.user_votes[0]?.poll_question_id !==
       data?.getChannelPoll[0]?.poll_question?.id ? (
         <Paper className={classes.pollCard}>
-          <Typography variant="caption">Anonymous poll</Typography>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            flexDirection="row"
+            mb={3}
+          >
+            <Typography variant="caption">Anonymous poll</Typography>
+            <ShowTotalVotes totalVotes={totalVotes()} />
+          </Box>
           <Typography variant="h2">
             {data?.getChannelPoll[0].poll_question?.text}
           </Typography>

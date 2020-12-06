@@ -8,7 +8,6 @@ import AddGif from '@material-ui/icons/Gif';
 import MenuIcon from '@material-ui/icons/Menu';
 import People from '@material-ui/icons/People';
 import Person from '@material-ui/icons/Person';
-import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import PollPopUp from '../../components/adminPollings/PollPopup';
 
@@ -39,9 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: '#0f1448',
     },
     backdrop: {
-      [theme.breakpoints.up('md')]: {
-        backgroundColor: 'rgb(0 0 0 / 95%)',
-      },
+      [theme.breakpoints.up('md')]: {},
     },
   }),
 );
@@ -88,7 +85,11 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
       name: 'Admin Polling',
     },
     {
-      icon: isPrivate ? <EnhancedEncryptionOutlinedIcon /> : <People />,
+      icon: isPrivate ? (
+        <EnhancedEncryptionOutlinedIcon color="secondary" />
+      ) : (
+        <People style={{ color: '#4CAF50' }} />
+      ),
       type: 'channel',
       state: true,
       name: `${channelName}`,

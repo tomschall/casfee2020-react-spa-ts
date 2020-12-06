@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   vspace: {
+    marginTop: theme.spacing(3),
     marginBottom: theme.spacing(1),
   },
   image: {
@@ -130,7 +131,6 @@ const MessageList: React.FC<MessageProps> = ({
                   <strong>Oh sorry it seems...</strong>
                 )}
               </Typography>
-              <Divider className={classes.vspace} />
             </Box>
             <Box>
               <Box

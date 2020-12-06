@@ -23,7 +23,7 @@ export default {
   },
   MuiBackdrop: {
     root: {
-      backgroundColor: 'rgb(0 0 0 / 90%)',
+      backgroundColor: 'rgba(0, 0, 0, 0.6)',
     },
   },
   MuiFab: {
@@ -112,7 +112,8 @@ export default {
   },
   MuiDivider: {
     root: {
-      margin: 0,
+      margin: 10,
+      opacity: 0.3,
     },
   },
   MuiTypography: {},

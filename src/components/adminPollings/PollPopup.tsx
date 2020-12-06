@@ -1,16 +1,13 @@
 import React from 'react';
-import { Box, Button, Popover } from '@material-ui/core';
+import { Badge, Box, Button, Popover } from '@material-ui/core';
 import { useWatchChannelHasActivePollSubscription } from '../../api/generated/graphql';
 import PopupState, { bindPopover } from 'material-ui-popup-state';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import Loader from '../shared/Loader';
 import PublishChannelPolling from '../adminPollings/PublishChannelPolling';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  usePopupState,
-  bindTrigger,
-  bindMenu,
-} from 'material-ui-popup-state/hooks';
+import { bindTrigger } from 'material-ui-popup-state/hooks';
+import Logo from '../shared/Logo';
 
 const useStyles = makeStyles((theme) => ({
   popoverRoot: {
@@ -20,9 +17,14 @@ const useStyles = makeStyles((theme) => ({
   },
   popupWidth: {
     minWidth: '40vw',
+    padding: theme.spacing(5),
     [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(3),
       minWidth: '90vw',
     },
+  },
+  badge: {
+    backgroundColor: '#4CAF50',
   },
 }));
 
@@ -37,10 +39,6 @@ const PollPopUp: React.FC<PollPopUpProps> = ({ channelId }) => {
       currentChannelId: channelId,
     },
   });
-  const popupState = usePopupState({
-    variant: 'popover',
-    popupId: 'demoPopper',
-  });
 
   if (loading) {
     return <Loader />;
@@ -51,10 +49,11 @@ const PollPopUp: React.FC<PollPopUpProps> = ({ channelId }) => {
         <PopupState variant="popover" popupId="demoPopper">
           {(popupState) => (
             <>
-              <HowToVoteIcon color="secondary" {...bindTrigger(popupState)} />
+              <Badge variant="dot" classes={{ badge: classes.badge }}>
+                <HowToVoteIcon {...bindTrigger(popupState)} />
+              </Badge>
               <Popover
                 anchorReference={'none'} // set popup center window
-                anchorEl={'popper'}
                 classes={{
                   root: classes.popoverRoot,
                 }}
@@ -63,10 +62,12 @@ const PollPopUp: React.FC<PollPopUpProps> = ({ channelId }) => {
                 <Box
                   display="flex"
                   justifyContent="center"
+                  alignItems="center"
                   flexDirection="column"
-                  p={2}
                   className={classes.popupWidth}
                 >
+                  <Logo />
+
                   <PublishChannelPolling
                     user={[]}
                     channelId={channelId}
@@ -76,7 +77,7 @@ const PollPopUp: React.FC<PollPopUpProps> = ({ channelId }) => {
                   <Button
                     aria-label="close"
                     onClick={popupState.close}
-                    style={{ marginLeft: '16px', maxWidth: '10vw' }}
+                    style={{ maxWidth: '10vw' }}
                   >
                     Close
                   </Button>
