@@ -4,25 +4,12 @@ import clsx from 'clsx';
 import { theme } from '../../theme/theme';
 import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../atom';
-import {
-  AppBar,
-  Box,
-  Container,
-  Chip,
-  Grid,
-  Popover,
-  Toolbar,
-} from '@material-ui/core';
-import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
-import { useWatchChannelHasActivePollSubscription } from '../../api/generated/graphql';
+import { AppBar, Box, Container, Grid, Toolbar } from '@material-ui/core';
 import MessageInput from '../chat/MessageInput';
 import GiphyCarousel from './GiphyCarousel';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import HowToVoteIcon from '@material-ui/icons/HowToVote';
-import PublishChannelPolling from '../adminPollings/PublishChannelPolling';
 import MenuBarDrawer from './MenuBarDrawer';
 import MobileMenu from '../chat/MobileMenu';
-import Loader from '../shared/Loader';
 import { makeStyles } from '@material-ui/core/styles';
 
 const drawerWidth = '100%';
@@ -115,17 +102,10 @@ const MenuBar: React.FC<MenuBarProps> = ({
   const [currentChannel, setCurrentChannel] = useRecoilState<any>(
     currentChannelState,
   );
-  const { data, loading } = useWatchChannelHasActivePollSubscription({
-    variables: {
-      currentChannelId: currentChannel.id,
-    },
-  });
   const [open, setOpen] = React.useState(false); // Sidebar default state
   const [showGiphyCarousel, setShowGiphyCarousel] = React.useState(false);
 
   const handleDrawerOpen = () => {
-    console.log('drawer open called');
-
     setOpen(true);
   };
 
@@ -140,10 +120,6 @@ const MenuBar: React.FC<MenuBarProps> = ({
   const hideGiphyCarousel = () => {
     setShowGiphyCarousel(false);
   };
-
-  if (loading) {
-    return <Loader />;
-  }
 
   return (
     <>
@@ -160,53 +136,10 @@ const MenuBar: React.FC<MenuBarProps> = ({
                   nickname={user.nickname}
                   channelName={currentChannel.name}
                   isPrivate={currentChannel?.is_private}
-                  pollQuestion={
-                    data?.poll_questions[0]?.text
-                      ? data?.poll_questions[0]?.text
-                      : ''
-                  }
                   handleDrawerOpen={handleDrawerOpen}
                   handleGiphyClick={handleGiphyClick}
+                  channelId={channelId}
                 />
-
-                {/* {data?.poll_questions?.length === 1 && (
-                  <PopupState variant="popover" popupId="demoPopper">
-                    {(popupState) => (
-                      <>
-                        <Chip
-                          {...bindTrigger(popupState)}
-                          variant="outlined"
-                          color="secondary"
-                          size="small"
-                          icon={<HowToVoteIcon color="secondary" />}
-                          label="Admin Polling"
-                        />
-                        <Popover
-                          anchorReference={'none'} // set popup center window
-                          anchorEl={'popper'}
-                          classes={{
-                            root: classes.popoverRoot,
-                          }}
-                          {...bindPopover(popupState)}
-                        >
-                          <Box
-                            display="flex"
-                            justifyContent="center"
-                            p={2}
-                            style={{ minWidth: '30vw' }}
-                          >
-                            <PublishChannelPolling
-                              user={[]}
-                              channelId={channelId}
-                              currentChannel={0}
-                              selectedPollAnswerId={0}
-                            />
-                          </Box>
-                        </Popover>
-                      </>
-                    )}
-                  </PopupState>
-                )} */}
               </Grid>
               <Grid item xs={12}>
                 <MessageInput

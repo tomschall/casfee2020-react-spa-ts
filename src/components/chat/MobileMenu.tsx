@@ -10,6 +10,7 @@ import People from '@material-ui/icons/People';
 import Person from '@material-ui/icons/Person';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
+import PollPopUp from '../../components/adminPollings/PollPopup';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,7 +50,8 @@ interface MobileMenuProps {
   nickname: string;
   channelName: string;
   isPrivate: boolean;
-  pollQuestion: string;
+  // pollQuestion: string;
+  channelId: number;
   handleDrawerOpen: () => void;
   handleGiphyClick: () => void;
 }
@@ -58,7 +60,8 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
   nickname,
   channelName,
   isPrivate,
-  pollQuestion,
+  // pollQuestion,
+  channelId,
   handleDrawerOpen,
   handleGiphyClick,
 }) => {
@@ -79,24 +82,10 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
       name: `+Giphy`,
     },
     {
-      icon:
-        pollQuestion !== '' ? (
-          <HowToVoteIcon
-            color="primary"
-            onClick={() => {
-              console.log('poll clicked; how to open popup?');
-            }}
-          />
-        ) : (
-          <HowToVoteIcon
-            onClick={() => {
-              console.log('poll clicked');
-            }}
-          />
-        ),
+      icon: <PollPopUp channelId={channelId} />,
       type: 'poll',
-      state: pollQuestion !== '' ? false : true,
-      name: pollQuestion !== '' ? `${pollQuestion}` : 'No active poll',
+      state: true,
+      name: 'Admin Polling',
     },
     {
       icon: isPrivate ? <EnhancedEncryptionOutlinedIcon /> : <People />,
