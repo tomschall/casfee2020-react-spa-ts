@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
   },
   giphyImage: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(0),
   },
   form: {
     display: 'flex',
@@ -34,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
   messageInput: {
     floatingLabelFocusStyle: {
       color: theme.palette.secondary.dark,
+    },
+    [theme.breakpoints.down('md')]: {
+      fontSize: '.9rem',
     },
   },
   messageButton: {
@@ -49,7 +52,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.dark,
   },
   image: {
-    maxHeight: 55,
+    [theme.breakpoints.up('md')]: {
+      maxHeight: 55,
+    },
+    [theme.breakpoints.down('md')]: {
+      maxHeight: 40,
+    },
     paddingRight: theme.spacing(1),
   },
 }));
@@ -166,6 +174,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
         {gif && (
           <img
             className={classes.image}
+            alt="Giphy"
             src={gif?.images?.fixed_width_small?.url}
             onClick={() => setGif(null)}
           />
@@ -190,7 +199,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
           autoComplete="off"
           placeholder="Type your message here ..."
           id="chat-message-input"
-          label={'Crackle your message here ...'}
+          label={'Type message ...'}
           InputProps={{
             classes: {
               input: classes.messageInput,
