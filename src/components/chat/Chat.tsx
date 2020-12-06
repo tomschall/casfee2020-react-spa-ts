@@ -16,9 +16,9 @@ import {
 } from '../../api/generated/graphql';
 
 import Alert from '@material-ui/lab/Alert';
-// import CircularProgress from '@material-ui/core/CircularProgress';
 import MenuBar from '../shared/MenuBar';
-import Loader from '../shared/Loader';
+import Logo from '../shared/Logo';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import { useHistory } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -114,18 +114,12 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
       <Box
         display="flex"
         justifyContent="center"
-        flexDirection="column"
         alignItems="center"
+        flexDirection="column"
         style={{ height: '100vh' }}
       >
-        <Box>
-          <Loader />
-        </Box>
-        <Box mt={2}>
-          <Typography color="secondary" variant="caption">
-            Please wait!
-          </Typography>
-        </Box>
+        <Logo />
+        <LinearProgress color="secondary" />
       </Box>
     );
   }

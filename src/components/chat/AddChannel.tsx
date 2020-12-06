@@ -20,7 +20,6 @@ import {
   TextField,
   Typography,
   Snackbar,
-  CircularProgress,
 } from '@material-ui/core';
 import { theme } from '../../theme/theme';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -134,7 +133,7 @@ const AddChannel: React.FC = () => {
   }
 
   if (loading) {
-    return <CircularProgress />;
+    return <Loader />;
   }
 
   return (

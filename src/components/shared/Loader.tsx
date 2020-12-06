@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, CircularProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { ScalarLeafsRule } from 'graphql';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,10 +19,15 @@ const Loader = () => {
     <Box
       display="flex"
       justifyContent="center"
-      alignItems="flex-start"
-      style={{ height: '100%' }}
+      alignItems="center"
+      flexDirection="column"
+      flex={1}
     >
-      <CircularProgress size={20} style={{ margin: '10px' }} />
+      <CircularProgress
+        color="secondary"
+        size={20}
+        style={{ margin: '10px' }}
+      />
     </Box>
   );
 };

@@ -22,6 +22,7 @@ import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import PublishChannelPolling from '../adminPollings/PublishChannelPolling';
 import MenuBarDrawer from './MenuBarDrawer';
 import MobileMenu from '../chat/MobileMenu';
+import Loader from '../shared/Loader';
 import { makeStyles } from '@material-ui/core/styles';
 
 const drawerWidth = '100%';
@@ -114,7 +115,7 @@ const MenuBar: React.FC<MenuBarProps> = ({
   const [currentChannel, setCurrentChannel] = useRecoilState<any>(
     currentChannelState,
   );
-  const { data } = useWatchChannelHasActivePollSubscription({
+  const { data, loading } = useWatchChannelHasActivePollSubscription({
     variables: {
       currentChannelId: currentChannel.id,
     },
@@ -139,6 +140,10 @@ const MenuBar: React.FC<MenuBarProps> = ({
   const hideGiphyCarousel = () => {
     setShowGiphyCarousel(false);
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <>

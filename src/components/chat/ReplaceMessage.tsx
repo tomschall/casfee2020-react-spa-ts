@@ -1,6 +1,6 @@
 import React from 'react';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import { IconButton, CircularProgress } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 import { useUpdateMessageMutation } from '../../api/generated/graphql';
 import { Alert } from '@material-ui/lab';
 
