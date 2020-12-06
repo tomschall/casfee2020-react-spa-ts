@@ -22,18 +22,11 @@ const useStyles = makeStyles((theme: Theme) =>
         },
       },
     },
-    exampleWrapper: {
-      display: 'flex',
-      flex: 1,
-      position: 'relative',
-      marginTop: theme.spacing(3),
-      backgroundColor: 'red',
-    },
     speedDial: {
       position: 'absolute',
       '&.MuiSpeedDial-directionUp, &.MuiSpeedDial-directionLeft': {
-        bottom: theme.spacing(-6.8),
-        right: theme.spacing(2),
+        bottom: theme.spacing(-7),
+        right: theme.spacing(0),
       },
       [theme.breakpoints.down('sm')]: {
         marginRight: theme.spacing(0),

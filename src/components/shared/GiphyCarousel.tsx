@@ -12,6 +12,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flex: 1,
     paddingBottom: theme.spacing(2),
+    marginTop: theme.spacing(1),
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(1),
+    },
   },
   giphyCarousel: {
     display: 'flex',
@@ -61,8 +65,8 @@ const GiphyCarousel: React.FC<GiphyCarouselProps> = ({ hideGiphyCarousel }) => {
       <TextField
         className={classes.giphySearchInput}
         size="small"
-        label="search giphy..."
-        variant="outlined"
+        label="Search giphy ..."
+        variant="standard"
         onChange={handleOnChange}
       />
     </>

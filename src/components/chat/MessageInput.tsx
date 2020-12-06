@@ -25,11 +25,16 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     display: 'flex',
-    marginTop: theme.spacing(0),
     marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(11),
+    marginRight: theme.spacing(8),
     flexDirection: 'column',
     flexGrow: 1,
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(0.2),
+    },
+    [theme.breakpoints.up('md')]: {
+      marginTop: theme.spacing(0),
+    },
   },
   messageInput: {
     floatingLabelFocusStyle: {
