@@ -4,8 +4,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
-import FileCopyIcon from '@material-ui/icons/FileCopyOutlined';
-import SaveIcon from '@material-ui/icons/Save';
+import AddGif from '@material-ui/icons/Gif';
 import MenuIcon from '@material-ui/icons/Menu';
 import People from '@material-ui/icons/People';
 import Person from '@material-ui/icons/Person';
@@ -17,13 +16,17 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       transform: 'translateZ(0)',
       flexGrow: 1,
+      [theme.breakpoints.up('md')]: {
+        '& #SpeedDialexample-action-0': {
+          display: 'none',
+        },
+      },
     },
     exampleWrapper: {
       display: 'flex',
       flex: 1,
       position: 'relative',
       marginTop: theme.spacing(3),
-      // height: 0,
       backgroundColor: 'red',
     },
     speedDial: {
@@ -38,8 +41,13 @@ const useStyles = makeStyles((theme: Theme) =>
         height: 30,
       },
     },
-    actions: {
+    action: {
       backgroundColor: '#0f1448',
+    },
+    backdrop: {
+      [theme.breakpoints.up('md')]: {
+        backgroundColor: 'rgb(0 0 0 / 95%)',
+      },
     },
   }),
 );
@@ -50,6 +58,7 @@ interface MobileMenuProps {
   isPrivate: boolean;
   pollQuestion: string;
   handleDrawerOpen: () => void;
+  handleGiphyClick: () => void;
 }
 
 const MobileMenu: React.FC<MobileMenuProps> = ({
@@ -58,12 +67,23 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
   isPrivate,
   pollQuestion,
   handleDrawerOpen,
+  handleGiphyClick,
 }) => {
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const [hidden, setHidden] = React.useState(false);
   const actions = [
     {
       icon: <MenuIcon onClick={handleDrawerOpen} />,
       type: 'menu',
+      state: true,
       name: `Menu`,
+    },
+    {
+      icon: <AddGif onClick={handleGiphyClick} />,
+      type: 'giphy',
+      state: true,
+      name: `+Giphy`,
     },
     {
       icon:
@@ -73,24 +93,17 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           <HowToVoteIcon />
         ),
       type: 'poll',
-      name: `${pollQuestion}`,
+      state: pollQuestion !== '' ? false : true,
+      name: pollQuestion !== '' ? `${pollQuestion}` : 'No active poll',
     },
     {
       icon: isPrivate ? <EnhancedEncryptionOutlinedIcon /> : <People />,
       type: 'channel',
+      state: true,
       name: `${channelName}`,
     },
     { icon: <Person />, type: 'user', name: `${nickname}` },
   ];
-
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const [hidden, setHidden] = React.useState(false);
-
-  // const handleHiddenChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   console.log(event.target.checked);
-  //   setHidden(event.target.checked);
-  // };
 
   const handleClose = () => {
     setOpen(false);
@@ -102,7 +115,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
 
   return (
     <>
-      <Backdrop open={open} />
+      <Backdrop open={open} className={classes.backdrop} />
       <div className={classes.root}>
         <SpeedDial
           ariaLabel="SpeedDial example"
@@ -121,11 +134,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
               icon={action.icon}
               tooltipTitle={action.name}
               onClick={(e) => {
-                // e.stopPropagation();
-                console.log(action.type);
                 handleClose();
               }}
-              className={classes.actions}
+              className={classes.action}
             />
           ))}
         </SpeedDial>
