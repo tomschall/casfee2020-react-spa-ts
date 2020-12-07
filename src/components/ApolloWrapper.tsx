@@ -21,12 +21,7 @@ export type ApolloHeadersType = {
 };
 
 const ApolloWrapper: React.FC<any> = ({ children }) => {
-  const {
-    isAuthenticated,
-    getAccessTokenSilently,
-    error,
-    loginWithRedirect,
-  } = useAuth0();
+  const { isAuthenticated, getAccessTokenSilently } = useAuth0();
 
   const getHeaders = async () => {
     const headers = {} as ApolloHeadersType;

@@ -30,7 +30,15 @@ services:
       - '3001:3001'
     volumes:
       - nestjs_data:/usr/src/app
+  react-app:
+    build: ./
+    ports:
+      - '80:80'
+    volumes:
+      - react_app_data:/usr/src/app
 volumes:
   db_data:
   nestjs_data:
+    driver: local
+  react_app_data:
     driver: local
