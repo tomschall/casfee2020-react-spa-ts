@@ -123,6 +123,9 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                       input: classes.messageInput,
                     },
                   }}
+                  inputProps={{
+                    maxLength: 80,
+                  }}
                   InputLabelProps={{
                     className: classes.messageInput,
                   }}

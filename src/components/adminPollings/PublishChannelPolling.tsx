@@ -69,7 +69,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
       pollAnswerId: selectedPollAnswerId,
     },
   });
-  const { data, loading } = useWatchChannelPollQuestionSubscription({
+  const { data, loading, error } = useWatchChannelPollQuestionSubscription({
     variables: {
       channelId: currentChannel.id,
     },
@@ -79,9 +79,13 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
     let numbers: Array<any> = data?.getChannelPoll[0]?.poll_question
       ?.poll_anwers!;
     const count: any = [];
-    numbers.map((num: any) => count.push(num.votes));
-    const result = count.reduce((a: number, b: number) => a + b);
-    return result;
+    if (numbers !== undefined) {
+      numbers.map((num: any) => count.push(num.votes));
+      const result = count.reduce((a: number, b: number) => a + b);
+      return result;
+    } else {
+      return <Loader />;
+    }
   };
   const { data: userVote } = useWatchCheckUserHasVotedSubscription({
     variables: {
@@ -155,7 +159,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
     });
   };
 
-  if (loading) {
+  if (loading || error) {
     return <Loader />;
   }
 
@@ -211,7 +215,9 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
             <Box>
               <Typography variant="caption">Anonymous poll</Typography>
               <Typography variant="h2" style={{ marginTop: 0 }}>
-                {data?.getChannelPoll[0].poll_question?.text}
+                {data?.getChannelPoll[0]
+                  ? data?.getChannelPoll[0].poll_question?.text
+                  : 'no value'}
               </Typography>
             </Box>
             <ShowTotalVotes totalVotes={totalVotes()} />

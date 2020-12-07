@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   popupWidth: {
     minWidth: '40vw',
+    maxWidth: '50vw',
     padding: theme.spacing(5),
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(3),
