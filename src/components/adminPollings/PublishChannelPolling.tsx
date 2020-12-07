@@ -34,6 +34,11 @@ const useStyles = makeStyles((theme) => ({
       minWidth: '100%',
     },
   },
+  text: {
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '.875rem',
+    },
+  },
 }));
 
 interface PublishChannelProps {
@@ -233,7 +238,11 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
                           onChange={handleChange}
                         />
                       }
-                      label={pollAnswer.text}
+                      label={
+                        <Typography variant="body2" className={classes.text}>
+                          {pollAnswer.text}
+                        </Typography>
+                      }
                     />
                   ))}
               </RadioGroup>
