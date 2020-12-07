@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     marginTop: theme.spacing(0),
     width: '100%',
-    height: '100vh',
+    // height: '100vh',
   },
 }));
 

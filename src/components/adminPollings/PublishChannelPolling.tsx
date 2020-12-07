@@ -51,6 +51,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
   const classes = useStyles();
   const { user } = useAuth0();
   const [voteEnabled, setVoteEnabled] = React.useState<boolean>(true);
+  const [userVoteState, setUserVoteState] = React.useState<boolean>(false);
   const [currentChannel, setCurrentChannelState] = useRecoilState(
     currentChannelState,
   );
@@ -58,14 +59,14 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
     selectedPollAnswerId,
     setSelectedPollAnswerId,
   ] = React.useState<number>(0);
-  const { data, loading } = useWatchChannelPollQuestionSubscription({
-    variables: {
-      channelId: currentChannel.id,
-    },
-  });
   const getPollAnswerVotes = useWatchPollAnswerVotesSubscription({
     variables: {
       pollAnswerId: selectedPollAnswerId,
+    },
+  });
+  const { data, loading } = useWatchChannelPollQuestionSubscription({
+    variables: {
+      channelId: currentChannel.id,
     },
   });
   const [setPollAnswerVoteMutation] = useSetPollAnswerVoteMutation();
@@ -94,10 +95,26 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
   });
 
   useEffect(() => {
-    if (selectedPollAnswerId > 0) {
+    if (selectedPollAnswerId > 0 && data?.getChannelPoll[0] !== undefined) {
       setVoteEnabled(false);
     }
-  }, [getPollAnswerVotes, userVote, selectedPollAnswerId, voteEnabled]);
+
+    if (
+      userVote?.user_votes[0]?.poll_question_id !==
+      data?.getChannelPoll[0]?.poll_question?.id
+    ) {
+      setUserVoteState(true);
+    } else {
+      setUserVoteState(false);
+    }
+  }, [
+    getPollAnswerVotes,
+    userVote,
+    selectedPollAnswerId,
+    voteEnabled,
+    userVoteState,
+    data,
+  ]);
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedPollAnswerId(parseInt(e.target.value));
@@ -139,21 +156,61 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
 
   return (
     <>
-      {userVote?.user_votes[0]?.poll_question_id !==
-      data?.getChannelPoll[0]?.poll_question?.id ? (
+      {userVoteState === false ? (
         <Paper className={classes.pollCard}>
           <Box
             display="flex"
             justifyContent="space-between"
+            alignItems="center"
             flexDirection="row"
             mb={3}
           >
-            <Typography variant="caption">Anonymous poll</Typography>
+            <Box>
+              <Typography variant="caption">Anonymous poll</Typography>
+              {data?.getChannelPoll.map((channelPoll) => (
+                <Typography
+                  key={channelPoll.id}
+                  color="secondary"
+                  variant="h2"
+                  style={{ marginTop: 0 }}
+                >
+                  {channelPoll?.poll_question?.text}
+                </Typography>
+              ))}
+            </Box>
             <ShowTotalVotes totalVotes={totalVotes()} />
           </Box>
-          <Typography variant="h2">
-            {data?.getChannelPoll[0].poll_question?.text}
-          </Typography>
+
+          {data?.getChannelPoll[0]?.poll_question?.poll_anwers
+            .sort((a, b) => (a.id > b.id ? 1 : -1))
+            .map((pollVotes) => (
+              <ResultGraph
+                key={pollVotes.id}
+                answerId={pollVotes.id}
+                userVote={userVote?.user_votes[0]?.poll_answer_id}
+                pollVotes={pollVotes.votes}
+                text={pollVotes.text}
+                totalVotes={totalVotes()}
+              />
+            ))}
+        </Paper>
+      ) : (
+        <Paper className={classes.pollCard}>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="flex-end"
+            flexDirection="row"
+            mb={3}
+          >
+            <Box>
+              <Typography variant="caption">Anonymous poll</Typography>
+              <Typography variant="h2" style={{ marginTop: 0 }}>
+                {data?.getChannelPoll[0].poll_question?.text}
+              </Typography>
+            </Box>
+            <ShowTotalVotes totalVotes={totalVotes()} />
+          </Box>
 
           <form onSubmit={handleSubmit}>
             <FormControl component="fieldset">
@@ -184,44 +241,6 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
             </FormControl>
           </form>
         </Paper>
-      ) : (
-        <>
-          {data?.getChannelPoll[0] && (
-            <Paper className={classes.pollCard}>
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                flexDirection="row"
-                mb={3}
-              >
-                {data?.getChannelPoll.map((channelPoll) => (
-                  <Typography
-                    key={channelPoll.id}
-                    color="secondary"
-                    variant="h2"
-                    style={{ marginTop: 0 }}
-                  >
-                    {channelPoll?.poll_question?.text}
-                  </Typography>
-                ))}
-                <ShowTotalVotes totalVotes={totalVotes()} />
-              </Box>
-
-              {data?.getChannelPoll[0]?.poll_question?.poll_anwers
-                .sort((a, b) => (a.id > b.id ? 1 : -1))
-                .map((pollVotes) => (
-                  <ResultGraph
-                    key={pollVotes.id}
-                    answerId={pollVotes.id}
-                    userVote={userVote?.user_votes[0]?.poll_answer_id}
-                    pollVotes={pollVotes.votes}
-                    text={pollVotes.text}
-                    totalVotes={totalVotes()}
-                  />
-                ))}
-            </Paper>
-          )}
-        </>
       )}
     </>
   );
