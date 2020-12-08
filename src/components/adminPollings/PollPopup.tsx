@@ -92,12 +92,7 @@ const PollPopUp: React.FC<PollPopUpProps> = ({ channelId }) => {
                 >
                   <Logo />
 
-                  <PublishChannelPolling
-                    user={[]}
-                    channelId={channelId}
-                    currentChannel={0}
-                    selectedPollAnswerId={0}
-                  />
+                  <PublishChannelPolling />
                   <Button
                     aria-label="close"
                     onClick={popupState.close}

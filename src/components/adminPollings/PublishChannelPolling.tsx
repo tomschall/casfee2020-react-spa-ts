@@ -41,40 +41,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface PublishChannelProps {
-  user: [];
-  channelId: number;
-  pollAnswerId?: number;
-  selectedPollAnswerId: number;
-  currentChannel: number;
-}
-
-const PublishChannelPolling: React.FC<PublishChannelProps> = ({
-  channelId,
-  pollAnswerId,
-}) => {
+const PublishChannelPolling: React.FC = () => {
   const classes = useStyles();
   const { user } = useAuth0();
-  const [voteEnabled, setVoteEnabled] = React.useState<boolean>(true);
-  const [userVoteState, setUserVoteState] = React.useState<boolean>(false);
   const [currentChannel, setCurrentChannelState] = useRecoilState(
     currentChannelState,
   );
-  const [
-    selectedPollAnswerId,
-    setSelectedPollAnswerId,
-  ] = React.useState<number>(0);
-  const getPollAnswerVotes = useWatchPollAnswerVotesSubscription({
+  const [selectedPollAnswerId, setSelectedPollAnswerId] = React.useState<
+    number | null
+  >(null);
+
+  const {
+    data: getPollAnswerVotes,
+    loading: getPollAnswerVotesLoading,
+  } = useWatchPollAnswerVotesSubscription({
     variables: {
-      pollAnswerId: selectedPollAnswerId,
+      pollAnswerId: selectedPollAnswerId ?? 0,
     },
   });
+
   const { data, loading, error } = useWatchChannelPollQuestionSubscription({
     variables: {
       channelId: currentChannel.id,
     },
   });
+
   const [setPollAnswerVoteMutation] = useSetPollAnswerVoteMutation();
+
   const totalVotes = () => {
     let numbers: Array<any> = data?.getChannelPoll[0]?.poll_question
       ?.poll_anwers!;
@@ -87,7 +80,11 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
       return <Loader />;
     }
   };
-  const { data: userVote } = useWatchCheckUserHasVotedSubscription({
+
+  const {
+    data: userVote,
+    loading: userVoteLoading,
+  } = useWatchCheckUserHasVotedSubscription({
     variables: {
       pollQuestionId: data?.getChannelPoll[0]?.poll_question?.id,
       auth0UserId: user.sub,
@@ -103,28 +100,6 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
     },
   });
 
-  useEffect(() => {
-    if (selectedPollAnswerId > 0 && data?.getChannelPoll[0] !== undefined) {
-      setVoteEnabled(false);
-    }
-
-    if (
-      userVote?.user_votes[0]?.poll_question_id !==
-      data?.getChannelPoll[0]?.poll_question?.id
-    ) {
-      setUserVoteState(true);
-    } else {
-      setUserVoteState(false);
-    }
-  }, [
-    getPollAnswerVotes,
-    userVote,
-    selectedPollAnswerId,
-    voteEnabled,
-    userVoteState,
-    data,
-  ]);
-
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedPollAnswerId(parseInt(e.target.value));
   };
@@ -132,10 +107,11 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (selectedPollAnswerId === 0) return;
+    if (selectedPollAnswerId === null) return;
 
-    let currentPollAnswerVotes = await getPollAnswerVotes.data
-      ?.pollAnswerVotes[0].votes;
+    console.log('inside', selectedPollAnswerId);
+
+    let currentPollAnswerVotes = getPollAnswerVotes?.pollAnswerVotes[0].votes;
 
     if (currentPollAnswerVotes !== undefined) {
       currentPollAnswerVotes++;
@@ -159,13 +135,13 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
     });
   };
 
-  if (loading || error) {
+  if (loading || error || getPollAnswerVotesLoading || userVoteLoading) {
     return <Loader />;
   }
 
   return (
     <>
-      {userVoteState === false ? (
+      {userVote?.user_votes?.length ? (
         <Paper className={classes.pollCard}>
           <Box
             display="flex"
@@ -252,7 +228,7 @@ const PublishChannelPolling: React.FC<PublishChannelProps> = ({
                     />
                   ))}
               </RadioGroup>
-              <VoteButton enabled={voteEnabled} />
+              <VoteButton enabled={false} />
             </FormControl>
           </form>
         </Paper>
