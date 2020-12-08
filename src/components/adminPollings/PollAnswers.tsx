@@ -148,6 +148,9 @@ const PollAnswers: React.FC = () => {
                   input: classes.messageInput,
                 },
               }}
+              inputProps={{
+                maxLength: 100,
+              }}
               InputLabelProps={{
                 className: classes.messageInput,
               }}

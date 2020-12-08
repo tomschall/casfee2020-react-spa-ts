@@ -13,6 +13,7 @@ const ShowTotalVotes: React.FC<ShowTotalVotesProps> = ({ totalVotes }) => {
         variant="outlined"
         size="small"
         label={`Total votes: ${totalVotes}`}
+        style={{ marginLeft: 8 }}
       />
     </>
   );

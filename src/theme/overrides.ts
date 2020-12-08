@@ -1,3 +1,4 @@
+import { theme } from './theme';
 export default {
   MuiCssBaseline: {
     '@global': {
@@ -18,6 +19,48 @@ export default {
       a: {
         textDecoration: 'none',
       },
+    },
+  },
+  MuiBackdrop: {
+    root: {
+      backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    },
+  },
+  MuiFab: {
+    root: {
+      borderRadius: 0,
+    },
+    primary: {
+      color: '#fff',
+      // backgroundColor: 'rgba(255, 255, 255, .1)',
+      boxShadow: 'none',
+    },
+    label: {},
+  },
+  MuiSpeedDial: {
+    direction: 'left',
+    directionUp: { marginBottom: 0 },
+    actions: {
+      backgroundColor: 'transparent',
+    },
+  },
+  MuiSpeedDialAction: {
+    fab: {
+      backgroundColor: 'transparent',
+      '&:hover': {
+        borderRadius: 3,
+        padding: 10,
+      },
+    },
+    staticTooltip: {
+      // opacity: 1,
+    },
+    tooltipOpen: true,
+    tooltipPlacement: 'top-end',
+    tooltipPlacementLeft: {},
+    staticTooltipLabel: {
+      right: '100%',
+      whiteSpace: 'nowrap',
     },
   },
   MuiTableCell: {
@@ -69,7 +112,8 @@ export default {
   },
   MuiDivider: {
     root: {
-      margin: 0,
+      margin: 10,
+      opacity: 0.3,
     },
   },
   MuiTypography: {},

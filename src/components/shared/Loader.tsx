@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     marginTop: theme.spacing(0),
     width: '100%',
-    height: '100vh',
+    // height: '100vh',
   },
 }));
 
@@ -20,9 +20,14 @@ const Loader = () => {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      // style={{ height: '100%' }}
+      flexDirection="column"
+      flex={1}
     >
-      <CircularProgress />
+      <CircularProgress
+        color="secondary"
+        size={20}
+        style={{ margin: '10px' }}
+      />
     </Box>
   );
 };

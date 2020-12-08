@@ -2,19 +2,24 @@ import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { GiphyFetch } from '@giphy/js-fetch-api';
 import { giphyState } from '../../atom';
-import { TextField } from '@material-ui/core';
+import { Box, TextField } from '@material-ui/core';
 import { Carousel } from '@giphy/react-components';
 import { IGif } from '@giphy/js-types';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   giphySearchInput: {
-    marginBottom: theme.spacing(4),
-    marginLeft: theme.spacing(2),
-    minWidth: 200,
+    display: 'flex',
+    flex: 1,
+    paddingBottom: theme.spacing(2),
+    marginTop: theme.spacing(1),
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(1),
+    },
   },
   giphyCarousel: {
-    maxWidth: '650px',
+    display: 'flex',
+    padding: theme.spacing(3),
   },
 }));
 
@@ -49,22 +54,24 @@ const GiphyCarousel: React.FC<GiphyCarouselProps> = ({ hideGiphyCarousel }) => {
   };
 
   return (
-    <React.Fragment>
-      <Carousel
-        key={giphySearchString}
-        fetchGifs={fetchGifs}
-        onGifClick={onGifClick}
-        gifHeight={50}
-        gutter={6}
-      />
-      <TextField
-        className={classes.giphySearchInput}
-        size="small"
-        label="search giphy..."
-        variant="outlined"
-        onChange={handleOnChange}
-      />
-    </React.Fragment>
+    <>
+      <Box display="flex" flexDirection="column" style={{ maxWidth: '100%' }}>
+        <Carousel
+          key={giphySearchString}
+          fetchGifs={fetchGifs}
+          onGifClick={onGifClick}
+          gifHeight={50}
+          gutter={6}
+        />
+        <TextField
+          className={classes.giphySearchInput}
+          size="small"
+          label="Search giphy ..."
+          variant="standard"
+          onChange={handleOnChange}
+        />
+      </Box>
+    </>
   );
 };
 

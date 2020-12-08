@@ -1,5 +1,17 @@
-import React, { useEffect } from 'react';
-import { Box, LinearProgress, Typography } from '@material-ui/core';
+import React from 'react';
+import { theme } from '../../theme/theme';
+import { Box, Chip, LinearProgress, Typography } from '@material-ui/core';
+import FaceIcon from '@material-ui/icons/Face';
+import GroupIcon from '@material-ui/icons/Group';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  text: {
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '.875rem',
+    },
+  },
+}));
 
 interface ResultGraphProps {
   answerId: number;
@@ -16,6 +28,7 @@ const ResultGraph: React.FC<ResultGraphProps> = ({
   text,
   totalVotes,
 }) => {
+  const classes = useStyles();
   const LinearProgressWithLabel = (props: any) => {
     return (
       <Box
@@ -33,10 +46,19 @@ const ResultGraph: React.FC<ResultGraphProps> = ({
             {...props}
           />
         </Box>
-        <Box minWidth={0}>
-          <Typography variant="body2" color="textSecondary">
-            {props.value.toFixed(1)}%
-          </Typography>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          flexDirection="row-reverse"
+        >
+          <Chip
+            size="small"
+            color={userVote === answerId ? 'secondary' : 'primary'}
+            variant={userVote === answerId ? 'default' : 'outlined'}
+            label={`${pollVotes} / ${props.value.toFixed(1)}%`}
+            icon={userVote === answerId ? <FaceIcon /> : <GroupIcon />}
+          />
         </Box>
       </Box>
     );
@@ -51,7 +73,9 @@ const ResultGraph: React.FC<ResultGraphProps> = ({
       flexDirection="column"
       mb={2}
     >
-      <Typography variant="body2">{text}</Typography>
+      <Typography variant="body1" className={classes.text}>
+        {text}
+      </Typography>
       <LinearProgressWithLabel
         value={(100 * pollVotes) / totalVotes}
         answerid={answerId}

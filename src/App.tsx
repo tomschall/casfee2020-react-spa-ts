@@ -7,6 +7,7 @@ import { theme } from './theme/theme';
 import { Box } from '@material-ui/core';
 import SignIn from './components/shared/SignIn';
 import Loader from './components/shared/Loader';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import NotFound from './components/shared/NotFound';
 import PrivateRoute from './components/PrivateRoute';
 import AddChannelMembers from './components/chat/AddChannelMembers';
@@ -14,6 +15,7 @@ import AddDirectMessageChannel from './components/chat/AddDirectMessageChannel';
 import ThreadBoard from './components/layout/ThreadBoard';
 import ChatBoard from './components/layout/ChatBoard';
 import AdminBoard from './components/layout/AdminBoard';
+import Logo from './components/shared/Logo';
 
 const App: React.FC = () => {
   const { isAuthenticated, user, isLoading } = useAuth0();
@@ -25,12 +27,16 @@ const App: React.FC = () => {
           display="flex"
           justifyContent="center"
           alignItems="center"
+          flexDirection="column"
           style={{
             height: '100vh',
-            backgroundColor: theme.palette.background.default,
+            backgroundColor: theme.palette.error.dark,
           }}
         >
-          <Loader />
+          <Box>
+            <Logo />
+            <LinearProgress color="primary" style={{ marginTop: '16px' }} />
+          </Box>
         </Box>
       </>
     );

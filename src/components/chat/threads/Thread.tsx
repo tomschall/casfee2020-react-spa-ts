@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Grid, List, CircularProgress } from '@material-ui/core';
+import { Grid, List } from '@material-ui/core';
 import { Box } from '@material-ui/core';
 import { useHistory, useParams } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -12,6 +12,7 @@ import {
 } from '../../../api/generated/graphql';
 import ThreadMessageList from './ThreadMessageList';
 import ThreadInputContainer from './ThreadInputContainer';
+import Loader from '../../shared/Loader';
 import { Alert } from '@material-ui/lab';
 import { ThreadMessage } from '../../../interfaces/message.interface';
 import { ThreadParams } from '../../../interfaces/param.interface';
@@ -92,7 +93,7 @@ const Thread: React.FC = () => {
     if (currentChannel?.id === undefined) history.push(`/channel/${channel}`);
   }, []);
 
-  if (loading || getChannelThreadLoading) return <CircularProgress />;
+  if (loading || getChannelThreadLoading) return <Loader />;
 
   if (error || getChannelThreadError) {
     console.log('error', error);

@@ -4,29 +4,13 @@ import clsx from 'clsx';
 import { theme } from '../../theme/theme';
 import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../atom';
-import {
-  AppBar,
-  Box,
-  Container,
-  Chip,
-  Grid,
-  Popover,
-  Toolbar,
-} from '@material-ui/core';
-import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
-import AddGif from '@material-ui/icons/Gif';
+import { AppBar, Box, Container, Grid, Toolbar } from '@material-ui/core';
 import MessageInput from '../chat/MessageInput';
 import GiphyCarousel from './GiphyCarousel';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import FaceIcon from '@material-ui/icons/Face';
-import PeopleIcon from '@material-ui/icons/People';
-import HowToVoteIcon from '@material-ui/icons/HowToVote';
-import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
-import { makeStyles } from '@material-ui/core/styles';
-import PublishChannelPolling from '../adminPollings/PublishChannelPolling';
-import { useWatchChannelHasActivePollSubscription } from '../../api/generated/graphql';
 import MenuBarDrawer from './MenuBarDrawer';
+import MobileMenu from '../chat/MobileMenu';
+import { makeStyles } from '@material-ui/core/styles';
 
 const drawerWidth = '100%';
 
@@ -35,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     [theme.breakpoints.up('md')]: {
       paddingTop: theme.spacing(5),
-      paddingBottom: theme.spacing(5),
+      paddingBottom: theme.spacing(3),
     },
     [theme.breakpoints.down('md')]: {
       paddingLeft: theme.spacing(1),
@@ -90,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2),
   },
   giphyImage: {
+    padding: theme.spacing(1),
     marginTop: theme.spacing(2),
   },
   popoverRoot: {
@@ -117,11 +102,6 @@ const MenuBar: React.FC<MenuBarProps> = ({
   const [currentChannel, setCurrentChannel] = useRecoilState<any>(
     currentChannelState,
   );
-  const { data } = useWatchChannelHasActivePollSubscription({
-    variables: {
-      currentChannelId: currentChannel.id,
-    },
-  });
   const [open, setOpen] = React.useState(false); // Sidebar default state
   const [showGiphyCarousel, setShowGiphyCarousel] = React.useState(false);
 
@@ -151,106 +131,15 @@ const MenuBar: React.FC<MenuBarProps> = ({
         <Toolbar className={classes.toolbar}>
           <Container maxWidth="xl" disableGutters>
             <Grid container>
-              <Grid item xs={9}>
-                <Chip
-                  variant="outlined"
-                  color="primary"
-                  size="small"
-                  icon={<FaceIcon />}
-                  label={user.nickname}
+              <Grid item xs={12}>
+                <MobileMenu
+                  nickname={user.nickname}
+                  channelName={currentChannel.name}
+                  isPrivate={currentChannel?.is_private}
+                  handleDrawerOpen={handleDrawerOpen}
+                  handleGiphyClick={handleGiphyClick}
+                  channelId={channelId}
                 />
-                <Chip
-                  color="secondary"
-                  variant="outlined"
-                  size="small"
-                  icon={
-                    currentChannel.is_private === true ? (
-                      <EnhancedEncryptionOutlinedIcon />
-                    ) : (
-                      <PeopleIcon color="secondary" />
-                    )
-                  }
-                  label={currentChannel.name}
-                />
-                <Chip
-                  variant="outlined"
-                  color="primary"
-                  size="small"
-                  icon={<AddGif />}
-                  label="+Gif"
-                  onClick={handleGiphyClick}
-                />
-                {data?.poll_questions?.length === 1 && (
-                  <PopupState variant="popover" popupId="demo-popup-popover">
-                    {(popupState) => (
-                      <>
-                        <Chip
-                          {...bindTrigger(popupState)}
-                          variant="outlined"
-                          color="secondary"
-                          size="small"
-                          icon={<HowToVoteIcon color="secondary" />}
-                          label="Admin Polling"
-                        />
-                        <Popover
-                          anchorReference={'none'}
-                          classes={{
-                            root: classes.popoverRoot,
-                          }}
-                          {...bindPopover(popupState)}
-                        >
-                          <Box
-                            display="flex"
-                            justifyContent="center"
-                            p={2}
-                            style={{ minWidth: '30vw' }}
-                          >
-                            <PublishChannelPolling
-                              user={[]}
-                              channelId={channelId}
-                              currentChannel={0}
-                              selectedPollAnswerId={0}
-                            />
-                          </Box>
-                        </Popover>
-                      </>
-                    )}
-                  </PopupState>
-                )}
-                <Box
-                  style={{ display: showGiphyCarousel ? 'flex' : 'none' }}
-                  className={classes.giphyImage}
-                  order={1}
-                  flex="1"
-                  justifyContent="flex-end"
-                  alignItems="flex-end"
-                >
-                  <GiphyCarousel
-                    hideGiphyCarousel={() => hideGiphyCarousel()}
-                  />
-                </Box>
-              </Grid>
-              <Grid item style={{ flex: 1 }}>
-                {matches === false && (
-                  <Box
-                    order={1}
-                    display="flex"
-                    flex="1"
-                    justifyContent="flex-end"
-                    alignItems="flex-end"
-                  >
-                    <Chip
-                      variant="default"
-                      aria-label="open drawer"
-                      onClick={handleDrawerOpen}
-                      label="Menu"
-                      clickable
-                      size="small"
-                      color="secondary"
-                      icon={<ExpandLess />}
-                    />
-                  </Box>
-                )}
               </Grid>
               <Grid item xs={12}>
                 <MessageInput
@@ -258,6 +147,20 @@ const MenuBar: React.FC<MenuBarProps> = ({
                   handleSetLastMessage={handleSetLastMessage}
                   preLastMessageId={preLastMessageId}
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <Box
+                  style={{ display: showGiphyCarousel ? 'block' : 'none' }}
+                  className={classes.giphyImage}
+                  order={1}
+                  flex="1"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                >
+                  <GiphyCarousel
+                    hideGiphyCarousel={() => hideGiphyCarousel()}
+                  />
+                </Box>
               </Grid>
             </Grid>
           </Container>

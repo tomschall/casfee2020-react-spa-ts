@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { CircularProgress, TextField, Button, Icon } from '@material-ui/core';
+import { TextField, Button, Icon } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { useSetRecoilState } from 'recoil';
 import { Message } from '../../interfaces/message.interface';
 import { makeStyles } from '@material-ui/core/styles';
 import { useUpdateMessageMutation } from '../../api/generated/graphql';
+import Loader from '../shared/Loader';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,7 +69,12 @@ const UpdateMessage: React.FC<UpdateMessageProps> = ({ message }) => {
   };
 
   if (loading) {
-    return <CircularProgress />;
+    return (
+      <>
+        <p>hello</p>
+        <Loader />
+      </>
+    );
   }
 
   if (
