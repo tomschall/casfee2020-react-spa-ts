@@ -30,8 +30,6 @@ hasura update-cli --version 1.3.1
 git clone https://github.com/tomschall/casfee2020-react-spa-ts.git
 # Go to project directory
 cd casfee2020-react-spa-ts
-# Checkout develop branch
-git checkout develop
 # Clone nestjs microservice for hasura actions
 git clone https://github.com/tomschall/casfee2020-nestjs.git nestjs
 ```
@@ -41,6 +39,10 @@ git clone https://github.com/tomschall/casfee2020-nestjs.git nestjs
 ```shell script
 # Start API inside Docker
 docker-compose up -d
+# cd to hasura folder
+cd hasura
+# apply migrations and metadata
+yarn api:hasura:migrations:apply
 ```
 
 #### Users for testing
