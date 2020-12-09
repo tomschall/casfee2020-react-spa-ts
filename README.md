@@ -3,7 +3,7 @@
 This project is a realtime chat app that uses subscriptions in Hasura GraphQL Engine.
 It is built using React, Apollo and Hasura with Postgres DB.
 
-## Prerequisites
+## Prerequisites for development
 
 - Node (See `.nvmrc` for exact version or use `nvm use`)
 - yarn
@@ -34,8 +34,6 @@ cd casfee2020-react-spa-ts
 git checkout develop
 # Clone nestjs microservice for hasura actions
 git clone https://github.com/tomschall/casfee2020-nestjs.git nestjs
-# Install all dependencies
-yarn install
 ```
 
 ### Usage
@@ -43,8 +41,6 @@ yarn install
 ```shell script
 # Start API inside Docker
 docker-compose up -d
-# apply latest migrations and finally start app.
-yarn dev:start
 ```
 
 #### Users for testing
@@ -57,8 +53,19 @@ For login take the following users
 - email: webrooster@webrooster.ch
 - pw for all users: admin1234.$
 
-* [Frontend](http://localhost:3000)
+* [Frontend](http://localhost)
 * [Backend](http://localhost:8080/console)
+
+### Usage development
+
+```shell script
+# Start API inside Docker
+docker-compose up -d
+# apply latest migrations and finally start app.
+yarn dev:start
+```
+
+- [Frontend](http://localhost:3000)
 
 #### Development
 
