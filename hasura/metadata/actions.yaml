@@ -2,13 +2,13 @@ actions:
 - name: addChannelUser
   definition:
     kind: synchronous
-    handler: http://host.docker.internal:3001/addChannelUser
+    handler: https://casfee-2020-nestjs-ayovh.ondigitalocean.app/addChannelUser
   permissions:
   - role: user
 - name: validateAndAddDirectMessageChannel
   definition:
     kind: synchronous
-    handler: http://host.docker.internal:3001/validateAndAddDirectMessageChannel
+    handler: https://casfee-2020-nestjs-ayovh.ondigitalocean.app/validateAndAddDirectMessageChannel
   permissions:
   - role: user
 custom_types:
