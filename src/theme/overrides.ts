@@ -41,6 +41,7 @@ export default {
     direction: 'left',
     directionUp: { marginBottom: 0 },
     actions: {
+      display: 'unset',
       backgroundColor: 'transparent',
     },
   },

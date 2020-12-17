@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     action: {
-      display: 'unset',
       backgroundColor: '#0f1448',
     },
     backdrop: {

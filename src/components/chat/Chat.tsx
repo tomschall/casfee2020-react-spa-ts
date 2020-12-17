@@ -38,12 +38,12 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('md')]: {
       padding: theme.spacing(3),
       paddingTop: theme.spacing(3),
-      paddingBottom: theme.spacing(3),
+      paddingBottom: theme.spacing(0),
     },
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(0),
       paddingTop: theme.spacing(0),
-      paddingBottom: theme.spacing(3),
+      paddingBottom: theme.spacing(6),
     },
   },
   polling: {
