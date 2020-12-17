@@ -10,6 +10,7 @@ import People from '@material-ui/icons/People';
 import Person from '@material-ui/icons/Person';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import PollPopUp from '../../components/adminPollings/PollPopup';
+import { unstable_batchedUpdates } from 'react-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
         bottom: theme.spacing(-7),
         right: theme.spacing(0),
       },
+      display: 'unset',
       [theme.breakpoints.down('sm')]: {
         marginRight: theme.spacing(0),
         marginBottom: theme.spacing(2),
