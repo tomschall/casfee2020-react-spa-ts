@@ -172,12 +172,12 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
             <div ref={messagesEndRef} />
           </Grid>
           <Box maxWidth="xl" component="nav">
-            {/* <MenuBar
+            <MenuBar
               user={user.sub}
               channelId={channelId}
               handleSetLastMessage={handleSetLastMessage}
               preLastMessageId={preLastMessageId}
-            /> */}
+            />
           </Box>
         </Grid>
       </Box>
