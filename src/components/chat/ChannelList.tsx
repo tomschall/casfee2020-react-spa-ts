@@ -119,7 +119,7 @@ const Channels: React.FC<any> = () => {
                     >
                       <ListItemText primary={data?.name} />
                     </Link>
-                    <ChannelListMessageCounter channelId={data.id} />
+                    {/* <ChannelListMessageCounter channelId={data.id} /> */}
                   </React.Fragment>
                 )}
               </ListItem>

@@ -130,7 +130,7 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
           <List component="div">
             {data?.channels.map((data: any) => (
               <ListItem button key={data.id}>
-                <ChannelListMessageCounter channelId={data.id} />
+                {/* <ChannelListMessageCounter channelId={data.id} /> */}
                 <ListItemText
                   primary={
                     <React.Fragment>
