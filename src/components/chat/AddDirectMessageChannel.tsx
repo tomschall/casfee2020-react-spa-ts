@@ -26,6 +26,7 @@ import { useHistory } from 'react-router';
 import Loader from '../shared/Loader';
 import Logo from '../shared/Logo';
 import { makeStyles } from '@material-ui/core/styles';
+import OnlineUserStatus from '../shared/OnlineUserStatus';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -177,13 +178,7 @@ const AddDirectMessageChannel: React.FC = () => {
                         handleAddUser(user_id, dm_user.auth0_user_id)
                       }
                     >
-                      <ListItemIcon>
-                        <Badge variant="dot">
-                          <Avatar className={classes.avatar}>
-                            {dm_user.username.substring(0, 2).toUpperCase()}
-                          </Avatar>
-                        </Badge>
-                      </ListItemIcon>
+                      <OnlineUserStatus user={dm_user} />
                       <ListItemText primary={dm_user.username} />
                     </ListItem>
                   );
