@@ -67,8 +67,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   avatar: {
-    backgroundColor: '#0a0e33',
-    color: '#F57C00',
+    backgroundColor: '#ed1859',
+    color: 'white',
     fontSize: 12,
   },
 }));
