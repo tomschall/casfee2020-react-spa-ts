@@ -85,17 +85,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface MenuBarProps {
-  user: [];
+  children: any;
   channelId: number;
-  handleSetLastMessage: Function;
-  preLastMessageId: number;
 }
 
-const MenuBar: React.FC<MenuBarProps> = ({
-  channelId,
-  handleSetLastMessage,
-  preLastMessageId,
-}) => {
+const MenuBar: React.FC<MenuBarProps> = ({ children, channelId }) => {
   const { user } = useAuth0();
   const classes = useStyles();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
@@ -142,11 +136,7 @@ const MenuBar: React.FC<MenuBarProps> = ({
                 />
               </Grid>
               <Grid item xs={12}>
-                <MessageInput
-                  channelId={channelId}
-                  handleSetLastMessage={handleSetLastMessage}
-                  preLastMessageId={preLastMessageId}
-                />
+                {children}
               </Grid>
               <Grid item xs={12}>
                 <Box

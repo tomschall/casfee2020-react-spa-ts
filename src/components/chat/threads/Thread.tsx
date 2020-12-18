@@ -11,11 +11,12 @@ import {
   useGetChannelThreadQuery,
 } from '../../../api/generated/graphql';
 import ThreadMessageList from './ThreadMessageList';
-import ThreadInputContainer from './ThreadInputContainer';
 import Loader from '../../shared/Loader';
 import { Alert } from '@material-ui/lab';
 import { ThreadMessage } from '../../../interfaces/message.interface';
 import { ThreadParams } from '../../../interfaces/param.interface';
+import MenuBar from '../../shared/MenuBar';
+import ThreadMessageInput from './ThreadMessageInput';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -100,8 +101,6 @@ const Thread: React.FC = () => {
     return <Alert severity="error">Thread Error</Alert>;
   }
 
-  // console.log('getChannelThreadData', getChannelThreadData);
-
   return (
     <>
       <div className={classes.root}>
@@ -118,9 +117,12 @@ const Thread: React.FC = () => {
             <div ref={messagesEndRef} />
           </Grid>
           <Box maxWidth="xl" component="nav">
-            <ThreadInputContainer
-              channelThreadId={getChannelThreadData?.channel_thread[0]?.id}
-            />
+            <MenuBar channelId={currentChannel?.id}>
+              <ThreadMessageInput
+                channelId={currentChannel?.id}
+                channelThreadId={getChannelThreadData?.channel_thread[0]?.id}
+              />
+            </MenuBar>
           </Box>
         </Grid>
       </div>

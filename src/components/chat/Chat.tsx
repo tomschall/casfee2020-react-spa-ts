@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import MessageList from './MessageList';
+import MessageInput from './MessageInput';
 import { Message } from '../../interfaces/message.interface';
 import {
   useWatchMessagesSubscription,
@@ -172,12 +173,13 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
             <div ref={messagesEndRef} />
           </Grid>
           <Box maxWidth="xl" component="nav">
-            <MenuBar
-              user={user.sub}
-              channelId={channelId}
-              handleSetLastMessage={handleSetLastMessage}
-              preLastMessageId={preLastMessageId}
-            />
+            <MenuBar channelId={channelId}>
+              <MessageInput
+                channelId={channelId}
+                handleSetLastMessage={handleSetLastMessage}
+                preLastMessageId={preLastMessageId}
+              />
+            </MenuBar>
           </Box>
         </Grid>
       </Box>
