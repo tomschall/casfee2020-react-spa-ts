@@ -83,13 +83,11 @@ const Channels: React.FC<any> = () => {
               <ListItem key={data.id} button>
                 {data?.name === currentChannel?.name ? (
                   <ListItemIcon>
-                    <Badge classes={{ badge: classes.badge }} variant="dot">
-                      {data.is_private === true ? (
-                        <EnhancedEncryptionOutlinedIcon />
-                      ) : (
-                        <PeopleIcon color="secondary" />
-                      )}
-                    </Badge>
+                    {data.is_private === true ? (
+                      <EnhancedEncryptionOutlinedIcon />
+                    ) : (
+                      <PeopleIcon color="secondary" />
+                    )}
                   </ListItemIcon>
                 ) : (
                   <ListItemIcon>
