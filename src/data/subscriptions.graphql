@@ -16,17 +16,6 @@ subscription watchMessages($channelId: Int!, $limit: Int) {
     channel {
       name
     }
-    channel_threads {
-      id
-      channel_thread_messages_aggregate {
-        aggregate {
-          count(columns: message)
-        }
-      }
-      channel_thread_messages(limit: 1, order_by: { timestamp: desc }) {
-        timestamp
-      }
-    }
   }
 }
 

@@ -141,7 +141,7 @@ const MessageList: React.FC<MessageProps> = ({
                 <Typography variant="caption">
                   <ThreadReply message={message} channelName={channelName} />
                 </Typography>
-                {!message.deleted ? (
+                {/* {!message.deleted ? (
                   <React.Fragment>
                     {user.sub === message.user.auth0_user_id && (
                       <Typography variant="caption">
@@ -161,7 +161,7 @@ const MessageList: React.FC<MessageProps> = ({
                   </React.Fragment>
                 ) : (
                   ''
-                )}
+                )} */}
               </Box>
             </Box>
           </Box>
@@ -187,7 +187,7 @@ const MessageList: React.FC<MessageProps> = ({
           ) : (
             ''
           )}
-          {message?.channel_threads?.length &&
+          {/* {message?.channel_threads?.length &&
           message?.channel_threads[0]?.channel_thread_messages_aggregate
             .aggregate.count >= 1 ? (
             <Box>
@@ -195,7 +195,7 @@ const MessageList: React.FC<MessageProps> = ({
             </Box>
           ) : (
             ''
-          )}
+          )} */}
           <Divider className={classes.vspace} />
         </Box>
       </ListItem>

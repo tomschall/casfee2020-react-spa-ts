@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('lg')]: {
       padding: theme.spacing(10),
       paddingTop: theme.spacing(5),
-      paddingBottom: theme.spacing(0),
+      paddingBottom: theme.spacing(3),
     },
     [theme.breakpoints.down('md')]: {
       padding: theme.spacing(3),
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(0),
       paddingTop: theme.spacing(0),
-      paddingBottom: theme.spacing(0),
+      paddingBottom: theme.spacing(6),
     },
   },
   polling: {
