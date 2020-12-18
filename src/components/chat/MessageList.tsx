@@ -38,7 +38,11 @@ const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.up('md')]: {
     messageText: {
-      paddingBottom: '1rem',
+      padding: '1rem',
+      '&:hover': {
+        backgroundColor: '#0f1448',
+        cursor: 'pointer',
+      },
     },
   },
   [theme.breakpoints.down('md')]: {
@@ -187,7 +191,7 @@ const MessageList: React.FC<MessageProps> = ({
           </Box>
 
           <Typography
-            component="div"
+            component="p"
             color="textSecondary"
             className={classes.messageText}
             onClick={() => handleShowUpdate(message)}
