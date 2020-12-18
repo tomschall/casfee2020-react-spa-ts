@@ -118,6 +118,7 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
           </ListItemText>
           <ListItemIcon>
             <AddCircleOutlineIcon
+              color="secondary"
               onClick={navigateToAddDirectMessageChannelMembers}
             />
           </ListItemIcon>

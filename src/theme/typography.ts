@@ -2,7 +2,7 @@ export default {
   fontSize: 14,
   body1: {
     fontSize: 16,
-    color: '#f9cd8b',
+    color: '#0288D1',
   },
   body2: {
     fontSize: 16,
@@ -42,5 +42,6 @@ export default {
   h6: {
     fontWeight: 700,
     fontSize: 10,
+    color: '#0288D1',
   },
 };

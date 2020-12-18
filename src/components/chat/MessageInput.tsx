@@ -197,7 +197,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
           focused
           size={setTextFieldSize()}
           variant="outlined"
-          color="secondary"
+          color="primary"
           autoComplete="off"
           placeholder="..."
           id="chat-message-input"

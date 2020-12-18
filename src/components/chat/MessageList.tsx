@@ -188,6 +188,7 @@ const MessageList: React.FC<MessageProps> = ({
 
           <Typography
             component="div"
+            color="textSecondary"
             className={classes.messageText}
             onClick={() => handleShowUpdate(message)}
           >

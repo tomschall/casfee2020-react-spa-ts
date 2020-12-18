@@ -11,7 +11,7 @@ export const theme = createMuiTheme({
     type: 'dark',
     background: {
       paper: '#0f1448',
-      default: '#0c103b',
+      default: '#070922',
     },
     primary: {
       light: '#81D4FA',
@@ -21,7 +21,7 @@ export const theme = createMuiTheme({
     },
     secondary: {
       light: '#FFA726',
-      main: '#F57C00',
+      main: '#f57c00',
       dark: '#EF6C00',
       contrastText: '#ffffff',
     },
@@ -64,7 +64,7 @@ export const theme = createMuiTheme({
     },
     MuiListItemIcon: {
       style: {
-        color: '#5C6BC0',
+        color: '#0288D1',
       },
     },
     MuiPaper: {
