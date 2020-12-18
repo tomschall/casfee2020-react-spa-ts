@@ -26,11 +26,11 @@ const useStyles = makeStyles((theme) => ({
   form: {
     display: 'flex',
     marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(8),
+    marginRight: theme.spacing(1),
     flexDirection: 'column',
     flexGrow: 1,
     [theme.breakpoints.down('md')]: {
-      marginTop: theme.spacing(0.2),
+      marginTop: theme.spacing(1),
     },
     [theme.breakpoints.up('md')]: {
       marginTop: theme.spacing(0),
