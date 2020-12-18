@@ -81,7 +81,14 @@ const SideBar: React.FC<any> = () => {
             <Divider />
             <DirectMessageUserList user_id={user.sub} />
             <Divider />
-            <Logout />
+            <Box
+              display="flex"
+              justifyContent="flex-end"
+              alignItems="flex-end"
+              style={{ marginRight: '16px' }}
+            >
+              <Logout />
+            </Box>
           </Box>
         </Grid>
       </Box>

@@ -129,6 +129,8 @@ const PollAnswers: React.FC = () => {
               name="poll_answer"
               value={answerNewText.text}
               required
+              multiline
+              rowsMax={4}
               disabled={getPollQuestion?.data?.poll_question[0]?.is_active}
               onChange={(e) =>
                 handleNewAnswerChange(
@@ -149,7 +151,7 @@ const PollAnswers: React.FC = () => {
                 },
               }}
               inputProps={{
-                maxLength: 100,
+                maxLength: 250,
               }}
               InputLabelProps={{
                 className: classes.messageInput,

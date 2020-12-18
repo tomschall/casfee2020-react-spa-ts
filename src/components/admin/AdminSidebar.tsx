@@ -114,7 +114,9 @@ const AdminSidebar: React.FC<any> = () => {
               </ListItem>
             </List>
             <Divider />
-            <Logout />
+            <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
+              <Logout />
+            </Box>
           </Box>
         </Grid>
       </Box>
