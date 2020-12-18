@@ -1,12 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  Box,
-  Button,
-  Divider,
-  Grid,
-  List,
-  Typography,
-} from '@material-ui/core';
+import { Box, Button, Grid, List } from '@material-ui/core';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 import { Message } from '../../interfaces/message.interface';
@@ -119,8 +112,10 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
         flexDirection="column"
         style={{ height: '100vh' }}
       >
-        <Logo />
-        <LinearProgress color="secondary" />
+        <Box>
+          <Logo />
+          <LinearProgress color="secondary" style={{ marginTop: '8px' }} />
+        </Box>
       </Box>
     );
   }
