@@ -125,19 +125,18 @@ const MenuBar: React.FC<MenuBarProps> = ({ children, channelId }) => {
         <Toolbar className={classes.toolbar}>
           <Container maxWidth="xl" disableGutters>
             <Grid container>
-              <Grid item xs={12}>
-                <MobileMenu
-                  nickname={user.nickname}
-                  channelName={currentChannel.name}
-                  isPrivate={currentChannel?.is_private}
-                  handleDrawerOpen={handleDrawerOpen}
-                  handleGiphyClick={handleGiphyClick}
-                  channelId={channelId}
-                />
-              </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={9} sm={11} md={11}>
                 {children}
               </Grid>
+              <MobileMenu
+                nickname={user.nickname}
+                channelName={currentChannel.name}
+                isPrivate={currentChannel?.is_private}
+                handleDrawerOpen={handleDrawerOpen}
+                handleGiphyClick={handleGiphyClick}
+                channelId={channelId}
+              />
+
               <Grid item xs={12}>
                 <Box
                   style={{ display: showGiphyCarousel ? 'block' : 'none' }}

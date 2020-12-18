@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
       transform: 'translateZ(0)',
       flexGrow: 1,
       [theme.breakpoints.up('md')]: {
-        '& #SpeedDialexample-action-0': {
+        '& #ChickenfestNavi-action-4': {
           display: 'none',
         },
       },
@@ -26,13 +26,17 @@ const useStyles = makeStyles((theme: Theme) =>
     speedDial: {
       position: 'absolute',
       '&.MuiSpeedDial-directionUp, &.MuiSpeedDial-directionLeft': {
-        bottom: theme.spacing(-7),
-        right: theme.spacing(0),
+        bottom: '-10px',
+        right: theme.spacing(2),
       },
       [theme.breakpoints.down('sm')]: {
         marginRight: theme.spacing(0),
-        marginBottom: theme.spacing(2),
-        height: 30,
+        marginBottom: '12px',
+        height: 38,
+      },
+      [theme.breakpoints.up('md')]: {
+        marginRight: theme.spacing(0),
+        marginBottom: '75px',
       },
     },
     action: {
