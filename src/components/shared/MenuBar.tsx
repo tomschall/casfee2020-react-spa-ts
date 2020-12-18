@@ -125,7 +125,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ children, channelId }) => {
         <Toolbar className={classes.toolbar}>
           <Container maxWidth="xl" disableGutters>
             <Grid container>
-              <Grid item xs={9} sm={11} md={12}>
+              <Grid item xs={9} sm={11} md={11}>
                 {children}
               </Grid>
               <MobileMenu

@@ -23,7 +23,7 @@ export default {
   },
   MuiBackdrop: {
     root: {
-      backgroundColor: 'rgba(0, 0, 0, 0.6)',
+      backgroundColor: 'rgba(0, 0, 0, .95)',
     },
   },
   MuiFab: {

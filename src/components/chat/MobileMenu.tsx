@@ -34,6 +34,10 @@ const useStyles = makeStyles((theme: Theme) =>
         marginBottom: '12px',
         height: 38,
       },
+      [theme.breakpoints.up('md')]: {
+        marginRight: theme.spacing(0),
+        marginBottom: '75px',
+      },
     },
     action: {
       backgroundColor: '#0f1448',
