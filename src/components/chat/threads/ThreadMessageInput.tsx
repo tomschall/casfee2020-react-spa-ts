@@ -20,10 +20,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  rootSingleChip: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
   giphyVisible: {
     marginTop: theme.spacing(2),
     display: 'flex',
@@ -31,37 +27,48 @@ const useStyles = makeStyles((theme) => ({
   },
   giphyHidden: {
     display: 'none',
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(0),
   },
   giphyImage: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(0),
   },
   form: {
-    marginTop: theme.spacing(2),
     display: 'flex',
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(8),
     flexDirection: 'column',
     flexGrow: 1,
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(0.2),
+    },
+    [theme.breakpoints.up('md')]: {
+      marginTop: theme.spacing(0),
+    },
   },
   messageInput: {
-    floatingLabelFocusStyle: {
-      color: theme.palette.secondary.dark,
+    [theme.breakpoints.down('md')]: {
+      fontSize: '.9rem',
     },
   },
   messageButton: {
-    [theme.breakpoints.down('md')]: {
-      width: '100%',
-      size: 'small',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
     },
     [theme.breakpoints.up('md')]: {
       size: 'large',
       width: '25%',
     },
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(3),
     marginLeft: theme.spacing(0),
     backgroundColor: theme.palette.primary.dark,
   },
   image: {
-    maxHeight: 55,
+    [theme.breakpoints.up('md')]: {
+      maxHeight: 55,
+    },
+    [theme.breakpoints.down('md')]: {
+      maxHeight: 40,
+    },
     paddingRight: theme.spacing(1),
   },
 }));
@@ -168,7 +175,7 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
   };
 
   return (
-    <div className={classes.rootSingleChip}>
+    <div className={classes.root}>
       <Box className={gif ? classes.giphyImage : ''}>
         {gif && (
           <img
