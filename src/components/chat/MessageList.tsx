@@ -139,16 +139,23 @@ const MessageList: React.FC<MessageProps> = ({
               display="flex"
               justifyContent="flex-start"
               alignItems="flex-start"
+              flexDirection="row"
             >
               <Typography variant="caption">
                 {!message.deleted ? (
                   <>
                     <strong>{message.user.username} </strong>
-                    <i>{moment(message.timestamp).fromNow()}</i>
                   </>
                 ) : (
                   <strong>Oh sorry it seems...</strong>
                 )}
+              </Typography>
+              <Typography
+                variant="caption"
+                color="primary"
+                style={{ marginLeft: '8px' }}
+              >
+                {moment(message.timestamp).fromNow()}
               </Typography>
             </Box>
             <Box>
