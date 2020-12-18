@@ -43,14 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.down('md')]: {
     messageText: {
-      // fontSize: 14,
       paddingBottom: '.3rem',
-    },
-  },
-  [theme.breakpoints.down('sm')]: {
-    messageText: {
-      // fontSize: 24,
-      // paddingBottom: '1rem',
     },
   },
   vspace: {
@@ -74,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   avatar: {
-    backgroundColor: '#0a0b1a',
+    backgroundColor: '#0a0e33',
     color: '#F57C00',
     fontSize: 12,
   },
@@ -133,15 +126,16 @@ const MessageList: React.FC<MessageProps> = ({
           <Box
             display="flex"
             justifyContent="space-between"
-            alignItems="flex-start"
+            alignItems="center"
           >
             <Box
+              component="div"
               display="flex"
-              justifyContent="flex-start"
-              alignItems="flex-start"
-              flexDirection="row"
+              justifyContent="space-between"
+              flexGrow="1"
+              style={{ marginRight: 16 }}
             >
-              <Typography variant="caption">
+              <Typography color="secondary" variant="caption">
                 {!message.deleted ? (
                   <>
                     <strong>{message.user.username} </strong>
