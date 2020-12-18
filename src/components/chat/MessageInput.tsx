@@ -37,9 +37,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   messageInput: {
-    floatingLabelFocusStyle: {
-      color: theme.palette.secondary.dark,
-    },
     [theme.breakpoints.down('md')]: {
       fontSize: '.9rem',
     },
@@ -197,11 +194,12 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
           onChange={(e) => {
             handleTyping(e.target.value);
           }}
+          focused
           size={setTextFieldSize()}
           variant="outlined"
           color="secondary"
           autoComplete="off"
-          placeholder="Type your message here ..."
+          placeholder="..."
           id="chat-message-input"
           label={<TypingIndicator />}
           InputProps={{
