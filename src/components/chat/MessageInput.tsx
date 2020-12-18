@@ -40,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('md')]: {
       fontSize: '.9rem',
     },
+    '&.MuiFormLabel-root.Mui-focused': {
+      color: theme.palette.secondary.main,
+    },
   },
   messageButton: {
     [theme.breakpoints.down('sm')]: {
