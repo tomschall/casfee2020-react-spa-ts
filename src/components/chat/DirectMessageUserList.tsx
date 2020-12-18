@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     marginTop: theme.spacing(2),
-    // flex: 1,
   },
   badge: {
     backgroundColor: '#0f0',
@@ -112,9 +111,7 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
       <List className={classes.root}>
         <ListItem button onClick={handleClick}>
           <ListItemIcon>
-            <Badge classes={{ badge: classes.badge }} variant="dot">
-              <PersonIcon />
-            </Badge>
+            <PersonIcon />
           </ListItemIcon>
           <ListItemText>
             <Typography variant="h6">Direct Messages</Typography>
