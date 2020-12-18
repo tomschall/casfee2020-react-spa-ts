@@ -28,6 +28,13 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     padding: theme.spacing(2),
+
+    [theme.breakpoints.down('md')]: {
+      paddingTop: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+      paddingLeft: theme.spacing(2),
+      paddingBottom: theme.spacing(0),
+    },
   },
   [theme.breakpoints.up('md')]: {
     messageText: {
@@ -36,22 +43,35 @@ const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.down('md')]: {
     messageText: {
-      fontSize: 14,
-      paddingBottom: '1rem',
+      // fontSize: 14,
+      paddingBottom: '.3rem',
     },
   },
   [theme.breakpoints.down('sm')]: {
     messageText: {
-      fontSize: 12,
-      paddingBottom: '1rem',
+      // fontSize: 24,
+      // paddingBottom: '1rem',
     },
   },
   vspace: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(1),
+
+    [theme.breakpoints.down('sm')]: {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(0),
+    },
   },
   image: {
     paddingBottom: '0.5rem',
+  },
+  giphy: {
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+    [theme.breakpoints.up('md')]: {
+      width: '25%',
+    },
   },
   avatar: {
     backgroundColor: '#0a0b1a',
@@ -92,24 +112,23 @@ const MessageList: React.FC<MessageProps> = ({
   const renderMessage = (message: Message) => {
     return (
       <ListItem key={message.id} className={classes.root}>
-        <Box display="flex" justifyContent="flex-start" alignItems="center">
-          <ListItemAvatar>
-            <ListItemIcon>
-              <Badge variant="dot">
-                {!message.deleted ? (
-                  <Avatar className={classes.avatar}>
-                    {message.user.username.substring(0, 2).toUpperCase()}
-                  </Avatar>
-                ) : (
-                  <Avatar
-                    alt="Message has been removed"
-                    src={`${window.location.origin}/deleted.png`}
-                  />
-                )}
-              </Badge>
-            </ListItemIcon>
-          </ListItemAvatar>
-        </Box>
+        <ListItemAvatar>
+          <ListItemIcon>
+            <Badge variant="dot">
+              {!message.deleted ? (
+                <Avatar className={classes.avatar}>
+                  {message.user.username.substring(0, 2).toUpperCase()}
+                </Avatar>
+              ) : (
+                <Avatar
+                  alt="Message has been removed"
+                  src={`${window.location.origin}/deleted.png`}
+                />
+              )}
+            </Badge>
+          </ListItemIcon>
+        </ListItemAvatar>
+
         <Box component="div" display="flex" flexDirection="column" flex="1">
           <Box
             display="flex"
@@ -148,17 +167,17 @@ const MessageList: React.FC<MessageProps> = ({
                         {!(
                           showUpdate && showUpdateMessageId === message.id
                         ) && (
-                          <React.Fragment>
+                          <>
                             {message.channel_threads.length ? (
                               <ReplaceMessage messageId={message.id} />
                             ) : (
                               <DeleteMessage messageId={message.id} />
                             )}
-                          </React.Fragment>
+                          </>
                         )}
                       </Typography>
                     )}
-                  </React.Fragment>
+                  </>
                 ) : (
                   ''
                 )} */}
@@ -182,7 +201,7 @@ const MessageList: React.FC<MessageProps> = ({
           </Typography>
           {message?.image ? (
             <Box className={classes.image}>
-              <img src={message.image} />
+              <img src={message.image} className={classes.giphy} />
             </Box>
           ) : (
             ''
