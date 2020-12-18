@@ -34,11 +34,9 @@ const TypingIndicator: React.FC = () => {
 
   return (
     <>
-      <Box className={classes.indicator}>
-        {!loading && data?.user_typing[0]?.username
-          ? `${data.user_typing[0].username} is typing ...`
-          : ''}
-      </Box>
+      {!loading && data?.user_typing[0]?.username
+        ? `${data.user_typing[0].username} is typing ...`
+        : 'Type your message here ...'}
     </>
   );
 };

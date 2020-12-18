@@ -191,7 +191,6 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
         className={classes.form}
         onSubmit={handleSubmit}
       >
-        <TypingIndicator />
         <TextField
           value={text}
           autoFocus={false}
@@ -204,7 +203,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
           autoComplete="off"
           placeholder="Type your message here ..."
           id="chat-message-input"
-          label={'Type message ...'}
+          label={<TypingIndicator />}
           InputProps={{
             classes: {
               input: classes.messageInput,
