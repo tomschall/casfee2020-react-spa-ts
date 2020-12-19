@@ -125,7 +125,6 @@ const MenuBar: React.FC<MenuBarProps> = ({ children, channelId }) => {
   return (
     <>
       {children}
-
       <MobileMenu
         nickname={user.nickname}
         channelName={currentChannel.name}

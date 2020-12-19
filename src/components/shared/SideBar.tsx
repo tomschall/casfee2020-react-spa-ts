@@ -28,8 +28,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   treeView: {
-    overflowY: 'hidden',
-    maxHeight: '100vh',
     marginRight: theme.spacing(0),
     marginLeft: theme.spacing(0),
     paddingRight: theme.spacing(0),

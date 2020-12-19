@@ -49,7 +49,7 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
   user_id,
 }) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   let history = useHistory();
 
   const { data, loading, error } = useWatchDirectMessageChannelsSubscription({

@@ -17,7 +17,8 @@ const useStyles = makeStyles((theme) => ({
   },
   sidebar: {
     height: '100vh',
-    // maxHeight: '100vh',
+    minHeight: '80vh',
+    overflowY: 'scroll',
     display: 'flex',
     alignItems: 'flex-start',
     paddingTop: theme.spacing(5),

@@ -20,15 +20,13 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     overflowY: 'scroll',
-    maxHeight: '100vh',
+    maxHeight: '80vh',
     marginTop: theme.spacing(5),
-    paddingBottom: theme.spacing(10),
-  },
-  messageContainer: {
+    paddingBottom: theme.spacing(0),
     [theme.breakpoints.up('lg')]: {
       padding: theme.spacing(10),
       paddingTop: theme.spacing(5),
-      paddingBottom: theme.spacing(30),
+      paddingBottom: theme.spacing(0),
     },
     [theme.breakpoints.down('md')]: {
       padding: theme.spacing(3),
@@ -38,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(0),
       paddingTop: theme.spacing(0),
-      paddingBottom: theme.spacing(10),
+      paddingBottom: theme.spacing(0),
     },
   },
   messageInput: {
