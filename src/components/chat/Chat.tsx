@@ -20,14 +20,15 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     overflowY: 'scroll',
-    maxHeight: '81vh',
+    maxHeight: '100vh',
     marginTop: theme.spacing(5),
+    paddingBottom: theme.spacing(10),
   },
   messageContainer: {
     [theme.breakpoints.up('lg')]: {
       padding: theme.spacing(10),
       paddingTop: theme.spacing(5),
-      paddingBottom: theme.spacing(3),
+      paddingBottom: theme.spacing(30),
     },
     [theme.breakpoints.down('md')]: {
       padding: theme.spacing(3),
@@ -40,6 +41,20 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: theme.spacing(10),
     },
   },
+  messageInput: {
+    position: 'fixed',
+    bottom: 0,
+    padding: theme.spacing(3),
+    background: theme.palette.background.default,
+    zIndex: 1000,
+    [theme.breakpoints.up('sm')]: {
+      width: '71vw',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '100vw',
+    },
+  },
+
   polling: {
     position: 'fixed',
     overflow: 'hidden',
@@ -139,44 +154,40 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   return (
     <>
       <Box className={classes.root}>
-        <Grid container>
-          <Grid item xs={12} className={classes.messageContainer}>
-            {isPrivate && channelType !== Channel_Type_Enum.DirectMessage && (
-              <Box
-                display="flex"
-                justifyContent="center"
-                style={{ marginBottom: '20px' }}
-              >
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  type="button"
-                  onClick={navigateToAddChannelMembers}
-                >
-                  Add users to channel
-                </Button>
-              </Box>
-            )}
-            <List id="message-list">
-              <MessageList
-                messages={data?.messages as Message[]}
-                lastMessage={lastMessage}
-                preLastMessageId={preLastMessageId}
-                user={user}
-              />
-            </List>
-            <div ref={messagesEndRef} />
-          </Grid>
-          <Box maxWidth="xl" component="nav">
-            <MenuBar channelId={channelId}>
-              <MessageInput
-                channelId={channelId}
-                handleSetLastMessage={handleSetLastMessage}
-                preLastMessageId={preLastMessageId}
-              />
-            </MenuBar>
+        {isPrivate && channelType !== Channel_Type_Enum.DirectMessage && (
+          <Box
+            display="flex"
+            justifyContent="center"
+            style={{ marginBottom: '20px' }}
+          >
+            <Button
+              color="secondary"
+              variant="contained"
+              type="button"
+              onClick={navigateToAddChannelMembers}
+            >
+              Add users to channel
+            </Button>
           </Box>
-        </Grid>
+        )}
+        <List id="message-list">
+          <MessageList
+            messages={data?.messages as Message[]}
+            lastMessage={lastMessage}
+            preLastMessageId={preLastMessageId}
+            user={user}
+          />
+        </List>
+        <div ref={messagesEndRef} />
+      </Box>
+      <Box className={classes.messageInput}>
+        <MenuBar channelId={channelId}>
+          <MessageInput
+            channelId={channelId}
+            handleSetLastMessage={handleSetLastMessage}
+            preLastMessageId={preLastMessageId}
+          />
+        </MenuBar>
       </Box>
     </>
   );

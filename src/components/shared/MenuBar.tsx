@@ -4,7 +4,14 @@ import clsx from 'clsx';
 import { theme } from '../../theme/theme';
 import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../atom';
-import { AppBar, Box, Container, Grid, Toolbar } from '@material-ui/core';
+import {
+  AppBar,
+  BottomNavigation,
+  Box,
+  Container,
+  Grid,
+  Toolbar,
+} from '@material-ui/core';
 import MessageInput from '../chat/MessageInput';
 import GiphyCarousel from './GiphyCarousel';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -117,7 +124,31 @@ const MenuBar: React.FC<MenuBarProps> = ({ children, channelId }) => {
 
   return (
     <>
-      <AppBar
+      {children}
+
+      <MobileMenu
+        nickname={user.nickname}
+        channelName={currentChannel.name}
+        isPrivate={currentChannel?.is_private}
+        handleDrawerOpen={handleDrawerOpen}
+        handleGiphyClick={handleGiphyClick}
+        channelId={channelId}
+      />
+
+      <Box
+        style={{ display: showGiphyCarousel ? 'block' : 'none' }}
+        className={classes.giphyImage}
+        order={1}
+        flex="1"
+        justifyContent="flex-start"
+        alignItems="center"
+      >
+        <GiphyCarousel hideGiphyCarousel={() => hideGiphyCarousel()} />
+      </Box>
+
+      <MenuBarDrawer open={open} handleDrawerClose={handleDrawerClose} />
+
+      {/* <AppBar
         elevation={0}
         position="fixed"
         className={clsx(classes.appBar, open && classes.appBarShift)}
@@ -155,7 +186,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ children, channelId }) => {
           </Container>
         </Toolbar>
         <MenuBarDrawer open={open} handleDrawerClose={handleDrawerClose} />
-      </AppBar>
+      </AppBar> */}
     </>
   );
 };
