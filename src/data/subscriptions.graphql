@@ -16,6 +16,11 @@ subscription watchMessages($channelId: Int!, $limit: Int) {
     channel {
       name
     }
+    channel_thread {
+      channel_thread_messages(order_by: { timestamp: desc }) {
+        timestamp
+      }
+    }
   }
 }
 
@@ -67,11 +72,6 @@ subscription watchThreads {
       user {
         auth0_user_id
         username
-      }
-    }
-    channel_thread_messages_aggregate {
-      aggregate {
-        count(columns: message)
       }
     }
   }
