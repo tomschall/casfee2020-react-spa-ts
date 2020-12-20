@@ -6,7 +6,6 @@ import { Channel_Type_Enum } from '../../api/generated/graphql';
 import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../atom';
 import {
-  Badge,
   Collapse,
   List,
   ListItem,
@@ -83,20 +82,18 @@ const Channels: React.FC<any> = () => {
               <ListItem key={data.id} button>
                 {data?.name === currentChannel?.name ? (
                   <ListItemIcon>
-                    <Badge classes={{ badge: classes.badge }} variant="dot">
-                      {data.is_private === true ? (
-                        <EnhancedEncryptionOutlinedIcon />
-                      ) : (
-                        <PeopleIcon color="secondary" />
-                      )}
-                    </Badge>
+                    {data.is_private === true ? (
+                      <EnhancedEncryptionOutlinedIcon color="secondary" />
+                    ) : (
+                      <PeopleIcon color="secondary" />
+                    )}
                   </ListItemIcon>
                 ) : (
                   <ListItemIcon>
                     {data.is_private === true ? (
                       <EnhancedEncryptionOutlinedIcon />
                     ) : (
-                      <PeopleIcon color="secondary" />
+                      <PeopleIcon />
                     )}
                   </ListItemIcon>
                 )}

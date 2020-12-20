@@ -33,7 +33,7 @@ const ThreadsLink: React.FC<any> = () => {
     <>
       <ListItem button>
         <ListItemIcon>
-          <ForumOutlinedIcon color="secondary" />
+          <ForumOutlinedIcon />
         </ListItemIcon>
         <ListItemText>
           <Link to="/channel/threads">

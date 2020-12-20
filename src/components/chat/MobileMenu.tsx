@@ -10,6 +10,7 @@ import People from '@material-ui/icons/People';
 import Person from '@material-ui/icons/Person';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import PollPopUp from '../../components/adminPollings/PollPopup';
+import { unstable_batchedUpdates } from 'react-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
       transform: 'translateZ(0)',
       flexGrow: 1,
       [theme.breakpoints.up('md')]: {
-        '& #SpeedDialexample-action-0': {
+        '& #ChickenfestNavi-action-4': {
           display: 'none',
         },
       },
@@ -25,13 +26,17 @@ const useStyles = makeStyles((theme: Theme) =>
     speedDial: {
       position: 'absolute',
       '&.MuiSpeedDial-directionUp, &.MuiSpeedDial-directionLeft': {
-        bottom: theme.spacing(-7),
-        right: theme.spacing(0),
+        bottom: '-10px',
+        right: theme.spacing(1),
       },
       [theme.breakpoints.down('sm')]: {
         marginRight: theme.spacing(0),
-        marginBottom: theme.spacing(2),
-        height: 30,
+        marginBottom: '12px',
+        height: 38,
+      },
+      [theme.breakpoints.up('md')]: {
+        marginRight: theme.spacing(0),
+        marginBottom: '75px',
       },
     },
     action: {
@@ -67,24 +72,6 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
   const [hidden, setHidden] = React.useState(false);
   const actions = [
     {
-      icon: <MenuIcon onClick={handleDrawerOpen} />,
-      type: 'menu',
-      state: true,
-      name: `Menu`,
-    },
-    {
-      icon: <AddGif onClick={handleGiphyClick} />,
-      type: 'giphy',
-      state: true,
-      name: `+Giphy`,
-    },
-    {
-      icon: <PollPopUp channelId={channelId} />,
-      type: 'poll',
-      state: true,
-      name: 'Admin Polling',
-    },
-    {
       icon: isPrivate ? (
         <EnhancedEncryptionOutlinedIcon color="secondary" />
       ) : (
@@ -95,6 +82,24 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
       name: `${channelName}`,
     },
     { icon: <Person />, type: 'user', name: `${nickname}` },
+    {
+      icon: <PollPopUp channelId={channelId} />,
+      type: 'poll',
+      state: true,
+      name: 'Admin Polling',
+    },
+    {
+      icon: <AddGif onClick={handleGiphyClick} />,
+      type: 'giphy',
+      state: true,
+      name: `+Giphy`,
+    },
+    {
+      icon: <MenuIcon onClick={handleDrawerOpen} />,
+      type: 'menu',
+      state: true,
+      name: `Menu`,
+    },
   ];
 
   const handleClose = () => {
@@ -110,7 +115,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
       <Backdrop open={open} className={classes.backdrop} />
       <div className={classes.root}>
         <SpeedDial
-          ariaLabel="SpeedDial example"
+          ariaLabel="Chickenfest Navi"
           className={classes.speedDial}
           hidden={hidden}
           icon={<SpeedDialIcon />}

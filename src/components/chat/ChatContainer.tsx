@@ -17,13 +17,18 @@ const useStyles = makeStyles((theme) => ({
   },
   sidebar: {
     height: '100vh',
-    maxHeight: '85vh',
+    minHeight: '80vh',
+    overflowY: 'scroll',
     display: 'flex',
     alignItems: 'flex-start',
     paddingTop: theme.spacing(5),
     borderRightWidth: 1,
     borderRightStyle: 'solid',
     borderRightColor: theme.palette.primary.dark,
+  },
+  chatApp: {
+    height: '100vh',
+    overflow: 'hidden',
   },
 }));
 
@@ -43,7 +48,7 @@ const ChatContainer: React.FC = () => {
           <SideBar />
         </Grid>
       )}
-      <Grid item xs={12}>
+      <Grid item xs={12} className={classes.chatApp}>
         <ChatApp />
       </Grid>
     </Container>

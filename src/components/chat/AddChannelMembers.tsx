@@ -25,6 +25,7 @@ import { useHistory } from 'react-router-dom';
 import Loader from '../shared/Loader';
 import Logo from '../shared/Logo';
 import { makeStyles } from '@material-ui/core/';
+import OnlineUserStatus from '../shared/OnlineUserStatus';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -141,13 +142,7 @@ const AddChannelMembers: React.FC = () => {
                             handleUsersToggle(event, u.auth0_user_id)
                           }
                         >
-                          <ListItemIcon>
-                            <Badge variant="dot">
-                              <Avatar className={classes.avatar}>
-                                {u?.username.substring(0, 2).toUpperCase()}
-                              </Avatar>
-                            </Badge>
-                          </ListItemIcon>
+                          <OnlineUserStatus user={u} />
                           <ListItemText primary={u.username} />
                         </ListItem>
                       );

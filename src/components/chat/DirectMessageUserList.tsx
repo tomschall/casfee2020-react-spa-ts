@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-  Avatar,
-  Badge,
   Collapse,
   List,
   ListItem,
@@ -16,13 +14,11 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Loader from '../shared/Loader';
 import { Link, useHistory } from 'react-router-dom';
-import {
-  useWatchDirectMessageChannelsSubscription,
-  useWatchOnlineUsersSubscription,
-} from '../../api/generated/graphql';
+import { useWatchDirectMessageChannelsSubscription } from '../../api/generated/graphql';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
 import ChannelListMessageCounter from './ChannelListMessageCounter';
 import { makeStyles } from '@material-ui/core/styles';
+import OnlineUserStatus from '../shared/OnlineUserStatus';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -35,10 +31,6 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     marginTop: theme.spacing(2),
-    // flex: 1,
-  },
-  badge: {
-    backgroundColor: '#0f0',
   },
   itemText: {
     color: theme.palette.primary.light,
@@ -46,10 +38,6 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     color: '#f9cd8b',
-  },
-  avatar: {
-    backgroundColor: '#000000',
-    color: '#F57C00',
   },
 }));
 
@@ -61,14 +49,8 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
   user_id,
 }) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   let history = useHistory();
-
-  const {
-    data: onlineUsers,
-    loading: onlineUsersLoading,
-    error: onlineUsersError,
-  } = useWatchOnlineUsersSubscription();
 
   const { data, loading, error } = useWatchDirectMessageChannelsSubscription({
     variables: {
@@ -77,9 +59,8 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
     },
   });
 
-  if (error || onlineUsersError) {
+  if (error) {
     console.log('error', error);
-    console.log('onlineUsersError', onlineUsersError);
     return (
       <Alert severity="error">A DirectMessageUserListError occured.</Alert>
     );
@@ -97,30 +78,19 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
     history.push(`/addDirectMessageChannelMembers`);
   };
 
-  const setOnlineUsersStatus = (user_id: string) => {
-    if (user_id === undefined) return true;
-
-    const onlineUser = onlineUsers?.users.filter((u) => {
-      return user_id === u.auth0_user_id ? true : false;
-    });
-
-    return onlineUser?.length ? false : true;
-  };
-
   return (
     <>
       <List className={classes.root}>
         <ListItem button onClick={handleClick}>
           <ListItemIcon>
-            <Badge classes={{ badge: classes.badge }} variant="dot">
-              <PersonIcon />
-            </Badge>
+            <PersonIcon />
           </ListItemIcon>
           <ListItemText>
             <Typography variant="h6">Direct Messages</Typography>
           </ListItemText>
           <ListItemIcon>
             <AddCircleOutlineIcon
+              color="secondary"
               onClick={navigateToAddDirectMessageChannelMembers}
             />
           </ListItemIcon>
@@ -143,21 +113,7 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
                     </React.Fragment>
                   }
                 />
-                <ListItemIcon>
-                  <Badge
-                    classes={{ badge: classes.badge }}
-                    variant="dot"
-                    invisible={setOnlineUsersStatus(
-                      data.user_channels[0]?.user.auth0_user_id,
-                    )}
-                  >
-                    <Avatar className={classes.avatar}>
-                      {data.user_channels[0]?.user.username
-                        .substring(0, 2)
-                        .toUpperCase()}
-                    </Avatar>
-                  </Badge>
-                </ListItemIcon>
+                <OnlineUserStatus user={data.user_channels[0]?.user} />
               </ListItem>
             ))}
           </List>

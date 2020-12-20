@@ -110,6 +110,8 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                     handleAnswerChange(answer?.id, e);
                     setAnswerTextUpdateId(answer.id);
                   }}
+                  multiline
+                  rows={4}
                   size="medium"
                   variant="outlined"
                   color="secondary"
@@ -124,7 +126,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                     },
                   }}
                   inputProps={{
-                    maxLength: 80,
+                    maxLength: 250,
                   }}
                   InputLabelProps={{
                     className: classes.messageInput,

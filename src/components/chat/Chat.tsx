@@ -1,13 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  Box,
-  Button,
-  Divider,
-  Grid,
-  List,
-  Typography,
-} from '@material-ui/core';
+import { Box, Button, Grid, List } from '@material-ui/core';
 import MessageList from './MessageList';
+import MessageInput from './MessageInput';
 import { Message } from '../../interfaces/message.interface';
 import {
   useWatchMessagesSubscription,
@@ -26,10 +20,9 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     overflowY: 'scroll',
-    maxHeight: '81vh',
+    maxHeight: '80vh',
     marginTop: theme.spacing(5),
-  },
-  messageContainer: {
+    paddingBottom: theme.spacing(0),
     [theme.breakpoints.up('lg')]: {
       padding: theme.spacing(10),
       paddingTop: theme.spacing(5),
@@ -46,6 +39,20 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: theme.spacing(0),
     },
   },
+  messageInput: {
+    position: 'fixed',
+    bottom: 0,
+    padding: theme.spacing(3),
+    background: theme.palette.background.default,
+    zIndex: 1000,
+    [theme.breakpoints.up('sm')]: {
+      width: '71vw',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '100vw',
+    },
+  },
+
   polling: {
     position: 'fixed',
     overflow: 'hidden',
@@ -118,8 +125,10 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
         flexDirection="column"
         style={{ height: '100vh' }}
       >
-        <Logo />
-        <LinearProgress color="secondary" />
+        <Box>
+          <Logo />
+          <LinearProgress color="secondary" style={{ marginTop: '8px' }} />
+        </Box>
       </Box>
     );
   }
@@ -143,43 +152,40 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   return (
     <>
       <Box className={classes.root}>
-        <Grid container>
-          <Grid item xs={12} className={classes.messageContainer}>
-            {isPrivate && channelType !== Channel_Type_Enum.DirectMessage && (
-              <Box
-                display="flex"
-                justifyContent="center"
-                style={{ marginBottom: '20px' }}
-              >
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  type="button"
-                  onClick={navigateToAddChannelMembers}
-                >
-                  Add users to channel
-                </Button>
-              </Box>
-            )}
-            <List id="message-list">
-              <MessageList
-                messages={data?.messages as Message[]}
-                lastMessage={lastMessage}
-                preLastMessageId={preLastMessageId}
-                user={user}
-              />
-            </List>
-            <div ref={messagesEndRef} />
-          </Grid>
-          <Box maxWidth="xl" component="nav">
-            <MenuBar
-              user={user.sub}
-              channelId={channelId}
-              handleSetLastMessage={handleSetLastMessage}
-              preLastMessageId={preLastMessageId}
-            />
+        {isPrivate && channelType !== Channel_Type_Enum.DirectMessage && (
+          <Box
+            display="flex"
+            justifyContent="center"
+            style={{ marginBottom: '20px' }}
+          >
+            <Button
+              color="secondary"
+              variant="contained"
+              type="button"
+              onClick={navigateToAddChannelMembers}
+            >
+              Add users to channel
+            </Button>
           </Box>
-        </Grid>
+        )}
+        <List id="message-list">
+          <MessageList
+            messages={data?.messages as Message[]}
+            lastMessage={lastMessage}
+            preLastMessageId={preLastMessageId}
+            user={user}
+          />
+        </List>
+        <div ref={messagesEndRef} />
+      </Box>
+      <Box className={classes.messageInput}>
+        <MenuBar channelId={channelId}>
+          <MessageInput
+            channelId={channelId}
+            handleSetLastMessage={handleSetLastMessage}
+            preLastMessageId={preLastMessageId}
+          />
+        </MenuBar>
       </Box>
     </>
   );

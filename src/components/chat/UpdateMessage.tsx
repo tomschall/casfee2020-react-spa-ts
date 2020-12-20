@@ -71,7 +71,6 @@ const UpdateMessage: React.FC<UpdateMessageProps> = ({ message }) => {
   if (loading) {
     return (
       <>
-        <p>hello</p>
         <Loader />
       </>
     );
@@ -97,7 +96,8 @@ const UpdateMessage: React.FC<UpdateMessageProps> = ({ message }) => {
           variant="outlined"
           color="secondary"
           autoComplete="off"
-          placeholder="Type your message here ..."
+          multiline
+          rowsMax={4}
           id="update-chat-message-input"
           label={'Update message...'}
         />

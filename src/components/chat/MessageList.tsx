@@ -38,19 +38,16 @@ const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.up('md')]: {
     messageText: {
-      paddingBottom: '1rem',
+      padding: '1rem',
+      '&:hover': {
+        backgroundColor: '#0f1448',
+        cursor: 'pointer',
+      },
     },
   },
   [theme.breakpoints.down('md')]: {
     messageText: {
-      // fontSize: 14,
       paddingBottom: '.3rem',
-    },
-  },
-  [theme.breakpoints.down('sm')]: {
-    messageText: {
-      // fontSize: 24,
-      // paddingBottom: '1rem',
     },
   },
   vspace: {
@@ -74,8 +71,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   avatar: {
-    backgroundColor: '#0a0b1a',
-    color: '#F57C00',
+    backgroundColor: '#ed1859',
+    color: 'white',
     fontSize: 12,
   },
 }));
@@ -133,22 +130,30 @@ const MessageList: React.FC<MessageProps> = ({
           <Box
             display="flex"
             justifyContent="space-between"
-            alignItems="flex-start"
+            alignItems="center"
           >
             <Box
+              component="div"
               display="flex"
-              justifyContent="flex-start"
-              alignItems="flex-start"
+              justifyContent="space-between"
+              flexGrow="1"
+              style={{ marginRight: 16 }}
             >
-              <Typography variant="caption">
+              <Typography color="secondary" variant="caption">
                 {!message.deleted ? (
                   <>
                     <strong>{message.user.username} </strong>
-                    <i>{moment(message.timestamp).fromNow()}</i>
                   </>
                 ) : (
                   <strong>Oh sorry it seems...</strong>
                 )}
+              </Typography>
+              <Typography
+                variant="caption"
+                color="primary"
+                style={{ marginLeft: '8px' }}
+              >
+                {moment(message.timestamp).fromNow()}
               </Typography>
             </Box>
             <Box>
@@ -160,8 +165,8 @@ const MessageList: React.FC<MessageProps> = ({
                 <Typography variant="caption">
                   <ThreadReply message={message} channelName={channelName} />
                 </Typography>
-                {!message.deleted ? (
-                  <>
+                {/* {!message.deleted ? (
+                  <React.Fragment>
                     {user.sub === message.user.auth0_user_id && (
                       <Typography variant="caption">
                         {!(
@@ -180,13 +185,14 @@ const MessageList: React.FC<MessageProps> = ({
                   </>
                 ) : (
                   ''
-                )}
+                )} */}
               </Box>
             </Box>
           </Box>
 
           <Typography
-            component="div"
+            component="p"
+            color="textSecondary"
             className={classes.messageText}
             onClick={() => handleShowUpdate(message)}
           >
@@ -206,7 +212,7 @@ const MessageList: React.FC<MessageProps> = ({
           ) : (
             ''
           )}
-          {message?.channel_threads?.length &&
+          {/* {message?.channel_threads?.length &&
           message?.channel_threads[0]?.channel_thread_messages_aggregate
             .aggregate.count >= 1 ? (
             <Box>
@@ -214,7 +220,7 @@ const MessageList: React.FC<MessageProps> = ({
             </Box>
           ) : (
             ''
-          )}
+          )} */}
           <Divider className={classes.vspace} />
         </Box>
       </ListItem>

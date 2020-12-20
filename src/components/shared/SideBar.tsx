@@ -28,8 +28,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   treeView: {
-    overflowY: 'hidden',
-    maxHeight: '100vh',
     marginRight: theme.spacing(0),
     marginLeft: theme.spacing(0),
     paddingRight: theme.spacing(0),
@@ -81,7 +79,14 @@ const SideBar: React.FC<any> = () => {
             <Divider />
             <DirectMessageUserList user_id={user.sub} />
             <Divider />
-            <Logout />
+            <Box
+              display="flex"
+              justifyContent="flex-end"
+              alignItems="flex-end"
+              style={{ marginRight: '16px' }}
+            >
+              <Logout />
+            </Box>
           </Box>
         </Grid>
       </Box>

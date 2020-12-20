@@ -13,7 +13,7 @@ export default {
         '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)',
       },
       '*::-webkit-scrollbar-thumb': {
-        backgroundColor: 'rgba(0,0,0,.5)',
+        backgroundColor: 'rgb(245 124 0)',
         borderRadius: 20,
       },
       a: {
@@ -23,7 +23,7 @@ export default {
   },
   MuiBackdrop: {
     root: {
-      backgroundColor: 'rgba(0, 0, 0, 0.6)',
+      backgroundColor: 'rgba(0, 0, 0, .95)',
     },
   },
   MuiFab: {
@@ -41,6 +41,7 @@ export default {
     direction: 'left',
     directionUp: { marginBottom: 0 },
     actions: {
+      display: 'unset',
       backgroundColor: 'transparent',
     },
   },

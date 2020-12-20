@@ -17,7 +17,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
   },
   giphyImage: {
@@ -26,22 +26,22 @@ const useStyles = makeStyles((theme) => ({
   form: {
     display: 'flex',
     marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(8),
+    marginRight: theme.spacing(1),
     flexDirection: 'column',
     flexGrow: 1,
     [theme.breakpoints.down('md')]: {
-      marginTop: theme.spacing(0.2),
+      marginTop: theme.spacing(1),
     },
     [theme.breakpoints.up('md')]: {
       marginTop: theme.spacing(0),
     },
   },
   messageInput: {
-    floatingLabelFocusStyle: {
-      color: theme.palette.secondary.dark,
-    },
     [theme.breakpoints.down('md')]: {
       fontSize: '.9rem',
+    },
+    '&.MuiFormLabel-root.Mui-focused': {
+      color: theme.palette.secondary.main,
     },
   },
   messageButton: {
@@ -174,7 +174,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
   };
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       <Box className={classes.giphyImage}>
         {gif && (
           <img
@@ -197,11 +197,12 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
           onChange={(e) => {
             handleTyping(e.target.value);
           }}
+          focused
           size={setTextFieldSize()}
           variant="outlined"
-          color="secondary"
+          color="primary"
           autoComplete="off"
-          placeholder="Type your message here ..."
+          placeholder="..."
           id="chat-message-input"
           label={<TypingIndicator />}
           InputProps={{
@@ -225,7 +226,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
           Send
         </Button>
       </form>
-    </div>
+    </Box>
   );
 };
 
