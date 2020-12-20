@@ -10,7 +10,7 @@ import MenuBarDrawer from '../shared/MenuBarDrawer';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.default,
     marginTop: theme.spacing(0),
     paddingTop: theme.spacing(2),
     paddingLeft: theme.spacing(2),
@@ -19,7 +19,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     zIndex: 1000,
   },
   menuButton: {
+    width: 30,
+    height: 30,
     marginLeft: theme.spacing(1),
+    '& .MuiIconButton-label': {
+      marginLeft: theme.spacing(1),
+    },
   },
 }));
 
@@ -55,7 +60,6 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
             edge="end"
             className={classes.menuButton}
             color="inherit"
-            size="medium"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
           >
