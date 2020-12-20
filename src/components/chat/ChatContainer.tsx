@@ -43,8 +43,8 @@ const ChatContainer: React.FC = () => {
   return (
     <Container
       component="main"
-      maxWidth="xl"
       disableGutters
+      maxWidth="xl"
       className={classes.container}
     >
       {matches === true && (
