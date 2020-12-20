@@ -78,7 +78,7 @@ const PollPopUp: React.FC<PollPopUpProps> = ({ channelId }) => {
   return (
     <>
       {data?.poll_questions?.length === 1 ? (
-        <PopupState variant="popover" popupId="demoPopper">
+        <PopupState variant="popover" popupId="pollingPopOver">
           {(popupState) => (
             <>
               <Badge variant="dot" classes={{ badge: classes.badge }}>
