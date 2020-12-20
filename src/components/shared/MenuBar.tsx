@@ -96,6 +96,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ children, channelId }) => {
     currentChannelState,
   );
   const [open, setOpen] = React.useState(false); // Sidebar default state
+
   const [showGiphyCarousel, setShowGiphyCarousel] = React.useState(false);
 
   const handleDrawerOpen = () => {

@@ -21,6 +21,11 @@ export default {
       },
     },
   },
+  MuiPopover: {
+    root: {
+      background: 'rgba(245, 122, 0, .7)',
+    },
+  },
   MuiBackdrop: {
     root: {
       backgroundColor: 'rgba(0, 0, 0, .95)',

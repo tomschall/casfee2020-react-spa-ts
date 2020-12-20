@@ -16,11 +16,6 @@ subscription watchMessages($channelId: Int!, $limit: Int) {
     channel {
       name
     }
-    channel_thread {
-      channel_thread_messages(order_by: { timestamp: desc }) {
-        timestamp
-      }
-    }
   }
 }
 
@@ -38,6 +33,18 @@ subscription watchChannelThreadMessages($limit: Int!, $message_id: Int!) {
       id
       auth0_user_id
     }
+    channel_thread_id
+    timestamp
+  }
+}
+
+subscription watchChannelThread($message_id: Int!) {
+  channel_thread_message(
+    order_by: { id: desc }
+    where: { channel_thread: { message_id: { _eq: $message_id } } }
+  ) {
+    id
+    message
     channel_thread_id
     timestamp
   }

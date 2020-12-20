@@ -16,12 +16,20 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   popupWidth: {
+    width: '40vw',
     minWidth: '40vw',
     maxWidth: '50vw',
     padding: theme.spacing(5),
+    [theme.breakpoints.up('sm')]: {
+      padding: theme.spacing(3),
+      minWidth: '50vw',
+      maxWidth: '60vw',
+      width: '50vw',
+    },
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(3),
       minWidth: '90vw',
+      width: '90vw',
     },
   },
   badge: {
@@ -70,11 +78,11 @@ const PollPopUp: React.FC<PollPopUpProps> = ({ channelId }) => {
   return (
     <>
       {data?.poll_questions?.length === 1 ? (
-        <PopupState variant="popover" popupId="demoPopper">
+        <PopupState variant="popover" popupId="pollingPopOver">
           {(popupState) => (
             <>
               <Badge variant="dot" classes={{ badge: classes.badge }}>
-                <HowToVoteIcon {...bindTrigger(popupState)} />
+                <HowToVoteIcon color="primary" {...bindTrigger(popupState)} />
               </Badge>
               <Popover
                 anchorReference={'none'} // set popup center window
@@ -106,7 +114,7 @@ const PollPopUp: React.FC<PollPopUpProps> = ({ channelId }) => {
           )}
         </PopupState>
       ) : (
-        <HowToVoteIcon />
+        false
       )}
     </>
   );
