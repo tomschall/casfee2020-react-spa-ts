@@ -17,7 +17,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
   },
   giphyImage: {
@@ -174,7 +174,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
   };
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       <Box className={classes.giphyImage}>
         {gif && (
           <img
@@ -226,7 +226,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
           Send
         </Button>
       </form>
-    </div>
+    </Box>
   );
 };
 
