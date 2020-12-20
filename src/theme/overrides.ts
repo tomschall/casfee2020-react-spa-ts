@@ -14,7 +14,7 @@ export default {
       },
       '*::-webkit-scrollbar-thumb': {
         backgroundColor: 'rgb(245 124 0)',
-        borderRadius: 20,
+        borderRadius: 0,
       },
       a: {
         textDecoration: 'none',

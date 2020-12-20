@@ -78,7 +78,7 @@ const MenuBarDrawer: React.FC<MenuBarDrawerProps> = ({
     <Drawer
       variant="temporary"
       elevation={10}
-      anchor="bottom"
+      anchor="left"
       classes={{
         paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
       }}

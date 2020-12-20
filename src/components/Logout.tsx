@@ -1,18 +1,17 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Button } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   button: {
     [theme.breakpoints.down('md')]: {
-      width: '100%',
+      // width: '100%',
     },
     [theme.breakpoints.up('md')]: {
-      width: 'auto',
+      // width: 'auto',
     },
-    marginTop: theme.spacing(3),
   },
 }));
 
@@ -22,12 +21,10 @@ const Logout: React.FC = () => {
 
   return (
     <>
-      <Button
-        variant="outlined"
+      <IconButton
         color="secondary"
         size="small"
         className={classes.button}
-        endIcon={<ExitToAppIcon />}
         onClick={() => {
           logout({
             returnTo: process.env.REACT_APP_AUTH0_LOGOUT_URL,
@@ -35,8 +32,8 @@ const Logout: React.FC = () => {
           window.localStorage.clear();
         }}
       >
-        Logout
-      </Button>
+        <ExitToAppIcon />
+      </IconButton>
     </>
   );
 };

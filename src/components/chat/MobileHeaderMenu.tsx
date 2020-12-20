@@ -1,16 +1,25 @@
 import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { Box, Button, ButtonGroup } from '@material-ui/core';
+import { theme } from '../../theme/theme';
+import { Box, Button, FormHelperText, IconButton } from '@material-ui/core';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+
+import Logout from '../Logout';
+import MenuBarDrawer from '../shared/MenuBarDrawer';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    position: 'fixed',
-    backgroundColor: theme.palette.background.default,
-    marginTop: theme.spacing(2),
+    backgroundColor: theme.palette.background.paper,
+    marginTop: theme.spacing(0),
+    paddingTop: theme.spacing(2),
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
-    paddingBottom: theme.spacing(3),
+    paddingBottom: theme.spacing(2),
     zIndex: 1000,
+  },
+  menuButton: {
+    marginLeft: theme.spacing(1),
   },
 }));
 
@@ -20,26 +29,45 @@ interface MobileHeaderMenuProps {
 
 const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
   const classes = useStyles();
+  const matches = useMediaQuery(theme.breakpoints.up('md'));
+  const [open, setOpen] = React.useState(false); // Sidebar default state
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
   return (
-    <Box
-      justifyContent="center"
-      alignItems="center"
-      flexDirection="row"
-      width={1}
-      className={classes.root}
-    >
-      <ButtonGroup
-        color="secondary"
-        aria-label="outlined primary button group"
-        size="small"
-        fullWidth
+    <>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        flexDirection="row"
+        width={1}
+        className={classes.root}
       >
-        <Button>{channelName}</Button>
+        {matches === false && (
+          <IconButton
+            edge="end"
+            className={classes.menuButton}
+            color="inherit"
+            size="medium"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+          >
+            <ArrowBackIosIcon />
+          </IconButton>
+        )}
+        <Button variant="text">{channelName}</Button>
         <Button>Members</Button>
-        <Button>DM</Button>
-      </ButtonGroup>
-    </Box>
+        <Logout />
+      </Box>
+      <MenuBarDrawer open={open} handleDrawerClose={handleDrawerClose} />
+    </>
   );
 };
 
