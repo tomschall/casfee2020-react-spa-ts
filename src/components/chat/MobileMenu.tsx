@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Backdrop, Typography } from '@material-ui/core';
+import { Backdrop } from '@material-ui/core';
 import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
@@ -112,7 +112,6 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
 
   return (
     <>
-      <Backdrop open={open} className={classes.backdrop} />
       <div className={classes.root}>
         <SpeedDial
           ariaLabel="Chickenfest Navi"
@@ -138,6 +137,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
           ))}
         </SpeedDial>
       </div>
+      <Backdrop open={open} className={classes.backdrop} />
     </>
   );
 };

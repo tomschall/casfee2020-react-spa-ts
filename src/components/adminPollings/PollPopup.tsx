@@ -16,18 +16,20 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   popupWidth: {
+    width: '40vw',
     minWidth: '40vw',
     maxWidth: '50vw',
     padding: theme.spacing(5),
+    [theme.breakpoints.up('sm')]: {
+      padding: theme.spacing(3),
+      minWidth: '50vw',
+      maxWidth: '60vw',
+      width: '50vw',
+    },
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(3),
       minWidth: '90vw',
-      width: '100%',
-    },
-    [theme.breakpoints.down('md')]: {
-      padding: theme.spacing(3),
-      minWidth: '50vw',
-      width: '60vw',
+      width: '90vw',
     },
   },
   badge: {
@@ -112,7 +114,7 @@ const PollPopUp: React.FC<PollPopUpProps> = ({ channelId }) => {
           )}
         </PopupState>
       ) : (
-        <HowToVoteIcon />
+        <HowToVoteIcon color="primary" />
       )}
     </>
   );

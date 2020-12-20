@@ -1,9 +1,12 @@
 import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { theme } from '../../theme/theme';
+import { useRecoilState } from 'recoil';
 import { Box, Button, IconButton } from '@material-ui/core';
+import { currentChannelState } from '../../atom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import PollPopUp from '../../components/adminPollings/PollPopup';
 
 import Logout from '../Logout';
 import MenuBarDrawer from '../shared/MenuBarDrawer';
@@ -41,7 +44,13 @@ interface MobileHeaderMenuProps {
 
 const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
   const classes = useStyles();
+
+  const [currentChannel] = useRecoilState<any>(currentChannelState);
+
+  console.log(currentChannel);
+
   const matches = useMediaQuery(theme.breakpoints.up('md'));
+
   const [open, setOpen] = React.useState(false); // Sidebar default state
 
   const handleDrawerOpen = () => {
@@ -72,6 +81,7 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
             <ArrowBackIosIcon />
           </IconButton>
         )}
+        <PollPopUp channelId={currentChannel?.id} />
         <Button variant="text">{channelName}</Button>
         <Logout />
       </Box>
