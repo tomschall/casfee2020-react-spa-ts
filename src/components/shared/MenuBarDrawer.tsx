@@ -106,7 +106,6 @@ const MenuBarDrawer: React.FC<MenuBarDrawerProps> = ({
             style={{
               position: 'fixed',
               width: '100%',
-              // backgroundColor: theme.palette.background.default,
             }}
           >
             <IconButton

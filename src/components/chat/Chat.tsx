@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(0),
     paddingBottom: theme.spacing(0),
     [theme.breakpoints.up('lg')]: {
-      padding: theme.spacing(10),
+      padding: theme.spacing(5),
       paddingTop: theme.spacing(1),
       paddingBottom: theme.spacing(0),
     },

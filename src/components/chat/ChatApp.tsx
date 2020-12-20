@@ -5,7 +5,6 @@ import { useRecoilState } from 'recoil';
 import { useGetChannelByNameQuery } from '../../api/generated/graphql';
 import { currentChannelState } from '../../atom';
 import Chat from './Chat';
-import MobileHeaderMenu from '../chat/MobileHeaderMenu';
 import Loader from '../shared/Loader';
 import { ChatParams } from '../../interfaces/param.interface';
 
@@ -46,7 +45,6 @@ const ChatApp: React.FC = () => {
     <>
       {isAuthenticated && (
         <>
-          <MobileHeaderMenu channelName={channelName} />
           <Chat
             channelId={currentChannel?.id}
             isPrivate={currentChannel?.is_private}

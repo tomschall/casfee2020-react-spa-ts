@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingRight: theme.spacing(2),
     paddingBottom: theme.spacing(2),
     zIndex: 1000,
+    [theme.breakpoints.down('md')]: {
+      position: 'fixed',
+    },
   },
   menuButton: {
     width: 30,
@@ -66,7 +69,6 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
           </IconButton>
         )}
         <Button variant="text">{channelName}</Button>
-        <Button>Members</Button>
         <Logout />
       </Box>
       <MenuBarDrawer open={open} handleDrawerClose={handleDrawerClose} />

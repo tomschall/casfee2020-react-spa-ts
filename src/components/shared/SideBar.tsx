@@ -22,9 +22,9 @@ const useStyles = makeStyles((theme) => ({
       paddingTop: theme.spacing(2),
     },
     [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(0),
+      padding: theme.spacing(1),
       margin: theme.spacing(0),
-      paddingTop: theme.spacing(10),
+      paddingTop: theme.spacing(5),
     },
   },
   treeView: {
@@ -60,15 +60,15 @@ const SideBar: React.FC<any> = () => {
         className={classes.root}
       >
         <Grid container>
-          <Grid item xs={12}>
-            <UserStatus user_id={user.sub} />
-          </Grid>
           <Grid item xs={12} className={classes.branding}>
             <img
               alt="The Great Chicken Fest"
               src="/the-great-chicken-fest.svg"
               className={classes.logo}
             />
+          </Grid>
+          <Grid item xs={12}>
+            <UserStatus user_id={user.sub} />
           </Grid>
         </Grid>
         <Grid item xs={12}>
