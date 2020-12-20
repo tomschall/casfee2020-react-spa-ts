@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'absolute',
       '&.MuiSpeedDial-directionUp, &.MuiSpeedDial-directionLeft': {
         bottom: '-10px',
-        right: theme.spacing(2),
+        right: theme.spacing(1),
       },
       [theme.breakpoints.down('sm')]: {
         marginRight: theme.spacing(0),

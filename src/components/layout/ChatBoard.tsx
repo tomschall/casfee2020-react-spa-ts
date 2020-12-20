@@ -21,11 +21,7 @@ const ChatBoard: React.FC = () => {
     }, 9000);
   }, [sendUserIsOnline, user.sub]);
 
-  return (
-    <Container maxWidth="xl" disableGutters>
-      <ChatContainer />
-    </Container>
-  );
+  return <ChatContainer />;
 };
 
 export default ChatBoard;

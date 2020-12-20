@@ -2,14 +2,15 @@ import React from 'react';
 import clsx from 'clsx';
 import {
   Box,
-  Chip,
   Container,
   Drawer,
+  IconButton,
   makeStyles,
   Toolbar,
 } from '@material-ui/core';
 import SideBar from './SideBar';
-import ExpandMore from '@material-ui/icons/ExpandMore';
+import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
+import { theme } from '../../theme/theme';
 
 const drawerWidth = '100%';
 
@@ -17,13 +18,13 @@ const useStyles = makeStyles((theme) => ({
   root: {},
   toolbar: {
     [theme.breakpoints.up('md')]: {
-      paddingTop: theme.spacing(5),
+      paddingTop: theme.spacing(0),
       paddingBottom: theme.spacing(5),
     },
     [theme.breakpoints.down('md')]: {
-      paddingLeft: theme.spacing(1),
-      paddingRight: theme.spacing(1),
-      paddingTop: theme.spacing(2),
+      paddingTop: theme.spacing(0),
+      paddingLeft: theme.spacing(0),
+      paddingRight: theme.spacing(0),
       paddingBottom: theme.spacing(2),
     },
     borderTop: 1,
@@ -31,9 +32,16 @@ const useStyles = makeStyles((theme) => ({
     borderTopColor: theme.palette.primary.dark,
   },
   menuButton: {
-    marginTop: theme.spacing(5),
-    // marginRight: theme.spacing(0),
-    // flex: '1',
+    width: 30,
+    height: 30,
+    marginLeft: theme.spacing(2),
+    '& .MuiIconButton-label': {
+      marginLeft: theme.spacing(1),
+    },
+    justifyContent: 'flex-end',
+    marginTop: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   },
   menuButtonHidden: {
     display: 'none',
@@ -78,34 +86,39 @@ const MenuBarDrawer: React.FC<MenuBarDrawerProps> = ({
     <Drawer
       variant="temporary"
       elevation={10}
-      anchor="bottom"
+      anchor="left"
       classes={{
         paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
       }}
       open={open}
     >
       <Toolbar className={classes.toolbar}>
-        <Container maxWidth="xl" disableGutters>
-          <SideBar />
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          flexDirection="column"
+          width={1}
+        >
           <Box
-            order={1}
             display="flex"
-            justifyContent="center"
+            justifyContent="flex-start"
             alignItems="center"
+            style={{
+              position: 'fixed',
+              width: '100%',
+            }}
           >
-            <Chip
-              variant="default"
+            <IconButton
               aria-label="open drawer"
               onClick={handleDrawerClose}
-              label="Close"
-              clickable
-              size="small"
-              color="secondary"
-              icon={<ExpandMore />}
+              color="inherit"
               className={clsx(classes.menuButton, open)}
-            />
+            >
+              <ArrowForwardIos />
+            </IconButton>
           </Box>
-        </Container>
+          <SideBar />
+        </Box>
       </Toolbar>
     </Drawer>
   );

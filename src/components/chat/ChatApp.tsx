@@ -38,17 +38,19 @@ const ChatApp: React.FC = () => {
   }
 
   if (error || channelError) {
-    return <React.Fragment>Error: {error}</React.Fragment>;
+    return <>Error: {error}</>;
   }
 
   return (
     <>
       {isAuthenticated && (
-        <Chat
-          channelId={currentChannel?.id}
-          isPrivate={currentChannel?.is_private}
-          channelType={currentChannel?.channel_type}
-        />
+        <>
+          <Chat
+            channelId={currentChannel?.id}
+            isPrivate={currentChannel?.is_private}
+            channelType={currentChannel?.channel_type}
+          />
+        </>
       )}
     </>
   );
