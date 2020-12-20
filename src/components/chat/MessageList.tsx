@@ -165,7 +165,7 @@ const MessageList: React.FC<MessageProps> = ({
                 <Typography variant="caption">
                   <ThreadReply message={message} channelName={channelName} />
                 </Typography>
-                {/* {!message.deleted ? (
+                {!message.deleted ? (
                   <React.Fragment>
                     {user.sub === message.user.auth0_user_id && (
                       <Typography variant="caption">
@@ -173,7 +173,8 @@ const MessageList: React.FC<MessageProps> = ({
                           showUpdate && showUpdateMessageId === message.id
                         ) && (
                           <>
-                            {message.channel_threads.length ? (
+                            {message.channel_thread?.channel_thread_messages
+                              ?.length ? (
                               <ReplaceMessage messageId={message.id} />
                             ) : (
                               <DeleteMessage messageId={message.id} />
@@ -182,10 +183,10 @@ const MessageList: React.FC<MessageProps> = ({
                         )}
                       </Typography>
                     )}
-                  </>
+                  </React.Fragment>
                 ) : (
                   ''
-                )} */}
+                )}
               </Box>
             </Box>
           </Box>
@@ -212,15 +213,14 @@ const MessageList: React.FC<MessageProps> = ({
           ) : (
             ''
           )}
-          {/* {message?.channel_threads?.length &&
-          message?.channel_threads[0]?.channel_thread_messages_aggregate
-            .aggregate.count >= 1 ? (
+          {message?.channel_thread?.channel_thread_messages?.length &&
+          message?.channel_thread?.channel_thread_messages.length >= 1 ? (
             <Box>
               <ThreadReplyIn message={message} channelName={channelName} />
             </Box>
           ) : (
             ''
-          )} */}
+          )}
           <Divider className={classes.vspace} />
         </Box>
       </ListItem>

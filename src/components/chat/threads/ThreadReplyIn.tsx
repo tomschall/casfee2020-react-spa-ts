@@ -47,19 +47,15 @@ const ThreadReplyIn: React.FC<ThreadReplyInProps> = ({
           pathname: `/channel/${channelName}/thread/${message?.id}`,
         }}
       >
-        {`${
-          message?.channel_threads[0]?.channel_thread_messages_aggregate
-            .aggregate.count
-        } ${
-          message?.channel_threads[0]?.channel_thread_messages_aggregate
-            .aggregate.count === 1
+        {`${message?.channel_thread?.channel_thread_messages?.length} ${
+          message?.channel_thread?.channel_thread_messages?.length === 1
             ? 'reply'
             : 'replies'
         } `}
       </Link>
       <i className={classes.lastReply}>
         {`Last reply ${moment(
-          message?.channel_threads[0]?.channel_thread_messages[0]?.timestamp,
+          message?.channel_thread?.channel_thread_messages[0]?.timestamp,
         ).fromNow()}`}
       </i>
     </Typography>

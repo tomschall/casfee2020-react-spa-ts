@@ -22,6 +22,8 @@ graphql.schema.json
 .env.test.local
 .env.production.local
 .env.development
+.env.prod
+.env.dev
 
 npm-debug.log*
 yarn-debug.log*

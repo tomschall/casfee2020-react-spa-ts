@@ -7,7 +7,7 @@ export interface Message {
   deleted?: boolean;
   user?: any;
   channel?: any;
-  channel_threads?: any;
+  channel_thread?: any;
 }
 
 export interface ThreadMessage {
@@ -18,5 +18,4 @@ export interface ThreadMessage {
   image: string;
   timestamp: Date;
   user?: any;
-  channel_threads?: any;
 }

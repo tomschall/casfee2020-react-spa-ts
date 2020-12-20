@@ -34,7 +34,7 @@ const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
 
   if (error) return <Alert>Error in Thread Reply</Alert>;
 
-  if (props.message?.channel_threads?.length) {
+  if (props.message?.channel_thread?.channel_thread_messages?.length) {
     return (
       <div>
         <IconButton onClick={() => navigateToThreadChannel()}>
