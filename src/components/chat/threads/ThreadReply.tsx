@@ -2,7 +2,10 @@ import React from 'react';
 import { IconButton } from '@material-ui/core';
 import ReplyIcon from '@material-ui/icons/Reply';
 import { useHistory } from 'react-router';
-import { useInsertChannelThreadMutation } from '../../../api/generated/graphql';
+import {
+  useInsertChannelThreadMutation,
+  useWatchChannelThreadSubscription,
+} from '../../../api/generated/graphql';
 import { Alert } from '@material-ui/lab';
 import { Message } from '../../../interfaces/message.interface';
 
@@ -14,9 +17,19 @@ interface ThreadReplyProps {
 const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
   const history = useHistory();
 
+  const {
+    data: channelThreadData,
+    loading: channelThreadLoading,
+    error: channelThreadError,
+  } = useWatchChannelThreadSubscription({
+    variables: {
+      message_id: props.message?.id,
+    },
+  });
+
   const [
     insertChannelThreadMutation,
-    { data, loading, error },
+    { error },
   ] = useInsertChannelThreadMutation({
     variables: {
       message_id: props.message?.id,
@@ -32,9 +45,22 @@ const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
     navigateToThreadChannel();
   };
 
-  if (error) return <Alert>Error in Thread Reply</Alert>;
+  if (error || channelThreadError) return <Alert>Error in Thread Reply</Alert>;
 
-  if (props.message?.channel_thread?.channel_thread_messages?.length) {
+  if (channelThreadLoading)
+    return (
+      <div>
+        <IconButton>
+          <ReplyIcon
+            color="primary"
+            fontSize="small"
+            style={{ transform: 'scaleX(-1)' }}
+          />
+        </IconButton>
+      </div>
+    );
+
+  if (channelThreadData?.channel_thread_message?.length) {
     return (
       <div>
         <IconButton onClick={() => navigateToThreadChannel()}>
