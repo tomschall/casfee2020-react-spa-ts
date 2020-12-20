@@ -151,7 +151,6 @@
             channel:
               owner_id:
                 _eq: X-Hasura-User-Id
-      allow_aggregations: true
   update_permissions:
   - role: user
     permission:
@@ -240,7 +239,6 @@
               channel:
                 owner_id:
                   _eq: X-Hasura-User-Id
-      allow_aggregations: true
   update_permissions:
   - role: user
     permission:
@@ -281,6 +279,14 @@
   - name: channel
     using:
       foreign_key_constraint_on: channel_id
+  - name: channel_thread
+    using:
+      manual_configuration:
+        remote_table:
+          schema: public
+          name: channel_thread
+        column_mapping:
+          id: message_id
   - name: user
     using:
       foreign_key_constraint_on: user_id
