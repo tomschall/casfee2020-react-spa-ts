@@ -20,6 +20,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     [theme.breakpoints.down('md')]: {
       position: 'fixed',
     },
+    [theme.breakpoints.up('md')]: {
+      position: 'fixed',
+      width: '75vw',
+    },
   },
   menuButton: {
     width: 30,
