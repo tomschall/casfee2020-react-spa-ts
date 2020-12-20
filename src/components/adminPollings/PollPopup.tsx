@@ -22,6 +22,12 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(3),
       minWidth: '90vw',
+      width: '100%',
+    },
+    [theme.breakpoints.down('md')]: {
+      padding: theme.spacing(3),
+      minWidth: '50vw',
+      width: '60vw',
     },
   },
   badge: {
