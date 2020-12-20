@@ -4,15 +4,7 @@ import clsx from 'clsx';
 import { theme } from '../../theme/theme';
 import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../atom';
-import {
-  AppBar,
-  BottomNavigation,
-  Box,
-  Container,
-  Grid,
-  Toolbar,
-} from '@material-ui/core';
-import MessageInput from '../chat/MessageInput';
+import { Box } from '@material-ui/core';
 import GiphyCarousel from './GiphyCarousel';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import MenuBarDrawer from './MenuBarDrawer';
@@ -146,46 +138,6 @@ const MenuBar: React.FC<MenuBarProps> = ({ children, channelId }) => {
       </Box>
 
       <MenuBarDrawer open={open} handleDrawerClose={handleDrawerClose} />
-
-      {/* <AppBar
-        elevation={0}
-        position="fixed"
-        className={clsx(classes.appBar, open && classes.appBarShift)}
-      >
-        <Toolbar className={classes.toolbar}>
-          <Container maxWidth="xl" disableGutters>
-            <Grid container>
-              <Grid item xs={9} sm={10} md={11} lg={11}>
-                {children}
-              </Grid>
-              <MobileMenu
-                nickname={user.nickname}
-                channelName={currentChannel.name}
-                isPrivate={currentChannel?.is_private}
-                handleDrawerOpen={handleDrawerOpen}
-                handleGiphyClick={handleGiphyClick}
-                channelId={channelId}
-              />
-
-              <Grid item xs={12}>
-                <Box
-                  style={{ display: showGiphyCarousel ? 'block' : 'none' }}
-                  className={classes.giphyImage}
-                  order={1}
-                  flex="1"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                >
-                  <GiphyCarousel
-                    hideGiphyCarousel={() => hideGiphyCarousel()}
-                  />
-                </Box>
-              </Grid>
-            </Grid>
-          </Container>
-        </Toolbar>
-        <MenuBarDrawer open={open} handleDrawerClose={handleDrawerClose} />
-      </AppBar> */}
     </>
   );
 };

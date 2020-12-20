@@ -1,43 +1,43 @@
 actions:
- - name: addChannelUser
-   definition:
+- name: addChannelUser
+  definition:
     kind: synchronous
     handler: https://casfee-2020-actions-nestjs-hbcdh.ondigitalocean.app/addChannelUser
-   permissions:
-    - role: user
- - name: validateAndAddDirectMessageChannel
-   definition:
+  permissions:
+  - role: user
+- name: validateAndAddDirectMessageChannel
+  definition:
     kind: synchronous
     handler: https://casfee-2020-actions-nestjs-hbcdh.ondigitalocean.app/validateAndAddDirectMessageChannel
-   permissions:
-    - role: user
+  permissions:
+  - role: user
 custom_types:
- enums:
+  enums:
   - name: AddDirectMessageChannelChannelTypeEnum
     values:
-     - description: this channel type is for chat messages in a private or public channel
-       is_deprecated: null
-       value: CHAT_MESSAGE
-     - description: this channel type is for direct messages
-       is_deprecated: null
-       value: DIRECT_MESSAGE
+    - description: this channel type is for chat messages in a private or public channel
+      is_deprecated: null
+      value: CHAT_MESSAGE
+    - description: this channel type is for direct messages
+      is_deprecated: null
+      value: DIRECT_MESSAGE
   - name: ValidateAndAddDirectMessageChannelTypeEnum
     values:
-     - description: this channel type is for chat messages in a private or public channel
-       is_deprecated: null
-       value: CHAT_MESSAGE
-     - description: this channel type is for direct messages
-       is_deprecated: null
-       value: DIRECT_MESSAGE
+    - description: this channel type is for chat messages in a private or public channel
+      is_deprecated: null
+      value: CHAT_MESSAGE
+    - description: this channel type is for direct messages
+      is_deprecated: null
+      value: DIRECT_MESSAGE
   - name: MyMutationChannelTypeEnum
     values:
-     - description: this channel type is for chat messages in a private or public channel
-       is_deprecated: null
-       value: CHAT_MESSAGE
-     - description: this channel type is for direct messages
-       is_deprecated: null
-       value: DIRECT_MESSAGE
- input_objects:
+    - description: this channel type is for chat messages in a private or public channel
+      is_deprecated: null
+      value: CHAT_MESSAGE
+    - description: this channel type is for direct messages
+      is_deprecated: null
+      value: DIRECT_MESSAGE
+  input_objects:
   - name: MyMutationPollAnwersBoolExp
   - name: MyMutationTimestamptzComparisonExp
   - name: MyMutationIntComparisonExp
@@ -54,11 +54,11 @@ custom_types:
   - name: MyMutationUserBoolExp
   - name: MyMutationUserChannelsBoolExp
   - name: SampleInput
- objects:
+  objects:
   - name: AddDirectMessageChannelOutput
   - name: validateAndAddDirectMessageChannelOutput
   - name: AddChannelUserSubscriptionOutput
   - name: AddChannelUserOutput
   - name: MyMutationOutput
   - name: SampleOutput
- scalars: []
+  scalars: []
