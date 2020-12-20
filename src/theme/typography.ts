@@ -44,4 +44,7 @@ export default {
     fontSize: 10,
     color: '#0288D1',
   },
+  p: {
+    wordBreak: 'break-all',
+  },
 };
