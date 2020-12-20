@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { theme } from '../../theme/theme';
-import { Box, Button, FormHelperText, IconButton } from '@material-ui/core';
+import { Box, Button, IconButton } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
@@ -57,7 +57,6 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
       >
         {matches === false && (
           <IconButton
-            edge="end"
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"

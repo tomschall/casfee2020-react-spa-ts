@@ -22,7 +22,7 @@ const Logout: React.FC = () => {
   return (
     <>
       <IconButton
-        color="secondary"
+        color="primary"
         size="small"
         className={classes.button}
         onClick={() => {

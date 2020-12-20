@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(0),
       margin: theme.spacing(0),
-      paddingTop: theme.spacing(2),
+      paddingTop: theme.spacing(10),
     },
   },
   treeView: {
