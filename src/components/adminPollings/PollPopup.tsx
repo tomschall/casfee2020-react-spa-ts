@@ -82,7 +82,7 @@ const PollPopUp: React.FC<PollPopUpProps> = ({ channelId }) => {
           {(popupState) => (
             <>
               <Badge variant="dot" classes={{ badge: classes.badge }}>
-                <HowToVoteIcon {...bindTrigger(popupState)} />
+                <HowToVoteIcon color="primary" {...bindTrigger(popupState)} />
               </Badge>
               <Popover
                 anchorReference={'none'} // set popup center window
@@ -114,7 +114,7 @@ const PollPopUp: React.FC<PollPopUpProps> = ({ channelId }) => {
           )}
         </PopupState>
       ) : (
-        <HowToVoteIcon color="primary" />
+        false
       )}
     </>
   );

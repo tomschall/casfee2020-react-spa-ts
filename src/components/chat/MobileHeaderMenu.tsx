@@ -81,8 +81,8 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
             <ArrowBackIosIcon />
           </IconButton>
         )}
-        <PollPopUp channelId={currentChannel?.id} />
         <Button variant="text">{channelName}</Button>
+        <PollPopUp channelId={currentChannel?.id} />
         <Logout />
       </Box>
       <MenuBarDrawer open={open} handleDrawerClose={handleDrawerClose} />
