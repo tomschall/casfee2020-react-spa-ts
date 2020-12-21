@@ -2,8 +2,9 @@ import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { theme } from '../../theme/theme';
 import { useRecoilState } from 'recoil';
-import { Box, Button, IconButton } from '@material-ui/core';
+import { Box, Button, Chip, IconButton } from '@material-ui/core';
 import { currentChannelState } from '../../atom';
+import PeopleIcon from '@material-ui/icons/People';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import PollPopUp from '../../components/adminPollings/PollPopup';
@@ -80,7 +81,13 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
             <ArrowBackIosIcon />
           </IconButton>
         )}
-        <Button variant="text">{channelName}</Button>
+        <Chip
+          size="small"
+          variant="outlined"
+          color="primary"
+          label={channelName}
+          icon={<PeopleIcon />}
+        />
         <PollPopUp channelId={currentChannel?.id} />
         <Logout />
       </Box>
