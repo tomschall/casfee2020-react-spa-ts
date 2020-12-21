@@ -37,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
   },
   link: {
-    color: '#f9cd8b',
+    color: '#0288D1',
+    fontSize: '0.875rem',
   },
 }));
 
@@ -58,10 +59,6 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
       user_id,
     },
   });
-
-  const ListItemLink = (props: any) => {
-    return <ListItem button component="a" {...props} />;
-  };
 
   if (error) {
     console.log('error', error);
@@ -100,14 +97,16 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
           </ListItemIcon>
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
-        <Collapse in={open} timeout="auto" unmountOnExit>
+        <Collapse in={open} timeout="auto">
           <List component="div">
             {data?.channels.map((data: any) => (
-              <ListItemLink key={data.id} href={'/channel/' + data.name}>
-                <OnlineUserStatus user={data.user_channels[0]?.user} />
-                <ListItemText primary={data.user_channels[0]?.user.username} />
-                <ChannelListMessageCounter channelId={data.id} />
-              </ListItemLink>
+              <Link className={classes.link} to={'/channel/' + data.name}>
+                <ListItem button>
+                  <OnlineUserStatus user={data.user_channels[0]?.user} />
+                  {data.user_channels[0]?.user.username}
+                  <ChannelListMessageCounter channelId={data.id} />
+                </ListItem>
+              </Link>
             ))}
           </List>
         </Collapse>
