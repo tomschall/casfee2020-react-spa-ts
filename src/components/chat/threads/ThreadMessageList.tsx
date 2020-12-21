@@ -27,6 +27,8 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     padding: theme.spacing(2),
+    overflowWrap: 'break-word',
+    wordBreak: 'break-all',
   },
   [theme.breakpoints.up('md')]: {
     messageText: {
