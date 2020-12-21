@@ -5,6 +5,7 @@ import {
   Avatar,
   Badge,
   Box,
+  Chip,
   Divider,
   ListItem,
   ListItemAvatar,
@@ -93,10 +94,13 @@ const ThreadInfo: React.FC<ThreadInfoProps> = ({
   const renderThreadInfo = (channelThread: any) => {
     return (
       <React.Fragment>
-        <Box>
-          <Typography variant="caption">
-            <strong>Thread - {currentChannel.name} </strong>
-          </Typography>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <Chip
+            variant="outlined"
+            size="small"
+            color="primary"
+            label={<strong>Thread - {currentChannel.name} </strong>}
+          />
         </Box>
         <Divider className={classes.vspaceTop} />
         <ListItem key={channelThread.message.id} className={classes.head}>
