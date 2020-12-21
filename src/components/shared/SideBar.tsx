@@ -16,13 +16,13 @@ import { theme } from '../../theme/theme';
 const useStyles = makeStyles((theme) => ({
   root: {
     [theme.breakpoints.down('md')]: {
-      padding: theme.spacing(2),
+      padding: theme.spacing(1),
       margin: theme.spacing(0),
       paddingTop: theme.spacing(2),
     },
     [theme.breakpoints.up('sm')]: {
-      marginRight: theme.spacing(5),
-      marginLeft: theme.spacing(5),
+      marginRight: theme.spacing(2),
+      marginLeft: theme.spacing(2),
       marginTop: theme.spacing(0),
       marginBottom: theme.spacing(5),
     },
@@ -96,7 +96,6 @@ const SideBar: React.FC<SidebarProps> = ({ handleDrawerClose, open }) => {
             <Box
               display="flex"
               justifyContent="space-between"
-              alignItems="flex-end"
               style={{
                 marginRight: theme.spacing(3),
                 marginTop: theme.spacing(0),

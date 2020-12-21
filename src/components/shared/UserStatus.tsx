@@ -1,4 +1,5 @@
 import React from 'react';
+import { theme } from '../../theme/theme';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Badge, Box, Chip, Tooltip } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
@@ -23,7 +24,17 @@ const UserStatus: React.FC<OnlineUsersProps> = ({ user_id }) => {
   return (
     <>
       {!loading ? (
-        <Box justifyContent="flex-end">
+        <Box
+          display="flex"
+          flex="1"
+          justifyContent="space-between"
+          alignItems="flex-end"
+          style={{
+            [theme.breakpoints.down('md')]: {
+              justifyContent: 'flex-end',
+            },
+          }}
+        >
           <Chip
             variant="outlined"
             color="primary"
