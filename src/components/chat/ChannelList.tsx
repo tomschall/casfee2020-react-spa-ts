@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { theme } from '../../theme/theme';
 import { useWatchChannelsSubscription } from '../../api/generated/graphql';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
@@ -55,6 +54,10 @@ const Channels: React.FC<any> = () => {
     },
   });
 
+  const ListItemLink = (props: any) => {
+    return <ListItem button component="a" {...props} />;
+  };
+
   if (error) {
     return <Alert severity="error">Channels could not be loaded.</Alert>;
   }
@@ -79,7 +82,11 @@ const Channels: React.FC<any> = () => {
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div">
             {data?.channels?.map((data: any) => (
-              <ListItem key={data.id} button>
+              <ListItemLink
+                key={data.id}
+                data-channel-name={data.name}
+                href={'/channel/' + data.name}
+              >
                 {data?.name === currentChannel?.name ? (
                   <ListItemIcon>
                     {data.is_private === true ? (
@@ -99,27 +106,17 @@ const Channels: React.FC<any> = () => {
                 )}
                 {data?.name === currentChannel?.name ? (
                   <ListItemText>
-                    <Link
-                      data-channel-name={data.name}
-                      to={'/channel/' + data.name}
-                    >
-                      <Typography variant="h6" color="secondary">
-                        {data.name}
-                      </Typography>
-                    </Link>
+                    <Typography variant="h6" color="secondary">
+                      {data.name}
+                    </Typography>
                   </ListItemText>
                 ) : (
-                  <React.Fragment>
-                    <Link
-                      to={'/channel/' + data.name}
-                      data-channel-name={data.name}
-                    >
-                      <ListItemText primary={data?.name} />
-                    </Link>
+                  <>
+                    <ListItemText primary={data?.name} />
                     <ChannelListMessageCounter channelId={data.id} />
-                  </React.Fragment>
+                  </>
                 )}
-              </ListItem>
+              </ListItemLink>
             ))}
           </List>
         </Collapse>

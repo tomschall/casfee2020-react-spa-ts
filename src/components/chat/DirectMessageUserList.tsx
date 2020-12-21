@@ -59,6 +59,10 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
     },
   });
 
+  const ListItemLink = (props: any) => {
+    return <ListItem button component="a" {...props} />;
+  };
+
   if (error) {
     console.log('error', error);
     return (
@@ -99,22 +103,11 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div">
             {data?.channels.map((data: any) => (
-              <ListItem button key={data.id}>
+              <ListItemLink key={data.id} href={'/channel/' + data.name}>
                 <ChannelListMessageCounter channelId={data.id} />
-                <ListItemText
-                  primary={
-                    <React.Fragment>
-                      <Link
-                        className={classes.link}
-                        to={'/channel/' + data.name}
-                      >
-                        {data.user_channels[0]?.user.username}
-                      </Link>
-                    </React.Fragment>
-                  }
-                />
+                <ListItemText primary={data.user_channels[0]?.user.username} />
                 <OnlineUserStatus user={data.user_channels[0]?.user} />
-              </ListItem>
+              </ListItemLink>
             ))}
           </List>
         </Collapse>
