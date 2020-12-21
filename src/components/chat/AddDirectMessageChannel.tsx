@@ -167,7 +167,7 @@ const AddDirectMessageChannel: React.FC = () => {
           </Box>
           <Box mb={5}>
             <Divider className={classes.spacer} />
-            {users?.length ? (
+            {users?.length && (
               <List className={classes.spacer}>
                 {users?.map((dm_user: any, index: any) => {
                   return (
@@ -184,7 +184,8 @@ const AddDirectMessageChannel: React.FC = () => {
                   );
                 })}
               </List>
-            ) : (
+            )}
+            {users?.length === 0 && (
               <Alert severity={'success'}>
                 All users have been added. U can send a message, by clicking on
                 the user in the menu sidebar in direct messages.

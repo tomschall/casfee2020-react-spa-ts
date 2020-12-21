@@ -48,11 +48,9 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
 
   const [currentChannel] = useRecoilState<any>(currentChannelState);
 
-  console.log(currentChannel);
-
   const matches = useMediaQuery(theme.breakpoints.up('md'));
 
-  const [open, setOpen] = React.useState(false); // Sidebar default state
+  const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);

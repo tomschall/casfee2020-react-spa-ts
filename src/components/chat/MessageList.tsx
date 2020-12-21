@@ -1,11 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import { Message } from '../../interfaces/message.interface';
 import ThreadReply from './threads/ThreadReply';
 import ThreadReplyIn from './threads/ThreadReplyIn';
-import DeleteMessage from './DeleteMessage';
+import DeleteMessageWrapper from './DeleteMessageWrapper';
 import UpdateMessage from './UpdateMessage';
-import ReplaceMessage from './ReplaceMessage';
 import {
   Avatar,
   Badge,
@@ -167,28 +166,19 @@ const MessageList: React.FC<MessageProps> = ({
                 <Typography variant="caption">
                   <ThreadReply message={message} channelName={channelName} />
                 </Typography>
-                {/* {!message.deleted ? (
+                {!message.deleted ? (
                   <React.Fragment>
                     {user.sub === message.user.auth0_user_id && (
                       <Typography variant="caption">
                         {!(
                           showUpdate && showUpdateMessageId === message.id
-                        ) && (
-                          <>
-                            {message.channel_thread?.channel_thread_messages
-                              ?.length ? (
-                              <ReplaceMessage messageId={message.id} />
-                            ) : (
-                              <DeleteMessage messageId={message.id} />
-                            )}
-                          </>
-                        )}
+                        ) && <DeleteMessageWrapper messageId={message.id} />}
                       </Typography>
                     )}
                   </React.Fragment>
                 ) : (
                   ''
-                )} */}
+                )}
               </Box>
             </Box>
           </Box>

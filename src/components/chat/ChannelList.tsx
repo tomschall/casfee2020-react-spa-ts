@@ -23,6 +23,7 @@ import ChannelListMessageCounter from './ChannelListMessageCounter';
 import ThreadsLink from '../shared/ThreadsLink';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,7 +56,43 @@ const Channels: React.FC<any> = () => {
   });
 
   const ListItemLink = (props: any) => {
-    return <ListItem button component="a" {...props} />;
+    const { data } = props;
+
+    const CustomLink = (data: any) => <Link to={'/channel/' + data.name} />;
+
+    return (
+      <ListItem button component={CustomLink}>
+        {data?.name === currentChannel?.name ? (
+          <ListItemIcon>
+            {data.is_private === true ? (
+              <EnhancedEncryptionOutlinedIcon color="secondary" />
+            ) : (
+              <PeopleIcon color="secondary" />
+            )}
+          </ListItemIcon>
+        ) : (
+          <ListItemIcon>
+            {data.is_private === true ? (
+              <EnhancedEncryptionOutlinedIcon />
+            ) : (
+              <PeopleIcon />
+            )}
+          </ListItemIcon>
+        )}
+        {data?.name === currentChannel?.name ? (
+          <ListItemText>
+            <Typography variant="h6" color="secondary">
+              {data.name}
+            </Typography>
+          </ListItemText>
+        ) : (
+          <>
+            <ListItemText primary={data?.name} />
+            <ChannelListMessageCounter channelId={data.id} />
+          </>
+        )}
+      </ListItem>
+    );
   };
 
   if (error) {
@@ -83,40 +120,10 @@ const Channels: React.FC<any> = () => {
           <List component="div">
             {data?.channels?.map((data: any) => (
               <ListItemLink
+                data={data}
                 key={data.id}
                 data-channel-name={data.name}
-                href={'/channel/' + data.name}
-              >
-                {data?.name === currentChannel?.name ? (
-                  <ListItemIcon>
-                    {data.is_private === true ? (
-                      <EnhancedEncryptionOutlinedIcon color="secondary" />
-                    ) : (
-                      <PeopleIcon color="secondary" />
-                    )}
-                  </ListItemIcon>
-                ) : (
-                  <ListItemIcon>
-                    {data.is_private === true ? (
-                      <EnhancedEncryptionOutlinedIcon />
-                    ) : (
-                      <PeopleIcon />
-                    )}
-                  </ListItemIcon>
-                )}
-                {data?.name === currentChannel?.name ? (
-                  <ListItemText>
-                    <Typography variant="h6" color="secondary">
-                      {data.name}
-                    </Typography>
-                  </ListItemText>
-                ) : (
-                  <>
-                    <ListItemText primary={data?.name} />
-                    <ChannelListMessageCounter channelId={data.id} />
-                  </>
-                )}
-              </ListItemLink>
+              ></ListItemLink>
             ))}
           </List>
         </Collapse>

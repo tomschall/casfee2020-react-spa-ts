@@ -29,11 +29,11 @@ const UserStatus: React.FC<OnlineUsersProps> = ({ user_id }) => {
           flex="1"
           justifyContent="space-between"
           alignItems="center"
-          style={{
-            [theme.breakpoints.down('md')]: {
-              justifyContent: 'flex-end',
-            },
-          }}
+          // style={{
+          //   [theme.breakpoints.down('md')]: {
+          //     justifyContent: 'flex-end',
+          //   },
+          // }}
         >
           <Chip
             variant="outlined"

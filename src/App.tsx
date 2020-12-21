@@ -6,7 +6,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { theme } from './theme/theme';
 import { Box } from '@material-ui/core';
 import SignIn from './components/shared/SignIn';
-import Loader from './components/shared/Loader';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import NotFound from './components/shared/NotFound';
 import PrivateRoute from './components/PrivateRoute';
@@ -18,7 +17,7 @@ import AdminBoard from './components/layout/AdminBoard';
 import Logo from './components/shared/Logo';
 
 const App: React.FC = () => {
-  const { isAuthenticated, user, isLoading } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
 
   if (isLoading) {
     return (
@@ -40,10 +39,6 @@ const App: React.FC = () => {
         </Box>
       </>
     );
-  }
-
-  if (isAuthenticated) {
-    console.log('user.id', user.sub);
   }
 
   return (
