@@ -58,7 +58,9 @@ const Channels: React.FC<any> = () => {
   const ListItemLink = (props: any) => {
     const { data } = props;
 
-    const CustomLink = (data: any) => <Link to={'/channel/' + data.name} />;
+    const CustomLink = (props: any) => (
+      <Link to={'/channel/' + data.name} {...props} />
+    );
 
     return (
       <ListItem button component={CustomLink}>
