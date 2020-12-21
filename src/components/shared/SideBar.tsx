@@ -88,7 +88,7 @@ const SideBar: React.FC<SidebarProps> = ({ handleDrawerClose, open }) => {
               display="flex"
               justifyContent="space-between"
               style={{
-                marginLeft: theme.spacing(3),
+                // marginLeft: theme.spacing(3),
                 marginTop: theme.spacing(0),
               }}
             >
