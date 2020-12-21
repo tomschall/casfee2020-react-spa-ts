@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
   },
   sidebar: {
     height: '100vh',
-    minHeight: '100vh',
-    overflowY: 'scroll',
+    minHeight: '50vh',
+    // overflowY: 'scroll',
     display: 'flex',
     alignItems: 'flex-start',
     paddingTop: theme.spacing(5),
@@ -49,7 +49,7 @@ const ChatContainer: React.FC = () => {
     >
       {matches === true && (
         <Grid item xs={5} sm={4} className={classes.sidebar}>
-          <SideBar />
+          <SideBar handleDrawerClose={() => false} open={false} />
         </Grid>
       )}
       <Grid item xs={12} className={classes.chatApp}>

@@ -93,25 +93,7 @@ const MenuBarDrawer: React.FC<MenuBarDrawerProps> = ({
       open={open}
     >
       <Toolbar className={classes.toolbar}>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          flexDirection="column"
-          width={1}
-        >
-          <Box display="flex" justifyContent="flex-start" alignItems="center">
-            <IconButton
-              aria-label="open drawer"
-              onClick={handleDrawerClose}
-              color="inherit"
-              size="medium"
-              className={clsx(classes.menuButton, open)}
-            >
-              <ArrowForwardIos />
-            </IconButton>
-          </Box>
-          <SideBar />
-        </Box>
+        <SideBar handleDrawerClose={handleDrawerClose} open={open} />
       </Toolbar>
     </Drawer>
   );

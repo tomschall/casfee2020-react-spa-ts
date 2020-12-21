@@ -44,7 +44,7 @@ const ThreadContainer: React.FC = () => {
       >
         {matches === true && (
           <Grid item xs={5} className={classes.sidebar}>
-            <SideBar />
+            <SideBar handleDrawerClose={() => false} open={false} />
           </Grid>
         )}
         <Grid item xs={12}>
