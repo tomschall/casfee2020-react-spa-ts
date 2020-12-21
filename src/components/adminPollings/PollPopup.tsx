@@ -17,21 +17,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100vw',
   },
   popupWidth: {
-    width: '40vw',
-    minWidth: '40vw',
-    maxWidth: '50vw',
-    padding: theme.spacing(5),
-    [theme.breakpoints.up('sm')]: {
-      padding: theme.spacing(3),
-      minWidth: '50vw',
-      maxWidth: '60vw',
-      width: '50vw',
-    },
-    [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(3),
-      minWidth: '90vw',
-      width: '90vw',
-    },
+    padding: theme.spacing(1),
   },
   voteIcon: {
     cursor: 'pointer',
