@@ -15,17 +15,8 @@ import { theme } from '../../theme/theme';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    [theme.breakpoints.up('sm')]: {
-      padding: theme.spacing(1),
-      margin: theme.spacing(0),
-      paddingTop: theme.spacing(2),
-    },
-    [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(1),
-      margin: theme.spacing(0),
-      paddingTop: theme.spacing(0),
-      paddingBottom: theme.spacing(12),
-    },
+    [theme.breakpoints.up('sm')]: {},
+    [theme.breakpoints.down('sm')]: {},
   },
   treeView: {
     marginRight: theme.spacing(0),
@@ -76,7 +67,13 @@ const SideBar: React.FC<SidebarProps> = ({ handleDrawerClose, open }) => {
 
   return (
     <>
-      <Box display="flex" flex={1} className={classes.root}>
+      <Box
+        display="flex"
+        flex={1}
+        justifyContent="flex-start"
+        alignItems="flex-start"
+        className={classes.root}
+      >
         <Grid container>
           {matches === true && (
             <Grid item xs={12} className={classes.branding}>
