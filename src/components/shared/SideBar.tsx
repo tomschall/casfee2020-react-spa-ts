@@ -53,43 +53,36 @@ const SideBar: React.FC<any> = () => {
 
   return (
     <>
-      <Box
-        display="flex"
-        flexDirection="column"
-        flex="1"
-        className={classes.root}
-      >
-        <Grid container>
-          <Grid item xs={12} className={classes.branding}>
-            <img
-              alt="The Great Chicken Fest"
-              src="/the-great-chicken-fest.svg"
-              className={classes.logo}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <UserStatus user_id={user.sub} />
-          </Grid>
+      <Grid container>
+        <Grid item xs={12} className={classes.branding}>
+          <img
+            alt="The Great Chicken Fest"
+            src="/the-great-chicken-fest.svg"
+            className={classes.logo}
+          />
         </Grid>
         <Grid item xs={12}>
+          <Divider style={{ marginTop: 16, marginBottom: 16 }} />
+          <UserStatus user_id={user.sub} />
+          <Divider style={{ marginTop: 16, marginBottom: 16 }} />
+        </Grid>
+        <Grid item xs={12}>
+          <DirectMessageUserList user_id={user.sub} />
+          <Divider />
+          <ChannelList />
+          <Divider />
           <AddChannel />
-          <Box className={classes.treeView}>
-            <Divider />
-            <ChannelList />
-            <Divider />
-            <DirectMessageUserList user_id={user.sub} />
-            <Divider />
-            <Box
-              display="flex"
-              justifyContent="flex-end"
-              alignItems="flex-end"
-              style={{ marginRight: '16px' }}
-            >
-              <Logout />
-            </Box>
+          <Divider />
+          <Box
+            display="flex"
+            justifyContent="flex-end"
+            alignItems="center"
+            style={{ paddingRight: 8 }}
+          >
+            <Logout />
           </Box>
         </Grid>
-      </Box>
+      </Grid>
     </>
   );
 };

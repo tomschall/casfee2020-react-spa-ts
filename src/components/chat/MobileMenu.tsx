@@ -10,7 +10,6 @@ import People from '@material-ui/icons/People';
 import Person from '@material-ui/icons/Person';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import PollPopUp from '../../components/adminPollings/PollPopup';
-import { unstable_batchedUpdates } from 'react-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,7 +51,6 @@ interface MobileMenuProps {
   nickname: string;
   channelName: string;
   isPrivate: boolean;
-  // pollQuestion: string;
   channelId: number;
   handleDrawerOpen: () => void;
   handleGiphyClick: () => void;
@@ -62,7 +60,6 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
   nickname,
   channelName,
   isPrivate,
-  // pollQuestion,
   channelId,
   handleDrawerOpen,
   handleGiphyClick,

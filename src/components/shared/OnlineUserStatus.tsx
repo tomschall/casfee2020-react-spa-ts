@@ -11,11 +11,27 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
   },
   badge: {
-    backgroundColor: '#0f0',
+    backgroundColor: '#44b700',
+    color: '#44b700',
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+    '&::after': {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      borderRadius: '50%',
+      animation: '$ripple 1.2s infinite ease-in-out',
+      border: '1px solid currentColor',
+      content: '""',
+    },
   },
   avatar: {
-    backgroundColor: '#000000',
-    color: '#F57C00',
+    width: 24,
+    height: 24,
+    backgroundColor: '#ed1859',
+    color: 'white',
+    fontSize: 10,
   },
 }));
 

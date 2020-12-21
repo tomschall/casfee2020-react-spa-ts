@@ -99,20 +99,12 @@ const MenuBarDrawer: React.FC<MenuBarDrawerProps> = ({
           flexDirection="column"
           width={1}
         >
-          <Box
-            display="flex"
-            justifyContent="flex-start"
-            alignItems="center"
-            style={{
-              position: 'fixed',
-              width: '100%',
-              top: 0,
-            }}
-          >
+          <Box display="flex" justifyContent="flex-start" alignItems="center">
             <IconButton
               aria-label="open drawer"
               onClick={handleDrawerClose}
               color="inherit"
+              size="medium"
               className={clsx(classes.menuButton, open)}
             >
               <ArrowForwardIos />
