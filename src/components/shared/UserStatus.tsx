@@ -28,7 +28,7 @@ const UserStatus: React.FC<OnlineUsersProps> = ({ user_id }) => {
           display="flex"
           flex="1"
           justifyContent="space-between"
-          alignItems="flex-end"
+          alignItems="center"
           style={{
             [theme.breakpoints.down('md')]: {
               justifyContent: 'flex-end',

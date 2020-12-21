@@ -15,16 +15,10 @@ import { theme } from '../../theme/theme';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.up('sm')]: {
       padding: theme.spacing(1),
       margin: theme.spacing(0),
       paddingTop: theme.spacing(2),
-    },
-    [theme.breakpoints.up('sm')]: {
-      marginRight: theme.spacing(2),
-      marginLeft: theme.spacing(2),
-      marginTop: theme.spacing(0),
-      marginBottom: theme.spacing(5),
     },
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(1),
@@ -52,11 +46,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   menuButton: {
-    width: 30,
-    height: 30,
-    marginLeft: theme.spacing(2),
+    width: 50,
+    height: 50,
+    backgroundColor: theme.palette.secondary.main,
+    marginLeft: theme.spacing(1),
     '& .MuiIconButton-label': {
-      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
     },
     justifyContent: 'flex-end',
     marginTop: theme.spacing(2),

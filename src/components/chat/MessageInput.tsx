@@ -58,12 +58,15 @@ const useStyles = makeStyles((theme) => ({
   },
   image: {
     [theme.breakpoints.up('md')]: {
-      maxHeight: 55,
+      maxHeight: 250,
     },
     [theme.breakpoints.down('md')]: {
-      maxHeight: 40,
+      border: '2px solid ' + theme.palette.secondary.main,
+      height: 120,
+      marginBottom: theme.spacing(3),
+      maxWidth: '100vw',
+      maxHeight: '50vw',
     },
-    paddingRight: theme.spacing(1),
   },
 }));
 
@@ -175,7 +178,12 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
 
   return (
     <Box className={classes.root}>
-      <Box className={classes.giphyImage}>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        className={classes.giphyImage}
+      >
         {gif && (
           <img
             className={classes.image}
