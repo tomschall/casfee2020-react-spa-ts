@@ -8,7 +8,6 @@ import UserStatus from './UserStatus';
 import ChannelList from '../chat/ChannelList';
 import DirectMessageUserList from '../chat/DirectMessageUserList';
 import Logout from '../Logout';
-import Logo from '../shared/Logo';
 import AddChannel from '../chat/AddChannel';
 import { makeStyles } from '@material-ui/core/styles';
 import { theme } from '../../theme/theme';
@@ -89,7 +88,7 @@ const SideBar: React.FC<SidebarProps> = ({ handleDrawerClose, open }) => {
               display="flex"
               justifyContent="space-between"
               style={{
-                marginRight: theme.spacing(3),
+                marginLeft: theme.spacing(3),
                 marginTop: theme.spacing(0),
               }}
             >
