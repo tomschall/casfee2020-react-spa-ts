@@ -17,6 +17,9 @@ const drawerWidth = '100%';
 const useStyles = makeStyles((theme) => ({
   root: {},
   toolbar: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
     [theme.breakpoints.up('md')]: {
       paddingTop: theme.spacing(0),
       paddingBottom: theme.spacing(5),

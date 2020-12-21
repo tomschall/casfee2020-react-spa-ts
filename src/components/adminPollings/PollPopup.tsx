@@ -1,4 +1,5 @@
 import React from 'react';
+import { theme } from '../../theme/theme';
 import { Badge, Box, Button, Popover } from '@material-ui/core';
 import { useWatchChannelHasActivePollSubscription } from '../../api/generated/graphql';
 import PopupState, { bindPopover } from 'material-ui-popup-state';
@@ -17,21 +18,20 @@ const useStyles = makeStyles((theme) => ({
     width: '100vw',
   },
   popupWidth: {
-    width: '40vw',
-    minWidth: '40vw',
-    maxWidth: '50vw',
-    padding: theme.spacing(5),
-    [theme.breakpoints.up('sm')]: {
-      padding: theme.spacing(3),
-      minWidth: '50vw',
-      maxWidth: '60vw',
+    width: '30vw',
+    padding: theme.spacing(1),
+    [theme.breakpoints.down('lg')]: {
+      width: '40vw',
+    },
+    [theme.breakpoints.down('md')]: {
       width: '50vw',
     },
     [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(3),
-      minWidth: '90vw',
-      width: '90vw',
+      width: '85vw',
+      margin: 0,
     },
+    margin: theme.spacing(0),
+    paddingBottom: theme.spacing(2),
   },
   voteIcon: {
     cursor: 'pointer',

@@ -57,13 +57,21 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.dark,
   },
   image: {
+    border: '2px solid ' + theme.palette.secondary.main,
+    height: 150,
+    marginBottom: theme.spacing(3),
     [theme.breakpoints.up('md')]: {
       maxHeight: 250,
+    },
+    [theme.breakpoints.down('lg')]: {
+      border: '2px solid ' + theme.palette.secondary.main,
+      height: 150,
+      maxWidth: '150vw',
+      maxHeight: '70vw',
     },
     [theme.breakpoints.down('md')]: {
       border: '2px solid ' + theme.palette.secondary.main,
       height: 120,
-      marginBottom: theme.spacing(3),
       maxWidth: '100vw',
       maxHeight: '50vw',
     },
