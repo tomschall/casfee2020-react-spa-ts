@@ -105,8 +105,8 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
             {data?.channels.map((data: any) => (
               <ListItemLink key={data.id} href={'/channel/' + data.name}>
                 <OnlineUserStatus user={data.user_channels[0]?.user} />
-                <ChannelListMessageCounter channelId={data.id} />
                 <ListItemText primary={data.user_channels[0]?.user.username} />
+                <ChannelListMessageCounter channelId={data.id} />
               </ListItemLink>
             ))}
           </List>
