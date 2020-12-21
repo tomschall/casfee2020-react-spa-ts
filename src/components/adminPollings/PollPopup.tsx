@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
       width: '90vw',
     },
   },
+  voteIcon: {
+    cursor: 'pointer',
+  },
   badge: {
     backgroundColor: '#44b700',
     color: '#44b700',
@@ -83,7 +86,11 @@ const PollPopUp: React.FC<PollPopUpProps> = ({ channelId }) => {
           {(popupState) => (
             <>
               <Badge variant="dot" classes={{ badge: classes.badge }}>
-                <HowToVoteIcon color="primary" {...bindTrigger(popupState)} />
+                <HowToVoteIcon
+                  color="primary"
+                  {...bindTrigger(popupState)}
+                  className={classes.voteIcon}
+                />
               </Badge>
               <Popover
                 anchorReference={'none'} // set popup center window
