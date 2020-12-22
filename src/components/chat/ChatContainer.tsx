@@ -17,21 +17,20 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-start',
     overflowX: 'hidden',
     overflowY: 'hidden',
+    height: '100vh',
   },
   sidebar: {
-    height: '100vh',
+    overflowY: 'hidden',
     minHeight: '50vh',
-    // overflowY: 'scroll',
     display: 'flex',
     alignItems: 'flex-start',
-    paddingTop: theme.spacing(5),
     borderRightWidth: 1,
     borderRightStyle: 'solid',
     borderRightColor: theme.palette.primary.dark,
   },
   chatApp: {
     height: '100vh',
-    overflow: 'hidden',
+    overflowY: 'hidden',
   },
 }));
 

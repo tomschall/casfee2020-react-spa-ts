@@ -21,6 +21,11 @@ export default {
       },
     },
   },
+  MuiToolbar: {
+    root: {
+      overflow: 'hidden',
+    },
+  },
   MuiPopover: {
     root: {
       background: 'rgba(245, 122, 0, .7)',

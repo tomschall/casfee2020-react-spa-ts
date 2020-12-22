@@ -14,13 +14,11 @@ import { theme } from '../../theme/theme';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    height: '100vh',
+    overflowY: 'scroll',
+    WebkitOverflowScrolling: 'touch',
     [theme.breakpoints.up('sm')]: {},
     [theme.breakpoints.down('sm')]: {},
-  },
-  treeView: {
-    marginRight: theme.spacing(0),
-    marginLeft: theme.spacing(0),
-    paddingRight: theme.spacing(0),
   },
   branding: {
     display: 'flex',
@@ -118,7 +116,10 @@ const SideBar: React.FC<SidebarProps> = ({ handleDrawerClose, open }) => {
               display="flex"
               justifyContent="flex-end"
               alignItems="center"
-              style={{ paddingRight: 8 }}
+              style={{
+                paddingRight: theme.spacing(1),
+                marginBottom: theme.spacing(10),
+              }}
             >
               <Logout />
             </Box>
