@@ -165,7 +165,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
       },
       user_id: user.sub,
       text: text,
-      image: gif?.images?.fixed_width_small?.url,
+      image: gif?.images?.fixed_width?.url,
       channel_id: channelId,
     });
 
@@ -174,7 +174,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
         message: {
           user_id: user.sub,
           text: text,
-          image: gif?.images?.fixed_width_small?.url,
+          image: gif?.images?.fixed_width?.url,
           channel_id: channelId,
         },
       },
@@ -197,7 +197,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
           <img
             className={classes.image}
             alt="Giphy"
-            src={gif?.images?.fixed_width_small?.url}
+            src={gif?.images?.fixed_width?.url}
             onClick={() => setGif(null)}
           />
         )}

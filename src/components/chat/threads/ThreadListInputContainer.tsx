@@ -176,7 +176,7 @@ const ThreadListInputContainer: React.FC<ThreadListInputContainerProps> = (
       variables: {
         channel_thread_id: props.channelThreadId,
         message: text,
-        image: gif?.images?.fixed_width_small?.url,
+        image: gif?.images?.fixed_width?.url,
         user_id: user.sub,
       },
     });
@@ -213,7 +213,7 @@ const ThreadListInputContainer: React.FC<ThreadListInputContainerProps> = (
               <img
                 className={classes.image}
                 alt={gif?.bitly_url}
-                src={gif?.images?.fixed_width_small?.url}
+                src={gif?.images?.fixed_width?.url}
                 onClick={() => setGif(null)}
               />
             )}
