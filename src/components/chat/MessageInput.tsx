@@ -8,8 +8,8 @@ import {
   IconButton,
 } from '@material-ui/core';
 import { theme } from '../../theme/theme';
-import Icon from '@material-ui/core/Icon';
 import SendIcon from '@material-ui/icons/Send';
+import AddGif from '@material-ui/icons/Gif';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {
   useInsertMessageMutation,
@@ -45,25 +45,14 @@ const useStyles = makeStyles((theme) => ({
   },
   messageInput: {
     [theme.breakpoints.down('md')]: {
-      fontSize: '.9rem',
+      fontSize: '1rem',
       // paddingRight: theme.spacing(4),
     },
     '&.MuiFormLabel-root.Mui-focused': {
       color: theme.palette.secondary.main,
     },
   },
-  messageButton: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'none',
-    },
-    [theme.breakpoints.up('md')]: {
-      size: 'large',
-      width: '25%',
-    },
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(0),
-    backgroundColor: theme.palette.primary.dark,
-  },
+
   image: {
     border: '2px solid ' + theme.palette.secondary.main,
     height: 150,

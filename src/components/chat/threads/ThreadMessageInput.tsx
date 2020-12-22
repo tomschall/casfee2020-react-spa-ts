@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { TextField, Button, Box } from '@material-ui/core';
+import {
+  InputAdornment,
+  IconButton,
+  TextField,
+  Button,
+  Box,
+} from '@material-ui/core';
 import { theme } from '../../../theme/theme';
-import Icon from '@material-ui/core/Icon';
+import SendIcon from '@material-ui/icons/Send';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {
   useInsertChannelThreadMessageMutation,
@@ -182,6 +188,7 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
             className={classes.image}
             src={gif?.images?.fixed_width?.url}
             onClick={() => setGif(null)}
+            alt="GiphyImage"
           />
         )}
       </Box>
@@ -214,8 +221,21 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
           placeholder="Type your message here ..."
           id={`chat-message-input-${props.channelThreadId}`}
           label={'Crackle your message here ...'}
-          // fullWidth
           InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton type="submit" color="secondary">
+                  <SendIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+            startAdornment: (
+              <InputAdornment position="end">
+                <IconButton type="submit" color="secondary">
+                  <SendIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
             classes: {
               input: classes.messageInput,
             },
@@ -224,17 +244,6 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
             className: classes.messageInput,
           }}
         />
-
-        <Button
-          id={`chat-message-button-${props.channelThreadId}`}
-          size={setButtonSize()}
-          variant="contained"
-          endIcon={<Icon>send</Icon>}
-          className={classes.messageButton}
-          type="submit"
-        >
-          Send
-        </Button>
       </form>
     </div>
   );
