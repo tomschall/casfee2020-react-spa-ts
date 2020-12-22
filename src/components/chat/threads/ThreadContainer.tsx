@@ -1,16 +1,17 @@
 import React from 'react';
 import { Grid, Container, useMediaQuery } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import SideBar from '../../shared/SideBar';
 import { theme } from '../../../theme/theme';
-import Thread from './Thread';
-import ThreadListContainer from './ThreadListContainer';
 import { useParams } from 'react-router';
 import { ThreadParams } from '../../../interfaces/param.interface';
+import SideBar from '../../shared/SideBar';
+import MobileHeaderMenu from '../MobileHeaderMenu';
+import Thread from './Thread';
+import ThreadListContainer from './ThreadListContainer';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    margin: 0,
+    // margin: 0,
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
@@ -48,6 +49,7 @@ const ThreadContainer: React.FC = () => {
           </Grid>
         )}
         <Grid item xs={12}>
+          <MobileHeaderMenu channelName="THREAD" />
           {channel ? <Thread /> : <ThreadListContainer />}
         </Grid>
       </Container>

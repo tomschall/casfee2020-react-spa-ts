@@ -21,26 +21,26 @@ import ThreadMessageInput from './ThreadMessageInput';
 const useStyles = makeStyles((theme) => ({
   root: {
     overflowY: 'scroll',
-    height: '80vh',
-    maxHeight: '80vh',
-    marginTop: theme.spacing(5),
-    padding: theme.spacing(3),
+    height: '100vh',
+    marginTop: theme.spacing(0),
+    padding: theme.spacing(2),
+    paddingTop: theme.spacing(5),
+    paddingBottom: theme.spacing(5),
   },
-  messageContainer: {
-    [theme.breakpoints.up('lg')]: {
-      padding: theme.spacing(10),
-      paddingTop: theme.spacing(5),
-      paddingBottom: theme.spacing(0),
+  messageInput: {
+    position: 'fixed',
+    bottom: 0,
+    padding: theme.spacing(2),
+    background: theme.palette.background.default,
+    zIndex: 1000,
+    [theme.breakpoints.up('md')]: {
+      width: '70vw',
     },
-    [theme.breakpoints.down('md')]: {
-      padding: theme.spacing(3),
-      paddingTop: theme.spacing(3),
-      paddingBottom: theme.spacing(0),
+    [theme.breakpoints.up('lg')]: {
+      width: '75vw',
     },
     [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(0),
-      paddingTop: theme.spacing(0),
-      paddingBottom: theme.spacing(0),
+      width: '100vw',
     },
   },
 }));
@@ -103,29 +103,25 @@ const Thread: React.FC = () => {
 
   return (
     <>
-      <div className={classes.root}>
-        <Grid container>
-          <Grid item xs={12} className={classes.messageContainer}>
-            <List id="message-list">
-              <ThreadMessageList
-                messages={data?.channel_thread_message as ThreadMessage[]}
-                user={user}
-                channelThread={getChannelThreadData?.channel_thread[0]}
-                currentChannel={currentChannel}
-              />
-            </List>
-            <div ref={messagesEndRef} />
-          </Grid>
-          <Box maxWidth="xl" component="nav">
-            <MenuBar channelId={currentChannel?.id}>
-              <ThreadMessageInput
-                channelId={currentChannel?.id}
-                channelThreadId={getChannelThreadData?.channel_thread[0]?.id}
-              />
-            </MenuBar>
-          </Box>
-        </Grid>
-      </div>
+      <Box className={classes.root}>
+        <List id="message-list">
+          <ThreadMessageList
+            messages={data?.channel_thread_message as ThreadMessage[]}
+            user={user}
+            channelThread={getChannelThreadData?.channel_thread[0]}
+            currentChannel={currentChannel}
+          />
+        </List>
+        <div ref={messagesEndRef} />
+      </Box>
+      <Box className={classes.messageInput}>
+        <MenuBar channelId={currentChannel?.id}>
+          <ThreadMessageInput
+            channelId={currentChannel?.id}
+            channelThreadId={getChannelThreadData?.channel_thread[0]?.id}
+          />
+        </MenuBar>
+      </Box>
     </>
   );
 };

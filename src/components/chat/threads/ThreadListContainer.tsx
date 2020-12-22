@@ -4,7 +4,6 @@ import ThreadList from './ThreadList';
 import { Alert } from '@material-ui/lab';
 import { Box, Grid, makeStyles } from '@material-ui/core';
 import MobileHeaderMenu from '../MobileHeaderMenu';
-import ThreadMenuBar from './ThreadMenuBar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
