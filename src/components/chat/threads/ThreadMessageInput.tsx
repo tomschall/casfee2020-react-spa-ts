@@ -44,25 +44,13 @@ const useStyles = makeStyles((theme) => ({
   },
   messageInput: {
     [theme.breakpoints.down('md')]: {
-      fontSize: '.9rem',
-      paddingRight: theme.spacing(8),
+      fontSize: '1rem',
     },
     '&.MuiFormLabel-root.Mui-focused': {
       color: theme.palette.secondary.main,
     },
   },
-  messageButton: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'none',
-    },
-    [theme.breakpoints.up('md')]: {
-      size: 'large',
-      width: '25%',
-    },
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(0),
-    backgroundColor: theme.palette.primary.dark,
-  },
+
   image: {
     border: '2px solid ' + theme.palette.secondary.main,
     height: 150,
@@ -192,9 +180,9 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
         {gif && (
           <img
             className={classes.image}
+            alt="Giphy"
             src={gif?.images?.fixed_width?.url}
             onClick={() => setGif(null)}
-            alt="GiphyImage"
           />
         )}
       </Box>
@@ -221,13 +209,6 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
           label={<TypingIndicator />}
           InputProps={{
             endAdornment: (
-              <InputAdornment position="end">
-                <IconButton type="submit" color="secondary">
-                  <SendIcon />
-                </IconButton>
-              </InputAdornment>
-            ),
-            startAdornment: (
               <InputAdornment position="end">
                 <IconButton type="submit" color="secondary">
                   <SendIcon />

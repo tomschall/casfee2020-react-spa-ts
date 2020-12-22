@@ -46,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
   messageInput: {
     [theme.breakpoints.down('md')]: {
       fontSize: '1rem',
-      // paddingRight: theme.spacing(4),
     },
     '&.MuiFormLabel-root.Mui-focused': {
       color: theme.palette.secondary.main,
