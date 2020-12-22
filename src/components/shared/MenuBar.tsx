@@ -77,6 +77,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     marginTop: theme.spacing(2),
   },
+  giphyButton: {
+    [theme.breakpoints.up('md')]: {
+      height: 56,
+    },
+  },
   popoverRoot: {
     display: 'flex',
     justifyContent: 'center',
@@ -128,14 +133,14 @@ const MenuBar: React.FC<MenuBarProps> = ({ children, channelId }) => {
       >
         <GiphyCarousel hideGiphyCarousel={() => hideGiphyCarousel()} />
       </Box>
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
         <Box flex={1}>
           <Button
             aria-label="giphy"
             color="primary"
             size="large"
             onClick={handleGiphyClick}
-            style={{}}
+            className={classes.giphyButton}
           >
             <AddGif />
           </Button>
