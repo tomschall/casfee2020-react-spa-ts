@@ -29,10 +29,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import OnlineUserStatus from '../shared/OnlineUserStatus';
 
 const useStyles = makeStyles((theme) => ({
-  avatar: {
-    backgroundColor: '#000000',
-    color: '#F57C00',
-  },
   spacer: {
     marginTop: theme.spacing(5),
   },

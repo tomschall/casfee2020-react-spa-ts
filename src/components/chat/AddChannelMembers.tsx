@@ -1,8 +1,6 @@
 import React from 'react';
 import { Alert } from '@material-ui/lab';
 import {
-  Avatar,
-  Badge,
   Box,
   Button,
   Container,
@@ -11,7 +9,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  ListItemIcon,
   Typography,
 } from '@material-ui/core';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -30,10 +27,6 @@ import OnlineUserStatus from '../shared/OnlineUserStatus';
 const useStyles = makeStyles((theme) => ({
   root: {
     overflowY: 'scroll',
-  },
-  avatar: {
-    backgroundColor: '#000000',
-    color: '#F57C00',
   },
   spacer: {
     marginTop: theme.spacing(5),
@@ -64,11 +57,7 @@ const AddChannelMembers: React.FC = () => {
 
   const [
     addChannelUserMutation,
-    {
-      data: addChannelUserData,
-      loading: addChannelUserLoading,
-      error: addChannelUserError,
-    },
+    { error: addChannelUserError },
   ] = useAddChannelUserMutation();
 
   const handleUsersToggle = async (event: any, user_id: string) => {

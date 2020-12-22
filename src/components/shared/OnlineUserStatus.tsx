@@ -44,9 +44,11 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     width: 24,
     height: 24,
-    backgroundColor: '#ed1859',
-    color: 'white',
-    fontSize: 10,
+    backgroundColor: '#000000',
+    color: '#ffffff',
+    fontSize: 12,
+    fontWeight: 'bold',
+    border: '2px solid #f57c00',
   },
 }));
 

@@ -73,8 +73,8 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: '0.5rem',
   },
   avatar: {
-    backgroundColor: '#000000',
-    color: '#F57C00',
+    backgroundColor: '#f57c00',
+    color: '#000000',
   },
 }));
 

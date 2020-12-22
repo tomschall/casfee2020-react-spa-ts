@@ -45,6 +45,8 @@ const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
     navigateToThreadChannel();
   };
 
+  //console.log('channelThreadData', channelThreadData);
+
   if (error || channelThreadError) return <Alert>Error in Thread Reply</Alert>;
 
   if (channelThreadLoading)
