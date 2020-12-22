@@ -57,7 +57,7 @@ const ThreadReplyIn: React.FC<ThreadReplyInProps> = ({
 
   return (
     <>
-      {channelThreadData?.channel_thread_message?.length ? (
+      {channelThreadData?.channel_thread[0]?.channel_thread_messages?.length ? (
         <Typography component="div" className={classes.messageText}>
           <Link
             className={classes.link}
@@ -65,15 +65,20 @@ const ThreadReplyIn: React.FC<ThreadReplyInProps> = ({
               pathname: `/channel/${channelName}/thread/${message?.id}`,
             }}
           >
-            {`${channelThreadData?.channel_thread_message?.length} ${
-              channelThreadData?.channel_thread_message?.length === 1
+            {`${
+              channelThreadData?.channel_thread[0]?.channel_thread_messages
+                ?.length
+            } ${
+              channelThreadData?.channel_thread[0]?.channel_thread_messages
+                ?.length === 1
                 ? 'reply'
                 : 'replies'
             } `}
           </Link>
           <i className={classes.lastReply}>
             {`Last reply ${moment(
-              channelThreadData?.channel_thread_message[0]?.timestamp,
+              channelThreadData?.channel_thread[0]?.channel_thread_messages[0]
+                ?.timestamp,
             ).fromNow()}`}
           </i>
         </Typography>

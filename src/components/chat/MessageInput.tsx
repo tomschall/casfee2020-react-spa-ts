@@ -221,7 +221,6 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
           rows={1}
           color="primary"
           autoComplete="off"
-          placeholder="..."
           id="chat-message-input"
           label={<TypingIndicator />}
           InputProps={{

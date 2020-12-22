@@ -78,8 +78,8 @@ const Channels: React.FC<any> = () => {
         </ListItem>
         <Collapse in={open} timeout="auto">
           <List component="div">
-            {data?.channels?.map((data: any) => (
-              <Link to={'/channel/' + data.name}>
+            {data?.channels?.map((data: any, index) => (
+              <Link key={data.id} to={'/channel/' + data.name}>
                 <ListItem button>
                   {data?.name === currentChannel?.name ? (
                     <ListItemIcon>

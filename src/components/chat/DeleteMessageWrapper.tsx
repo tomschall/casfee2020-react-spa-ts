@@ -31,7 +31,9 @@ const DeleteMessageWrapper: React.FC<DeleteMessageWrapperProps> = ({
     );
   }
 
-  if (channelThreadData?.channel_thread_message.length)
+  console.log('channelThreadData', channelThreadData);
+
+  if (channelThreadData?.channel_thread)
     return <ReplaceMessage messageId={messageId} />;
 
   return <DeleteMessage messageId={messageId} />;

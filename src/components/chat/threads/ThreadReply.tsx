@@ -45,8 +45,6 @@ const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
     navigateToThreadChannel();
   };
 
-  //console.log('channelThreadData', channelThreadData);
-
   if (error || channelThreadError) return <Alert>Error in Thread Reply</Alert>;
 
   if (channelThreadLoading)
@@ -62,7 +60,7 @@ const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
       </div>
     );
 
-  if (channelThreadData?.channel_thread_message?.length) {
+  if (channelThreadData?.channel_thread?.length) {
     return (
       <div>
         <IconButton onClick={() => navigateToThreadChannel()}>

@@ -8,26 +8,17 @@ import {
   useInsertChannelThreadMessageMutation,
   useSendTypingEventMutation,
 } from '../../../api/generated/graphql';
+import TypingIndicator from '../../shared/TypingIndicator';
 import { useRecoilState } from 'recoil';
 import { giphyState, deletedMessageState } from '../../../atom';
 import { IGif } from '@giphy/js-types';
 import { makeStyles } from '@material-ui/core/styles';
-import GiphyCarousel from '../../shared/GiphyCarousel';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
-  },
-  giphyVisible: {
-    marginTop: theme.spacing(2),
-    display: 'flex',
-    justifyContent: 'flex-start',
-  },
-  giphyHidden: {
-    display: 'none',
-    marginTop: theme.spacing(0),
   },
   giphyImage: {
     marginTop: theme.spacing(0),
@@ -35,11 +26,11 @@ const useStyles = makeStyles((theme) => ({
   form: {
     display: 'flex',
     marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(8),
+    marginRight: theme.spacing(1),
     flexDirection: 'column',
     flexGrow: 1,
     [theme.breakpoints.down('md')]: {
-      marginTop: theme.spacing(0.2),
+      marginTop: theme.spacing(1),
     },
     [theme.breakpoints.up('md')]: {
       marginTop: theme.spacing(0),
@@ -48,6 +39,10 @@ const useStyles = makeStyles((theme) => ({
   messageInput: {
     [theme.breakpoints.down('md')]: {
       fontSize: '.9rem',
+      paddingRight: theme.spacing(8),
+    },
+    '&.MuiFormLabel-root.Mui-focused': {
+      color: theme.palette.secondary.main,
     },
   },
   messageButton: {
@@ -63,13 +58,24 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.dark,
   },
   image: {
+    border: '2px solid ' + theme.palette.secondary.main,
+    height: 150,
+    marginBottom: theme.spacing(3),
     [theme.breakpoints.up('md')]: {
-      maxHeight: 55,
+      maxHeight: 250,
+    },
+    [theme.breakpoints.down('lg')]: {
+      border: '2px solid ' + theme.palette.secondary.main,
+      height: 150,
+      maxWidth: '150vw',
+      maxHeight: '70vw',
     },
     [theme.breakpoints.down('md')]: {
-      maxHeight: 40,
+      border: '2px solid ' + theme.palette.secondary.main,
+      height: 120,
+      maxWidth: '100vw',
+      maxHeight: '50vw',
     },
-    paddingRight: theme.spacing(1),
   },
 }));
 
@@ -86,6 +92,7 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
     switch (matches) {
       case true:
         return 'medium';
+
       case false:
         return 'small';
 
@@ -112,8 +119,6 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
   const [deletedMessage, setdeletedMessage] = useRecoilState<boolean>(
     deletedMessageState,
   );
-
-  const [showGiphyCarousel, setShowGiphyCarousel] = React.useState(false);
 
   const channelId = props.channelId;
 
@@ -170,30 +175,22 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
     setdeletedMessage(false);
   };
 
-  const hideGiphyCarousel = () => {
-    setShowGiphyCarousel(false);
-  };
-
   return (
-    <div className={classes.root}>
-      <Box className={gif ? classes.giphyImage : ''}>
+    <Box className={classes.root}>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        className={classes.giphyImage}
+      >
         {gif && (
           <img
             className={classes.image}
+            alt="Giphy"
             src={gif?.images?.fixed_width?.url}
             onClick={() => setGif(null)}
           />
         )}
-      </Box>
-      <Box>
-        <Box
-          className={
-            showGiphyCarousel ? classes.giphyVisible : classes.giphyHidden
-          }
-          order={1}
-        >
-          <GiphyCarousel hideGiphyCarousel={() => hideGiphyCarousel()} />
-        </Box>
       </Box>
       <form
         noValidate
@@ -207,14 +204,15 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
           onChange={(e) => {
             handleTyping(e.target.value);
           }}
+          focused
           size={setTextFieldSize()}
           variant="outlined"
-          color="secondary"
+          multiline
+          rows={1}
+          color="primary"
           autoComplete="off"
-          placeholder="Type your message here ..."
           id={`chat-message-input-${props.channelThreadId}`}
-          label={'Crackle your message here ...'}
-          // fullWidth
+          label={<TypingIndicator />}
           InputProps={{
             classes: {
               input: classes.messageInput,
@@ -236,7 +234,7 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
           Send
         </Button>
       </form>
-    </div>
+    </Box>
   );
 };
 
