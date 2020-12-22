@@ -14,8 +14,9 @@ import PollPopUp from '../../components/adminPollings/PollPopup';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      position: 'relative',
       transform: 'translateZ(0)',
-      flexGrow: 1,
+
       [theme.breakpoints.up('md')]: {
         '& #ChickenfestNavi-action-4': {
           display: 'none',
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     speedDial: {
-      position: 'absolute',
+      position: 'relative',
       '&.MuiSpeedDial-directionUp, &.MuiSpeedDial-directionLeft': {
         bottom: '-10px',
         right: theme.spacing(1),

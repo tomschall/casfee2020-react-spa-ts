@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import {
-  TextField,
   Button,
-  Box,
   Chip,
   Container,
   Grid,
+  InputAdornment,
+  IconButton,
+  TextField,
 } from '@material-ui/core';
 import { theme } from '../../../theme/theme';
 import Icon from '@material-ui/core/Icon';
+import SendIcon from '@material-ui/icons/Send';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {
   useInsertChannelThreadMessageMutation,
@@ -247,8 +249,14 @@ const ThreadListInputContainer: React.FC<ThreadListInputContainerProps> = (
                 placeholder="Type your message here ..."
                 id={`chat-message-input-${props.channelThreadId}`}
                 label={'Crackle your message here ...'}
-                // fullWidth
                 InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton type="submit" color="secondary">
+                        <SendIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
                   classes: {
                     input: classes.messageInput,
                   },
@@ -258,7 +266,7 @@ const ThreadListInputContainer: React.FC<ThreadListInputContainerProps> = (
                 }}
               />
 
-              <Button
+              {/* <Button
                 id={`chat-message-button-${props.channelThreadId}`}
                 size={setButtonSize()}
                 variant="contained"
@@ -267,7 +275,7 @@ const ThreadListInputContainer: React.FC<ThreadListInputContainerProps> = (
                 type="submit"
               >
                 Send
-              </Button>
+              </Button> */}
             </form>
           </Grid>
         </Container>

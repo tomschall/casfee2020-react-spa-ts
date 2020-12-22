@@ -4,8 +4,9 @@ import clsx from 'clsx';
 import { theme } from '../../theme/theme';
 import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../atom';
-import { Box } from '@material-ui/core';
+import { Box, Button, IconButton } from '@material-ui/core';
 import GiphyCarousel from './GiphyCarousel';
+import AddGif from '@material-ui/icons/Gif';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import MenuBarDrawer from './MenuBarDrawer';
 import MobileMenu from '../chat/MobileMenu';
@@ -117,16 +118,6 @@ const MenuBar: React.FC<MenuBarProps> = ({ children, channelId }) => {
 
   return (
     <>
-      {children}
-      <MobileMenu
-        nickname={user.nickname}
-        channelName={currentChannel.name}
-        isPrivate={currentChannel?.is_private}
-        handleDrawerOpen={handleDrawerOpen}
-        handleGiphyClick={handleGiphyClick}
-        channelId={channelId}
-      />
-
       <Box
         style={{ display: showGiphyCarousel ? 'block' : 'none' }}
         className={classes.giphyImage}
@@ -136,6 +127,22 @@ const MenuBar: React.FC<MenuBarProps> = ({ children, channelId }) => {
         alignItems="center"
       >
         <GiphyCarousel hideGiphyCarousel={() => hideGiphyCarousel()} />
+      </Box>
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Box flex={1}>
+          <Button
+            aria-label="giphy"
+            color="primary"
+            size="large"
+            onClick={handleGiphyClick}
+            style={{}}
+          >
+            <AddGif />
+          </Button>
+        </Box>
+        <Box flex={16} justifyContent="flex-end">
+          {children}
+        </Box>
       </Box>
 
       <MenuBarDrawer open={open} handleDrawerClose={handleDrawerClose} />
