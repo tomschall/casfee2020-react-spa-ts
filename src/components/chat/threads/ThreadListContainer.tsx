@@ -3,14 +3,16 @@ import { useWatchThreadsSubscription } from '../../../api/generated/graphql';
 import ThreadList from './ThreadList';
 import { Alert } from '@material-ui/lab';
 import { Box, Grid, makeStyles } from '@material-ui/core';
+import MobileHeaderMenu from '../MobileHeaderMenu';
 import ThreadMenuBar from './ThreadMenuBar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     overflowY: 'scroll',
-    height: '90vh',
-    marginTop: theme.spacing(5),
-    marginBottom: theme.spacing(5),
+    height: '100vh',
+    marginTop: theme.spacing(0),
+    paddingTop: theme.spacing(0),
+    paddingBottom: theme.spacing(3),
   },
   end: {
     marginBottom: '2rem',
@@ -18,16 +20,18 @@ const useStyles = makeStyles((theme) => ({
   messageContainer: {
     [theme.breakpoints.up('lg')]: {
       padding: theme.spacing(10),
-      paddingTop: theme.spacing(5),
+      paddingTop: theme.spacing(12),
       paddingBottom: theme.spacing(0),
     },
     [theme.breakpoints.down('md')]: {
-      padding: theme.spacing(3),
-      paddingTop: theme.spacing(3),
+      padding: theme.spacing(2),
+      paddingTop: theme.spacing(12),
       paddingBottom: theme.spacing(0),
     },
     [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(1),
+      padding: theme.spacing(2),
+      paddingTop: theme.spacing(12),
+      paddingBottom: theme.spacing(0),
     },
   },
 }));
@@ -44,6 +48,9 @@ const ThreadListContainer: React.FC = () => {
   return (
     <>
       <div className={classes.root}>
+        <MobileHeaderMenu
+          channelName={`Thread ${JSON.stringify(data?.channel_thread[0].id)}`}
+        />
         <Grid container>
           {data?.channel_thread?.map((channelThread, index) => {
             if (channelThread.channel_thread_messages.length)
@@ -59,9 +66,6 @@ const ThreadListContainer: React.FC = () => {
               );
           })}
           <Box className={classes.end}>&nbsp;</Box>
-          <Box maxWidth="xl" component="nav">
-            <ThreadMenuBar />
-          </Box>
         </Grid>
       </div>
     </>

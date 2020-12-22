@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
   messageInput: {
     [theme.breakpoints.down('md')]: {
       fontSize: '.9rem',
+      paddingRight: theme.spacing(8),
     },
     '&.MuiFormLabel-root.Mui-focused': {
       color: theme.palette.secondary.main,
@@ -216,6 +217,8 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
           focused
           size={setTextFieldSize()}
           variant="outlined"
+          multiline
+          rows={1}
           color="primary"
           autoComplete="off"
           placeholder="..."
