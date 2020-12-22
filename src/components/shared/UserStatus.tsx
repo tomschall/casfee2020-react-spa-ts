@@ -21,41 +21,35 @@ const UserStatus: React.FC<OnlineUsersProps> = ({ user_id }) => {
     return <Alert severity="error">Online users could not be loaded.</Alert>;
   }
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
-    <>
-      {!loading ? (
-        <Box
-          display="flex"
-          flex="1"
-          justifyContent="space-between"
-          alignItems="center"
-          style={{
-            marginRight: theme.spacing(3),
-            marginLeft: theme.spacing(2),
-          }}
-        >
-          <Chip
-            variant="outlined"
-            color="primary"
-            size="small"
-            icon={<FaceIcon />}
-            label={user.nickname}
-            style={{ marginRight: 30 }}
-          />
-          <Tooltip
-            title="Users online"
-            aria-label="Unsers online"
-            placement="top"
-          >
-            <Badge color="secondary" badgeContent={usersOnline}>
-              <PeopleIcon color="primary" />
-            </Badge>
-          </Tooltip>
-        </Box>
-      ) : (
-        <Loader />
-      )}
-    </>
+    <Box
+      display="flex"
+      flex="1"
+      justifyContent="space-between"
+      alignItems="center"
+      style={{
+        marginRight: theme.spacing(3),
+        marginLeft: theme.spacing(2),
+      }}
+    >
+      <Chip
+        variant="outlined"
+        color="primary"
+        size="small"
+        icon={<FaceIcon />}
+        label={user.nickname}
+        style={{ marginRight: 30 }}
+      />
+      <Tooltip title="Users online" aria-label="Unsers online" placement="top">
+        <Badge color="secondary" badgeContent={usersOnline}>
+          <PeopleIcon color="primary" />
+        </Badge>
+      </Tooltip>
+    </Box>
   );
 };
 
