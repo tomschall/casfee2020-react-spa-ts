@@ -8,10 +8,12 @@ import {
   Badge,
   Box,
   Divider,
+  FormHelperText,
   ListItem,
   ListItemAvatar,
   ListItemIcon,
   Typography,
+  Button,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -79,6 +81,12 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: '#f57c00',
     color: '#000000',
   },
+  loadMoreButton: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: theme.spacing(1),
+  },
 }));
 
 interface ThreadMessageListProps {
@@ -86,6 +94,7 @@ interface ThreadMessageListProps {
   user: any;
   channelThread: any;
   currentChannel: any;
+  handleIncreaseLimit: any;
 }
 
 const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
@@ -93,6 +102,7 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
   user,
   channelThread,
   currentChannel,
+  handleIncreaseLimit,
 }) => {
   const classes = useStyles();
 
@@ -160,6 +170,11 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
         channelThread={channelThread}
         currentChannel={currentChannel}
       />
+
+      <Box className={classes.loadMoreButton}>
+        <Button onClick={handleIncreaseLimit}>load more...</Button>
+      </Box>
+
       {messages
         ? [...messages]
             ?.reverse()

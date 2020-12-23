@@ -9,6 +9,7 @@ import {
   Avatar,
   Badge,
   Box,
+  Button,
   Divider,
   ListItem,
   ListItemAvatar,
@@ -78,6 +79,12 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     border: '2px solid #f57c00',
   },
+  loadMoreButton: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: theme.spacing(1),
+  },
 }));
 
 interface MessageProps {
@@ -85,6 +92,7 @@ interface MessageProps {
   lastMessage: any;
   preLastMessageId: number;
   user: any;
+  handleIncreaseLimit: any;
 }
 
 const MessageList: React.FC<MessageProps> = ({
@@ -92,6 +100,7 @@ const MessageList: React.FC<MessageProps> = ({
   lastMessage,
   preLastMessageId,
   user,
+  handleIncreaseLimit,
 }) => {
   const classes = useStyles();
   const [showUpdate, setShowUpdate] = useState<boolean>(false);
@@ -218,6 +227,10 @@ const MessageList: React.FC<MessageProps> = ({
 
   return (
     <>
+      <Box className={classes.loadMoreButton}>
+        <Button onClick={handleIncreaseLimit}>load more...</Button>
+      </Box>
+
       {[...messages]?.reverse()?.map((message, i) => renderMessage(message))}
 
       {!deletedMessage &&

@@ -177,6 +177,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
             lastMessage={lastMessage}
             preLastMessageId={preLastMessageId}
             user={user}
+            handleIncreaseLimit={handleIncreaseLimit}
           />
         </List>
         <div ref={messagesEndRef} />

@@ -5,7 +5,7 @@ import ThreadMessageList from './ThreadMessageList';
 import { Alert } from '@material-ui/lab';
 import { ThreadMessage } from '../../../interfaces/message.interface';
 import ThreadListInputContainer from './ThreadListInputContainer';
-import { List } from '@material-ui/core';
+import { Box, List } from '@material-ui/core';
 
 interface ThreadListProps {
   channelThread: any;
@@ -40,6 +40,7 @@ const ThreadList: React.FC<ThreadListProps> = ({ channelThread }) => {
           user={user}
           channelThread={channelThread}
           currentChannel={channelThread.message.channel}
+          handleIncreaseLimit={handleIncreaseLimit}
         />
         <ThreadListInputContainer
           channelId={channelThread.message?.id}
