@@ -191,7 +191,7 @@ const AddDirectMessageChannel: React.FC = () => {
           </Box>
         </Grid>
         <Grid item xs={12}>
-          <Box display="flex" justifyContent="center" mt={5}>
+          <Box display="flex" justifyContent="center" mt={5} mb={5}>
             <Button
               variant="contained"
               color="secondary"

@@ -135,7 +135,7 @@ const PublishChannelPolling: React.FC = () => {
     });
   };
 
-  if (loading || error || getPollAnswerVotesLoading || userVoteLoading) {
+  if (loading || error || userVoteLoading) {
     return <Loader />;
   }
 
