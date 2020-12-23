@@ -15,8 +15,9 @@ const DeleteMessage: React.FC<DeleteMessageProps> = ({ messageId }) => {
 
   const [deleteMessageMutation, { data, error }] = useDeleteMessageMutation();
 
-  const handleDelete = (messageId: number) => {
-    deleteMessageMutation({
+  const handleDelete = async (messageId: number) => {
+    setdeletedMessage(true);
+    await deleteMessageMutation({
       variables: {
         message_id: messageId,
       },
@@ -29,13 +30,6 @@ const DeleteMessage: React.FC<DeleteMessageProps> = ({ messageId }) => {
       data?.delete_message?.affected_rows === 0)
   ) {
     return <Alert severity="error">Message could not get deleted...</Alert>;
-  }
-
-  if (
-    data?.delete_message?.affected_rows !== undefined &&
-    data?.delete_message?.affected_rows >= 0
-  ) {
-    setdeletedMessage(true);
   }
 
   return (

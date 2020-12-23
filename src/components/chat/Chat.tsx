@@ -78,7 +78,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  let preLastMessageId = 0;
+  let preLastMessageId: number = 0;
 
   const { data, loading, error } = useWatchMessagesSubscription({
     variables: {
