@@ -72,7 +72,6 @@ interface ChatProps {
 const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   const classes = useStyles();
   const [limit, setLimit] = useState<number>(20);
-  const [scroll, setScroll] = useState<boolean>(true);
   const [lastMessage, setLastMessage] = useState<Message | null>(null);
   const { user } = useAuth0();
   let history = useHistory();
@@ -93,7 +92,9 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
 
   const scrollToBottom = () => {
     if (typeof messagesEndRef === 'object') {
-      messagesEndRef?.current?.scrollIntoView();
+      setTimeout(() => {
+        messagesEndRef?.current?.scrollIntoView();
+      }, 100);
     }
   };
 
@@ -106,10 +107,13 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
           user_id: user.sub,
         },
       });
-    setTimeout(() => {
-      if (scroll) scrollToBottom();
-    }, 400);
   }, [data]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      scrollToBottom();
+    }, 1000);
+  }, []);
 
   if (error) {
     return <Alert severity="error">Messages could not be loaded.</Alert>;
@@ -137,7 +141,6 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   }
 
   const handleIncreaseLimit = () => {
-    setScroll(false);
     setLimit(limit + 20);
   };
 
@@ -185,7 +188,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
             channelId={channelId}
             handleSetLastMessage={handleSetLastMessage}
             preLastMessageId={preLastMessageId}
-            setScroll={setScroll}
+            scrollToBottom={scrollToBottom}
           />
         </MenuBar>
       </Box>

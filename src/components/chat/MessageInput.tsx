@@ -79,7 +79,7 @@ interface ChatInputProps {
   channelId: number;
   handleSetLastMessage: Function;
   preLastMessageId: number;
-  setScroll: any;
+  scrollToBottom: any;
 }
 
 const ChatInput: React.FC<ChatInputProps> = (props) => {
@@ -146,8 +146,6 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    props.setScroll(true);
-
     if (text === '' && gif === null) {
       return;
     }
@@ -167,6 +165,8 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
       image: gif?.images?.fixed_width?.url,
       channel_id: channelId,
     });
+
+    props.scrollToBottom(true);
 
     await sendMessage({
       variables: {
