@@ -89,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
 
 interface MessageProps {
   messages: Message[];
-  lastMessage: any;
+  lastMessage: Message | null;
   preLastMessageId: number;
   user: any;
   handleIncreaseLimit: any;
