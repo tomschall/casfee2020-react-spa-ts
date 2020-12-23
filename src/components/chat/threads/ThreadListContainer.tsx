@@ -3,7 +3,6 @@ import { useWatchThreadsSubscription } from '../../../api/generated/graphql';
 import ThreadList from './ThreadList';
 import { Alert } from '@material-ui/lab';
 import { Box, Grid, makeStyles } from '@material-ui/core';
-import MobileHeaderMenu from '../MobileHeaderMenu';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,9 +46,6 @@ const ThreadListContainer: React.FC = () => {
   return (
     <>
       <div className={classes.root}>
-        <MobileHeaderMenu
-          channelName={`Thread ${JSON.stringify(data?.channel_thread[0].id)}`}
-        />
         <Grid container>
           {data?.channel_thread?.map((channelThread, index) => {
             if (channelThread.channel_thread_messages.length)

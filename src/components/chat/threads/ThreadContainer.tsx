@@ -49,7 +49,9 @@ const ThreadContainer: React.FC = () => {
           </Grid>
         )}
         <Grid item xs={12}>
-          <MobileHeaderMenu channelName="THREAD" />
+          <MobileHeaderMenu
+            channelName={`${channel ? `Thread - ${channel}` : 'Threadlist'}`}
+          />
           {channel ? <Thread /> : <ThreadListContainer />}
         </Grid>
       </Container>
