@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { theme } from '../../theme/theme';
 import { useRecoilState } from 'recoil';
-import { Box, Button, Chip, IconButton } from '@material-ui/core';
+import { Box, Chip, IconButton } from '@material-ui/core';
 import { currentChannelState } from '../../atom';
 import PeopleIcon from '@material-ui/icons/People';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: 50,
     height: 50,
     backgroundColor: theme.palette.primary.dark,
-    marginLeft: theme.spacing(1),
+    marginLeft: theme.spacing(0),
     '& .MuiIconButton-label': {
       marginLeft: theme.spacing(1),
     },
@@ -87,6 +87,7 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
           color="primary"
           label={channelName}
           icon={<PeopleIcon />}
+          style={{ maxWidth: theme.spacing(20) }}
         />
         <PollPopUp channelId={currentChannel?.id} />
         <Logout />
