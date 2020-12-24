@@ -17,8 +17,12 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
     overflowY: 'scroll',
     WebkitOverflowScrolling: 'touch',
-    [theme.breakpoints.up('sm')]: {},
-    [theme.breakpoints.down('sm')]: {},
+    [theme.breakpoints.up('sm')]: {
+      paddingBottom: theme.spacing(5),
+    },
+    [theme.breakpoints.down('sm')]: {
+      paddingBottom: theme.spacing(5),
+    },
   },
   branding: {
     display: 'flex',
