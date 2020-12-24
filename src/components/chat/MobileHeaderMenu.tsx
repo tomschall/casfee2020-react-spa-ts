@@ -14,6 +14,7 @@ import MenuBarDrawer from '../shared/MenuBarDrawer';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
+    justifyContent: 'space-between',
     backgroundColor: theme.palette.background.default,
     marginTop: theme.spacing(0),
     paddingTop: theme.spacing(2),
@@ -21,12 +22,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingRight: theme.spacing(2),
     paddingBottom: theme.spacing(2),
     zIndex: 1000,
-    [theme.breakpoints.down('md')]: {
-      position: 'fixed',
-    },
     [theme.breakpoints.up('md')]: {
       position: 'fixed',
       width: '75vw',
+    },
+    [theme.breakpoints.down('md')]: {
+      position: 'fixed',
     },
   },
   menuButton: {
@@ -37,6 +38,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     '& .MuiIconButton-label': {
       marginLeft: theme.spacing(1),
     },
+  },
+  title: {
+    width: 180,
+    maxWidth: theme.spacing(22),
   },
 }));
 
@@ -65,7 +70,6 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
     <>
       <Box
         display="flex"
-        justifyContent="space-between"
         alignItems="center"
         flexDirection="row"
         width={1}
@@ -87,7 +91,7 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
           color="primary"
           label={channelName}
           icon={<PeopleIcon />}
-          style={{ maxWidth: theme.spacing(20) }}
+          className={classes.title}
         />
         <PollPopUp channelId={currentChannel?.id} />
         <Logout />
