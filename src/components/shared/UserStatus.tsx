@@ -29,7 +29,7 @@ const UserStatus: React.FC<OnlineUsersProps> = ({ user_id }) => {
     <Box
       display="flex"
       flex="1"
-      justifyContent="space-between"
+      justifyContent="flex-end"
       alignItems="center"
       style={{
         marginRight: theme.spacing(3),
