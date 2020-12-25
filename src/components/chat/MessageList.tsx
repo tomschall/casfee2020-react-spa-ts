@@ -86,6 +86,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     paddingTop: theme.spacing(5),
   },
+  divider: {
+    flex: 1,
+  },
 }));
 
 interface MessageProps {
@@ -228,7 +231,13 @@ const MessageList: React.FC<MessageProps> = ({
 
   return (
     <>
-      <Box className={classes.loadMoreButton}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        className={classes.loadMoreButton}
+      >
+        <Divider className={classes.divider} />
         <Button
           endIcon={
             <CircularProgress
@@ -240,6 +249,7 @@ const MessageList: React.FC<MessageProps> = ({
         >
           load more
         </Button>
+        <Divider className={classes.divider} />
       </Box>
 
       {[...messages]?.reverse()?.map((message, i) => renderMessage(message))}
