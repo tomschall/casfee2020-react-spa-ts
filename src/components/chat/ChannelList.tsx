@@ -29,11 +29,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
   },
-  treeView: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
   badge: {
     backgroundColor: '#0f0',
   },

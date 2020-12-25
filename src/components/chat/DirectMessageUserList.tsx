@@ -103,7 +103,11 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
               <Link className={classes.link} to={'/channel/' + data.name}>
                 <ListItem button>
                   <OnlineUserStatus user={data.user_channels[0]?.user} />
-                  {data.user_channels[0]?.user.username}
+                  <ListItemText>
+                    <Typography variant="h6">
+                      {data.user_channels[0]?.user.username}
+                    </Typography>
+                  </ListItemText>
                   <ChannelListMessageCounter channelId={data.id} />
                 </ListItem>
               </Link>
