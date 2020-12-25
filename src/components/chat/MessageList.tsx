@@ -5,6 +5,7 @@ import ThreadReply from './threads/ThreadReply';
 import ThreadReplyIn from './threads/ThreadReplyIn';
 import DeleteMessageWrapper from './DeleteMessageWrapper';
 import UpdateMessage from './UpdateMessage';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import {
   Avatar,
   Badge,
@@ -83,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: theme.spacing(1),
+    paddingTop: theme.spacing(5),
   },
 }));
 
@@ -228,7 +229,17 @@ const MessageList: React.FC<MessageProps> = ({
   return (
     <>
       <Box className={classes.loadMoreButton}>
-        <Button onClick={handleIncreaseLimit}>load more...</Button>
+        <Button
+          endIcon={
+            <CircularProgress
+              color="secondary"
+              style={{ height: 10, width: 10 }}
+            />
+          }
+          onClick={handleIncreaseLimit}
+        >
+          load more
+        </Button>
       </Box>
 
       {[...messages]?.reverse()?.map((message, i) => renderMessage(message))}
