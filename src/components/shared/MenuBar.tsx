@@ -120,6 +120,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ children, channelId }) => {
   };
 
   const hideGiphyCarousel = () => {
+    setOpenGiphy(!openGiphy);
     setShowGiphyCarousel(false);
   };
 
