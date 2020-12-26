@@ -19,6 +19,8 @@ import { Channel_Type_Enum } from '../../api/generated/graphql';
 import UnreadMessageCounter from './UnreadMessageCounter';
 import { makeStyles } from '@material-ui/core/styles';
 import OnlineUserStatus from '../shared/OnlineUserStatus';
+import { useRecoilState } from 'recoil';
+import { currentChannelState } from '../../atom';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -52,6 +54,8 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   let history = useHistory();
+
+  const [currentChannel] = useRecoilState<any>(currentChannelState);
 
   const { data, loading, error } = useWatchDirectMessageChannelsSubscription({
     variables: {
@@ -103,12 +107,24 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
               <Link className={classes.link} to={'/channel/' + data.name}>
                 <ListItem button>
                   <OnlineUserStatus user={data.user_channels[0]?.user} />
-                  <ListItemText>
-                    <Typography variant="h6">
-                      {data.user_channels[0]?.user.username}
-                    </Typography>
-                  </ListItemText>
-                  <UnreadMessageCounter channelId={data.id} />
+                  {data?.id === currentChannel?.id ? (
+                    <>
+                      <ListItemText>
+                        <Typography variant="h6" color="secondary">
+                          {data.user_channels[0]?.user.username}
+                        </Typography>
+                      </ListItemText>
+                    </>
+                  ) : (
+                    <>
+                      <ListItemText>
+                        <Typography variant="h6">
+                          {data.user_channels[0]?.user.username}
+                        </Typography>
+                      </ListItemText>
+                      <UnreadMessageCounter channelId={data.id} />
+                    </>
+                  )}
                 </ListItem>
               </Link>
             ))}

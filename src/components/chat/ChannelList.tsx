@@ -76,31 +76,30 @@ const Channels: React.FC<any> = () => {
             {data?.channels?.map((data: any, index) => (
               <Link key={data.id} to={'/channel/' + data.name}>
                 <ListItem button>
-                  {data?.name === currentChannel?.name ? (
-                    <ListItemIcon>
-                      {data.is_private === true ? (
-                        <EnhancedEncryptionOutlinedIcon color="secondary" />
-                      ) : (
-                        <PeopleIcon color="secondary" />
-                      )}
-                    </ListItemIcon>
-                  ) : (
-                    <ListItemIcon>
-                      {data.is_private === true ? (
-                        <EnhancedEncryptionOutlinedIcon />
-                      ) : (
-                        <PeopleIcon />
-                      )}
-                    </ListItemIcon>
-                  )}
-                  {data?.name === currentChannel?.name ? (
-                    <ListItemText>
-                      <Typography variant="h6" color="secondary">
-                        {data.name}
-                      </Typography>
-                    </ListItemText>
+                  {data?.id === currentChannel?.id ? (
+                    <>
+                      <ListItemIcon>
+                        {data.is_private === true ? (
+                          <EnhancedEncryptionOutlinedIcon color="secondary" />
+                        ) : (
+                          <PeopleIcon color="secondary" />
+                        )}
+                      </ListItemIcon>
+                      <ListItemText>
+                        <Typography variant="h6" color="secondary">
+                          {data.name}
+                        </Typography>
+                      </ListItemText>
+                    </>
                   ) : (
                     <>
+                      <ListItemIcon>
+                        {data.is_private === true ? (
+                          <EnhancedEncryptionOutlinedIcon />
+                        ) : (
+                          <PeopleIcon />
+                        )}
+                      </ListItemIcon>
                       <ListItemText primary={data?.name} />
                       <UnreadMessageCounter channelId={data.id} />
                     </>
