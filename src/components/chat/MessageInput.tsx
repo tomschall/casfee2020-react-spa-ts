@@ -181,13 +181,10 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
       },
     });
 
-    setTimeout(() => {
-      if (textInput !== null) textInput?.current?.focus();
-    }, 100);
-
     setText('');
     setGif(null);
     setdeletedMessage(false);
+    textInput?.current?.focus();
   };
 
   return (
