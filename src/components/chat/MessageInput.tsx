@@ -112,11 +112,13 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
   };
 
   const { user } = useAuth0();
-  const [text, setText] = useState('');
+  const [text, setText] = useState<string>('');
   const [gif, setGif] = useRecoilState<IGif | null>(giphyState);
   const [deletedMessage, setdeletedMessage] = useRecoilState<boolean>(
     deletedMessageState,
   );
+
+  let textInput = useRef<HTMLDivElement>(null);
 
   const channelId = props.channelId;
 
@@ -179,6 +181,10 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
       },
     });
 
+    setTimeout(() => {
+      if (textInput !== null) textInput?.current?.focus();
+    }, 100);
+
     setText('');
     setGif(null);
     setdeletedMessage(false);
@@ -213,7 +219,8 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
           onChange={(e) => {
             handleTyping(e.target.value);
           }}
-          focused
+          focused={true}
+          inputRef={textInput}
           size={setTextFieldSize()}
           variant="outlined"
           multiline
