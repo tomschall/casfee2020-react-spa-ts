@@ -102,6 +102,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ children, channelId }) => {
     currentChannelState,
   );
   const [open, setOpen] = React.useState(false); // Sidebar default state
+  const [openGiphy, setOpenGiphy] = React.useState<boolean>(false);
 
   const [showGiphyCarousel, setShowGiphyCarousel] = React.useState(false);
 
@@ -115,9 +116,11 @@ const MenuBar: React.FC<MenuBarProps> = ({ children, channelId }) => {
 
   const handleGiphyClick = () => {
     setShowGiphyCarousel(!showGiphyCarousel);
+    setOpenGiphy(!openGiphy);
   };
 
   const hideGiphyCarousel = () => {
+    setOpenGiphy(!openGiphy);
     setShowGiphyCarousel(false);
   };
 
@@ -136,8 +139,8 @@ const MenuBar: React.FC<MenuBarProps> = ({ children, channelId }) => {
       <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
         <Box flex={1}>
           <Button
-            aria-label="giphy"
-            color="primary"
+            aria-label="giphyyyyy"
+            color={openGiphy === false ? 'primary' : 'secondary'}
             size="large"
             onClick={handleGiphyClick}
             className={classes.giphyButton}

@@ -124,7 +124,7 @@ export default {
   MuiDivider: {
     root: {
       margin: 10,
-      opacity: 0.3,
+      opacity: 0.5,
     },
   },
   MuiTypography: {},

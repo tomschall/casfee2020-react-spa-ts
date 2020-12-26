@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(0),
   },
   checkbox: {
-    color: theme.palette.primary.dark,
+    color: theme.palette.secondary.main,
   },
   submit: {
     marginTop: theme.spacing(2),
