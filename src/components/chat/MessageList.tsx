@@ -97,6 +97,7 @@ interface MessageProps {
   preLastMessageId: number;
   user: any;
   handleIncreaseLimit: any;
+  limit: number;
 }
 
 const MessageList: React.FC<MessageProps> = ({
@@ -105,6 +106,7 @@ const MessageList: React.FC<MessageProps> = ({
   preLastMessageId,
   user,
   handleIncreaseLimit,
+  limit,
 }) => {
   const classes = useStyles();
   const [showUpdate, setShowUpdate] = useState<boolean>(false);
@@ -238,17 +240,7 @@ const MessageList: React.FC<MessageProps> = ({
         className={classes.loadMoreButton}
       >
         <Divider className={classes.divider} />
-        <Button
-          endIcon={
-            <CircularProgress
-              color="secondary"
-              style={{ height: 10, width: 10 }}
-            />
-          }
-          onClick={handleIncreaseLimit}
-        >
-          load more
-        </Button>
+        <Button onClick={handleIncreaseLimit}>load more (+{limit})</Button>
         <Divider className={classes.divider} />
       </Box>
 

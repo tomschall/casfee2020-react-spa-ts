@@ -95,6 +95,7 @@ interface ThreadMessageListProps {
   channelThread: any;
   currentChannel: any;
   handleIncreaseLimit: any;
+  limit: number;
 }
 
 const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
@@ -103,6 +104,7 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
   channelThread,
   currentChannel,
   handleIncreaseLimit,
+  limit,
 }) => {
   const classes = useStyles();
 
@@ -172,7 +174,7 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
       />
 
       <Box className={classes.loadMoreButton}>
-        <Button onClick={handleIncreaseLimit}>load more...</Button>
+        <Button onClick={handleIncreaseLimit}>load more (+{limit})</Button>
       </Box>
 
       {messages

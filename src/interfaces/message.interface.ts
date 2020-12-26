@@ -18,4 +18,5 @@ export interface ThreadMessage {
   image: string;
   timestamp: Date;
   user?: any;
+  limit: number;
 }

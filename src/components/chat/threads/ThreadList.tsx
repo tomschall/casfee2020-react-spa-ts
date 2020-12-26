@@ -41,6 +41,7 @@ const ThreadList: React.FC<ThreadListProps> = ({ channelThread }) => {
           channelThread={channelThread}
           currentChannel={channelThread.message.channel}
           handleIncreaseLimit={handleIncreaseLimit}
+          limit={limit}
         />
         <ThreadListInputContainer
           channelId={channelThread.message?.id}
