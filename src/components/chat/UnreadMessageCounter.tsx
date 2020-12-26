@@ -3,10 +3,7 @@ import {
   useWatchMessagesSubscription,
   useWatchMessageCursorSubscription,
 } from '../../api/generated/graphql';
-import { useRecoilState } from 'recoil';
-import { currentChannelState } from '../../atom';
 import { useAuth0 } from '@auth0/auth0-react';
-import Alert from '@material-ui/lab/Alert';
 import { Chip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -24,11 +21,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface ChannelListMessageCounterProps {
+interface UnreadMessageCounterProps {
   channelId: number;
 }
 
-const ChannelListMessageCounter: React.FC<ChannelListMessageCounterProps> = ({
+const UnreadMessageCounter: React.FC<UnreadMessageCounterProps> = ({
   channelId,
 }) => {
   const classes = useStyles();
@@ -67,7 +64,7 @@ const ChannelListMessageCounter: React.FC<ChannelListMessageCounterProps> = ({
 
   if (error || useWatchMessageCursorError || auth0Error) {
     console.log(
-      'Error in ChannelListMessageCounter Component',
+      'Error in MessageCounter Component',
       error,
       useWatchMessageCursorError,
       auth0Error,
@@ -97,4 +94,4 @@ const ChannelListMessageCounter: React.FC<ChannelListMessageCounterProps> = ({
   );
 };
 
-export default ChannelListMessageCounter;
+export default UnreadMessageCounter;

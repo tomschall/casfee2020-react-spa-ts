@@ -16,7 +16,7 @@ import Loader from '../shared/Loader';
 import { Link, useHistory } from 'react-router-dom';
 import { useWatchDirectMessageChannelsSubscription } from '../../api/generated/graphql';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
-import ChannelListMessageCounter from './ChannelListMessageCounter';
+import UnreadMessageCounter from './UnreadMessageCounter';
 import { makeStyles } from '@material-ui/core/styles';
 import OnlineUserStatus from '../shared/OnlineUserStatus';
 
@@ -104,7 +104,7 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
                 <ListItem button>
                   <OnlineUserStatus user={data.user_channels[0]?.user} />
                   {data.user_channels[0]?.user.username}
-                  <ChannelListMessageCounter channelId={data.id} />
+                  <UnreadMessageCounter channelId={data.id} />
                 </ListItem>
               </Link>
             ))}
