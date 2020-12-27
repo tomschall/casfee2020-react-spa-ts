@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       paddingBottom: theme.spacing(5),
     },
+    [theme.breakpoints.down('sm')]: {
+      paddingBottom: theme.spacing(8),
+    },
   },
   branding: {
     display: 'flex',
@@ -40,8 +43,8 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     width: 50,
     height: 50,
-    backgroundColor: theme.palette.primary.dark,
-    marginLeft: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+    marginLeft: theme.spacing(2),
     '& .MuiIconButton-label': {
       marginRight: theme.spacing(1),
     },
