@@ -25,7 +25,6 @@ export const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     overflowWrap: 'break-word',
     wordBreak: 'break-all',
-    // background: 'red',
   },
   [theme.breakpoints.up('md')]: {
     messageText: {
