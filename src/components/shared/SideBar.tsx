@@ -57,6 +57,10 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+  logout: {
+    paddingRight: theme.spacing(1),
+    height: 100,
+  },
 }));
 
 interface SidebarProps {
@@ -92,8 +96,8 @@ const SideBar: React.FC<SidebarProps> = ({ handleDrawerClose, open }) => {
             <Box
               display="flex"
               justifyContent="space-between"
+              alignItems="center"
               style={{
-                // marginLeft: theme.spacing(3),
                 marginTop: theme.spacing(0),
               }}
             >
@@ -122,11 +126,8 @@ const SideBar: React.FC<SidebarProps> = ({ handleDrawerClose, open }) => {
             <Box
               display="flex"
               justifyContent="flex-end"
-              alignItems="center"
-              style={{
-                paddingRight: theme.spacing(1),
-                marginBottom: theme.spacing(10),
-              }}
+              alignItems="flex-start"
+              className={classes.logout}
             >
               <Logout />
             </Box>

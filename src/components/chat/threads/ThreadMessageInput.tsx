@@ -51,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.secondary.main,
     },
   },
-
   image: {
     border: '2px solid ' + theme.palette.secondary.main,
     height: 150,

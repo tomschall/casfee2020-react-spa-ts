@@ -18,12 +18,6 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
-  head: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    padding: theme.spacing(0),
-  },
   root: {
     display: 'flex',
     justifyContent: 'flex-start',
@@ -31,6 +25,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     overflowWrap: 'break-word',
     wordBreak: 'break-all',
+    // background: 'red',
   },
   [theme.breakpoints.up('md')]: {
     messageText: {
@@ -110,18 +105,17 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
 
   const renderMessage = (message: ThreadMessage) => {
     return (
-      <ListItem key={message.id} className={classes.root}>
-        <Box display="flex" justifyContent="flex-start" alignItems="flex-start">
-          <ListItemAvatar>
-            <ListItemIcon>
-              <Badge variant="dot">
-                <Avatar className={classes.avatar}>
-                  {message.user.username.substring(0, 2).toUpperCase()}
-                </Avatar>
-              </Badge>
-            </ListItemIcon>
-          </ListItemAvatar>
-        </Box>
+      <ListItem key={message.id} component="div" className={classes.root}>
+        <ListItemAvatar>
+          <ListItemIcon>
+            <Badge variant="dot">
+              <Avatar className={classes.avatar}>
+                {message.user.username.substring(0, 2).toUpperCase()}
+              </Avatar>
+            </Badge>
+          </ListItemIcon>
+        </ListItemAvatar>
+
         <Box component="div" display="flex" flexDirection="column" flex="1">
           <Box
             display="flex"

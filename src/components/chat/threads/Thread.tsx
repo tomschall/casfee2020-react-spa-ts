@@ -11,6 +11,7 @@ import {
   useGetChannelThreadQuery,
 } from '../../../api/generated/graphql';
 import ThreadMessageList from './ThreadMessageList';
+import ThreadInfo from './ThreadInfo';
 import Loader from '../../shared/Loader';
 import { Alert } from '@material-ui/lab';
 import { ThreadMessage } from '../../../interfaces/message.interface';
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
     marginTop: theme.spacing(0),
     padding: theme.spacing(2),
-    paddingTop: theme.spacing(6),
+    paddingTop: theme.spacing(15),
     paddingBottom: theme.spacing(5),
   },
   messageInput: {
@@ -33,10 +34,13 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     background: theme.palette.background.default,
     zIndex: 1000,
-    [theme.breakpoints.up('md')]: {
-      width: '70vw',
-    },
     [theme.breakpoints.up('lg')]: {
+      width: '75vw',
+    },
+    [theme.breakpoints.down('lg')]: {
+      width: '75vw',
+    },
+    [theme.breakpoints.down('md')]: {
       width: '75vw',
     },
     [theme.breakpoints.down('sm')]: {
@@ -106,7 +110,7 @@ const Thread: React.FC = () => {
   return (
     <>
       <Box className={classes.root}>
-        <List id="message-list">
+        <List id="message-list" component="div">
           <ThreadMessageList
             messages={data?.channel_thread_message as ThreadMessage[]}
             user={user}

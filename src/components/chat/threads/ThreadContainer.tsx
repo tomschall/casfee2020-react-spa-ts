@@ -28,6 +28,10 @@ const useStyles = makeStyles((theme) => ({
     borderRightStyle: 'solid',
     borderRightColor: theme.palette.primary.dark,
   },
+  chatApp: {
+    height: '100vh',
+    overflowY: 'hidden',
+  },
 }));
 
 const ThreadContainer: React.FC = () => {
@@ -44,11 +48,11 @@ const ThreadContainer: React.FC = () => {
         className={classes.container}
       >
         {matches === true && (
-          <Grid item xs={5} className={classes.sidebar}>
+          <Grid item xs={5} md={3} className={classes.sidebar}>
             <SideBar handleDrawerClose={() => false} open={false} />
           </Grid>
         )}
-        <Grid item xs={12}>
+        <Grid item xs={12} md={9} className={classes.chatApp}>
           <MobileHeaderMenu
             channelName={`${channel ? `Thread - ${channel}` : 'Threadlist'}`}
           />
