@@ -139,7 +139,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ children, channelId }) => {
       <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
         <Box flex={1}>
           <Button
-            aria-label="giphyyyyy"
+            aria-label="giphy"
             color={openGiphy === false ? 'primary' : 'secondary'}
             size="large"
             onClick={handleGiphyClick}

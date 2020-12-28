@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import {
   Button,
+  Box,
   Chip,
   Container,
   Grid,
@@ -25,16 +26,6 @@ import GiphyCarousel from '../../shared/GiphyCarousel';
 import AddGif from '@material-ui/icons/Gif';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  rootSingleChip: {
-    display: 'flex',
-    flexDirection: 'column',
-    flex: 1,
-  },
   giphyVisible: {
     marginTop: theme.spacing(2),
   },
@@ -52,40 +43,25 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   messageInput: {
-    floatingLabelFocusStyle: {
-      color: theme.palette.secondary.dark,
-    },
-  },
-  messageButton: {
     [theme.breakpoints.down('md')]: {
-      display: 'none',
+      fontSize: '1rem',
     },
-    [theme.breakpoints.up('md')]: {
-      size: 'large',
-      width: '25%',
+    '&.MuiFormLabel-root.Mui-focused': {
+      color: theme.palette.secondary.main,
     },
-    marginTop: theme.spacing(2),
-    marginLeft: theme.spacing(0),
-    backgroundColor: theme.palette.primary.dark,
   },
   image: {
     maxHeight: 55,
     paddingRight: theme.spacing(1),
   },
-  toolbar: {
+  giphyButton: {
+    marginRight: theme.spacing(1),
     [theme.breakpoints.up('md')]: {
-      paddingTop: theme.spacing(5),
-      paddingBottom: theme.spacing(5),
+      height: 56,
     },
     [theme.breakpoints.down('md')]: {
-      paddingLeft: theme.spacing(1),
-      paddingRight: theme.spacing(1),
-      paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2),
+      height: 40,
     },
-    borderTop: 1,
-    borderTopStyle: 'solid',
-    borderTopColor: theme.palette.primary.dark,
   },
 }));
 
@@ -98,7 +74,10 @@ const ThreadListInputContainer: React.FC<ThreadListInputContainerProps> = (
   props,
 ) => {
   const classes = useStyles();
+
   const matches = useMediaQuery(theme.breakpoints.up('md'));
+
+  const [openGiphy, setOpenGiphy] = React.useState<boolean>(false);
 
   const setTextFieldSize = () => {
     switch (matches) {
@@ -190,96 +169,85 @@ const ThreadListInputContainer: React.FC<ThreadListInputContainerProps> = (
 
   const handleGiphyClick = () => {
     setShowGiphyCarousel(!showGiphyCarousel);
+    setOpenGiphy(!openGiphy);
   };
 
   const hideGiphyCarousel = () => {
     setShowGiphyCarousel(false);
+    setOpenGiphy(!openGiphy);
   };
 
   return (
     <>
-      <li>
-        <Container maxWidth="lg">
-          <Grid item xs={12}>
-            <Chip
-              variant="outlined"
-              color="primary"
-              size="small"
-              icon={<AddGif />}
-              label="+Gif"
-              onClick={handleGiphyClick}
-            />
-          </Grid>
-          <Grid item xs={12} className={gif ? classes.giphyImage : ''}>
-            {gif && (
-              <img
-                className={classes.image}
-                alt={gif?.bitly_url}
-                src={gif?.images?.fixed_width?.url}
-                onClick={() => setGif(null)}
-              />
-            )}
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            className={
-              showGiphyCarousel ? classes.giphyVisible : classes.giphyHidden
-            }
+      <Grid item xs={12} className={gif ? classes.giphyImage : ''}>
+        {gif && (
+          <img
+            className={classes.image}
+            alt={gif?.bitly_url}
+            src={gif?.images?.fixed_width?.url}
+            onClick={() => setGif(null)}
+          />
+        )}
+      </Grid>
+      <Grid
+        item
+        xs={12}
+        className={
+          showGiphyCarousel ? classes.giphyVisible : classes.giphyHidden
+        }
+      >
+        <GiphyCarousel hideGiphyCarousel={() => hideGiphyCarousel()} />
+      </Grid>
+      <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
+        <Box>
+          <Button
+            aria-label="giphy"
+            variant="outlined"
+            color={openGiphy === false ? 'primary' : 'secondary'}
+            onClick={handleGiphyClick}
+            className={classes.giphyButton}
           >
-            <GiphyCarousel hideGiphyCarousel={() => hideGiphyCarousel()} />
-          </Grid>
-          <Grid item xs={12}>
-            <form
-              noValidate
+            <AddGif />
+          </Button>
+        </Box>
+        <Box flex={16} justifyContent="flex-end">
+          <form
+            noValidate
+            autoComplete="off"
+            className={classes.form}
+            onSubmit={handleSubmit}
+          >
+            <TextField
+              value={text}
+              autoFocus={false}
+              onChange={(e) => {
+                handleTyping(e.target.value);
+              }}
+              size={setTextFieldSize()}
+              variant="outlined"
+              color="secondary"
               autoComplete="off"
-              className={classes.form}
-              onSubmit={handleSubmit}
-            >
-              <TextField
-                value={text}
-                autoFocus={false}
-                onChange={(e) => {
-                  handleTyping(e.target.value);
-                }}
-                size={setTextFieldSize()}
-                variant="outlined"
-                color="secondary"
-                autoComplete="off"
-                placeholder="Type your message here ..."
-                id={`chat-message-input-${props.channelThreadId}`}
-                label={'Crackle your message here ...'}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton type="submit" color="secondary">
-                        <SendIcon />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                  classes: {
-                    input: classes.messageInput,
-                  },
-                }}
-                InputLabelProps={{
-                  className: classes.messageInput,
-                }}
-              />
-
-              {/* <Button
-                id={`chat-message-button-${props.channelThreadId}`}
-                size={setButtonSize()}
-                variant="contained"
-                endIcon={<Icon>send</Icon>}
-                className={classes.messageButton}
-                type="submit"
-              >
-                Send
-              </Button> */}
-            </form>
-          </Grid>
-        </Container>
-      </li>
+              id={`chat-message-input-${props.channelThreadId}`}
+              label={'Crackle your message here ...'}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton type="submit" color="secondary">
+                      <SendIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+                classes: {
+                  input: classes.messageInput,
+                },
+              }}
+              InputLabelProps={{
+                className: classes.messageInput,
+              }}
+            />
+          </form>
+        </Box>
+      </Box>
     </>
   );
 };
