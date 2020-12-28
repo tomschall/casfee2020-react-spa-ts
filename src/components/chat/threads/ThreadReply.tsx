@@ -50,7 +50,7 @@ const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
   if (channelThreadLoading)
     return (
       <div>
-        <IconButton>
+        <IconButton aria-label="reply to message">
           <ReplyIcon
             color="primary"
             fontSize="small"
@@ -63,7 +63,10 @@ const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
   if (channelThreadData?.channel_thread?.length) {
     return (
       <div>
-        <IconButton onClick={() => navigateToThreadChannel()}>
+        <IconButton
+          onClick={() => navigateToThreadChannel()}
+          aria-label="reply to message"
+        >
           <ReplyIcon
             color="primary"
             fontSize="small"

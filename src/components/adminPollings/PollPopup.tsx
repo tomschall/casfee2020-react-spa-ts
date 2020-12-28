@@ -110,7 +110,7 @@ const PollPopUp: React.FC<PollPopUpProps> = ({ channelId }) => {
 
                   <PublishChannelPolling />
                   <Button
-                    aria-label="close"
+                    aria-label="close poll popover"
                     onClick={popupState.close}
                     style={{ maxWidth: '10vw' }}
                   >

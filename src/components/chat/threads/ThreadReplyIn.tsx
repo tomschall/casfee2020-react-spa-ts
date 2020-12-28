@@ -64,6 +64,7 @@ const ThreadReplyIn: React.FC<ThreadReplyInProps> = ({
             to={{
               pathname: `/channel/${channelName}/thread/${message?.id}`,
             }}
+            aria-label={`reply to message in channel thread ${channelName}`}
           >
             {`${
               channelThreadData?.channel_thread[0]?.channel_thread_messages

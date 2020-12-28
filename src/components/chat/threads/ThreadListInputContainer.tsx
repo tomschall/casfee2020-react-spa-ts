@@ -201,7 +201,7 @@ const ThreadListInputContainer: React.FC<ThreadListInputContainerProps> = (
       <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
         <Box>
           <Button
-            aria-label="giphy"
+            aria-label="add giphy"
             variant="outlined"
             color={openGiphy === false ? 'primary' : 'secondary'}
             onClick={handleGiphyClick}

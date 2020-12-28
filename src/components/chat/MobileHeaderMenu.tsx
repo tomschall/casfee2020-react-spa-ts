@@ -79,7 +79,7 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
           <IconButton
             className={classes.menuButton}
             color="inherit"
-            aria-label="open drawer"
+            aria-label="open menu"
             onClick={handleDrawerOpen}
           >
             <ArrowBackIosIcon />
@@ -92,6 +92,7 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
           label={channelName}
           icon={<PeopleIcon />}
           className={classes.title}
+          aria-label={`channel: ${channelName}`}
         />
         <PollPopUp channelId={currentChannel?.id} />
         <Logout />

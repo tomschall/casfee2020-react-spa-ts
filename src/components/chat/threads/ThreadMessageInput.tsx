@@ -210,7 +210,11 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton type="submit" color="secondary">
+                <IconButton
+                  type="submit"
+                  color="secondary"
+                  aria-label="submit message"
+                >
                   <SendIcon />
                 </IconButton>
               </InputAdornment>
