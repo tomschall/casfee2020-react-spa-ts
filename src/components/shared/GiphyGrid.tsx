@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { GiphyFetch } from '@giphy/js-fetch-api';
 import { Grid } from '@giphy/react-components';
+import { Button } from '@material-ui/core';
 import ResizeObserver from 'react-resize-observer';
 import { useHistory } from 'react-router';
 import { IGif } from '@giphy/js-types';
@@ -28,9 +29,13 @@ const GiphyGrid: React.FC<any> = () => {
 
   return (
     <>
-      <button type="button" onClick={handleClick}>
+      <Button
+        type="button"
+        onClick={handleClick}
+        aria-label="back to channel general"
+      >
         back to general channel...
-      </button>
+      </Button>
       <Grid
         onGifClick={onGifClick}
         fetchGifs={fetchGifs}

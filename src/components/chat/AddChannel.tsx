@@ -137,9 +137,9 @@ const AddChannel: React.FC = () => {
   }
 
   return (
-    <List className={classes.root}>
+    <List className={classes.root} component="div">
       <ListItem button onClick={handleClick}>
-        <ListItemIcon>
+        <ListItemIcon aria-label="open add channel">
           {open ? <GroupAddIcon /> : <GroupAddOutlinedIcon />}
         </ListItemIcon>
         <ListItemText primary="Add Channel" />
@@ -233,6 +233,7 @@ const AddChannel: React.FC = () => {
                     endIcon={<AddCircle />}
                     className={classes.submit}
                     variant="outlined"
+                    arial-label="Add channel"
                   >
                     Add new channel
                   </Button>

@@ -104,6 +104,7 @@ const AddPollQuestion: React.FC = () => {
             variant="contained"
             endIcon={<HowToVoteIcon />}
             className={classes.messageButton}
+            aria-label="Vote!"
           >
             Add poll
           </Button>

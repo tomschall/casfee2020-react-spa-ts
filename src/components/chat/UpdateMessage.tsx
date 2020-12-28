@@ -109,6 +109,7 @@ const UpdateMessage: React.FC<UpdateMessageProps> = ({ message }) => {
           className={classes.messageButton}
           onClick={(e) => handleUpdate(e)}
           type="button"
+          aria-label="update message"
         >
           Save
         </Button>

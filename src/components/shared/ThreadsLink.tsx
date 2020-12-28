@@ -36,7 +36,7 @@ const ThreadsLink: React.FC<any> = () => {
           <ForumOutlinedIcon />
         </ListItemIcon>
         <ListItemText>
-          <Link to="/channel/threads">
+          <Link to="/channel/threads" aria-label="Open Threads">
             <Typography variant="h6">Threads</Typography>
           </Link>
         </ListItemText>

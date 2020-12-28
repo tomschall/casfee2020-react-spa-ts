@@ -42,6 +42,7 @@ const DeleteAnswer: React.FC<DeleteAnswerProps> = ({
         onClick={() => {
           handleDeleteAnswer(answerId);
         }}
+        aria-label="Delete Answer"
       >
         Delete
       </Button>

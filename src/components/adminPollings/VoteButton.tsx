@@ -22,6 +22,7 @@ const VoteButton: React.FC<VoteButtonProps> = ({ enabled }) => {
         color="secondary"
         className={classes.pollSubmit}
         disabled={enabled}
+        aria-label="submit vote"
       >
         {enabled ? 'Choose Your Answer' : 'Vote'}
       </Button>

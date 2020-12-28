@@ -166,12 +166,13 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
               variant="contained"
               type="button"
               onClick={navigateToAddChannelMembers}
+              aria-label="add user to channel"
             >
               Add users to channel
             </Button>
           </Box>
         )}
-        <List id="message-list">
+        <List id="message-list" component="div">
           <MessageList
             messages={data?.messages as Message[]}
             lastMessage={lastMessage}
