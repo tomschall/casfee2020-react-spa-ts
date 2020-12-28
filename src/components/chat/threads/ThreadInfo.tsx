@@ -93,7 +93,7 @@ const ThreadInfo: React.FC<ThreadInfoProps> = ({
 
   const renderThreadInfo = (channelThread: any) => {
     return (
-      <React.Fragment>
+      <>
         <Box display="flex" justifyContent="center" alignItems="center">
           <Chip
             variant="outlined"
@@ -103,7 +103,11 @@ const ThreadInfo: React.FC<ThreadInfoProps> = ({
           />
         </Box>
         <Divider className={classes.vspaceTop} />
-        <ListItem key={channelThread.message.id} className={classes.head}>
+        <ListItem
+          key={channelThread.message.id}
+          component="div"
+          className={classes.head}
+        >
           <Box
             display="flex"
             justifyContent="flex-start"
@@ -163,7 +167,7 @@ const ThreadInfo: React.FC<ThreadInfoProps> = ({
             {messages?.length === 1 ? ' reply' : ' replies'}
           </Typography>
         </Box>
-      </React.Fragment>
+      </>
     );
   };
 

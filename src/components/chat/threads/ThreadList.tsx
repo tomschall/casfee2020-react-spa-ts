@@ -34,7 +34,7 @@ const ThreadList: React.FC<ThreadListProps> = ({ channelThread }) => {
 
   return (
     <>
-      <List>
+      <List component="div">
         <ThreadMessageList
           messages={data?.channel_thread_message as ThreadMessage[]}
           user={user}
