@@ -1,15 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import {
-  TextField,
-  Button,
-  Box,
-  InputAdornment,
-  IconButton,
-} from '@material-ui/core';
+import { TextField, Box, InputAdornment, IconButton } from '@material-ui/core';
 import { theme } from '../../theme/theme';
 import SendIcon from '@material-ui/icons/Send';
-import AddGif from '@material-ui/icons/Gif';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {
   useInsertMessageMutation,
@@ -75,14 +68,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface ChatInputProps {
+interface MessageInputProps {
   channelId: number;
   handleSetLastMessage: Function;
   preLastMessageId: number;
   scrollToBottom: any;
 }
 
-const ChatInput: React.FC<ChatInputProps> = (props) => {
+const MessageInput: React.FC<MessageInputProps> = (props) => {
   const classes = useStyles();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -91,18 +84,6 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
       case true:
         return 'medium';
 
-      case false:
-        return 'small';
-
-      default:
-        return 'small';
-    }
-  };
-
-  const setButtonSize = () => {
-    switch (matches) {
-      case true:
-        return 'large';
       case false:
         return 'small';
 
@@ -140,10 +121,7 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
     setText(text);
   };
 
-  const [
-    sendMessage,
-    { data: sendUpdateMessageData },
-  ] = useInsertMessageMutation();
+  const [sendMessage] = useInsertMessageMutation();
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -247,4 +225,4 @@ const ChatInput: React.FC<ChatInputProps> = (props) => {
   );
 };
 
-export default ChatInput;
+export default MessageInput;
