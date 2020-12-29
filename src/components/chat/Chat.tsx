@@ -154,7 +154,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
 
   return (
     <>
-      <Box className={classes.root}>
+      <Box className={classes.root} component="article">
         {isPrivate && channelType !== Channel_Type_Enum.DirectMessage && (
           <Box
             display="flex"
@@ -184,7 +184,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
         </List>
         <div ref={messagesEndRef} />
       </Box>
-      <Box className={classes.messageInput}>
+      <Box className={classes.messageInput} component="footer">
         <MenuBar channelId={channelId}>
           <MessageInput
             channelId={channelId}
