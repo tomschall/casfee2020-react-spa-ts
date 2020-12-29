@@ -180,23 +180,20 @@ const MessageList: React.FC<MessageProps> = ({
                 justifyContent="flex-start"
                 alignItems="flex-start"
               >
-                <Typography variant="caption">
-                  {/* <ThreadReply message={message} channelName={channelName} /> */}
-                  <MessageOptions message={message} channelName={channelName} />
-                </Typography>
-                {!message.deleted ? (
-                  <React.Fragment>
-                    {user.sub === message.user.auth0_user_id && (
-                      <Typography variant="caption">
-                        {!(
-                          showUpdate && showUpdateMessageId === message.id
-                        ) && <DeleteMessageWrapper messageId={message.id} />}
-                      </Typography>
-                    )}
-                  </React.Fragment>
-                ) : (
-                  ''
-                )}
+                <MessageOptions
+                  message={message}
+                  channelName={channelName}
+                  messageId={
+                    !message.deleted &&
+                    user.sub === message.user.auth0_user_id &&
+                    !(showUpdate && showUpdateMessageId === message.id)
+                      ? message.id
+                      : null
+                  }
+                  handleShowUpdate={() => {
+                    handleShowUpdate(message);
+                  }}
+                />
               </Box>
             </Box>
           </Box>
