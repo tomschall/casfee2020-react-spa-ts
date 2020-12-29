@@ -49,20 +49,21 @@ const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
 
   if (channelThreadLoading)
     return (
-      <div>
+      <>
         <IconButton aria-label="reply to message">
           <ReplyIcon
             color="primary"
             fontSize="small"
             style={{ transform: 'scaleX(-1)' }}
+            aria-label="reply to message"
           />
         </IconButton>
-      </div>
+      </>
     );
 
   if (channelThreadData?.channel_thread?.length) {
     return (
-      <div>
+      <>
         <IconButton
           onClick={() => navigateToThreadChannel()}
           aria-label="reply to message"
@@ -71,22 +72,24 @@ const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
             color="primary"
             fontSize="small"
             style={{ transform: 'scaleX(-1)' }}
+            aria-label="reply to message"
           />
         </IconButton>
-      </div>
+      </>
     );
   }
 
   return (
-    <div>
-      <IconButton onClick={handleClick}>
+    <>
+      <IconButton onClick={handleClick} aria-label="reply to message">
         <ReplyIcon
           color="primary"
           fontSize="small"
           style={{ transform: 'scaleX(-1)' }}
+          aria-label="reply to message"
         />
       </IconButton>
-    </div>
+    </>
   );
 };
 

@@ -60,9 +60,9 @@ const Channels: React.FC<any> = () => {
 
   return (
     <>
-      <List className={classes.root}>
+      <List component="div" className={classes.root}>
         <ThreadsLink />
-        <ListItem button onClick={handleClick}>
+        <ListItem button onClick={handleClick} aria-label="open channel list">
           <ListItemIcon>
             <PeopleOutlineIcon />
           </ListItemIcon>

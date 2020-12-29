@@ -31,6 +31,7 @@ const Logout: React.FC = () => {
           });
           window.localStorage.clear();
         }}
+        aria-label="Logout"
       >
         <ExitToAppIcon />
       </IconButton>

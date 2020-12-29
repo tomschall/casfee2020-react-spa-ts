@@ -201,11 +201,11 @@ const ThreadListInputContainer: React.FC<ThreadListInputContainerProps> = (
       <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
         <Box>
           <Button
-            aria-label="add giphy"
             variant="outlined"
             color={openGiphy === false ? 'primary' : 'secondary'}
             onClick={handleGiphyClick}
             className={classes.giphyButton}
+            aria-label="add giphy"
           >
             <AddGif />
           </Button>
@@ -232,7 +232,11 @@ const ThreadListInputContainer: React.FC<ThreadListInputContainerProps> = (
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton type="submit" color="secondary">
+                    <IconButton
+                      type="submit"
+                      color="secondary"
+                      aria-label="send message"
+                    >
                       <SendIcon />
                     </IconButton>
                   </InputAdornment>

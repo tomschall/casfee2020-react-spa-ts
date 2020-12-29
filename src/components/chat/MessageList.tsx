@@ -126,9 +126,11 @@ const MessageList: React.FC<MessageProps> = ({
 
   const renderMessage = (message: Message) => {
     return (
-      <ListItem key={message.id} className={classes.root}>
+      <ListItem key={message.id} component="div" className={classes.root}>
         <ListItemAvatar>
-          <ListItemIcon>
+          <ListItemIcon
+            aria-label={message.user.username.substring(0, 2).toUpperCase()}
+          >
             <Badge variant="dot">
               {!message.deleted ? (
                 <Avatar className={classes.avatar}>
@@ -180,9 +182,8 @@ const MessageList: React.FC<MessageProps> = ({
                 justifyContent="flex-start"
                 alignItems="flex-start"
               >
-                <Typography variant="caption">
-                  <ThreadReply message={message} channelName={channelName} />
-                </Typography>
+                <ThreadReply message={message} channelName={channelName} />
+
                 {!message.deleted ? (
                   <React.Fragment>
                     {user.sub === message.user.auth0_user_id && (
@@ -217,7 +218,11 @@ const MessageList: React.FC<MessageProps> = ({
           </Typography>
           {message?.image ? (
             <Box className={classes.image}>
-              <img src={message.image} className={classes.giphy} />
+              <img
+                alt="Giphy Image"
+                src={message.image}
+                className={classes.giphy}
+              />
             </Box>
           ) : (
             ''
@@ -240,7 +245,9 @@ const MessageList: React.FC<MessageProps> = ({
         className={classes.loadMoreButton}
       >
         <Divider className={classes.divider} />
-        <Button onClick={handleIncreaseLimit}>load more (+{limit})</Button>
+        <Button onClick={handleIncreaseLimit} aria-label="load more messages">
+          load more (+{limit})
+        </Button>
         <Divider className={classes.divider} />
       </Box>
 

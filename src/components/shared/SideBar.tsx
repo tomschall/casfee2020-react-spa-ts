@@ -102,7 +102,7 @@ const SideBar: React.FC<SidebarProps> = ({ handleDrawerClose, open }) => {
               }}
             >
               <IconButton
-                aria-label="open drawer"
+                aria-label="open menu"
                 onClick={handleDrawerClose}
                 color="inherit"
                 size="medium"

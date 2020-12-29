@@ -207,7 +207,11 @@ const MessageInput: React.FC<MessageInputProps> = (props) => {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton type="submit" color="secondary">
+                <IconButton
+                  type="submit"
+                  color="secondary"
+                  aria-label="Send message"
+                >
                   <SendIcon />
                 </IconButton>
               </InputAdornment>

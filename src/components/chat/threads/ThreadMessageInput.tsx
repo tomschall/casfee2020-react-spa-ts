@@ -180,7 +180,7 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
         {gif && (
           <img
             className={classes.image}
-            alt="Giphy"
+            alt="Giphy Image"
             src={gif?.images?.fixed_width?.url}
             onClick={() => setGif(null)}
           />
