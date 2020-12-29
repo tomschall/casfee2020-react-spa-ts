@@ -74,6 +74,7 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
         flexDirection="row"
         width={1}
         className={classes.root}
+        component="header"
       >
         {matches === false && (
           <IconButton

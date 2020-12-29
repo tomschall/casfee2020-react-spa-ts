@@ -47,11 +47,18 @@ const ChatContainer: React.FC = () => {
       className={classes.container}
     >
       {matches === true && (
-        <Grid item xs={5} sm={4} md={3} className={classes.sidebar}>
+        <Grid
+          item
+          xs={5}
+          sm={4}
+          md={3}
+          className={classes.sidebar}
+          component="nav"
+        >
           <SideBar handleDrawerClose={() => false} open={false} />
         </Grid>
       )}
-      <Grid item xs={12} md={9} className={classes.chatApp}>
+      <Grid item xs={12} md={9} className={classes.chatApp} component="section">
         <MobileHeaderMenu channelName={channelName} />
         <ChatApp />
       </Grid>

@@ -149,6 +149,7 @@ const AddChannelMembers: React.FC = () => {
               color="secondary"
               size="large"
               onClick={handleClick}
+              aria-label="back to channel"
             >
               Back to channel
             </Button>

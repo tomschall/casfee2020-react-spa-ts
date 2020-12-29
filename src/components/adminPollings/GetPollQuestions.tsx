@@ -192,6 +192,7 @@ const GetPollQuestions: React.FC = () => {
                     variant="contained"
                     color="secondary"
                     href={`/dashboard/pollings/edit/question/${question.id}`}
+                    aria-label="Poll Question"
                   >
                     Edit
                   </Button>

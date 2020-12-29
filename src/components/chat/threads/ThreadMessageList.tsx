@@ -147,7 +147,7 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
           </Typography>
           {message.image ? (
             <Box className={classes.image}>
-              <img src={message.image} />
+              <img alt="Giphy Image" src={message.image} />
             </Box>
           ) : (
             ''

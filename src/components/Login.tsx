@@ -16,6 +16,7 @@ const Login: React.FC<any> = () => {
         variant="contained"
         color="secondary"
         onClick={checkAndLogin}
+        aria-label="Login To Chat"
       >
         Login
       </Button>

@@ -85,9 +85,9 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
 
   return (
     <>
-      <List className={classes.root}>
+      <List component="div" className={classes.root}>
         <ListItem button onClick={handleClick}>
-          <ListItemIcon>
+          <ListItemIcon aria-label="open direct message list">
             <PersonIcon />
           </ListItemIcon>
           <ListItemText>
@@ -104,8 +104,15 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
         <Collapse in={open} timeout="auto">
           <List component="div">
             {data?.channels.map((data: any) => (
-              <Link className={classes.link} to={'/channel/' + data.name}>
-                <ListItem button>
+              <Link
+                className={classes.link}
+                to={'/channel/' + data.name}
+                aria-label={data.user_channels[0]?.user.username}
+              >
+                <ListItem
+                  button
+                  aria-label={data.user_channels[0]?.user.username}
+                >
                   <OnlineUserStatus user={data.user_channels[0]?.user} />
                   {data?.id === currentChannel?.id ? (
                     <>

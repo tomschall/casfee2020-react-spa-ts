@@ -33,7 +33,10 @@ const DeleteMessage: React.FC<DeleteMessageProps> = ({ messageId }) => {
   }
 
   return (
-    <IconButton onClick={() => handleDelete(messageId)}>
+    <IconButton
+      onClick={() => handleDelete(messageId)}
+      aria-label={`Delete message id ${messageId}`}
+    >
       <HighlightOffIcon color="primary" fontSize="small" />
     </IconButton>
   );
