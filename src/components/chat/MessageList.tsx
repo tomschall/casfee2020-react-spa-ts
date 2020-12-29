@@ -5,7 +5,7 @@ import ThreadReply from './threads/ThreadReply';
 import ThreadReplyIn from './threads/ThreadReplyIn';
 import DeleteMessageWrapper from './DeleteMessageWrapper';
 import UpdateMessage from './UpdateMessage';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import MessageOptions from './MessageOptions';
 import {
   Avatar,
   Badge,
@@ -181,7 +181,8 @@ const MessageList: React.FC<MessageProps> = ({
                 alignItems="flex-start"
               >
                 <Typography variant="caption">
-                  <ThreadReply message={message} channelName={channelName} />
+                  {/* <ThreadReply message={message} channelName={channelName} /> */}
+                  <MessageOptions message={message} channelName={channelName} />
                 </Typography>
                 {!message.deleted ? (
                   <React.Fragment>
