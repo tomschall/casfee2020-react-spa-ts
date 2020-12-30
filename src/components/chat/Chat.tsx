@@ -71,9 +71,13 @@ interface ChatProps {
 
 const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   const classes = useStyles();
+
   const [limit, setLimit] = useState<number>(20);
+
   const [lastMessage, setLastMessage] = useState<Message | null>(null);
+
   const { user } = useAuth0();
+
   let history = useHistory();
 
   const messagesEndRef = useRef<HTMLDivElement>(null);

@@ -31,7 +31,6 @@ import { useHistory } from 'react-router';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
   nested: {
     paddingLeft: theme.spacing(0),
   },
@@ -137,7 +136,7 @@ const AddChannel: React.FC = () => {
   }
 
   return (
-    <List className={classes.root} component="div">
+    <List component="div">
       <ListItem button onClick={handleClick}>
         <ListItemIcon aria-label="open add channel">
           {open ? <GroupAddIcon /> : <GroupAddOutlinedIcon />}

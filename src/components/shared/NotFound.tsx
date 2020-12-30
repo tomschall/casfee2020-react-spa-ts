@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box } from '@material-ui/core';
-import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({

@@ -91,21 +91,12 @@ const ThreadListInputContainer: React.FC<ThreadListInputContainerProps> = (
     }
   };
 
-  const setButtonSize = () => {
-    switch (matches) {
-      case true:
-        return 'large';
-      case false:
-        return 'small';
-
-      default:
-        return 'small';
-    }
-  };
-
   const { user } = useAuth0();
+
   const [text, setText] = useState('');
+
   const [gif, setGif] = useRecoilState<IGif | null>(giphyState);
+
   const [deletedMessage, setdeletedMessage] = useRecoilState<boolean>(
     deletedMessageState,
   );

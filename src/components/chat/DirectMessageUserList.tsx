@@ -23,7 +23,6 @@ import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../atom';
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
   nested: {
     paddingLeft: theme.spacing(0),
   },
@@ -52,7 +51,9 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
   user_id,
 }) => {
   const classes = useStyles();
+
   const [open, setOpen] = React.useState(true);
+
   let history = useHistory();
 
   const [currentChannel] = useRecoilState<any>(currentChannelState);
@@ -85,7 +86,7 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
 
   return (
     <>
-      <List component="div" className={classes.root}>
+      <List component="div">
         <ListItem button onClick={handleClick}>
           <ListItemIcon aria-label="open direct message list">
             <PersonIcon />

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Box } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { useGetUserIsTypingSubscription } from '../../api/generated/graphql';
 import { useRecoilState } from 'recoil';
@@ -16,11 +15,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TypingIndicator: React.FC = () => {
-  const classes = useStyles();
   const { user } = useAuth0();
+
   const [currentChannel, setCurrentChannel] = useRecoilState<any>(
     currentChannelState,
   );
+
   const { data, loading, error } = useGetUserIsTypingSubscription({
     variables: {
       self_id: user.sub,

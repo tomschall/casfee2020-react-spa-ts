@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Avatar,
-  Badge,
   Box,
   Button,
   Container,
@@ -9,7 +7,6 @@ import {
   Grid,
   List,
   ListItem,
-  ListItemIcon,
   ListItemText,
   Typography,
 } from '@material-ui/core';
@@ -36,7 +33,9 @@ const useStyles = makeStyles((theme) => ({
 
 const AddDirectMessageChannel: React.FC = () => {
   const classes = useStyles();
+
   const [anchorEl, setAnchorEl] = useState(null);
+
   const { user } = useAuth0();
 
   const [users, setUsers] = useState<any>(null);
@@ -129,7 +128,6 @@ const AddDirectMessageChannel: React.FC = () => {
       });
 
     history.push(`/channel/${data?.validateAndAddDirectMessageChannel?.name}`);
-    // TODO: add backend_only flag for addDirectMessageChannel mutation to hasura
   };
 
   const handleClick = () => {

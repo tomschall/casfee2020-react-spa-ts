@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import ResizeObserver from 'react-resize-observer';
 import { GiphyFetch } from '@giphy/js-fetch-api';
 import { Grid } from '@giphy/react-components';
 import { Button } from '@material-ui/core';
-import ResizeObserver from 'react-resize-observer';
 import { useHistory } from 'react-router';
 import { IGif } from '@giphy/js-types';
 

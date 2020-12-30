@@ -1,13 +1,13 @@
 import React from 'react';
-import { IconButton } from '@material-ui/core';
-import ReplyIcon from '@material-ui/icons/Reply';
 import { useHistory } from 'react-router';
 import {
   useInsertChannelThreadMutation,
   useWatchChannelThreadSubscription,
 } from '../../../api/generated/graphql';
 import { Alert } from '@material-ui/lab';
+import { IconButton } from '@material-ui/core';
 import { Message } from '../../../interfaces/message.interface';
+import ReplyIcon from '@material-ui/icons/Reply';
 
 interface ThreadReplyProps {
   channelName: string;

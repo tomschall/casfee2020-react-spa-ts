@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Grid, List } from '@material-ui/core';
-import { Box } from '@material-ui/core';
+import { Box, List } from '@material-ui/core';
 import { useHistory, useParams } from 'react-router-dom';
+import { Alert } from '@material-ui/lab';
 import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useRecoilState } from 'recoil';
@@ -11,9 +11,7 @@ import {
   useGetChannelThreadQuery,
 } from '../../../api/generated/graphql';
 import ThreadMessageList from './ThreadMessageList';
-import ThreadInfo from './ThreadInfo';
 import Loader from '../../shared/Loader';
-import { Alert } from '@material-ui/lab';
 import { ThreadMessage } from '../../../interfaces/message.interface';
 import { ThreadParams } from '../../../interfaces/param.interface';
 import MenuBar from '../../shared/MenuBar';
@@ -51,13 +49,17 @@ const useStyles = makeStyles((theme) => ({
 
 const Thread: React.FC = () => {
   const classes = useStyles();
+
   const [limit, setLimit] = useState(20);
+
   const { user, error: auth0Error } = useAuth0();
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const [currentChannel, setCurrentChannel] = useRecoilState<any>(
     currentChannelState,
   );
+
   let history = useHistory();
 
   const { messageId, channel } = useParams<ThreadParams>();

@@ -67,7 +67,9 @@ interface SidebarProps {
 
 const SideBar: React.FC<SidebarProps> = ({ handleDrawerClose, open }) => {
   const { user } = useAuth0();
+
   const classes = useStyles();
+
   const matches = useMediaQuery(theme.breakpoints.up('md'));
 
   return (

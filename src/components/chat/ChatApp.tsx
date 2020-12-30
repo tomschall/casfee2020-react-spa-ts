@@ -14,6 +14,7 @@ const ChatApp: React.FC = () => {
   );
 
   const { isAuthenticated, isLoading: isLoadingAuth0, error } = useAuth0();
+
   const { channel: channelName } = useParams<ChatParams>();
 
   const {

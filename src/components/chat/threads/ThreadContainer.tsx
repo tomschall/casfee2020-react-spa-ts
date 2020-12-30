@@ -11,7 +11,6 @@ import ThreadListContainer from './ThreadListContainer';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    // margin: 0,
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
@@ -36,7 +35,9 @@ const useStyles = makeStyles((theme) => ({
 
 const ThreadContainer: React.FC = () => {
   const classes = useStyles();
+
   const matches = useMediaQuery(theme.breakpoints.up('md'));
+
   const { channel } = useParams<ThreadParams>();
 
   return (

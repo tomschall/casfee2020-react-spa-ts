@@ -8,7 +8,6 @@ import PeopleIcon from '@material-ui/icons/People';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import PollPopUp from '../../components/adminPollings/PollPopup';
-
 import Logout from '../Logout';
 import MenuBarDrawer from '../shared/MenuBarDrawer';
 

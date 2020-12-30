@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Container, Grid, Typography } from '@material-ui/core';
-import Login from '../Login';
 import { makeStyles } from '@material-ui/core/styles';
+import Login from '../Login';
 
 const useStyles = makeStyles((theme) => ({
   root: {

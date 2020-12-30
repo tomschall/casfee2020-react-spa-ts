@@ -1,13 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import {
-  Box,
-  Container,
-  Drawer,
-  IconButton,
-  makeStyles,
-  Toolbar,
-} from '@material-ui/core';
+import { Drawer, makeStyles, Toolbar } from '@material-ui/core';
 import SideBar from './SideBar';
 import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
 import { theme } from '../../theme/theme';
@@ -15,7 +8,6 @@ import { theme } from '../../theme/theme';
 const drawerWidth = '100%';
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
   toolbar: {
     display: 'flex',
     justifyContent: 'center',
@@ -34,21 +26,6 @@ const useStyles = makeStyles((theme) => ({
     borderTopStyle: 'solid',
     borderTopColor: theme.palette.primary.dark,
   },
-  menuButton: {
-    width: 30,
-    height: 30,
-    marginLeft: theme.spacing(3),
-    '& .MuiIconButton-label': {
-      marginLeft: theme.spacing(1),
-    },
-    justifyContent: 'flex-end',
-    marginTop: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-  },
-  menuButtonHidden: {
-    display: 'none',
-  },
   drawerPaper: {
     height: '100vh',
     width: drawerWidth,
@@ -64,13 +41,6 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     width: drawerWidth,
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  fab: {
-    margin: theme.spacing(2),
-  },
-  giphyImage: {
-    marginTop: theme.spacing(2),
   },
 }));
 

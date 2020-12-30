@@ -21,12 +21,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-start',
     padding: theme.spacing(0),
   },
-  root: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    padding: theme.spacing(2),
-  },
   [theme.breakpoints.up('md')]: {
     messageText: {
       paddingBottom: '1rem',

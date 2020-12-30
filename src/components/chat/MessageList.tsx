@@ -5,7 +5,6 @@ import ThreadReply from './threads/ThreadReply';
 import ThreadReplyIn from './threads/ThreadReplyIn';
 import DeleteMessageWrapper from './DeleteMessageWrapper';
 import UpdateMessage from './UpdateMessage';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import {
   Avatar,
   Badge,
@@ -109,7 +108,9 @@ const MessageList: React.FC<MessageProps> = ({
   limit,
 }) => {
   const classes = useStyles();
+
   const [showUpdate, setShowUpdate] = useState<boolean>(false);
+
   const [showUpdateMessageId, setShowUpdateMessageId] = useState<number | null>(
     null,
   );

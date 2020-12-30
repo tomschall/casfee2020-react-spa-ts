@@ -36,8 +36,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Channels: React.FC<any> = () => {
   const classes = useStyles();
+
   const [currentChannel] = useRecoilState<any>(currentChannelState);
+
   const [open, setOpen] = React.useState(true);
+
   const matches = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleClick = () => {
