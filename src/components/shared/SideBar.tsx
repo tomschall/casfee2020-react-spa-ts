@@ -21,10 +21,7 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: theme.spacing(5),
     },
     [theme.breakpoints.down('sm')]: {
-      paddingBottom: theme.spacing(5),
-    },
-    [theme.breakpoints.down('sm')]: {
-      paddingBottom: theme.spacing(8),
+      height: '100vh',
     },
   },
   branding: {
@@ -82,7 +79,12 @@ const SideBar: React.FC<SidebarProps> = ({ handleDrawerClose, open }) => {
         alignItems="flex-start"
         className={classes.root}
       >
-        <Grid container>
+        <Box
+          display="flex"
+          justifyContent="flex-start"
+          flex={1}
+          flexDirection="column"
+        >
           {matches === true && (
             <Grid item xs={12} className={classes.branding}>
               <img
@@ -132,7 +134,7 @@ const SideBar: React.FC<SidebarProps> = ({ handleDrawerClose, open }) => {
               <Logout />
             </Box>
           </Grid>
-        </Grid>
+        </Box>
       </Box>
     </>
   );
