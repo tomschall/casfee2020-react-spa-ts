@@ -1,6 +1,6 @@
 import React from 'react';
-import PollAnswers from '../PollAnswers';
-import { render, fireEvent } from '@testing-library/react';
+import PollAnswers from '../../../components/adminPollings/PollAnswers';
+import { render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 
 describe('Add answer', () => {
@@ -15,6 +15,6 @@ describe('Add answer', () => {
   });
 
   describe('with invalid input', () => {
-    it.todo('renders invalid input');
+    // it.todo('renders invalid input');
   });
 });
