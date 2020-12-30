@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.background.default,
     zIndex: 1000,
     [theme.breakpoints.up('md')]: {
-      width: '70vw',
+      width: '75vw',
     },
     [theme.breakpoints.up('lg')]: {
       width: '75vw',
