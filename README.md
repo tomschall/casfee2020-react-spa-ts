@@ -108,7 +108,7 @@ them, the execute ./clean.sh script in the root folder of the project.
 ### Tests with nightwatch
 
 ```
-npx nightwatch nightwatch_tests
+npx nightwatch nightwatch
 ```
 
 ## Additional features
