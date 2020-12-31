@@ -11,6 +11,7 @@ import {
   Box,
   Button,
   Divider,
+  List,
   ListItem,
   ListItemAvatar,
   ListItemIcon,
@@ -21,9 +22,11 @@ import { useRecoilValue } from 'recoil';
 import { deletedMessageState } from '../../atom';
 import { useParams } from 'react-router';
 import { ChatParams } from '../../interfaces/param.interface';
+import { spacing } from '@material-ui/system';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  root: {},
+  listItem: {
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
@@ -123,7 +126,7 @@ const MessageList: React.FC<MessageProps> = ({
 
   const renderMessage = (message: Message) => {
     return (
-      <ListItem key={message.id} component="div" className={classes.root}>
+      <ListItem key={message.id} component="div" className={classes.listItem}>
         <ListItemAvatar>
           <ListItemIcon
             aria-label={message.user.username.substring(0, 2).toUpperCase()}
@@ -247,15 +250,16 @@ const MessageList: React.FC<MessageProps> = ({
         </Button>
         <Divider className={classes.divider} />
       </Box>
+      <List id="message-list" component="div" className={classes.root}>
+        {[...messages]?.reverse()?.map((message, i) => renderMessage(message))}
 
-      {[...messages]?.reverse()?.map((message, i) => renderMessage(message))}
-
-      {!deletedMessage &&
-      lastMessage &&
-      preLastMessageId !== 0 &&
-      preLastMessageId < lastMessage.id
-        ? renderMessage(lastMessage)
-        : ''}
+        {!deletedMessage &&
+        lastMessage &&
+        preLastMessageId !== 0 &&
+        preLastMessageId < lastMessage.id
+          ? renderMessage(lastMessage)
+          : ''}
+      </List>
     </>
   );
 };

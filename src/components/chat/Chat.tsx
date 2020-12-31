@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, Button, Grid, List } from '@material-ui/core';
+import { Box, Button } from '@material-ui/core';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 import { Message } from '../../interfaces/message.interface';
@@ -55,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
       width: '100vw',
     },
   },
-
   polling: {
     position: 'fixed',
     overflow: 'hidden',
@@ -154,11 +153,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
     <>
       <Box className={classes.root} component="article">
         {isPrivate && channelType !== Channel_Type_Enum.DirectMessage && (
-          <Box
-            display="flex"
-            justifyContent="center"
-            style={{ marginBottom: '20px' }}
-          >
+          <Box display="flex" justifyContent="center">
             <Button
               color="secondary"
               variant="contained"
@@ -170,17 +165,17 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
             </Button>
           </Box>
         )}
-        <List id="message-list" component="div">
-          <MessageList
-            messages={data?.messages as Message[]}
-            lastMessage={lastMessage}
-            preLastMessageId={preLastMessageId}
-            user={user}
-            handleIncreaseLimit={handleIncreaseLimit}
-            limit={limit}
-          />
-        </List>
-        <div ref={messagesEndRef} />
+        <MessageList
+          messages={data?.messages as Message[]}
+          lastMessage={lastMessage}
+          preLastMessageId={preLastMessageId}
+          user={user}
+          handleIncreaseLimit={handleIncreaseLimit}
+          limit={limit}
+        />
+        <Box>
+          <div ref={messagesEndRef}></div>
+        </Box>
       </Box>
       <Box className={classes.messageInput} component="footer">
         <MenuBar channelId={channelId}>
