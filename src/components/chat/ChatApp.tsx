@@ -25,8 +25,6 @@ const ChatApp: React.FC = () => {
     },
   });
 
-  console.log('data', data);
-
   if (isLoadingAuth0 || channelLoading) {
     return <Loader />;
   }
@@ -35,7 +33,6 @@ const ChatApp: React.FC = () => {
     !currentChannel ||
     (currentChannel && currentChannel.name !== channelName)
   ) {
-    console.log('setCurrentChannel');
     setCurrentChannel(data?.channel[0]);
   }
 

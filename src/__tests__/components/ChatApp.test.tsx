@@ -27,24 +27,30 @@ jest.mock('react-router');
 const mockedParams = useParams as jest.Mock;
 jest.mock('../../api/generated/graphql');
 const mockedApiCall = useGetChannelByNameQuery as jest.Mock;
-jest.mock('../../components/chat/Chat', () => () => <div data-testid="chat" />);
+jest.mock('../../components/chat/Chat', () => () => (
+  <div data-testid="chat">Chat</div>
+));
 jest.mock('../../components/shared/Loader', () => () => (
   <div data-testid="loader">Loader...</div>
 ));
 
 describe('Chatapp loading', () => {
   beforeEach(() => {
+    mockedParams.mockReturnValue({
+      channel: 'general',
+    });
+  });
+
+  it('renders Chat', async () => {
     mockedUseAuth0.mockReturnValue({
       isAuthenticated: true,
-      isLoading: true,
+      isLoading: false,
       error: false,
       user,
       logout: jest.fn(),
       loginWithRedirect: jest.fn(),
     });
-    mockedParams.mockReturnValue({
-      channelName: 'general',
-    });
+
     mockedApiCall.mockReturnValue({
       data: {
         channel: [
@@ -58,24 +64,106 @@ describe('Chatapp loading', () => {
           },
         ],
       },
-      loading: true,
+      loading: false,
       error: false,
     });
-  });
 
-  it('renders without crashing', async () => {
     const { container, getByTestId, debug, getByText } = render(
-      <MockedProvider>
-        <ThemeProvider theme={theme}>
-          <RecoilRoot>
+      <RecoilRoot>
+        <MockedProvider>
+          <ThemeProvider theme={theme}>
             <ChatApp />
-          </RecoilRoot>
-        </ThemeProvider>
-      </MockedProvider>,
+          </ThemeProvider>
+        </MockedProvider>
+      </RecoilRoot>,
     );
 
     debug();
 
-    expect(getByTestId('loader')).toBeInTheDocument();
+    expect(getByText('Chat')).toBeInTheDocument();
+  });
+
+  it('renders Loader', async () => {
+    mockedUseAuth0.mockReturnValue({
+      isAuthenticated: true,
+      isLoading: true,
+      error: false,
+      user,
+      logout: jest.fn(),
+      loginWithRedirect: jest.fn(),
+    });
+
+    mockedApiCall.mockReturnValue({
+      data: {
+        channel: [
+          {
+            channel_type: Channel_Type_Enum.ChatMessage,
+            id: 1,
+            is_private: false,
+            name: 'general',
+            owner_id: 'admin',
+            __typename: 'channel',
+          },
+        ],
+      },
+      loading: false,
+      error: false,
+    });
+
+    const { container, getByTestId, debug, getByText } = render(
+      <RecoilRoot>
+        <MockedProvider>
+          <ThemeProvider theme={theme}>
+            <ChatApp />
+          </ThemeProvider>
+        </MockedProvider>
+      </RecoilRoot>,
+    );
+
+    debug();
+
+    expect(getByText('Loader...')).toBeInTheDocument();
+  });
+
+  it('renders Error', async () => {
+    mockedUseAuth0.mockReturnValue({
+      isAuthenticated: true,
+      isLoading: false,
+      error: true,
+      user,
+      logout: jest.fn(),
+      loginWithRedirect: jest.fn(),
+    });
+
+    mockedApiCall.mockReturnValue({
+      data: {
+        channel: [
+          {
+            channel_type: Channel_Type_Enum.ChatMessage,
+            id: 1,
+            is_private: false,
+            name: 'general',
+            owner_id: 'admin',
+            __typename: 'channel',
+          },
+        ],
+      },
+      loading: false,
+      error: true,
+    });
+
+    const { container, getByTestId, debug, getByText } = render(
+      <RecoilRoot>
+        <MockedProvider>
+          <ThemeProvider theme={theme}>
+            <ChatApp />
+          </ThemeProvider>
+        </MockedProvider>
+      </RecoilRoot>,
+    );
+
+    debug();
+
+    expect(getByText('Error:')).toBeInTheDocument();
   });
 });
