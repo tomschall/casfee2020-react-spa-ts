@@ -17,8 +17,10 @@ module.exports = {
   test_settings: {
     default: {
       globals: {
-        user: 'tweets@webrooster.ch',
-        pw: '_Tweets_3ster',
+        user: 'testuser@chickenfest.ch',
+        pw: 'test1234.$',
+        channel: 'general',
+        url: 'http://localhost:3000/',
       },
       desiredCapabilities: {
         browserName: 'chrome',

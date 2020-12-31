@@ -1,39 +1,56 @@
 module.exports = {
-  'ChickenFest site gets loaded': function (browser) {
+  'Login user': function (browser) {
     browser
-      .url('http://localhost:3000/')
+      .url(browser.globals.url)
       .waitForElementVisible('body')
       .pause(3000)
       .click('input[name=email]')
-      .pause(300)
       .setValue('input[name=email]', browser.globals.user)
-      .pause(300)
-      .setValue('input[name=password]', browser.globals.pw);
-  },
-
-  'Insert message into channel': (browser) => {
-    browser
-      .click('button[type=submit]')
+      .click('input[name=password]')
+      .setValue('input[name=password]', browser.globals.pw)
+      .click('.auth0-lock-submit')
       .waitForElementVisible('body')
-      .assert.titleContains('Chicken Chat - CasFee 2020')
-      .setValue('input[id=chat-message-input]', 'nightwatch')
-      .pause(300)
-      .setValue('input[id=chat-message-input]', browser.Keys.ENTER)
-      .pause(300)
-      .getText('css selector', '#message-list', function (element) {
-        this.assert.equal(typeof element, 'object');
-        this.assert.equal(element.value, '"AD"');
-        console.log('element', element.value);
-      });
+      .pause(1000);
   },
-
-  'Select channel "testing"': (browser) => {
+  'HEAD - check metatags, font includes, viewport': (browser) => {
     browser
-      .url('http://localhost:3000/channel/testing')
+
       .waitForElementVisible('body')
-      .pause(3000)
-      .click('a[data-channel-name="testing"]')
-      .pause(3000)
+      .verify.title('Chicken Chat - CasFee 2020')
+      .verify.attributeEquals(
+        {
+          selector: 'link[rel="icon"]',
+          index: 0,
+        },
+        'href',
+        `${browser.globals.url}favicon.ico`,
+      )
+      .verify.attributeEquals(
+        'meta[name="description"]',
+        'content',
+        'CASFEE 2020 - Hochschule für Technik Rapperswil',
+      )
+      .verify.attributeEquals(
+        'meta[name="viewport"]',
+        'content',
+        'width=device-width, initial-scale=1, maximum-scale=1',
+      )
+      .assert.attributeContains(
+        {
+          selector: 'link[rel="stylesheet"]',
+          index: 0,
+        },
+        'href',
+        'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap',
+      )
+      .assert.attributeContains(
+        {
+          selector: 'link[rel="stylesheet"]',
+          index: 1,
+        },
+        'href',
+        'https://fonts.googleapis.com/icon?family=Material+Icons',
+      )
       .end();
   },
 };
