@@ -75,9 +75,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   const [lastMessage, setLastMessage] = useState<Message | null>(null);
   const { user } = useAuth0();
   let history = useHistory();
-
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
   let preLastMessageId: number = 0;
 
   const { data, loading, error } = useWatchMessagesSubscription({

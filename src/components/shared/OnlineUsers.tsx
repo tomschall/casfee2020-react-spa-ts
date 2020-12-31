@@ -19,6 +19,7 @@ interface OnlineUsersProps {
 
 const OnlineUsers: React.FC<OnlineUsersProps> = ({ user_id }) => {
   const { data, loading, error } = useWatchOnlineUsersSubscription();
+
   const [sendUserIsOnline] = useSetUserOnlineMutation({
     variables: { user_id },
   });

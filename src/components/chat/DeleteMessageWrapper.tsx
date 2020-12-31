@@ -1,6 +1,4 @@
 import React from 'react';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import { IconButton } from '@material-ui/core';
 import { useWatchChannelThreadSubscription } from '../../api/generated/graphql';
 import { Alert } from '@material-ui/lab';
 import DeleteMessage from './DeleteMessage';

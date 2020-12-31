@@ -5,10 +5,6 @@ import { useWatchOnlineUsersSubscription } from '../../api/generated/graphql';
 import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
-  toolbarIcon: {
-    ...theme.mixins.toolbar,
-  },
   badgeOnline: {
     backgroundColor: '#44b700',
     color: '#44b700',

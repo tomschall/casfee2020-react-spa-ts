@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  Typography,
-  makeStyles,
-  Box,
-  CircularProgress,
-} from '@material-ui/core';
+import { Typography, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { Message } from '../../../interfaces/message.interface';

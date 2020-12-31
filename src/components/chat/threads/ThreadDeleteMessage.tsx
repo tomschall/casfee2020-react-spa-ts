@@ -1,8 +1,8 @@
 import React from 'react';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import { IconButton, CircularProgress } from '@material-ui/core';
-import { useDeleteThreadMessageMutation } from '../../../api/generated/graphql';
+import { IconButton } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+import { useDeleteThreadMessageMutation } from '../../../api/generated/graphql';
 
 interface ThreadDeleteMessageProps {
   messageId: number;

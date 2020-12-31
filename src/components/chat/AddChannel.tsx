@@ -31,7 +31,6 @@ import { useHistory } from 'react-router';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
   nested: {
     paddingLeft: theme.spacing(0),
   },
@@ -49,13 +48,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AddChannel: React.FC = () => {
+  const classes = useStyles();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
   const [open, setOpen] = React.useState(false);
   const [openAlert, setOpenAlert] = React.useState(true);
   const [channelName, setChannelName] = useState('');
   const [channelIsPrivate, setChannelIsPrivate] = useState(false);
   const { user } = useAuth0();
-  const classes = useStyles();
 
   const [addChannel, { data, loading, error }] = useAddChannelMutation();
 
@@ -137,7 +136,7 @@ const AddChannel: React.FC = () => {
   }
 
   return (
-    <List className={classes.root} component="div">
+    <List component="div">
       <ListItem button onClick={handleClick}>
         <ListItemIcon aria-label="open add channel">
           {open ? <GroupAddIcon /> : <GroupAddOutlinedIcon />}

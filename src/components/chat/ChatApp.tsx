@@ -12,7 +12,6 @@ const ChatApp: React.FC = () => {
   const [currentChannel, setCurrentChannel] = useRecoilState<any>(
     currentChannelState,
   );
-
   const { isAuthenticated, isLoading: isLoadingAuth0, error } = useAuth0();
   const { channel: channelName } = useParams<ChatParams>();
 

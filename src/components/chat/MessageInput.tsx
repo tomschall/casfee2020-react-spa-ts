@@ -95,12 +95,12 @@ const MessageInput: React.FC<MessageInputProps> = (props) => {
   const { user } = useAuth0();
   const [text, setText] = useState<string>('');
   const [gif, setGif] = useRecoilState<IGif | null>(giphyState);
+
   const [deletedMessage, setdeletedMessage] = useRecoilState<boolean>(
     deletedMessageState,
   );
 
   let textInput = useRef<HTMLDivElement>(null);
-
   const channelId = props.channelId;
 
   const [

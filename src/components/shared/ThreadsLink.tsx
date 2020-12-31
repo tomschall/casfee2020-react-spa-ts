@@ -1,8 +1,5 @@
 import React from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
 import {
-  Badge,
-  Box,
   ListItem,
   ListItemIcon,
   ListItemText,
@@ -27,8 +24,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ThreadsLink: React.FC<any> = () => {
-  const classes = useStyles();
-
   return (
     <>
       <ListItem button>

@@ -35,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ThreadListContainer: React.FC = () => {
-  const { data, error } = useWatchThreadsSubscription();
   const classes = useStyles();
+  const { data, error } = useWatchThreadsSubscription();
 
   if (error) {
     console.log('error', error);

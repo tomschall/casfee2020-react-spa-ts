@@ -35,14 +35,12 @@ const useStyles = makeStyles((theme) => ({
 
 const AddChannelMembers: React.FC = () => {
   const classes = useStyles();
-
   let history = useHistory();
+  const { isLoading: loadingAuth0 } = useAuth0();
 
   const [currentChannel, setCurrentChannel] = useRecoilState<any>(
     currentChannelState,
   );
-
-  const { isLoading: loadingAuth0 } = useAuth0();
 
   const {
     data: users,

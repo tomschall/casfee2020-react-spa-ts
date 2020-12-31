@@ -12,7 +12,6 @@ interface DeleteMessageProps {
 
 const DeleteMessage: React.FC<DeleteMessageProps> = ({ messageId }) => {
   const setdeletedMessage = useSetRecoilState<boolean>(deletedMessageState);
-
   const [deleteMessageMutation, { data, error }] = useDeleteMessageMutation();
 
   const handleDelete = async (messageId: number) => {
