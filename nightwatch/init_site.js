@@ -5,10 +5,10 @@ module.exports = {
       .waitForElementVisible('body')
       .pause(3000)
       .click('input[name=email]')
-      .pause(500)
-      .setValue('input[name=email]', 'tweets@webrooster.ch')
-      .pause(500)
-      .setValue('input[name=password]', '_Tweets_3ster');
+      .pause(300)
+      .setValue('input[name=email]', browser.globals.user)
+      .pause(300)
+      .setValue('input[name=password]', browser.globals.pw);
   },
 
   'Insert message into channel': (browser) => {
@@ -17,15 +17,12 @@ module.exports = {
       .waitForElementVisible('body')
       .assert.titleContains('Chicken Chat - CasFee 2020')
       .setValue('input[id=chat-message-input]', 'nightwatch')
-      .pause(500)
+      .pause(300)
       .setValue('input[id=chat-message-input]', browser.Keys.ENTER)
-      .pause(500)
-      .getText('css selector', 'ul#message-list li', function (element) {
+      .pause(300)
+      .getText('css selector', '#message-list', function (element) {
         this.assert.equal(typeof element, 'object');
-        this.assert.equal(
-          element.value,
-          'webrooster 16 days ago\nGoile, wah?\nREPLY',
-        );
+        this.assert.equal(element.value, '"AD"');
         console.log('element', element.value);
       });
   },
