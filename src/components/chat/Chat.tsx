@@ -153,7 +153,11 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
     <>
       <Box className={classes.root} component="article">
         {isPrivate && channelType !== Channel_Type_Enum.DirectMessage && (
-          <Box display="flex" justifyContent="center">
+          <Box
+            display="flex"
+            justifyContent="center"
+            style={{ marginBottom: '20px' }}
+          >
             <Button
               color="secondary"
               variant="contained"
@@ -173,9 +177,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
           handleIncreaseLimit={handleIncreaseLimit}
           limit={limit}
         />
-        <Box>
-          <div ref={messagesEndRef}></div>
-        </Box>
+        <div ref={messagesEndRef}></div>
       </Box>
       <Box className={classes.messageInput} component="footer">
         <MenuBar channelId={channelId}>

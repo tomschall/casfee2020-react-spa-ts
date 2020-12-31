@@ -12,7 +12,8 @@ const ReplaceMessage: React.FC<ReplaceMessageProps> = ({ messageId }) => {
   const [updateMessageMutation, { data, error }] = useUpdateMessageMutation();
 
   const handleReplace = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
+    e.stopPropagation();
+
     await updateMessageMutation({
       variables: {
         _eq: messageId,

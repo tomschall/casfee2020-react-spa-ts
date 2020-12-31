@@ -14,7 +14,8 @@ const DeleteMessage: React.FC<DeleteMessageProps> = ({ messageId }) => {
   const setdeletedMessage = useSetRecoilState<boolean>(deletedMessageState);
   const [deleteMessageMutation, { data, error }] = useDeleteMessageMutation();
 
-  const handleDelete = async (messageId: number) => {
+  const handleDelete = async (e: React.SyntheticEvent, messageId: number) => {
+    e.stopPropagation();
     setdeletedMessage(true);
     await deleteMessageMutation({
       variables: {
@@ -33,7 +34,7 @@ const DeleteMessage: React.FC<DeleteMessageProps> = ({ messageId }) => {
 
   return (
     <IconButton
-      onClick={() => handleDelete(messageId)}
+      onClick={(e) => handleDelete(e, messageId)}
       aria-label={`Delete message id ${messageId}`}
     >
       <HighlightOffIcon color="primary" fontSize="small" />

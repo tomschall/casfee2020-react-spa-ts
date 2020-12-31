@@ -36,13 +36,15 @@ const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
     },
   });
 
-  const navigateToThreadChannel = () => {
+  const navigateToThreadChannel = (e: React.SyntheticEvent) => {
+    e.stopPropagation();
     history.push(`/channel/${props.channelName}/thread/${props.message?.id}`);
   };
 
-  const handleClick = async () => {
+  const handleClick = async (e: React.SyntheticEvent) => {
+    e.stopPropagation();
     await insertChannelThreadMutation();
-    navigateToThreadChannel();
+    navigateToThreadChannel(e);
   };
 
   if (error || channelThreadError) return <Alert>Error in Thread Reply</Alert>;
@@ -65,7 +67,7 @@ const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
     return (
       <>
         <IconButton
-          onClick={() => navigateToThreadChannel()}
+          onClick={(e) => navigateToThreadChannel(e)}
           aria-label="reply to message"
         >
           <ReplyIcon
