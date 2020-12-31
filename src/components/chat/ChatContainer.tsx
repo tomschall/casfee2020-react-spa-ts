@@ -36,9 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ChatContainer: React.FC = () => {
   const classes = useStyles();
-
   const { channel: channelName } = useParams<ChatParams>();
-
   const matches = useMediaQuery(theme.breakpoints.up('md'));
 
   return (

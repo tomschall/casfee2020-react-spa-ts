@@ -39,7 +39,6 @@ interface UpdateMessageProps {
 
 const UpdateMessage: React.FC<UpdateMessageProps> = ({ message }) => {
   const classes = useStyles();
-
   const [text, setText] = useState<string>('');
 
   useEffect(() => {

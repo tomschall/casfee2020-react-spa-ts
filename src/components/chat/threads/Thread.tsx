@@ -49,19 +49,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Thread: React.FC = () => {
   const classes = useStyles();
-
   const [limit, setLimit] = useState(20);
-
   const { user, error: auth0Error } = useAuth0();
-
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
   const [currentChannel, setCurrentChannel] = useRecoilState<any>(
     currentChannelState,
   );
-
   let history = useHistory();
-
   const { messageId, channel } = useParams<ThreadParams>();
 
   const { data, loading, error } = useWatchChannelThreadMessagesSubscription({

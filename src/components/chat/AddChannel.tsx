@@ -48,13 +48,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AddChannel: React.FC = () => {
+  const classes = useStyles();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
   const [open, setOpen] = React.useState(false);
   const [openAlert, setOpenAlert] = React.useState(true);
   const [channelName, setChannelName] = useState('');
   const [channelIsPrivate, setChannelIsPrivate] = useState(false);
   const { user } = useAuth0();
-  const classes = useStyles();
 
   const [addChannel, { data, loading, error }] = useAddChannelMutation();
 

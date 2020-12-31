@@ -108,15 +108,11 @@ const MessageList: React.FC<MessageProps> = ({
   limit,
 }) => {
   const classes = useStyles();
-
   const [showUpdate, setShowUpdate] = useState<boolean>(false);
-
   const [showUpdateMessageId, setShowUpdateMessageId] = useState<number | null>(
     null,
   );
-
   const { channel: channelName } = useParams<ChatParams>();
-
   const deletedMessage = useRecoilValue<boolean>(deletedMessageState);
 
   const handleShowUpdate = (message: Message) => {

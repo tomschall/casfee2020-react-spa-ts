@@ -13,7 +13,6 @@ interface ThreadListProps {
 
 const ThreadList: React.FC<ThreadListProps> = ({ channelThread }) => {
   const [limit, setLimit] = useState(20);
-
   const { user, error: auth0Error } = useAuth0();
 
   const { data, error } = useWatchChannelThreadMessagesSubscription({

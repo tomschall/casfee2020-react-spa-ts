@@ -33,15 +33,10 @@ const useStyles = makeStyles((theme) => ({
 
 const AddDirectMessageChannel: React.FC = () => {
   const classes = useStyles();
-
   const [anchorEl, setAnchorEl] = useState(null);
-
   const { user } = useAuth0();
-
   const [users, setUsers] = useState<any>(null);
-
   const user_id = user.sub;
-
   let history = useHistory();
 
   const {

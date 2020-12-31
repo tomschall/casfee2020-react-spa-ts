@@ -74,9 +74,7 @@ const ThreadListInputContainer: React.FC<ThreadListInputContainerProps> = (
   props,
 ) => {
   const classes = useStyles();
-
   const matches = useMediaQuery(theme.breakpoints.up('md'));
-
   const [openGiphy, setOpenGiphy] = React.useState<boolean>(false);
 
   const setTextFieldSize = () => {
@@ -92,17 +90,12 @@ const ThreadListInputContainer: React.FC<ThreadListInputContainerProps> = (
   };
 
   const { user } = useAuth0();
-
   const [text, setText] = useState('');
-
   const [gif, setGif] = useRecoilState<IGif | null>(giphyState);
-
   const [deletedMessage, setdeletedMessage] = useRecoilState<boolean>(
     deletedMessageState,
   );
-
   const [showGiphyCarousel, setShowGiphyCarousel] = React.useState(false);
-
   const channelId = props.channelId;
 
   const [

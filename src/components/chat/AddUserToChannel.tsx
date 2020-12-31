@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
 
 const AddUserToChannelContainer: React.FC = () => {
   const classes = useStyles();
-
   const matches = useMediaQuery(theme.breakpoints.up('md'));
 
   return (

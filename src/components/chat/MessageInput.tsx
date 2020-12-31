@@ -77,7 +77,6 @@ interface MessageInputProps {
 
 const MessageInput: React.FC<MessageInputProps> = (props) => {
   const classes = useStyles();
-
   const matches = useMediaQuery(theme.breakpoints.up('md'));
 
   const setTextFieldSize = () => {
@@ -94,9 +93,7 @@ const MessageInput: React.FC<MessageInputProps> = (props) => {
   };
 
   const { user } = useAuth0();
-
   const [text, setText] = useState<string>('');
-
   const [gif, setGif] = useRecoilState<IGif | null>(giphyState);
 
   const [deletedMessage, setdeletedMessage] = useRecoilState<boolean>(
@@ -104,7 +101,6 @@ const MessageInput: React.FC<MessageInputProps> = (props) => {
   );
 
   let textInput = useRef<HTMLDivElement>(null);
-
   const channelId = props.channelId;
 
   const [

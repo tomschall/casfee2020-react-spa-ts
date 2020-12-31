@@ -51,11 +51,8 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
   user_id,
 }) => {
   const classes = useStyles();
-
   const [open, setOpen] = React.useState(true);
-
   let history = useHistory();
-
   const [currentChannel] = useRecoilState<any>(currentChannelState);
 
   const { data, loading, error } = useWatchDirectMessageChannelsSubscription({
@@ -106,6 +103,7 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
           <List component="div">
             {data?.channels.map((data: any) => (
               <Link
+                key={data.name}
                 className={classes.link}
                 to={'/channel/' + data.name}
                 aria-label={data.user_channels[0]?.user.username}

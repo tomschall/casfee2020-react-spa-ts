@@ -6,9 +6,7 @@ import ThreadContainer from '../chat/threads/ThreadContainer';
 
 const ChatBoard: React.FC = () => {
   const { user } = useAuth0();
-
   const user_id = user.sub;
-
   const [sendUserIsOnline] = useSetUserOnlineMutation({
     variables: { user_id },
   });

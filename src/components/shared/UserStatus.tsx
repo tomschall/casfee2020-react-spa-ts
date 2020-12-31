@@ -14,9 +14,7 @@ interface OnlineUsersProps {
 
 const UserStatus: React.FC<OnlineUsersProps> = ({ user_id }) => {
   const { data, loading, error } = useWatchOnlineUsersSubscription();
-
   const { user } = useAuth0();
-
   const usersOnline = data?.users.length ?? 0;
 
   if (error) {

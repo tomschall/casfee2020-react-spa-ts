@@ -50,11 +50,8 @@ interface MobileHeaderMenuProps {
 
 const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
   const classes = useStyles();
-
   const [currentChannel] = useRecoilState<any>(currentChannelState);
-
   const matches = useMediaQuery(theme.breakpoints.up('md'));
-
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {

@@ -35,9 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ThreadContainer: React.FC = () => {
   const classes = useStyles();
-
   const matches = useMediaQuery(theme.breakpoints.up('md'));
-
   const { channel } = useParams<ThreadParams>();
 
   return (
