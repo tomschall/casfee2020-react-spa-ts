@@ -19,8 +19,8 @@ module.exports = {
       globals: {
         user: 'testuser@chickenfest.ch',
         pw: 'test1234.$',
-        channel: 'general',
         url: 'http://localhost:3000/',
+        channel: 'general',
       },
       desiredCapabilities: {
         browserName: 'chrome',
