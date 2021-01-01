@@ -78,7 +78,7 @@ jest.mock('../../components/chat/UpdateMessage', () => () => (
   <div>UpdateMessage...</div>
 ));
 
-describe('Chatapp loading', () => {
+describe('MessageList', () => {
   beforeEach(() => {
     mockedParams.mockReturnValue({
       channel: 'general',
@@ -86,7 +86,7 @@ describe('Chatapp loading', () => {
   });
 
   it('renders MessageList', async () => {
-    const { container, getByTestId, debug, getByText, getAllByText } = render(
+    const { debug, getByText, getAllByText } = render(
       <RecoilRoot>
         <MockedProvider>
           <ThemeProvider theme={theme}>
