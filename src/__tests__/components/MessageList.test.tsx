@@ -12,42 +12,55 @@ import moment from 'moment';
 const user = {
   email: 'kimi@gmail.com',
   email_verified: true,
-  sub: 'auth0|abc',
+  sub: 'auth0|aaa',
 };
 
 const messages: Message[] = [
   {
     id: 3,
-    user_id: 'auth0|abc',
+    user_id: 'auth0|aaa',
     image: null,
     text: 'third message',
     timestamp: moment().subtract(3600, 'seconds'),
-    user: { username: 'kimi', auth0_user_id: 'auth0|abc' },
+    user: { username: 'kimi', auth0_user_id: 'auth0|aaa' },
     channel: { name: 'general' },
   },
   {
     id: 2,
-    user_id: 'auth0|def',
+    user_id: 'auth0|bbb',
     image: null,
     text: 'second message',
     timestamp: moment().subtract(7200, 'seconds'),
     user: {
       username: 'tomschall',
-      auth0_user_id: 'auth0|def',
+      auth0_user_id: 'auth0|bbb',
     },
     channel: { name: 'general' },
   },
   {
     id: 1,
-    user_id: 'auth0|ghi',
+    user_id: 'auth0|ccc',
     image: null,
     text: 'first message',
     timestamp: moment().subtract(10800, 'seconds'),
     user: {
       username: 'bruce_lee',
-      auth0_user_id: 'auth0|ghi',
+      auth0_user_id: 'auth0|ccc',
     },
     channel: { name: 'general' },
+  },
+];
+
+const deletedMessage: Message[] = [
+  {
+    id: 4,
+    user_id: 'auth0|ddd',
+    image: null,
+    text: 'fourth message',
+    timestamp: moment().subtract(14400, 'seconds'),
+    user: { username: 'kimi', auth0_user_id: 'auth0|aaa' },
+    channel: { name: 'general' },
+    deleted: true,
   },
 ];
 
@@ -85,7 +98,7 @@ describe('MessageList', () => {
     });
   });
 
-  it('renders MessageList', async () => {
+  it('renders MessageList component', async () => {
     const { debug, getByText, getAllByText } = render(
       <RecoilRoot>
         <MockedProvider>
@@ -122,7 +135,7 @@ describe('MessageList', () => {
     expect(getByText('BR')).toBeInTheDocument();
     expect(getByText('bruce_lee')).toBeInTheDocument();
     expect(
-      getByText(moment(messages[0].timestamp).fromNow()),
+      getByText(moment(messages[2].timestamp).fromNow()),
     ).toBeInTheDocument();
     expect(getByText('first message')).toBeInTheDocument();
 
@@ -135,5 +148,29 @@ describe('MessageList', () => {
 
     expect(getAllByText('ThreadReply...')[2]).toBeInTheDocument();
     expect(getAllByText('ThreadReplyIn...')[2]).toBeInTheDocument();
+  });
+
+  it('renders deleted message in MessageList component', async () => {
+    const { debug, getByText, getByAltText } = render(
+      <RecoilRoot>
+        <MockedProvider>
+          <ThemeProvider theme={theme}>
+            <MessageList
+              messages={deletedMessage as Message[]}
+              lastMessage={null}
+              preLastMessageId={null}
+              user={user}
+              handleIncreaseLimit={3}
+              limit={3}
+            />
+          </ThemeProvider>
+        </MockedProvider>
+      </RecoilRoot>,
+    );
+
+    debug();
+
+    expect(getByText('Oh sorry it seems...')).toBeInTheDocument();
+    expect(getByAltText('Message has been removed')).toBeInTheDocument();
   });
 });
