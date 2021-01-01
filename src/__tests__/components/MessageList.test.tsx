@@ -98,7 +98,7 @@ describe('MessageList', () => {
     });
   });
 
-  it('renders MessageList component', async () => {
+  it('renders MessageList component with some messages', async () => {
     const { debug, getByText, getAllByText } = render(
       <RecoilRoot>
         <MockedProvider>

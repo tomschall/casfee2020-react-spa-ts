@@ -11,9 +11,6 @@ import {
   useGetChannelByNameQuery,
   Channel_Type_Enum,
 } from '../../api/generated/graphql';
-import { act } from 'react-dom/test-utils';
-import { getByLabelText, getByText, waitFor } from '@testing-library/dom';
-import { JsonObjectExpressionStatement } from 'typescript';
 
 const user = {
   email: 'kimi@gmail.com',
@@ -68,7 +65,7 @@ describe('Chatapp loading', () => {
       error: false,
     });
 
-    const { container, getByTestId, debug, getByText } = render(
+    const { debug, getByText } = render(
       <RecoilRoot>
         <MockedProvider>
           <ThemeProvider theme={theme}>
@@ -152,7 +149,7 @@ describe('Chatapp loading', () => {
       error: true,
     });
 
-    const { container, getByTestId, debug, getByText } = render(
+    const { debug, getByText } = render(
       <RecoilRoot>
         <MockedProvider>
           <ThemeProvider theme={theme}>
