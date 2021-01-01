@@ -1,17 +1,15 @@
 const messageList = '#message-list';
+const lastDeleteButton =
+  '//*[@id="message-list"]/div[last()]/div[2]/div[1]/div[2]/div/span/button';
 
 module.exports = () => ({
-  'Delete message': (browser) => {
+  'Delete last message': (browser) => {
     browser
-      .waitForElementVisible('body')
-      .pause(3000)
       .waitForElementVisible('#message-list')
+      .pause(3000)
+      .useXpath()
       .click(
-        'css selector',
-        '#message-list span button.MuiButtonBase-root:last-child',
-        () => {
-          console.log('Message deleted!');
-        },
+        '//*[@id="message-list"]/div[last()]/div[2]/div[1]/div[2]/div/span/button',
       )
       .pause(3000);
   },

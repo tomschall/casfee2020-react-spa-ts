@@ -10,6 +10,7 @@ module.exports = () => ({
       .setValue('input[name=password]', browser.globals.pw)
       .click('.auth0-lock-submit')
       .pause(3000)
+      .assert.urlContains(browser.globals.channel)
       .waitForElementVisible('body');
   },
 });

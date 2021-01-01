@@ -18,6 +18,9 @@ module.exports = {
   test_settings: {
     default: {
       globals: {
+        // user: 'lorem@ipsum.com',
+        // pw: '_Lorem_3ster',
+        // url: 'https://chickenfest.ch',
         user: 'testuser@chickenfest.ch',
         pw: 'test1234.$',
         url: 'http://localhost:3000/',

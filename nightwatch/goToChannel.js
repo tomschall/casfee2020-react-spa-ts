@@ -1,12 +1,17 @@
 const messageList = '#message-list';
-const channelName = 'nightwatch';
+const channelName = 'general';
 
 module.exports = () => ({
-  'Go to channel nightwatch': (browser) => {
+  'Go to channel: select channel, close dropdown, check url': (browser) => {
     browser
       .waitForElementVisible(messageList)
-      .pause(3000)
       .click(`a[aria-label="go to channel ${channelName}"]`)
-      .pause(3000);
+      .pause(3000)
+      .url((result) => {
+        console.log(result);
+      })
+      .assert.urlContains(browser.globals.channel)
+      .useXpath()
+      .click("//div[contains(@aria-label, 'open channel list')]");
   },
 });

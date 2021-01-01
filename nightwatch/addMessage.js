@@ -1,29 +1,16 @@
-const message = 'nightwatch is sending a message';
+const message = 'nightwatch sending a message';
+const messageList = '#message-list';
 
 module.exports = () => ({
-  'Add 2 messages in nightwatch (public)': (browser) => {
+  'Add message channel general': (browser) => {
     browser
-      .waitForElementVisible('body')
-      .pause(3000)
-      .setValue('textarea#chat-message-input', message)
-      .pause(1000)
-      .click('button#message_submit')
+      .useCss()
+      .waitForElementVisible(messageList)
       .pause(1000)
       .setValue('textarea#chat-message-input', message)
       .pause(1000)
       .click('button#message_submit')
       .pause(3000)
-      .waitForElementVisible('#message-list');
-    // .elements('css selector', '#message-list', (element) => {
-    //   browser.getText(
-    //     'css selector',
-    //     'p.MuiTypography-root:nth-child(even)',
-    //     function (element) {
-    //       // this.assert.equal(typeof element, 'object');
-    //       this.assert.equal(element.value, message);
-    //       console.log('message', element.value);
-    //     },
-    //   );
-    // });
+      .assert.containsText(messageList, message);
   },
 });

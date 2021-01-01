@@ -1,7 +1,8 @@
 module.exports = () => ({
   'HEAD-TAG - favicon, metatags, font/icons includes, viewport': (browser) => {
-    browser.verify
-      .title('Chicken Chat - CasFee 2020')
+    browser
+      .useCss()
+      .verify.title('Chicken Chat - CasFee 2020')
       .verify.attributeEquals(
         {
           selector: 'link[rel="icon"]',
@@ -35,7 +36,6 @@ module.exports = () => ({
         },
         'href',
         'https://fonts.googleapis.com/icon?family=Material+Icons',
-      )
-      .end();
+      );
   },
 });

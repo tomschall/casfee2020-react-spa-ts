@@ -9,9 +9,9 @@ module.exports = Object.assign(
     },
   },
   require('./login')(),
-  require('./addChannel')(),
+  require('./meta')(),
+  // require('./addChannel')(),
   require('./goToChannel')(),
   require('./addMessage')(),
   require('./deleteMessage')(),
-  require('./meta')(),
 );
