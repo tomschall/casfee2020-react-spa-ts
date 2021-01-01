@@ -1,9 +1,11 @@
+import { Moment } from 'moment';
+
 export interface Message {
   id: number;
   user_id: string;
   text: string;
   image: string;
-  timestamp: Date;
+  timestamp: Date | Moment;
   deleted?: boolean;
   user?: any;
   channel?: any;

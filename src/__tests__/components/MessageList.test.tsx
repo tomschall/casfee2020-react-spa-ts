@@ -12,37 +12,40 @@ import moment from 'moment';
 const user = {
   email: 'kimi@gmail.com',
   email_verified: true,
-  sub: 'auth0|5f5f7119b9bd4c006ae69306',
+  sub: 'auth0|abc',
 };
 
-const messages: any[] = [
+const messages: Message[] = [
   {
     id: 3,
+    user_id: 'auth0|abc',
     image: null,
     text: 'third message',
     timestamp: moment().subtract(3600, 'seconds'),
-    user: { username: 'kimi', auth0_user_id: 'auth0|5f5f7119b9bd4c006ae69306' },
+    user: { username: 'kimi', auth0_user_id: 'auth0|abc' },
     channel: { name: 'general' },
   },
   {
     id: 2,
+    user_id: 'auth0|def',
     image: null,
     text: 'second message',
     timestamp: moment().subtract(7200, 'seconds'),
     user: {
       username: 'tomschall',
-      auth0_user_id: 'auth0|5f5f7119b9bd4c006ae69306',
+      auth0_user_id: 'auth0|def',
     },
     channel: { name: 'general' },
   },
   {
     id: 1,
+    user_id: 'auth0|ghi',
     image: null,
     text: 'first message',
     timestamp: moment().subtract(10800, 'seconds'),
     user: {
       username: 'bruce_lee',
-      auth0_user_id: 'auth0|5f5f7119b9bd4c006ae69306',
+      auth0_user_id: 'auth0|ghi',
     },
     channel: { name: 'general' },
   },
@@ -88,7 +91,7 @@ describe('Chatapp loading', () => {
         <MockedProvider>
           <ThemeProvider theme={theme}>
             <MessageList
-              messages={messages as any[]}
+              messages={messages as Message[]}
               lastMessage={null}
               preLastMessageId={null}
               user={user}
@@ -124,15 +127,13 @@ describe('Chatapp loading', () => {
     expect(getByText('first message')).toBeInTheDocument();
 
     expect(getAllByText('ThreadReply...')[0]).toBeInTheDocument();
-    expect(getAllByText('Delete Message Wrapper...')[0]).toBeInTheDocument();
+    expect(getByText('Delete Message Wrapper...')).toBeInTheDocument();
     expect(getAllByText('ThreadReplyIn...')[0]).toBeInTheDocument();
 
     expect(getAllByText('ThreadReply...')[1]).toBeInTheDocument();
-    expect(getAllByText('Delete Message Wrapper...')[1]).toBeInTheDocument();
     expect(getAllByText('ThreadReplyIn...')[1]).toBeInTheDocument();
 
     expect(getAllByText('ThreadReply...')[2]).toBeInTheDocument();
-    expect(getAllByText('Delete Message Wrapper...')[2]).toBeInTheDocument();
     expect(getAllByText('ThreadReplyIn...')[2]).toBeInTheDocument();
   });
 });
