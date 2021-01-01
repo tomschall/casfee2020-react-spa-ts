@@ -12,7 +12,7 @@ module.exports = () => ({
       .click('button[type="submit"]')
       .pause(5000);
   },
-  'Add channel -private': (browser) => {
+  'Add channel - private': (browser) => {
     browser
       .url(browser.globals.url)
       .waitForElementVisible('body')
