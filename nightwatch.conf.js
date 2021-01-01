@@ -22,6 +22,7 @@ module.exports = {
         pw: 'test1234.$',
         url: 'http://localhost:3000/',
         channel: 'general',
+        waitForConditionTimeout: 5000,
       },
       desiredCapabilities: {
         browserName: 'chrome',

@@ -9,6 +9,8 @@ module.exports = () => ({
       .click('input[name=password]')
       .setValue('input[name=password]', browser.globals.pw)
       .click('.auth0-lock-submit')
-      .waitForElementVisible('body');
+      .pause(3000)
+      .waitForElementVisible('body')
+      .pause(3000);
   },
 });
