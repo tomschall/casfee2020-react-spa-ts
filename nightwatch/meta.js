@@ -35,6 +35,7 @@ module.exports = () => ({
         },
         'href',
         'https://fonts.googleapis.com/icon?family=Material+Icons',
-      );
+      )
+      .end();
   },
 });
