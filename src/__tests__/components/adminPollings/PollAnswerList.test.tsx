@@ -53,12 +53,6 @@ jest.mock('../../../components/adminPollings/DeleteAnswer', () => () => (
 
 describe('PollAnswerList', () => {
   beforeEach(() => {
-    mockedApiCallQuestion.mockReturnValue({
-      data: pollQuestion,
-      loading: false,
-      error: false,
-    });
-
     mockedApiCallAnswers.mockReturnValue({
       data: pollAnswers,
       loading: false,
@@ -71,6 +65,12 @@ describe('PollAnswerList', () => {
   });
 
   it('renders PollAnswerList component', async () => {
+    mockedApiCallQuestion.mockReturnValue({
+      data: pollQuestion,
+      loading: false,
+      error: false,
+    });
+
     const { debug, getByText, getAllByText } = render(
       <RecoilRoot>
         <MockedProvider>
@@ -94,5 +94,27 @@ describe('PollAnswerList', () => {
     expect(getByText('Ja, an was hat es gelegen?')).toBeInTheDocument();
     expect(getAllByText('Delete Answer')[2]).toBeInTheDocument();
     expect(getAllByText('Update')[2]).toBeInTheDocument();
+  });
+
+  it('renders PollAnswerList component loader', async () => {
+    mockedApiCallQuestion.mockReturnValue({
+      data: pollQuestion,
+      loading: true,
+      error: false,
+    });
+
+    const { debug, getByText, getAllByText } = render(
+      <RecoilRoot>
+        <MockedProvider>
+          <ThemeProvider theme={theme}>
+            <PollAnswerList pollQuestionId={1} />
+          </ThemeProvider>
+        </MockedProvider>
+      </RecoilRoot>,
+    );
+
+    debug();
+
+    expect(getByText('Loader...')).toBeInTheDocument();
   });
 });
