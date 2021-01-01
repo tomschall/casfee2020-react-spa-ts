@@ -7,6 +7,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { render } from '@testing-library/react';
 import { theme } from '../../theme/theme';
+import moment from 'moment';
 
 const user = {
   email: 'kimi@gmail.com',
@@ -16,10 +17,10 @@ const user = {
 
 const messages: any[] = [
   {
-    id: 1,
+    id: 3,
     image: null,
-    text: 'first message',
-    timestamp: '2020-12-31T11:07:58.245664+00:00',
+    text: 'third message',
+    timestamp: moment().subtract(3600, 'seconds'),
     user: { username: 'kimi', auth0_user_id: 'auth0|5f5f7119b9bd4c006ae69306' },
     channel: { name: 'general' },
   },
@@ -27,16 +28,22 @@ const messages: any[] = [
     id: 2,
     image: null,
     text: 'second message',
-    timestamp: '2020-12-31T10:07:58.245664+00:00',
-    user: { username: 'kimi', auth0_user_id: 'auth0|5f5f7119b9bd4c006ae69306' },
+    timestamp: moment().subtract(7200, 'seconds'),
+    user: {
+      username: 'tomschall',
+      auth0_user_id: 'auth0|5f5f7119b9bd4c006ae69306',
+    },
     channel: { name: 'general' },
   },
   {
-    id: 3,
+    id: 1,
     image: null,
-    text: 'third message',
-    timestamp: '2020-12-31T09:07:58.245664+00:00',
-    user: { username: 'kimi', auth0_user_id: 'auth0|5f5f7119b9bd4c006ae69306' },
+    text: 'first message',
+    timestamp: moment().subtract(10800, 'seconds'),
+    user: {
+      username: 'bruce_lee',
+      auth0_user_id: 'auth0|5f5f7119b9bd4c006ae69306',
+    },
     channel: { name: 'general' },
   },
 ];
@@ -76,7 +83,7 @@ describe('Chatapp loading', () => {
   });
 
   it('renders MessageList', async () => {
-    const { container, getByTestId, debug, getByText } = render(
+    const { container, getByTestId, debug, getByText, getAllByText } = render(
       <RecoilRoot>
         <MockedProvider>
           <ThemeProvider theme={theme}>
@@ -95,8 +102,37 @@ describe('Chatapp loading', () => {
 
     debug();
 
-    expect(getByText('first message')).toBeInTheDocument();
-    expect(getByText('second message')).toBeInTheDocument();
+    expect(getByText('KI')).toBeInTheDocument();
+    expect(getByText('kimi')).toBeInTheDocument();
+    expect(
+      getByText(moment(messages[0].timestamp).fromNow()),
+    ).toBeInTheDocument();
     expect(getByText('third message')).toBeInTheDocument();
+
+    expect(getByText('TO')).toBeInTheDocument();
+    expect(getByText('tomschall')).toBeInTheDocument();
+    expect(
+      getByText(moment(messages[1].timestamp).fromNow()),
+    ).toBeInTheDocument();
+    expect(getByText('second message')).toBeInTheDocument();
+
+    expect(getByText('BR')).toBeInTheDocument();
+    expect(getByText('bruce_lee')).toBeInTheDocument();
+    expect(
+      getByText(moment(messages[0].timestamp).fromNow()),
+    ).toBeInTheDocument();
+    expect(getByText('first message')).toBeInTheDocument();
+
+    expect(getAllByText('ThreadReply...')[0]).toBeInTheDocument();
+    expect(getAllByText('Delete Message Wrapper...')[0]).toBeInTheDocument();
+    expect(getAllByText('ThreadReplyIn...')[0]).toBeInTheDocument();
+
+    expect(getAllByText('ThreadReply...')[1]).toBeInTheDocument();
+    expect(getAllByText('Delete Message Wrapper...')[1]).toBeInTheDocument();
+    expect(getAllByText('ThreadReplyIn...')[1]).toBeInTheDocument();
+
+    expect(getAllByText('ThreadReply...')[2]).toBeInTheDocument();
+    expect(getAllByText('Delete Message Wrapper...')[2]).toBeInTheDocument();
+    expect(getAllByText('ThreadReplyIn...')[2]).toBeInTheDocument();
   });
 });
