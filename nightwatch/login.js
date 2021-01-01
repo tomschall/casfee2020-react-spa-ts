@@ -1,5 +1,5 @@
 module.exports = () => ({
-  'Login user': function (browser) {
+  'Login user': (browser) => {
     browser
       .url(browser.globals.url)
       .waitForElementVisible('body')
