@@ -20,7 +20,6 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import UnreadMessageCounter from './UnreadMessageCounter';
-import ThreadsLink from '../shared/ThreadsLink';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 
@@ -59,7 +58,6 @@ const Channels: React.FC<any> = () => {
   return (
     <>
       <List component="div" className={classes.root}>
-        <ThreadsLink />
         <ListItem button onClick={handleClick} aria-label="open channel list">
           <ListItemIcon>
             <PeopleOutlineIcon />

@@ -2,6 +2,8 @@ import React from 'react';
 import clsx from 'clsx';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Box, Divider, Grid, IconButton } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { theme } from '../../theme/theme';
 import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import UserStatus from './UserStatus';
@@ -9,8 +11,7 @@ import ChannelList from '../chat/ChannelList';
 import DirectMessageUserList from '../chat/DirectMessageUserList';
 import Logout from '../Logout';
 import AddChannel from '../chat/AddChannel';
-import { makeStyles } from '@material-ui/core/styles';
-import { theme } from '../../theme/theme';
+import ThreadsLink from '../shared/ThreadsLink';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -120,6 +121,8 @@ const SideBar: React.FC<SidebarProps> = ({ handleDrawerClose, open }) => {
           </Grid>
           <Grid item xs={12}>
             <DirectMessageUserList user_id={user.sub} />
+            <Divider />
+            <ThreadsLink />
             <Divider />
             <ChannelList />
             <Divider />
