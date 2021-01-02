@@ -116,7 +116,10 @@ const SideBar: React.FC<SidebarProps> = ({ handleDrawerClose, open }) => {
               <UserStatus user_id={user.sub} />
             </Box>
             <Divider
-              style={{ marginTop: theme.spacing(1), marginBottom: 16 }}
+              style={{
+                marginTop: theme.spacing(1),
+                marginBottom: theme.spacing(2),
+              }}
             />
           </Grid>
           <Grid item xs={12}>

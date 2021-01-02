@@ -1,5 +1,5 @@
 module.exports = () => ({
-  'Login user': (browser) => {
+  'Login Chatapp': (browser) => {
     browser
       .url(browser.globals.url)
       .waitForElementVisible('body')
@@ -9,8 +9,6 @@ module.exports = () => ({
       .click('input[name=password]')
       .setValue('input[name=password]', browser.globals.pw)
       .click('.auth0-lock-submit')
-      .pause(3000)
-      .assert.urlContains(browser.globals.channel)
       .waitForElementVisible('body');
   },
 });

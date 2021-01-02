@@ -10,7 +10,7 @@ module.exports = () => ({
       .url((result) => {
         console.log(result);
       })
-      .assert.urlContains(browser.globals.channel)
+      .assert.urlContains(channelName)
       .useXpath()
       .click("//div[contains(@aria-label, 'open channel list')]");
   },

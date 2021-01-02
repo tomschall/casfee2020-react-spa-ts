@@ -36,6 +36,10 @@ module.exports = () => ({
         },
         'href',
         'https://fonts.googleapis.com/icon?family=Material+Icons',
-      );
+      )
+      .expect.element(
+        'main, section, header, article, nav, footer, #message-list',
+      )
+      .to.be.present.after(3000);
   },
 });

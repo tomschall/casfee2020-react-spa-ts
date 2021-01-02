@@ -19,7 +19,7 @@ module.exports = {
     default: {
       globals: {
         // user: 'lorem@ipsum.com',
-        // pw: '_Lorem_3ster',
+        // pw: 'password',
         // url: 'https://chickenfest.ch',
         user: 'testuser@chickenfest.ch',
         pw: 'test1234.$',
@@ -42,15 +42,15 @@ module.exports = {
 };
 
 function loadServices() {
-  try {
-    Services.seleniumServer = require('selenium-server');
-  } catch (err) {}
+  // try {
+  //   Services.seleniumServer = require('selenium-server');
+  // } catch (err) {}
 
   try {
     Services.chromedriver = require('chromedriver');
   } catch (err) {}
 
-  try {
-    Services.geckodriver = require('geckodriver');
-  } catch (err) {}
+  // try {
+  //   Services.geckodriver = require('geckodriver');
+  // } catch (err) {}
 }
