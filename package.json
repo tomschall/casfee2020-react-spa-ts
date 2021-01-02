@@ -57,7 +57,7 @@
     "api:client:generate:windows": "rimraf src/api/generated/* && graphql-codegen --config codegen.js",
     "start": "react-scripts start",
     "build": "yarn api:client:generate && sh -ac '. .env.build; react-scripts build'",
-    "test": "react-scripts test",
+    "test": "react-scripts test && npx nightwatch nightwatch",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

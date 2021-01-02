@@ -2,6 +2,8 @@ const toggleAddChannel = '#collapse_add_channel';
 const messageList = '#message-list';
 
 module.exports = () => ({
+  '@†ags': ['ui'],
+  '@disabled': false,
   'Add channel - public': (browser) => {
     browser
       .waitForElementVisible('body')

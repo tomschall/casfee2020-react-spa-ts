@@ -6,6 +6,7 @@ loadServices();
 
 module.exports = {
   src_folders: ['nightwatch'],
+  page_objects_path: ['nightwatch/page_objects'],
 
   webdriver: {
     start_process: true,
