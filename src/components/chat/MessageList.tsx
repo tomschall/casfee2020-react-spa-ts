@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
 interface MessageProps {
   messages: Message[];
   lastMessage: Message | null;
-  preLastMessageId: number;
+  preLastMessageId: number | null;
   user: any;
   handleIncreaseLimit: any;
   limit: number;
@@ -259,6 +259,7 @@ const MessageList: React.FC<MessageProps> = ({
         {!deletedMessage &&
         lastMessage &&
         preLastMessageId !== 0 &&
+        preLastMessageId &&
         preLastMessageId < lastMessage.id
           ? renderMessage(lastMessage)
           : ''}

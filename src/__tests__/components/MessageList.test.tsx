@@ -116,8 +116,6 @@ describe('MessageList', () => {
       </RecoilRoot>,
     );
 
-    debug();
-
     expect(getByText('KI')).toBeInTheDocument();
     expect(getByText('kimi')).toBeInTheDocument();
     expect(
@@ -167,8 +165,6 @@ describe('MessageList', () => {
         </MockedProvider>
       </RecoilRoot>,
     );
-
-    debug();
 
     expect(getByText('Oh sorry it seems...')).toBeInTheDocument();
     expect(getByAltText('Message has been removed')).toBeInTheDocument();

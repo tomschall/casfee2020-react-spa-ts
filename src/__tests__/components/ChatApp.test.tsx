@@ -75,8 +75,6 @@ describe('Chatapp loading', () => {
       </RecoilRoot>,
     );
 
-    debug();
-
     expect(getByText('Chat')).toBeInTheDocument();
   });
 
@@ -117,8 +115,6 @@ describe('Chatapp loading', () => {
       </RecoilRoot>,
     );
 
-    debug();
-
     expect(getByText('Loader...')).toBeInTheDocument();
   });
 
@@ -158,8 +154,6 @@ describe('Chatapp loading', () => {
         </MockedProvider>
       </RecoilRoot>,
     );
-
-    debug();
 
     expect(getByText('Error:')).toBeInTheDocument();
   });

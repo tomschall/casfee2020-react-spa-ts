@@ -4,7 +4,7 @@ export interface Message {
   id: number;
   user_id: string;
   text: string;
-  image: string;
+  image: string | null;
   timestamp: Date | Moment;
   deleted?: boolean;
   user?: any;
@@ -17,7 +17,7 @@ export interface ThreadMessage {
   user_id: string;
   channel_thread_id: number;
   message: string;
-  image: string;
+  image: string | null;
   timestamp: Date;
   user?: any;
   limit: number;

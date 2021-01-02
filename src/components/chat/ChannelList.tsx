@@ -1,5 +1,4 @@
 import React from 'react';
-import { theme } from '../../theme/theme';
 import { useWatchChannelsSubscription } from '../../api/generated/graphql';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
 import { useRecoilState } from 'recoil';

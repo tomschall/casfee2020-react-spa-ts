@@ -81,8 +81,6 @@ describe('PollAnswerList', () => {
       </RecoilRoot>,
     );
 
-    debug();
-
     expect(getByText('Answers to these question')).toBeInTheDocument();
     expect(getByText('Total answers: 3')).toBeInTheDocument();
     expect(getByText('Das fragt man sich immer!')).toBeInTheDocument();
@@ -112,8 +110,6 @@ describe('PollAnswerList', () => {
         </MockedProvider>
       </RecoilRoot>,
     );
-
-    debug();
 
     expect(getByText('Loader...')).toBeInTheDocument();
   });
