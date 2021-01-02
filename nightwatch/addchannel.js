@@ -25,10 +25,4 @@ module.exports = () => ({
       .pause(3000)
       .waitForElementVisible(messageList);
   },
-  // 'Go to channel nightwatch': (browser) => {
-  //   browser
-  //     .click('a[aria-label="go to channel nightwatch"]')
-  //     .waitForElementVisible(messageList)
-  //     .pause(5000);
-  // },
 });

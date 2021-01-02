@@ -10,6 +10,7 @@ module.exports = Object.assign(
   },
   require('./login')(),
   require('./meta')(),
+  require('./threads')(),
   // require('./addChannel')(),
   require('./goToChannel')(),
   require('./addMessage')(),

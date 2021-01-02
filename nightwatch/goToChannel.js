@@ -4,7 +4,7 @@ const channelName = 'general';
 module.exports = () => ({
   'Go to channel: select channel, close dropdown, check url': (browser) => {
     browser
-      .waitForElementVisible(messageList)
+      .useCss()
       .click(`a[aria-label="go to channel ${channelName}"]`)
       .pause(3000)
       .url((result) => {
