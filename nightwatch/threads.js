@@ -12,9 +12,9 @@ module.exports = () => ({
       .expect.element('//*[@id="root"]/div/div/main/div[2]/header/div').to.be
       .visible;
   },
-  'Check thread list': (browser) => {
-    browser.expect.element(
-      '//*[@id="root"]/div/div/main/div[2]/div/div/div[1]/div',
-    ).to.be.present;
+  'Check thread list present': (browser) => {
+    browser.expect
+      .element('//*[@id="root"]/div/div/main/div[2]/div/div/div[1]/div')
+      .to.be.present.before(3000);
   },
 });
