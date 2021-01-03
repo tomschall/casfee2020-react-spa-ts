@@ -9,17 +9,17 @@ module.exports = () => ({
           index: 0,
         },
         'href',
-        `${browser.globals.url}favicon.ico`,
+        `${browser.globals.url}/favicon.ico`,
       )
       .verify.attributeEquals(
         'meta[name="description"]',
         'content',
         'CASFEE 2020 - Hochschule für Technik Rapperswil',
       )
-      .verify.attributeEquals(
+      .verify.attributeContains(
         'meta[name="viewport"]',
         'content',
-        'width=device-width, initial-scale=1, maximum-scale=1',
+        'maximum-scale=1',
       )
       .assert.attributeContains(
         {

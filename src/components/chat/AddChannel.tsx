@@ -185,7 +185,7 @@ const AddChannel: React.FC = () => {
               </Snackbar>
             </ListItem>
           )}
-          <ListItem className={classes.nested}>
+          <ListItem component="div" className={classes.nested}>
             <Grid container>
               <form
                 id="add_channel"
