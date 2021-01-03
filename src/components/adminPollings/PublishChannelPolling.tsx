@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 const PublishChannelPolling: React.FC = () => {
   const classes = useStyles();
   const { user } = useAuth0();
-  const [currentChannel, setCurrentChannelState] = useRecoilState(
+  const [currentChannel, setCurrentChannelState] = useRecoilState<any>(
     currentChannelState,
   );
   const [selectedPollAnswerId, setSelectedPollAnswerId] = React.useState<
@@ -62,7 +62,7 @@ const PublishChannelPolling: React.FC = () => {
 
   const { data, loading, error } = useWatchChannelPollQuestionSubscription({
     variables: {
-      channelId: currentChannel.id,
+      channelId: currentChannel?.id,
     },
   });
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useWatchChannelsSubscription } from '../../api/generated/graphql';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
 import { useRecoilState } from 'recoil';
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 const Channels: React.FC<any> = () => {
   const classes = useStyles();
   const [currentChannel] = useRecoilState<any>(currentChannelState);
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
 
   const handleClick = () => {
     setOpen(!open);
