@@ -1,3 +1,6 @@
+const user = process.env.NIGHTWATCH_USER || '';
+const pw = process.env.NIGHTWATCH_PW || '';
+
 module.exports = Object.assign(
   {
     before: (browser, done) => {
@@ -18,7 +21,7 @@ module.exports = Object.assign(
         .waitForElementVisible('body')
         .pause(3000);
 
-      page.login(browser.globals.user, browser.globals.pw);
+      page.login(`${user}`, `${pw}`);
     });
 
     test('send message', (browser) => {

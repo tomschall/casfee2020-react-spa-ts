@@ -19,13 +19,23 @@ module.exports = {
   test_settings: {
     default: {
       globals: {
-        // user: 'lorem@ipsum.com',
-        // pw: '_Lorem_3ster',
-        // url: 'https://chickenfest.ch',
-
-        user: 'testuser@chickenfest.ch',
-        pw: 'test1234.$',
         url: 'http://localhost:3000',
+        waitForConditionTimeout: 5000,
+      },
+      desiredCapabilities: {
+        browserName: 'chrome',
+        javascriptEnabled: true,
+        chromeOptions: {
+          args: ['--no-sandbox', '--disable-gpu', browserSize],
+        },
+        addons: {
+          chrome: 'stable',
+        },
+      },
+    },
+    production: {
+      globals: {
+        url: 'https://chickenfest.ch',
         waitForConditionTimeout: 5000,
       },
       desiredCapabilities: {
