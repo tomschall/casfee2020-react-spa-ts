@@ -8,11 +8,6 @@ module.exports = Object.assign(
       done();
     },
   },
-  require('./login')(),
-  // require('./meta')(),
-  // require('./threads')(),
-  // require('./addChannel')(),
-  require('./goToChannel')(),
-  // require('./addMessage')(),
-  // require('./deleteMessage')(),
+  require('./testChatApp')(),
+  require('./meta')(),
 );
