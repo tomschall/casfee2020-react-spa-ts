@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
-import { Chip } from '@material-ui/core';
+import React from 'react';
+import { Badge, Chip } from '@material-ui/core';
+import HowToVoteIcon from '@material-ui/icons/HowToVote';
 
 interface ShowTotalVotesProps {
   totalVotes: number;
@@ -8,13 +9,9 @@ interface ShowTotalVotesProps {
 const ShowTotalVotes: React.FC<ShowTotalVotesProps> = ({ totalVotes }) => {
   return (
     <>
-      <Chip
-        color="primary"
-        variant="outlined"
-        size="small"
-        label={`Total votes: ${totalVotes}`}
-        style={{ marginLeft: 8 }}
-      />
+      <Badge color="secondary" badgeContent={totalVotes}>
+        <HowToVoteIcon color="primary" />
+      </Badge>
     </>
   );
 };

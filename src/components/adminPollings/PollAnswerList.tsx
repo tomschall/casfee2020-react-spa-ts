@@ -7,7 +7,6 @@ import {
 import {
   Badge,
   Box,
-  Button,
   Chip,
   FormGroup,
   InputAdornment,
@@ -15,10 +14,8 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import SendIcon from '@material-ui/icons/Send';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import UpdateIcon from '@material-ui/icons/Update';
-import DeleteIcon from '@material-ui/icons/Delete';
 import Alert from '@material-ui/lab/Alert';
 import DeleteAnswer from './DeleteAnswer';
 import Loader from '../shared/Loader';

@@ -12,7 +12,6 @@ import {
   Box,
   Button,
   Chip,
-  Divider,
   Typography,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
@@ -22,7 +21,6 @@ import NotFound from '../shared/NotFound';
 import { useWatchGetPollQuestionsSubscription } from '../../api/generated/graphql';
 import { getPollQuestionAnswers } from '../../atom';
 import DeleteQuestion from './DeleteQuestion';
-import ShowPollQuestionLockState from './ShowPollQuestionLockState';
 import GetChannels from './GetChannels';
 import Loader from '../shared/Loader';
 import { makeStyles } from '@material-ui/core/styles';
@@ -109,6 +107,9 @@ const GetPollQuestions: React.FC = () => {
                   <HowToVoteIcon className={classes.voteIcon} />
                 )}
                 <Typography
+                  color={
+                    question?.channel_polls.length > 0 ? 'secondary' : 'primary'
+                  }
                   component={Link}
                   onClick={() => {
                     handleClick(question.id);
@@ -121,25 +122,6 @@ const GetPollQuestions: React.FC = () => {
                 >
                   {question.text}
                 </Typography>
-
-                {/* <Box
-                    display="flex"
-                    justifyContent="flex-end"
-                    alignItems="center"
-                    className={classes.column}
-                  >
-                    <ShowPollQuestionLockState
-                      setActiveState={question.is_active}
-                    />
-                    <Chip
-                      variant="outlined"
-                      color="primary"
-                      size="small"
-                      label={`Created at | ${moment(question.created_at).format(
-                        'DD-MM-YYYY | hh:mm:ss',
-                      )}`}
-                    />
-                  </Box> */}
               </AccordionSummary>
               <AccordionDetails className={classes.details}>
                 <div
