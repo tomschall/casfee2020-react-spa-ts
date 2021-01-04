@@ -73,7 +73,6 @@ describe('ChannelList', () => {
       </BrowserRouter>,
     );
 
-    expect(getByText('Threads')).toBeInTheDocument();
     expect(getByText('Channels')).toBeInTheDocument();
     expect(getByText('general')).toBeInTheDocument();
     expect(getByText('random')).toBeInTheDocument();

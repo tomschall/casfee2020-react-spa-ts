@@ -25,8 +25,6 @@ const GetChannels: React.FC<GetChannelsProps> = ({ questionId }) => {
     variables: {},
   });
 
-  console.log('GETPOLLQUESTIONID', getPollQuestionId, questionId);
-
   const [pollQuestionToChannel] = useAddPublishPollQuestionToChannelMutation();
   const [
     deletePollQuestionFromChannelMutation,

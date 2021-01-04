@@ -63,8 +63,6 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
     setOpen(false);
   };
 
-  console.log('currentChannel', currentChannel);
-
   return (
     <>
       <Box

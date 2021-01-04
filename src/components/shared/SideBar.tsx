@@ -12,6 +12,7 @@ import DirectMessageUserList from '../chat/DirectMessageUserList';
 import Logout from '../Logout';
 import AddChannel from '../chat/AddChannel';
 import ThreadsLink from '../shared/ThreadsLink';
+import DashBoardLink from '../shared/DashBoardLink';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,6 +72,7 @@ const SideBar: React.FC<SidebarProps> = ({ handleDrawerClose, open }) => {
   const { user } = useAuth0();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
   const { isAuthenticated } = useAuth0();
+  const role = localStorage.getItem(user.sub);
 
   return (
     <>
@@ -128,6 +130,7 @@ const SideBar: React.FC<SidebarProps> = ({ handleDrawerClose, open }) => {
               <>
                 <DirectMessageUserList user_id={user.sub} />
                 <Divider />
+                {role === 'admin' && <DashBoardLink />}
                 <ThreadsLink />
                 <Divider />
                 <ChannelList />

@@ -42,7 +42,7 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
       user['https://hasura.io/jwt/claims']['x-hasura-allowed-roles']
     )
       localStorage.setItem(
-        'role',
+        user.sub,
         user['https://hasura.io/jwt/claims']['x-hasura-allowed-roles'],
       );
   };
