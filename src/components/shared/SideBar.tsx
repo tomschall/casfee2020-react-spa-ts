@@ -70,6 +70,7 @@ const SideBar: React.FC<SidebarProps> = ({ handleDrawerClose, open }) => {
   const classes = useStyles();
   const { user } = useAuth0();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
+  const { isAuthenticated } = useAuth0();
 
   return (
     <>
@@ -123,14 +124,20 @@ const SideBar: React.FC<SidebarProps> = ({ handleDrawerClose, open }) => {
             />
           </Grid>
           <Grid item xs={12}>
-            <DirectMessageUserList user_id={user.sub} />
-            <Divider />
-            <ThreadsLink />
-            <Divider />
-            <ChannelList />
-            <Divider />
-            <AddChannel />
-            <Divider />
+            {isAuthenticated ? (
+              <>
+                <DirectMessageUserList user_id={user.sub} />
+                <Divider />
+                <ThreadsLink />
+                <Divider />
+                <ChannelList />
+                <Divider />
+                <AddChannel />
+                <Divider />
+              </>
+            ) : (
+              ''
+            )}
             <Box
               display="flex"
               justifyContent="flex-end"

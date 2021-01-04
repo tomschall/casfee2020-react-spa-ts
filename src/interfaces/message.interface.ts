@@ -1,9 +1,11 @@
+import { Moment } from 'moment';
+
 export interface Message {
   id: number;
   user_id: string;
   text: string;
-  image: string;
-  timestamp: Date;
+  image: string | null;
+  timestamp: Date | Moment;
   deleted?: boolean;
   user?: any;
   channel?: any;
@@ -15,7 +17,7 @@ export interface ThreadMessage {
   user_id: string;
   channel_thread_id: number;
   message: string;
-  image: string;
+  image: string | null;
   timestamp: Date;
   user?: any;
   limit: number;

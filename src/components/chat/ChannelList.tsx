@@ -1,5 +1,4 @@
-import React from 'react';
-import { theme } from '../../theme/theme';
+import React, { useState } from 'react';
 import { useWatchChannelsSubscription } from '../../api/generated/graphql';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
 import { useRecoilState } from 'recoil';
@@ -20,6 +19,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import UnreadMessageCounter from './UnreadMessageCounter';
+import DashBoardLink from '../shared/DashBoardLink';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 const Channels: React.FC<any> = () => {
   const classes = useStyles();
   const [currentChannel] = useRecoilState<any>(currentChannelState);
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
 
   const handleClick = () => {
     setOpen(!open);
@@ -58,6 +58,7 @@ const Channels: React.FC<any> = () => {
   return (
     <>
       <List component="div" className={classes.root}>
+        <DashBoardLink />
         <ListItem button onClick={handleClick} aria-label="open channel list">
           <ListItemIcon>
             <PeopleOutlineIcon />

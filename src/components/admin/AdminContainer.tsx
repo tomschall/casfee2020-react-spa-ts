@@ -40,39 +40,23 @@ const AdminContainer: React.FC = () => {
   const classes = useStyles();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
   return (
-    <Container
-      component="main"
-      maxWidth="xl"
-      disableGutters
-      className={classes.root}
-    >
-      {matches === true && (
-        <Grid item xs={4} className={classes.sidebar}>
-          <AdminSidebar />
-        </Grid>
-      )}
-      <Grid item xs={12} md={8} className={classes.container}>
-        <Typography color="primary" variant="h1">
-          Admin Dashboard
-        </Typography>
-        <Divider />
-        <Switch>
-          <Route exact path="/dashboard/users" component={AdminUserList} />
-          <Route exact path="/dashboard" component={PollingDashBoard} />
-          <Route
-            exact
-            path="/dashboard/pollings"
-            component={PollingDashBoard}
-          />
-          <Route
-            exact
-            path="/dashboard/pollings/edit/question/:question"
-            component={PollAnswers}
-          />
-          <Route component={NotFound} />
-        </Switch>
-      </Grid>
-    </Container>
+    <Grid item xs={12} md={8} className={classes.container}>
+      <Typography color="primary" variant="h1">
+        Admin Dashboard
+      </Typography>
+      <Divider />
+      <Switch>
+        <Route exact path="/dashboard/users" component={AdminUserList} />
+        <Route exact path="/dashboard" component={PollingDashBoard} />
+        <Route exact path="/dashboard/pollings" component={PollingDashBoard} />
+        <Route
+          exact
+          path="/dashboard/pollings/edit/question/:question"
+          component={PollAnswers}
+        />
+        <Route component={NotFound} />
+      </Switch>
+    </Grid>
   );
 };
 

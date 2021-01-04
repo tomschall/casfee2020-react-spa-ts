@@ -7,37 +7,60 @@ import { MockedProvider } from '@apollo/client/testing';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { render } from '@testing-library/react';
 import { theme } from '../../theme/theme';
+import moment from 'moment';
 
 const user = {
   email: 'kimi@gmail.com',
   email_verified: true,
-  sub: 'auth0|5f5f7119b9bd4c006ae69306',
+  sub: 'auth0|aaa',
 };
 
-const messages: any[] = [
+const messages: Message[] = [
   {
-    id: 1,
+    id: 3,
+    user_id: 'auth0|aaa',
     image: null,
-    text: 'first message',
-    timestamp: '2020-12-31T11:07:58.245664+00:00',
-    user: { username: 'kimi', auth0_user_id: 'auth0|5f5f7119b9bd4c006ae69306' },
+    text: 'third message',
+    timestamp: moment().subtract(3600, 'seconds'),
+    user: { username: 'kimi', auth0_user_id: 'auth0|aaa' },
     channel: { name: 'general' },
   },
   {
     id: 2,
+    user_id: 'auth0|bbb',
     image: null,
     text: 'second message',
-    timestamp: '2020-12-31T10:07:58.245664+00:00',
-    user: { username: 'kimi', auth0_user_id: 'auth0|5f5f7119b9bd4c006ae69306' },
+    timestamp: moment().subtract(7200, 'seconds'),
+    user: {
+      username: 'tomschall',
+      auth0_user_id: 'auth0|bbb',
+    },
     channel: { name: 'general' },
   },
   {
-    id: 3,
+    id: 1,
+    user_id: 'auth0|ccc',
     image: null,
-    text: 'third message',
-    timestamp: '2020-12-31T09:07:58.245664+00:00',
-    user: { username: 'kimi', auth0_user_id: 'auth0|5f5f7119b9bd4c006ae69306' },
+    text: 'first message',
+    timestamp: moment().subtract(10800, 'seconds'),
+    user: {
+      username: 'bruce_lee',
+      auth0_user_id: 'auth0|ccc',
+    },
     channel: { name: 'general' },
+  },
+];
+
+const deletedMessage: Message[] = [
+  {
+    id: 4,
+    user_id: 'auth0|ddd',
+    image: null,
+    text: 'fourth message',
+    timestamp: moment().subtract(14400, 'seconds'),
+    user: { username: 'kimi', auth0_user_id: 'auth0|aaa' },
+    channel: { name: 'general' },
+    deleted: true,
   },
 ];
 
@@ -68,20 +91,20 @@ jest.mock('../../components/chat/UpdateMessage', () => () => (
   <div>UpdateMessage...</div>
 ));
 
-describe('Chatapp loading', () => {
+describe('MessageList', () => {
   beforeEach(() => {
     mockedParams.mockReturnValue({
       channel: 'general',
     });
   });
 
-  it('renders MessageList', async () => {
-    const { container, getByTestId, debug, getByText } = render(
+  it('renders MessageList component with some messages', async () => {
+    const { debug, getByText, getAllByText } = render(
       <RecoilRoot>
         <MockedProvider>
           <ThemeProvider theme={theme}>
             <MessageList
-              messages={messages as any[]}
+              messages={messages as Message[]}
               lastMessage={null}
               preLastMessageId={null}
               user={user}
@@ -93,10 +116,57 @@ describe('Chatapp loading', () => {
       </RecoilRoot>,
     );
 
-    debug();
-
-    expect(getByText('first message')).toBeInTheDocument();
-    expect(getByText('second message')).toBeInTheDocument();
+    expect(getByText('KI')).toBeInTheDocument();
+    expect(getByText('kimi')).toBeInTheDocument();
+    expect(
+      getByText(moment(messages[0].timestamp).fromNow()),
+    ).toBeInTheDocument();
     expect(getByText('third message')).toBeInTheDocument();
+
+    expect(getByText('TO')).toBeInTheDocument();
+    expect(getByText('tomschall')).toBeInTheDocument();
+    expect(
+      getByText(moment(messages[1].timestamp).fromNow()),
+    ).toBeInTheDocument();
+    expect(getByText('second message')).toBeInTheDocument();
+
+    expect(getByText('BR')).toBeInTheDocument();
+    expect(getByText('bruce_lee')).toBeInTheDocument();
+    expect(
+      getByText(moment(messages[2].timestamp).fromNow()),
+    ).toBeInTheDocument();
+    expect(getByText('first message')).toBeInTheDocument();
+
+    expect(getAllByText('ThreadReply...')[0]).toBeInTheDocument();
+    expect(getByText('Delete Message Wrapper...')).toBeInTheDocument();
+    expect(getAllByText('ThreadReplyIn...')[0]).toBeInTheDocument();
+
+    expect(getAllByText('ThreadReply...')[1]).toBeInTheDocument();
+    expect(getAllByText('ThreadReplyIn...')[1]).toBeInTheDocument();
+
+    expect(getAllByText('ThreadReply...')[2]).toBeInTheDocument();
+    expect(getAllByText('ThreadReplyIn...')[2]).toBeInTheDocument();
+  });
+
+  it('renders deleted message in MessageList component', async () => {
+    const { debug, getByText, getByAltText } = render(
+      <RecoilRoot>
+        <MockedProvider>
+          <ThemeProvider theme={theme}>
+            <MessageList
+              messages={deletedMessage as Message[]}
+              lastMessage={null}
+              preLastMessageId={null}
+              user={user}
+              handleIncreaseLimit={3}
+              limit={3}
+            />
+          </ThemeProvider>
+        </MockedProvider>
+      </RecoilRoot>,
+    );
+
+    expect(getByText('Oh sorry it seems...')).toBeInTheDocument();
+    expect(getByAltText('Message has been removed')).toBeInTheDocument();
   });
 });

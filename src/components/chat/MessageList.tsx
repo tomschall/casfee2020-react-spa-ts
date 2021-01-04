@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
 interface MessageProps {
   messages: Message[];
   lastMessage: Message | null;
-  preLastMessageId: number;
+  preLastMessageId: number | null;
   user: any;
   handleIncreaseLimit: any;
   limit: number;
@@ -245,9 +245,14 @@ const MessageList: React.FC<MessageProps> = ({
         className={classes.loadMoreButton}
       >
         <Divider className={classes.divider} />
-        <Button onClick={handleIncreaseLimit} aria-label="load more messages">
-          load more (+{limit})
-        </Button>
+        {messages?.length === limit && (
+          <Button
+            onClick={() => handleIncreaseLimit()}
+            aria-label="load more messages"
+          >
+            load more (+{limit})
+          </Button>
+        )}
         <Divider className={classes.divider} />
       </Box>
       <List id="message-list" component="div" className={classes.root}>
@@ -256,6 +261,7 @@ const MessageList: React.FC<MessageProps> = ({
         {!deletedMessage &&
         lastMessage &&
         preLastMessageId !== 0 &&
+        preLastMessageId &&
         preLastMessageId < lastMessage.id
           ? renderMessage(lastMessage)
           : ''}
