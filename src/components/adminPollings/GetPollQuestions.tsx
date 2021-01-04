@@ -60,6 +60,8 @@ const GetPollQuestions: React.FC = () => {
     setPollQuestion(questionId);
   };
 
+  useEffect(() => {}, [data]);
+
   if (loading) {
     return <Loader />;
   }
@@ -140,24 +142,6 @@ const GetPollQuestions: React.FC = () => {
                   </Box> */}
               </AccordionSummary>
               <AccordionDetails className={classes.details}>
-                <div className={classes.column}>
-                  <Typography
-                    variant="caption"
-                    style={{ display: 'flex', width: '100%' }}
-                  >
-                    This poll is published on:
-                  </Typography>
-                  {question?.channel_polls.map((chn, index) => (
-                    <Chip
-                      key={chn.channel.name + index}
-                      style={{ marginTop: 8, marginRight: 8 }}
-                      variant="outlined"
-                      size="small"
-                      color="secondary"
-                      label={chn.channel.name}
-                    />
-                  ))}
-                </div>
                 <div
                   className={clsx(classes.column)}
                   onMouseEnter={() => {
@@ -171,13 +155,13 @@ const GetPollQuestions: React.FC = () => {
                   <GetChannels questionId={question.id} />
                 </div>
               </AccordionDetails>
-              <Divider />
               <AccordionActions>
                 <Button
                   variant="contained"
                   color="secondary"
                   href={`/dashboard/pollings/edit/question/${question.id}`}
                   aria-label="Poll Question"
+                  size="small"
                 >
                   Edit
                 </Button>

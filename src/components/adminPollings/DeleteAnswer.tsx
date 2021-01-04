@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDeletePollAnswerIdMutation } from '../../api/generated/graphql';
-import { Button } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { IconButton } from '@material-ui/core';
 
 interface DeleteAnswerProps {
   answerId: number;
@@ -29,23 +30,18 @@ const DeleteAnswer: React.FC<DeleteAnswerProps> = ({
 
   return (
     <>
-      <Button
-        style={{
-          marginTop: '8px',
-          marginLeft: '8px',
-          maxWidth: '100px',
-        }}
-        variant="outlined"
-        size="large"
+      <IconButton
+        id="answer_update"
+        type="submit"
         color="secondary"
+        aria-label="Update answer text"
         disabled={setActiveState}
         onClick={() => {
           handleDeleteAnswer(answerId);
         }}
-        aria-label="Delete Answer"
       >
-        Delete
-      </Button>
+        <DeleteIcon />
+      </IconButton>
     </>
   );
 };

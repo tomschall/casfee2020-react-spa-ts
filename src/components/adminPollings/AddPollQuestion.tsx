@@ -72,7 +72,7 @@ const AddPollQuestion: React.FC = () => {
     <>
       <Box className={classes.root}>
         <Typography variant="h2" style={{ paddingBottom: theme.spacing(1) }}>
-          Add a new poll
+          Add new poll
         </Typography>
         <form
           className={classes.form}
