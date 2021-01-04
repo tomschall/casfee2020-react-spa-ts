@@ -102,37 +102,34 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
         <Collapse in={open} timeout="auto">
           <List component="div">
             {data?.channels.map((data: any) => (
-              <Link
+              <ListItem
+                button
+                component={Link}
                 key={data.name}
                 className={classes.link}
                 to={'/channel/' + data.name}
                 aria-label={data.user_channels[0]?.user.username}
               >
-                <ListItem
-                  button
-                  aria-label={data.user_channels[0]?.user.username}
-                >
-                  <OnlineUserStatus user={data.user_channels[0]?.user} />
-                  {data?.id === currentChannel?.id ? (
-                    <>
-                      <ListItemText>
-                        <Typography variant="h6" color="secondary">
-                          {data.user_channels[0]?.user.username}
-                        </Typography>
-                      </ListItemText>
-                    </>
-                  ) : (
-                    <>
-                      <ListItemText>
-                        <Typography variant="h6">
-                          {data.user_channels[0]?.user.username}
-                        </Typography>
-                      </ListItemText>
-                      <UnreadMessageCounter channelId={data.id} />
-                    </>
-                  )}
-                </ListItem>
-              </Link>
+                <OnlineUserStatus user={data.user_channels[0]?.user} />
+                {data?.id === currentChannel?.id ? (
+                  <>
+                    <ListItemText>
+                      <Typography variant="h6" color="secondary">
+                        {data.user_channels[0]?.user.username}
+                      </Typography>
+                    </ListItemText>
+                  </>
+                ) : (
+                  <>
+                    <ListItemText>
+                      <Typography variant="h6">
+                        {data.user_channels[0]?.user.username}
+                      </Typography>
+                    </ListItemText>
+                    <UnreadMessageCounter channelId={data.id} />
+                  </>
+                )}
+              </ListItem>
             ))}
           </List>
         </Collapse>

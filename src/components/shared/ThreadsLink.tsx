@@ -26,14 +26,19 @@ const useStyles = makeStyles((theme) => ({
 const ThreadsLink: React.FC<any> = () => {
   return (
     <>
-      <ListItem button>
+      <ListItem
+        button
+        component={Link}
+        to="/channel/threads"
+        aria-label="Open Threads"
+      >
         <ListItemIcon>
           <ForumOutlinedIcon />
         </ListItemIcon>
         <ListItemText>
-          <Link to="/channel/threads" aria-label="Open Threads">
-            <Typography variant="h6">Threads</Typography>
-          </Link>
+          <Typography variant="h6" color="primary">
+            Threads
+          </Typography>
         </ListItemText>
       </ListItem>
     </>

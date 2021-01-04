@@ -137,7 +137,7 @@ const AddChannel: React.FC = () => {
 
   return (
     <List component="div">
-      <ListItem button onClick={handleClick}>
+      <ListItem id="collapse_add_channel" button onClick={handleClick}>
         <ListItemIcon aria-label="open add channel">
           {open ? <GroupAddIcon /> : <GroupAddOutlinedIcon />}
         </ListItemIcon>
@@ -185,9 +185,10 @@ const AddChannel: React.FC = () => {
               </Snackbar>
             </ListItem>
           )}
-          <ListItem className={classes.nested}>
+          <ListItem component="div" className={classes.nested}>
             <Grid container>
               <form
+                id="add_channel"
                 className={classes.form}
                 noValidate
                 autoComplete="off"

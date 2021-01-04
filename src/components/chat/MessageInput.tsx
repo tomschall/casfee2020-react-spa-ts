@@ -208,6 +208,7 @@ const MessageInput: React.FC<MessageInputProps> = (props) => {
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
+                  id="message_submit"
                   type="submit"
                   color="secondary"
                   aria-label="Send message"
