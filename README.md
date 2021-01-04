@@ -105,19 +105,36 @@ them, the execute ./clean.sh script in the root folder of the project.
 
 ## Tests
 
-### Tests with nightwatch
+### E2E-Tests with nightwatch
+
+Update your nightwatch test user in nightwatch.conf.js accordingly.
+
+### E2E-Tests (local)
 
 ```
 npx nightwatch nightwatch
 ```
 
+### E2E-Tests (https://chickenfest.ch)
+
+```
+npx nightwatch nightwatch --env production
+```
+
 ## Additional features
 
-- typing indicator
-- number of users are online
-- direct message users online status
-- inline edit your own chat- and direct messages
-- when a message with a thread get's deleted, there's an additonal info on the message and the thread gets not deleted
-- add giphy's to your chat and direct messages
-- add default message to your channel on creation
-- show number of new messages in sidebar - for this feature the user must have visited the channel at least once, thread messages are not counted at the moment
+- Typing indicator
+- Number of users are online
+- Direct message users online status
+- Inline edit your own chat- and direct messages
+- When a message with a thread get's deleted, there's an additonal info on the message and the thread gets not deleted
+- Add giphy's to your chat and direct messages
+- Add default message to your channel on creation
+- Show number of new messages in sidebar - for this feature the user must have visited the channel at least once, thread messages are not counted at the moment
+- Generate a thread on each message.
+- Listing all generated threads in one list.
+- Admin dashboard to generate user pollings. Publish a poll on one or more public channels. The User has to be administrator to administrate pollings.
+
+## Demo Chatapp
+
+URL: https://chickenfest.ch
