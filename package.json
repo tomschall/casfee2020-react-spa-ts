@@ -59,6 +59,7 @@
     "start": "react-scripts start",
     "build": "yarn api:client:generate && sh -ac '. .env.build; react-scripts build'",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
+    "nightwatch": "npx nightwatch",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

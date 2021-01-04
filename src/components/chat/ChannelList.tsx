@@ -19,7 +19,6 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import UnreadMessageCounter from './UnreadMessageCounter';
-import ThreadsLink from '../shared/ThreadsLink';
 import DashBoardLink from '../shared/DashBoardLink';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
@@ -60,7 +59,6 @@ const Channels: React.FC<any> = () => {
     <>
       <List component="div" className={classes.root}>
         <DashBoardLink />
-        <ThreadsLink />
         <ListItem button onClick={handleClick} aria-label="open channel list">
           <ListItemIcon>
             <PeopleOutlineIcon />
@@ -73,42 +71,42 @@ const Channels: React.FC<any> = () => {
         <Collapse in={open} timeout="auto">
           <List component="div">
             {data?.channels?.map((data: any, index) => (
-              <Link
-                key={data.id}
+              <ListItem
+                key={index}
+                button
+                component={Link}
                 to={'/channel/' + data.name}
                 aria-label={`go to channel ${data.name}`}
               >
-                <ListItem button>
-                  {data?.id === currentChannel?.id ? (
-                    <>
-                      <ListItemIcon>
-                        {data.is_private === true ? (
-                          <EnhancedEncryptionOutlinedIcon color="secondary" />
-                        ) : (
-                          <PeopleIcon color="secondary" />
-                        )}
-                      </ListItemIcon>
-                      <ListItemText>
-                        <Typography variant="h6" color="secondary">
-                          {data.name}
-                        </Typography>
-                      </ListItemText>
-                    </>
-                  ) : (
-                    <>
-                      <ListItemIcon>
-                        {data.is_private === true ? (
-                          <EnhancedEncryptionOutlinedIcon />
-                        ) : (
-                          <PeopleIcon />
-                        )}
-                      </ListItemIcon>
-                      <ListItemText primary={data?.name} />
-                      <UnreadMessageCounter channelId={data.id} />
-                    </>
-                  )}
-                </ListItem>
-              </Link>
+                {data?.id === currentChannel?.id ? (
+                  <>
+                    <ListItemIcon>
+                      {data.is_private === true ? (
+                        <EnhancedEncryptionOutlinedIcon color="secondary" />
+                      ) : (
+                        <PeopleIcon color="secondary" />
+                      )}
+                    </ListItemIcon>
+                    <ListItemText>
+                      <Typography variant="h6" color="secondary">
+                        {data.name}
+                      </Typography>
+                    </ListItemText>
+                  </>
+                ) : (
+                  <>
+                    <ListItemIcon>
+                      {data.is_private === true ? (
+                        <EnhancedEncryptionOutlinedIcon />
+                      ) : (
+                        <PeopleIcon />
+                      )}
+                    </ListItemIcon>
+                    <ListItemText primary={data?.name} />
+                    <UnreadMessageCounter channelId={data.id} />
+                  </>
+                )}
+              </ListItem>
             ))}
           </List>
         </Collapse>
