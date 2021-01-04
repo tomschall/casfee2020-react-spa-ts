@@ -245,12 +245,14 @@ const MessageList: React.FC<MessageProps> = ({
         className={classes.loadMoreButton}
       >
         <Divider className={classes.divider} />
-        <Button
-          onClick={() => handleIncreaseLimit()}
-          aria-label="load more messages"
-        >
-          load more (+{limit})
-        </Button>
+        {messages?.length === limit && (
+          <Button
+            onClick={() => handleIncreaseLimit()}
+            aria-label="load more messages"
+          >
+            load more (+{limit})
+          </Button>
+        )}
         <Divider className={classes.divider} />
       </Box>
       <List id="message-list" component="div" className={classes.root}>

@@ -20,6 +20,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import UnreadMessageCounter from './UnreadMessageCounter';
 import ThreadsLink from '../shared/ThreadsLink';
+import DashBoardLink from '../shared/DashBoardLink';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 
@@ -58,6 +59,7 @@ const Channels: React.FC<any> = () => {
   return (
     <>
       <List component="div" className={classes.root}>
+        <DashBoardLink />
         <ThreadsLink />
         <ListItem button onClick={handleClick} aria-label="open channel list">
           <ListItemIcon>

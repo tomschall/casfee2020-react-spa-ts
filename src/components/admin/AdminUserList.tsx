@@ -17,7 +17,7 @@ import { useGetUserListQuery } from '../../api/generated/graphql';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: { overflowY: 'scroll', height: '100vh' },
 }));
 
 const AdminUserList: React.FC = () => {

@@ -5,19 +5,18 @@ import { useSetUserOnlineMutation } from '../../api/generated/graphql';
 
 const ChatBoard: React.FC = () => {
   const { user } = useAuth0();
-  const user_id = user.sub;
 
   const [sendUserIsOnline] = useSetUserOnlineMutation({
-    variables: { user_id },
+    variables: { user_id: user?.sub },
   });
 
   useEffect(() => {
     setInterval(() => {
-      if (user.sub !== undefined) {
+      if (user?.sub !== undefined) {
         sendUserIsOnline();
       }
     }, 9000);
-  }, [sendUserIsOnline, user.sub]);
+  }, [sendUserIsOnline, user?.sub]);
 
   return <ChatContainer />;
 };

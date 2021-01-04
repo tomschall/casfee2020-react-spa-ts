@@ -23,10 +23,12 @@ import Loader from '../shared/Loader';
 import Logo from '../shared/Logo';
 import { makeStyles } from '@material-ui/core/';
 import OnlineUserStatus from '../shared/OnlineUserStatus';
+import MobileHeaderMenu from './MobileHeaderMenu';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     overflowY: 'scroll',
+    height: '100vh',
   },
   spacer: {
     marginTop: theme.spacing(5),
@@ -42,14 +44,16 @@ const AddChannelMembers: React.FC = () => {
     currentChannelState,
   );
 
+  if (!currentChannel) history.push('/channel/general');
+
   const {
     data: users,
     loading,
     error,
   } = useWatchUsersWhoHaveNotSubscribedToChannelSubscription({
     variables: {
-      user_id: currentChannel.owner_id,
-      channel_id: currentChannel.id,
+      user_id: currentChannel?.owner_id,
+      channel_id: currentChannel?.id,
     },
   });
 
@@ -61,14 +65,14 @@ const AddChannelMembers: React.FC = () => {
   const handleUsersToggle = async (event: any, user_id: string) => {
     await addChannelUserMutation({
       variables: {
-        channel_id: currentChannel.id,
+        channel_id: currentChannel?.id,
         user_id,
       },
     });
   };
 
   const handleClick = () => {
-    history.push(`/channel/${currentChannel.name}`);
+    history.push(`/channel/${currentChannel?.name}`);
   };
 
   if (error || addChannelUserError)
@@ -76,84 +80,70 @@ const AddChannelMembers: React.FC = () => {
 
   return (
     <>
-      <Container maxWidth="sm" className={classes.root}>
-        <Grid item xs={12}>
-          <Box display="flex" justifyContent="center" alignItems="center">
-            <Logo />
-          </Box>
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            flexDirection="column"
-            mt={0}
-            mb={5}
+      <Grid item xs={12} md={9} className={classes.root} component="section">
+        <MobileHeaderMenu channelName={currentChannel?.name} />
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <Logo />
+        </Box>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          flexDirection="column"
+          mt={0}
+          mb={5}
+        >
+          <Typography id="simple-modal-title" variant="h2">
+            Add users to {currentChannel?.name}
+          </Typography>
+          <Typography
+            color="secondary"
+            variant="caption"
+            id="simple-modal-description"
           >
-            <Typography id="simple-modal-title" variant="h2">
-              Add users to {currentChannel.name}
-            </Typography>
-            <Typography
-              color="secondary"
-              variant="caption"
-              id="simple-modal-description"
-            >
-              {users && users.user.length > 0
-                ? 'Select users that you wanna add to this channel.'
-                : 'All users have subscribed to this channel.'}
-            </Typography>
-          </Box>
-          <Box>
-            {error && (
-              <Alert severity={'error'}>
-                Error - something weird happened...
-              </Alert>
-            )}
+            {users && users.user.length > 0
+              ? 'Select users that you wanna add to this channel.'
+              : 'All users have subscribed to this channel.'}
+          </Typography>
+        </Box>
+        <Box>
+          {error && (
+            <Alert severity={'error'}>
+              Error - something weird happened...
+            </Alert>
+          )}
 
-            {(loadingAuth0 || loading) && <Loader />}
+          {(loadingAuth0 || loading) && <Loader />}
 
-            {!(loadingAuth0 || loading || error) && (
-              <>
-                <Divider className={classes.spacer} />
-                <List
-                  component="nav"
-                  aria-label="secondary mailbox folders"
-                  className={classes.spacer}
-                >
-                  {users &&
-                    users.user.map((u: any, index) => {
-                      return (
-                        <ListItem
-                          button
-                          key={index}
-                          onClick={(event) =>
-                            handleUsersToggle(event, u.auth0_user_id)
-                          }
-                        >
-                          <OnlineUserStatus user={u} />
-                          <ListItemText primary={u.username} />
-                        </ListItem>
-                      );
-                    })}
-                </List>
-                <Divider className={classes.spacer} />
-              </>
-            )}
-          </Box>
-        </Grid>
-        <Grid item xs={12}>
-          <Box display="flex" justifyContent="center" mt={5} mb={5}>
-            <Button
-              variant="contained"
-              color="secondary"
-              size="large"
-              onClick={handleClick}
-              aria-label="back to channel"
-            >
-              Back to channel
-            </Button>
-          </Box>
-        </Grid>
-      </Container>
+          {!(loadingAuth0 || loading || error) && (
+            <>
+              <Divider className={classes.spacer} />
+              <List
+                component="nav"
+                aria-label="secondary mailbox folders"
+                className={classes.spacer}
+              >
+                {users &&
+                  users.user.map((u: any, index) => {
+                    return (
+                      <ListItem
+                        button
+                        key={index}
+                        onClick={(event) =>
+                          handleUsersToggle(event, u.auth0_user_id)
+                        }
+                      >
+                        <OnlineUserStatus user={u} />
+                        <ListItemText primary={u.username} />
+                      </ListItem>
+                    );
+                  })}
+              </List>
+              <Divider className={classes.spacer} />
+            </>
+          )}
+        </Box>
+      </Grid>
     </>
   );
 };

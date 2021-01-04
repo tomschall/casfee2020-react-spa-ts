@@ -167,9 +167,14 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
       />
 
       <Box className={classes.loadMoreButton}>
-        <Button onClick={handleIncreaseLimit} aria-label="load more messages">
-          load more (+{limit})
-        </Button>
+        {messages?.length === limit && (
+          <Button
+            onClick={() => handleIncreaseLimit()}
+            aria-label="load more messages"
+          >
+            load more (+{limit})
+          </Button>
+        )}
       </Box>
 
       {messages
