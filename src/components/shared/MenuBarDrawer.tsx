@@ -1,9 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Drawer, makeStyles, Toolbar } from '@material-ui/core';
-import SideBar from './SideBar';
-import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
-import { theme } from '../../theme/theme';
 
 const drawerWidth = '100%';
 
@@ -45,29 +42,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface MenuBarDrawerProps {
+  children: any;
   open: boolean;
-  handleDrawerClose: any;
 }
 
-const MenuBarDrawer: React.FC<MenuBarDrawerProps> = ({
-  open,
-  handleDrawerClose,
-}) => {
+const MenuBarDrawer: React.FC<MenuBarDrawerProps> = ({ children, open }) => {
   const classes = useStyles();
 
   return (
     <Drawer
       variant="temporary"
-      elevation={10}
+      elevation={0}
       anchor="left"
       classes={{
         paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
       }}
       open={open}
     >
-      <Toolbar className={classes.toolbar}>
-        <SideBar handleDrawerClose={handleDrawerClose} open={open} />
-      </Toolbar>
+      <Toolbar className={classes.toolbar}>{children}</Toolbar>
     </Drawer>
   );
 };

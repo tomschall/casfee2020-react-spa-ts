@@ -7,6 +7,7 @@ import GiphyCarousel from './GiphyCarousel';
 import AddGif from '@material-ui/icons/Gif';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import MenuBarDrawer from './MenuBarDrawer';
+import SideBar from './SideBar';
 
 const drawerWidth = '100%';
 
@@ -29,10 +30,6 @@ interface MenuBarProps {
 
 const MenuBar: React.FC<MenuBarProps> = ({ children, channelId }) => {
   const classes = useStyles();
-
-  const [currentChannel, setCurrentChannel] = useRecoilState<any>(
-    currentChannelState,
-  );
 
   const [open, setOpen] = React.useState(false);
   const [openGiphy, setOpenGiphy] = React.useState<boolean>(false);
@@ -80,8 +77,9 @@ const MenuBar: React.FC<MenuBarProps> = ({ children, channelId }) => {
           {children}
         </Box>
       </Box>
-
-      <MenuBarDrawer open={open} handleDrawerClose={handleDrawerClose} />
+      <MenuBarDrawer open={open}>
+        <SideBar handleDrawerClose={handleDrawerClose} open={open} />
+      </MenuBarDrawer>
     </>
   );
 };

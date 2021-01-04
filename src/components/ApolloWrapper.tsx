@@ -10,6 +10,7 @@ import {
 } from '@apollo/client';
 import { WebSocketLink, WebSocketParams } from '@apollo/client/link/ws';
 import { setContext } from '@apollo/client/link/context';
+import jwt_decode from 'jwt-decode';
 
 interface Definition {
   kind: string;
@@ -26,10 +27,24 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
   const getHeaders = async () => {
     const headers = {} as ApolloHeadersType;
     if (isAuthenticated) {
-      const token = await getAccessTokenSilently();
+      const token: string = await getAccessTokenSilently();
+      parseTokenAndSetRoles(token);
       headers.Authorization = `Bearer ${token}`;
     }
     return headers;
+  };
+
+  const parseTokenAndSetRoles = async (token: any) => {
+    const user: any = jwt_decode(token);
+    if (
+      user &&
+      user['https://hasura.io/jwt/claims'] &&
+      user['https://hasura.io/jwt/claims']['x-hasura-allowed-roles']
+    )
+      localStorage.setItem(
+        'role',
+        user['https://hasura.io/jwt/claims']['x-hasura-allowed-roles'],
+      );
   };
 
   const authMiddleware = setContext(async (operation, { originalHeaders }) => {

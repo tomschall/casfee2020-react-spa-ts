@@ -10,6 +10,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import PollPopUp from '../../components/adminPollings/PollPopup';
 import Logout from '../Logout';
 import MenuBarDrawer from '../shared/MenuBarDrawer';
+import SideBar from '../shared/SideBar';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -62,6 +63,8 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
     setOpen(false);
   };
 
+  console.log('currentChannel', currentChannel);
+
   return (
     <>
       <Box
@@ -94,7 +97,9 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
         <PollPopUp channelId={currentChannel?.id} />
         <Logout />
       </Box>
-      <MenuBarDrawer open={open} handleDrawerClose={handleDrawerClose} />
+      <MenuBarDrawer open={open}>
+        <SideBar handleDrawerClose={handleDrawerClose} open={open} />
+      </MenuBarDrawer>
     </>
   );
 };

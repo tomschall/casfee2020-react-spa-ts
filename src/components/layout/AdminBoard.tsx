@@ -18,7 +18,7 @@ const AdminBoard: React.FC = () => {
     }, 9000);
   }, [sendUserIsOnline, user?.sub]);
 
-  return <>admin board</>;
+  return <AdminContainer />;
 };
 
 export default AdminBoard;

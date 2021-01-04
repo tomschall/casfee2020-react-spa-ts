@@ -33,6 +33,7 @@
     "graphql": "^15.3.0",
     "graphql-tag": "^2.11.0",
     "graphql-tools": "^6.0.16",
+    "jwt-decode": "^3.1.2",
     "material-ui-popup-state": "^1.7.0",
     "moment": "^2.22.2",
     "nightwatch": "^1.5.1",

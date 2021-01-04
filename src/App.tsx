@@ -25,29 +25,32 @@ import SideBar from './components/shared/SideBar';
 
 const useStyles = makeStyles((theme) => ({
   container: {
+    overflowY: 'scroll',
+    maxHeight: '100vh',
     margin: 0,
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     overflowX: 'hidden',
-    overflowY: 'hidden',
     height: '100vh',
+    [theme.breakpoints.down('md')]: {
+      overflowY: 'hidden',
+    },
   },
   sidebar: {
     overflowY: 'hidden',
     minHeight: '50vh',
     display: 'flex',
     alignItems: 'flex-start',
-    borderRightWidth: 1,
-    borderRightStyle: 'solid',
-    borderRightColor: theme.palette.primary.dark,
   },
 }));
 
 const App: React.FC = () => {
-  const { isAuthenticated, isLoading } = useAuth0();
+  const { isAuthenticated, isLoading, user } = useAuth0();
   const classes = useStyles();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
+
+  console.log('user', user?.sub);
 
   if (isLoading) {
     return (
@@ -92,7 +95,6 @@ const App: React.FC = () => {
             <SideBar handleDrawerClose={() => false} open={false} />
           </Grid>
         )}
-
         <>
           {isAuthenticated ? (
             <Switch>
