@@ -25,7 +25,7 @@ import SideBar from './components/shared/SideBar';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    overflowY: 'scroll',
+    // overflowY: 'scroll',
     maxHeight: '100vh',
     margin: 0,
     display: 'flex',

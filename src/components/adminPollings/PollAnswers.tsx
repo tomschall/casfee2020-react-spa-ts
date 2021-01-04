@@ -2,14 +2,15 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Box,
-  Button,
+  IconButton,
+  InputAdornment,
   Divider,
   FormGroup,
   Grid,
   TextField,
   Typography,
 } from '@material-ui/core';
-import HowToVoteIcon from '@material-ui/icons/HowToVote';
+import SendIcon from '@material-ui/icons/Send';
 import {
   useWatchGetPollQuestionSubscription,
   useAddAnswerToQuestionMutation,
@@ -21,9 +22,13 @@ import SetPollQuestionLockState from './SetPollQuestionLockState';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  divider: {
+  root: {
+    padding: theme.spacing(2),
     marginTop: theme.spacing(5),
-    marginBottom: theme.spacing(5),
+  },
+  divider: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
   },
   form: {},
   messageInput: {
@@ -92,10 +97,8 @@ const PollAnswers: React.FC = () => {
 
   return (
     <>
-      <Grid item xs={12}>
-        <Box mt={3} p={0}>
-          <GetPollAnswerId pollQuestionId={parseInt(pollQuestionId)} />
-        </Box>
+      <Box className={classes.root}>
+        <GetPollAnswerId pollQuestionId={parseInt(pollQuestionId)} />
 
         <Box
           display="flex"
@@ -146,36 +149,31 @@ const PollAnswers: React.FC = () => {
               label="Add an answer to these question"
               fullWidth
               InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      id="message_submit"
+                      type="submit"
+                      color="secondary"
+                      aria-label="Send message"
+                    >
+                      <SendIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
                 classes: {
                   input: classes.messageInput,
                 },
-              }}
-              inputProps={{
-                maxLength: 250,
               }}
               InputLabelProps={{
                 className: classes.messageInput,
               }}
             />
-            <Button
-              type="submit"
-              value="Add poll title"
-              size="medium"
-              variant="contained"
-              endIcon={<HowToVoteIcon />}
-              className={classes.messageButton}
-            >
-              Add answer
-            </Button>
           </FormGroup>
         </form>
         <Divider className={classes.divider} />
-      </Grid>
-      <Grid item xs={12}>
         <PollAnswerList pollQuestionId={parseInt(pollQuestionId)} />
-        <Divider className={classes.divider} />
-        <GetChannels questionId={currentAnswerId} />
-      </Grid>
+      </Box>
     </>
   );
 };

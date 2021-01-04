@@ -5,14 +5,17 @@ import {
   useWatchGetPollQuestionSubscription,
 } from '../../api/generated/graphql';
 import {
+  Badge,
   Box,
-  Button,
   Chip,
   FormGroup,
-  Grid,
+  InputAdornment,
+  IconButton,
   TextField,
   Typography,
 } from '@material-ui/core';
+import HowToVoteIcon from '@material-ui/icons/HowToVote';
+import UpdateIcon from '@material-ui/icons/Update';
 import Alert from '@material-ui/lab/Alert';
 import DeleteAnswer from './DeleteAnswer';
 import Loader from '../shared/Loader';
@@ -99,8 +102,8 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
         data?.poll_answers
           .sort((a, b) => a.id - b.id)
           .map((answer) => (
-            <FormGroup row key={answer.id}>
-              <Grid item xs={8}>
+            <>
+              <FormGroup row key={answer.id}>
                 <TextField
                   key={answer.id}
                   name={answer.text + answer.id}
@@ -111,7 +114,8 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                     setAnswerTextUpdateId(answer.id);
                   }}
                   multiline
-                  rows={4}
+                  // rows={1}
+                  rowsMax={4}
                   size="medium"
                   variant="outlined"
                   color="secondary"
@@ -120,72 +124,56 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                   label={answer.text}
                   fullWidth
                   margin="dense"
+                  inputProps={{
+                    maxLength: 250,
+                  }}
                   InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          key={answer.id}
+                          id="answer_update"
+                          type="submit"
+                          color="secondary"
+                          aria-label="Send message"
+                          onClick={() => {
+                            handleUpdateAnswerText(answer.id);
+                          }}
+                          disabled={
+                            answer.id !== answerTextUpdateId
+                              ? true
+                              : false || updateEnabled === true
+                          }
+                        >
+                          <UpdateIcon />
+                        </IconButton>
+                        <DeleteAnswer
+                          answerId={answer.id}
+                          setActiveState={
+                            answer.votes !== undefined
+                            // getPollQuestion?.data?.poll_question[0]?.is_active
+                            //   ? true
+                            //   : false
+                          }
+                        />
+                        <Badge
+                          badgeContent={answer.votes ? answer.votes : 0}
+                          color="secondary"
+                        >
+                          <HowToVoteIcon color="primary" />
+                        </Badge>
+                      </InputAdornment>
+                    ),
                     classes: {
                       input: classes.messageInput,
                     },
-                  }}
-                  inputProps={{
-                    maxLength: 250,
                   }}
                   InputLabelProps={{
                     className: classes.messageInput,
                   }}
                 />
-              </Grid>
-              <Grid item xs={4}>
-                <Box
-                  display="flex"
-                  justifyContent="flex-end"
-                  alignItems="center"
-                >
-                  <Button
-                    style={{
-                      marginTop: '8px',
-                      marginLeft: '8px',
-                      maxWidth: '100px',
-                    }}
-                    key={answer.id}
-                    variant="contained"
-                    size="large"
-                    color="secondary"
-                    disabled={
-                      answer.id !== answerTextUpdateId
-                        ? true
-                        : false || updateEnabled === true
-                    }
-                    onClick={() => {
-                      handleUpdateAnswerText(answer.id);
-                    }}
-                  >
-                    Update
-                  </Button>
-                  <DeleteAnswer
-                    answerId={answer.id}
-                    setActiveState={
-                      getPollQuestion?.data?.poll_question[0]?.is_active
-                        ? true
-                        : false
-                    }
-                  />
-                  <Button
-                    style={{
-                      marginTop: '8px',
-                      marginLeft: '8px',
-                      whiteSpace: 'nowrap',
-                      maxWidth: '100px',
-                      minWidth: '100px',
-                    }}
-                    variant="outlined"
-                    size="large"
-                    color="secondary"
-                    disabled={answer.votes !== undefined}
-                  >
-                    {answer.votes ? answer.votes : 'no votes'}
-                  </Button>
-                </Box>
-              </Grid>
-            </FormGroup>
+              </FormGroup>
+            </>
           ))
       )}
     </>

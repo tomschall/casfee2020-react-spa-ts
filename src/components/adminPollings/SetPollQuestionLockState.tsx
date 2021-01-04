@@ -79,6 +79,7 @@ const SetPollQuestionLockState: React.FC<SetPollQuestionLockStateProps> = ({
           )
         }
         onClick={handleSetPollQuestionPublishState}
+        style={{ minWidth: 150 }}
       >
         {setActiveState ? 'locked' : 'unlocked'}
       </Button>

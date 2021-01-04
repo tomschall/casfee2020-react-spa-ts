@@ -90,10 +90,6 @@ const GetChannels: React.FC<GetChannelsProps> = ({ questionId }) => {
         flexDirection="column"
         pb={1}
       >
-        <Typography variant="h3">Channels with active polls:</Typography>
-        <Typography variant="caption">
-          Click on chip to set actual question to channel:
-        </Typography>
         {data?.channel
           .sort((a, b) => a.id - b.id)
           .map((chn, index) => (
@@ -138,8 +134,13 @@ const GetChannels: React.FC<GetChannelsProps> = ({ questionId }) => {
                     ? chn.channel_polls[0]?.poll_question?.text
                     : 'No poll set.'
                 }
-                style={{ marginTop: 8, marginRight: 8 }}
                 size="small"
+                style={{
+                  marginTop: 8,
+                  marginRight: 8,
+                  minWidth: 150,
+                  maxWidth: 250,
+                }}
               />
             </Box>
           ))}
