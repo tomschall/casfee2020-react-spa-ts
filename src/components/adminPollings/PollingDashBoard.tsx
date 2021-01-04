@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Grid } from '@material-ui/core';
+import { Box, Divider, Grid } from '@material-ui/core';
 
 import GetPollQuestions from './GetPollQuestions';
 import AddPollQuestion from './AddPollQuestion';
@@ -17,13 +17,9 @@ const PollingDashBoard: React.FC = () => {
 
   return (
     <>
-      <Grid item xs={12}>
-        <AddPollQuestion />
-        <Divider className={classes.divider} />
-      </Grid>
-      <Grid item xs={12}>
-        <GetPollQuestions />
-      </Grid>
+      <AddPollQuestion />
+      <Divider className={classes.divider} />
+      <GetPollQuestions />
     </>
   );
 };

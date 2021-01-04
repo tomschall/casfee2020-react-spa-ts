@@ -1,18 +1,23 @@
 import React, { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useAddPollQuestionMutation } from '../../api/generated/graphql';
+import { theme } from '../../theme/theme';
 import {
   Box,
-  Button,
   FormGroup,
+  IconButton,
+  InputAdornment,
   TextField,
   Typography,
 } from '@material-ui/core';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
+import SendIcon from '@material-ui/icons/Send';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    padding: theme.spacing(2),
+  },
   form: {},
   messageInput: {
     floatingLabelFocusStyle: {
@@ -65,50 +70,53 @@ const AddPollQuestion: React.FC = () => {
 
   return (
     <>
-      <Box className={classes.root} mt={5} mb={3}>
-        <Typography variant="h2">Add a new poll</Typography>
+      <Box className={classes.root}>
+        <Typography variant="h2" style={{ paddingBottom: theme.spacing(1) }}>
+          Add a new poll
+        </Typography>
+        <form
+          className={classes.form}
+          noValidate
+          autoComplete="off"
+          onSubmit={handleAddTitle}
+        >
+          <FormGroup>
+            <TextField
+              id="title"
+              required
+              value={pollTitle.title}
+              onChange={handleChange}
+              size="medium"
+              variant="outlined"
+              color="secondary"
+              autoComplete="off"
+              placeholder="Type your question here ..."
+              label="Add a meaningful question"
+              fullWidth
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      id="message_submit"
+                      type="submit"
+                      color="secondary"
+                      aria-label="Send message"
+                    >
+                      <SendIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+                classes: {
+                  input: classes.messageInput,
+                },
+              }}
+              InputLabelProps={{
+                className: classes.messageInput,
+              }}
+            />
+          </FormGroup>
+        </form>
       </Box>
-      <form
-        className={classes.form}
-        noValidate
-        autoComplete="off"
-        onSubmit={handleAddTitle}
-      >
-        <FormGroup>
-          <TextField
-            id="title"
-            required
-            value={pollTitle.title}
-            onChange={handleChange}
-            size="medium"
-            variant="outlined"
-            color="secondary"
-            autoComplete="off"
-            placeholder="Type your question here ..."
-            label="Add a meaningful question"
-            fullWidth
-            InputProps={{
-              classes: {
-                input: classes.messageInput,
-              },
-            }}
-            InputLabelProps={{
-              className: classes.messageInput,
-            }}
-          />
-          <Button
-            type="submit"
-            value="Add poll title"
-            size="medium"
-            variant="contained"
-            endIcon={<HowToVoteIcon />}
-            className={classes.messageButton}
-            aria-label="Vote!"
-          >
-            Add poll
-          </Button>
-        </FormGroup>
-      </form>
     </>
   );
 };
