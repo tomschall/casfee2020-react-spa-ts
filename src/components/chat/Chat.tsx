@@ -23,11 +23,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    flexBasis: '100%',
-    flex: '1',
-    overflowY: 'scroll',
-    maxHeight: '90vh',
-    height: '90vh',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+    height: '80vh',
+    maxHeight: '80vh',
   },
   messageInput: {
     position: 'fixed',
@@ -142,21 +141,21 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
 
   return (
     <>
+      <MobileHeaderMenu channelName={channelName} user={user.sub} />
+      {isPrivate && channelType !== Channel_Type_Enum.DirectMessage && (
+        <Box display="flex" justifyContent="center" component="article">
+          <Button
+            color="secondary"
+            variant="contained"
+            type="button"
+            onClick={navigateToAddChannelMembers}
+            aria-label="add user to channel"
+          >
+            Add users to channel
+          </Button>
+        </Box>
+      )}
       <Box className={classes.root} component="article">
-        <MobileHeaderMenu channelName={channelName} user={user.sub} />
-        {isPrivate && channelType !== Channel_Type_Enum.DirectMessage && (
-          <Box display="flex" justifyContent="center" component="article">
-            <Button
-              color="secondary"
-              variant="contained"
-              type="button"
-              onClick={navigateToAddChannelMembers}
-              aria-label="add user to channel"
-            >
-              Add users to channel
-            </Button>
-          </Box>
-        )}
         <MessageList
           messages={data?.messages as Message[]}
           lastMessage={lastMessage}

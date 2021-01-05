@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-start',
     padding: theme.spacing(2),
     overflowWrap: 'break-word',
-    wordBreak: 'break-all',
+    hyphens: 'auto',
+    // wordBreak: 'break-all',
 
     [theme.breakpoints.down('md')]: {
       paddingTop: theme.spacing(2),
