@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { theme } from '../../theme/theme';
 import { useRecoilValue } from 'recoil';
 import { getPollQuestionAnswers } from '../../atom';
 import {
@@ -7,7 +8,7 @@ import {
   useAddPublishPollQuestionToChannelMutation,
   useDeletePollQuestionFromChannelMutation,
 } from '../../api/generated/graphql';
-import { Box, Chip, Typography } from '@material-ui/core';
+import { Box, Chip } from '@material-ui/core';
 import Loader from '../../components/shared/Loader';
 
 interface GetChannelsProps {
@@ -96,52 +97,65 @@ const GetChannels: React.FC<GetChannelsProps> = ({ questionId }) => {
             <Box
               key={index}
               display="flex"
-              justifyContent="flex-start"
-              alignItems="flex-start"
+              justifyContent="space-between"
+              alignItems="center"
             >
-              <Chip
-                disabled={
-                  chn.channel_polls[0]?.poll_question?.id !== questionIdState &&
-                  chn.channel_polls[0]?.poll_question?.id !== undefined
-                    ? true
-                    : false
-                }
-                onClick={() => handlePublishOnChannel(chn.id)}
-                onDelete={() => handleDeleteQuestionFromChannel(chn.id)}
-                style={{ marginTop: 8, marginRight: 8 }}
-                variant="outlined"
-                size="small"
-                color={
-                  chn.channel_polls[0]?.channel_id === chn.id
-                    ? 'secondary'
-                    : 'primary'
-                }
-                label={chn.name}
-              />
-              <Chip
-                variant={
-                  chn.channel_polls[0]?.poll_question?.text
-                    ? 'default'
-                    : 'outlined'
-                }
-                color={
-                  chn.channel_polls[0]?.poll_question?.text
-                    ? 'secondary'
-                    : 'primary'
-                }
-                label={
-                  chn.channel_polls[0]?.poll_question?.text
-                    ? chn.channel_polls[0]?.poll_question?.text
-                    : 'No poll set.'
-                }
-                size="small"
-                style={{
-                  marginTop: 8,
-                  marginRight: 8,
-                  minWidth: 150,
-                  maxWidth: 250,
-                }}
-              />
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                flexDirection="row"
+                flex={1}
+              >
+                <Chip
+                  disabled={
+                    chn.channel_polls[0]?.poll_question?.id !==
+                      questionIdState &&
+                    chn.channel_polls[0]?.poll_question?.id !== undefined
+                      ? true
+                      : false
+                  }
+                  onClick={() => handlePublishOnChannel(chn.id)}
+                  onDelete={() => handleDeleteQuestionFromChannel(chn.id)}
+                  style={{
+                    marginTop: theme.spacing(1),
+                    marginRight: theme.spacing(1),
+                    maxWidth: 150,
+                  }}
+                  variant="outlined"
+                  size="small"
+                  color={
+                    chn.channel_polls[0]?.channel_id === chn.id
+                      ? 'secondary'
+                      : 'primary'
+                  }
+                  label={chn.name}
+                />
+                <Chip
+                  variant={
+                    chn.channel_polls[0]?.poll_question?.text
+                      ? 'default'
+                      : 'outlined'
+                  }
+                  color={
+                    chn.channel_polls[0]?.poll_question?.text
+                      ? 'secondary'
+                      : 'primary'
+                  }
+                  label={
+                    chn.channel_polls[0]?.poll_question?.text
+                      ? chn.channel_polls[0]?.poll_question?.text
+                      : 'No poll set.'
+                  }
+                  size="small"
+                  style={{
+                    marginTop: theme.spacing(1),
+                    width: 150,
+                    minWidth: 100,
+                    maxWidth: 150,
+                  }}
+                />
+              </Box>
             </Box>
           ))}
       </Box>
