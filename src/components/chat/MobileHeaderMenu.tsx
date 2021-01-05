@@ -77,16 +77,18 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
         className={classes.root}
         component="nav"
       >
-        {matches === false && (
-          <IconButton
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open menu"
-            onClick={handleDrawerOpen}
-          >
-            <ArrowBackIosIcon />
-          </IconButton>
-        )}
+        <Box>
+          {matches === false && (
+            <IconButton
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="open menu"
+              onClick={handleDrawerOpen}
+            >
+              <ArrowBackIosIcon />
+            </IconButton>
+          )}
+        </Box>
         {currentChannel?.channel_type === Channel_Type_Enum.DirectMessage &&
           user && <UserHeader channelId={currentChannel.id} user={user} />}
         {currentChannel?.channel_type === Channel_Type_Enum.ChatMessage &&
