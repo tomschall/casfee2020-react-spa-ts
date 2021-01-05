@@ -15,12 +15,9 @@ const useStyles = makeStyles((theme) => ({
     overflowY: 'scroll',
     maxHeight: '100vh',
     height: '100vh',
-    padding: theme.spacing(2),
-    paddingTop: theme.spacing(0),
-    paddingRight: theme.spacing(0),
   },
   article: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(0),
     paddingTop: theme.spacing(8),
   },
 }));
