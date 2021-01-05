@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { theme } from '../../theme/theme';
 import { useRecoilState } from 'recoil';
-import { AppBar, Box, Button, Chip, IconButton } from '@material-ui/core';
+import { Box, Button, Chip, IconButton } from '@material-ui/core';
 import { currentChannelState } from '../../atom';
 import PeopleIcon from '@material-ui/icons/People';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -76,7 +76,7 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
   };
 
   return (
-    <AppBar position="sticky">
+    <Box component="article">
       <Box
         display="flex"
         alignItems="center"
@@ -143,7 +143,7 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
       <MenuBarDrawer open={open}>
         <SideBar handleDrawerClose={handleDrawerClose} open={open} />
       </MenuBarDrawer>
-    </AppBar>
+    </Box>
   );
 };
 
