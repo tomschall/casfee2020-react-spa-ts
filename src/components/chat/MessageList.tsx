@@ -76,9 +76,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   avatar: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
     backgroundColor: '#000000',
     color: '#ffffff',
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: 'bold',
     border: '2px solid #f57c00',
   },

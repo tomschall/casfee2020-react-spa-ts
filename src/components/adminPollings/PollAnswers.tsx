@@ -132,8 +132,15 @@ const PollAnswers: React.FC = () => {
               name="poll_answer"
               value={answerNewText.text}
               required
+              id="outlined-multiline-static"
+              label="Add an answer to these question"
               multiline
-              rowsMax={4}
+              rows={1}
+              size="small"
+              variant="outlined"
+              color="secondary"
+              autoComplete="off"
+              placeholder="Type your answers here ..."
               disabled={getPollQuestion?.data?.poll_question[0]?.is_active}
               onChange={(e) =>
                 handleNewAnswerChange(
@@ -141,13 +148,10 @@ const PollAnswers: React.FC = () => {
                   e,
                 )
               }
-              size="medium"
-              variant="outlined"
-              color="secondary"
-              autoComplete="off"
-              placeholder="Type your answers here ..."
-              label="Add an answer to these question"
               fullWidth
+              inputProps={{
+                maxLength: 150,
+              }}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">

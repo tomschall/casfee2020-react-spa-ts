@@ -86,13 +86,18 @@ const AddPollQuestion: React.FC = () => {
               required
               value={pollTitle.title}
               onChange={handleChange}
-              size="medium"
+              size="small"
               variant="outlined"
+              multiline
+              rows={1}
               color="secondary"
               autoComplete="off"
               placeholder="Type your question here ..."
               label="Add a meaningful question"
               fullWidth
+              inputProps={{
+                maxLength: 200,
+              }}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">

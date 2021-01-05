@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   menuButton: {
-    width: 50,
-    height: 50,
+    width: theme.spacing(5),
+    height: theme.spacing(5),
     backgroundColor: theme.palette.secondary.main,
     marginLeft: theme.spacing(0),
     '& .MuiIconButton-label': {

@@ -113,13 +113,13 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                   setAnswerTextUpdateId(answer.id);
                 }}
                 multiline
-                // rows={1}
+                rows={1}
                 rowsMax={4}
-                size="medium"
+                size="small"
                 variant="outlined"
                 color="secondary"
                 autoComplete="off"
-                placeholder="Type your answers here ..."
+                placeholder={answer.text}
                 label={answer.text}
                 fullWidth
                 margin="dense"
@@ -148,7 +148,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                       </IconButton>
                       <DeleteAnswer
                         answerId={answer.id}
-                        setActiveState={answer.votes !== undefined}
+                        setActiveState={answer.votes === 0 ? false : true}
                       />
                       <Badge
                         badgeContent={answer.votes ? answer.votes : 0}
@@ -163,6 +163,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                   },
                 }}
                 InputLabelProps={{
+                  shrink: true,
                   className: classes.messageInput,
                 }}
               />
