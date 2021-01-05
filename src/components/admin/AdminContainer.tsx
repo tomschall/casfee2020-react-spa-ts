@@ -33,10 +33,6 @@ const AdminContainer: React.FC = () => {
       <Grid item xs={12} md={9} component="section" className={classes.root}>
         <MobileHeaderDashboardMenu channelName="Dashboard" />
         <Box component="article" className={classes.article}>
-          <Typography color="primary" variant="h1">
-            Admin Dashboard
-          </Typography>
-          <Divider />
           <Switch>
             <Route exact path="/dashboard/users" component={AdminUserList} />
             <Route exact path="/dashboard" component={PollingDashBoard} />
