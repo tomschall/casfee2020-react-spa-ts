@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(0),
     paddingRight: theme.spacing(0),
   },
+  article: {
+    padding: theme.spacing(2),
+    paddingTop: theme.spacing(8),
+  },
 }));
 
 const AdminContainer: React.FC = () => {
@@ -28,7 +32,7 @@ const AdminContainer: React.FC = () => {
     <>
       <Grid item xs={12} md={9} component="section" className={classes.root}>
         <MobileHeaderDashboardMenu channelName="Dashboard" />
-        <Box component="article">
+        <Box component="article" className={classes.article}>
           <Typography color="primary" variant="h1">
             Admin Dashboard
           </Typography>
