@@ -13,12 +13,18 @@ import Alert from '@material-ui/lab/Alert';
 import MenuBar from '../shared/MenuBar';
 import Logo from '../shared/Logo';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
+import MobileHeaderMenu from './MobileHeaderMenu';
+import { ChatParams } from '../../interfaces/param.interface';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexBasis: '100%',
+    flex: '1',
     overflowY: 'scroll',
     maxHeight: '90vh',
     height: '90vh',
@@ -60,6 +66,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   let history = useHistory();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   let preLastMessageId: number = 0;
+  const { channel: channelName } = useParams<ChatParams>();
 
   const { data, loading, error } = useWatchMessagesSubscription({
     variables: {
@@ -136,12 +143,9 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   return (
     <>
       <Box className={classes.root} component="article">
+        <MobileHeaderMenu channelName={channelName} user={user.sub} />
         {isPrivate && channelType !== Channel_Type_Enum.DirectMessage && (
-          <Box
-            display="flex"
-            justifyContent="center"
-            style={{ marginBottom: '20px' }}
-          >
+          <Box display="flex" justifyContent="center" component="article">
             <Button
               color="secondary"
               variant="contained"

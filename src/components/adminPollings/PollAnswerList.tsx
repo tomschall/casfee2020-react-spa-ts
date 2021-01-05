@@ -102,78 +102,71 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
         data?.poll_answers
           .sort((a, b) => a.id - b.id)
           .map((answer) => (
-            <>
-              <FormGroup row key={answer.id}>
-                <TextField
-                  key={answer.id}
-                  name={answer.text + answer.id}
-                  required
-                  disabled={getPollQuestion?.data?.poll_question[0].is_active}
-                  onChange={(e) => {
-                    handleAnswerChange(answer?.id, e);
-                    setAnswerTextUpdateId(answer.id);
-                  }}
-                  multiline
-                  // rows={1}
-                  rowsMax={4}
-                  size="medium"
-                  variant="outlined"
-                  color="secondary"
-                  autoComplete="off"
-                  placeholder="Type your answers here ..."
-                  label={answer.text}
-                  fullWidth
-                  margin="dense"
-                  inputProps={{
-                    maxLength: 250,
-                  }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          key={answer.id}
-                          id="answer_update"
-                          type="submit"
-                          color="secondary"
-                          aria-label="Send message"
-                          onClick={() => {
-                            handleUpdateAnswerText(answer.id);
-                          }}
-                          disabled={
-                            answer.id !== answerTextUpdateId
-                              ? true
-                              : false || updateEnabled === true
-                          }
-                        >
-                          <UpdateIcon />
-                        </IconButton>
-                        <DeleteAnswer
-                          answerId={answer.id}
-                          setActiveState={
-                            answer.votes !== undefined
-                            // getPollQuestion?.data?.poll_question[0]?.is_active
-                            //   ? true
-                            //   : false
-                          }
-                        />
-                        <Badge
-                          badgeContent={answer.votes ? answer.votes : 0}
-                          color="secondary"
-                        >
-                          <HowToVoteIcon color="primary" />
-                        </Badge>
-                      </InputAdornment>
-                    ),
-                    classes: {
-                      input: classes.messageInput,
-                    },
-                  }}
-                  InputLabelProps={{
-                    className: classes.messageInput,
-                  }}
-                />
-              </FormGroup>
-            </>
+            <FormGroup row key={answer.id}>
+              <TextField
+                key={answer.id}
+                name={answer.text + answer.id}
+                required
+                disabled={getPollQuestion?.data?.poll_question[0].is_active}
+                onChange={(e) => {
+                  handleAnswerChange(answer?.id, e);
+                  setAnswerTextUpdateId(answer.id);
+                }}
+                multiline
+                // rows={1}
+                rowsMax={4}
+                size="medium"
+                variant="outlined"
+                color="secondary"
+                autoComplete="off"
+                placeholder="Type your answers here ..."
+                label={answer.text}
+                fullWidth
+                margin="dense"
+                inputProps={{
+                  maxLength: 250,
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        key={answer.id}
+                        id="answer_update"
+                        type="submit"
+                        color="secondary"
+                        aria-label="Send message"
+                        onClick={() => {
+                          handleUpdateAnswerText(answer.id);
+                        }}
+                        disabled={
+                          answer.id !== answerTextUpdateId
+                            ? true
+                            : false || updateEnabled === true
+                        }
+                      >
+                        <UpdateIcon />
+                      </IconButton>
+                      <DeleteAnswer
+                        answerId={answer.id}
+                        setActiveState={answer.votes !== undefined}
+                      />
+                      <Badge
+                        badgeContent={answer.votes ? answer.votes : 0}
+                        color="secondary"
+                      >
+                        <HowToVoteIcon color="primary" />
+                      </Badge>
+                    </InputAdornment>
+                  ),
+                  classes: {
+                    input: classes.messageInput,
+                  },
+                }}
+                InputLabelProps={{
+                  className: classes.messageInput,
+                }}
+              />
+            </FormGroup>
           ))
       )}
     </>

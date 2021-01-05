@@ -86,7 +86,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: theme.spacing(5),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(1),
   },
   divider: {
     flex: 1,
@@ -238,23 +239,23 @@ const MessageList: React.FC<MessageProps> = ({
 
   return (
     <>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        className={classes.loadMoreButton}
-      >
-        <Divider className={classes.divider} />
-        {messages?.length === limit && (
+      {messages?.length === limit && (
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          className={classes.loadMoreButton}
+        >
+          <Divider className={classes.divider} />
           <Button
             onClick={() => handleIncreaseLimit()}
             aria-label="load more messages"
           >
             load more (+{limit})
           </Button>
-        )}
-        <Divider className={classes.divider} />
-      </Box>
+          <Divider className={classes.divider} />
+        </Box>
+      )}
       <List id="message-list" component="div" className={classes.root}>
         {[...messages]?.reverse()?.map((message, i) => renderMessage(message))}
 

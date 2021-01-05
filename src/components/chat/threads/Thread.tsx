@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
     marginTop: theme.spacing(0),
     padding: theme.spacing(2),
-    paddingTop: theme.spacing(15),
     paddingBottom: theme.spacing(5),
   },
   messageInput: {

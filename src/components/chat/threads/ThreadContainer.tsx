@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useParams } from 'react-router';
 import { ThreadParams } from '../../../interfaces/param.interface';
@@ -8,6 +8,15 @@ import Thread from './Thread';
 import ThreadListContainer from './ThreadListContainer';
 
 const useStyles = makeStyles(() => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexBasis: '100%',
+    flex: '1',
+    overflowY: 'scroll',
+    maxHeight: '90vh',
+    height: '90vh',
+  },
   chatApp: {
     height: '100vh',
     overflowY: 'hidden',
@@ -20,10 +29,12 @@ const ThreadContainer: React.FC = () => {
 
   return (
     <Grid item xs={12} md={9} className={classes.chatApp}>
-      <MobileHeaderMenu
-        channelName={`${channel ? `Thread - ${channel}` : 'Threadlist'}`}
-      />
-      {channel ? <Thread /> : <ThreadListContainer />}
+      <Box className={classes.root} component="article">
+        <MobileHeaderMenu
+          channelName={`${channel ? `Thread - ${channel}` : 'Threadlist'}`}
+        />
+        {channel ? <Thread /> : <ThreadListContainer />}
+      </Box>
     </Grid>
   );
 };

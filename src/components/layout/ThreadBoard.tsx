@@ -11,12 +11,15 @@ const ChatBoard: React.FC = () => {
   });
 
   useEffect(() => {
-    setInterval(() => {
+    const interval = setInterval(() => {
       if (user?.sub !== undefined) {
         sendUserIsOnline();
       }
     }, 9000);
-  }, [sendUserIsOnline, user?.sub]);
+    return function cleanup() {
+      clearInterval(interval);
+    };
+  }, []);
 
   return <ThreadContainer />;
 };

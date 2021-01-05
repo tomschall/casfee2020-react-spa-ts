@@ -11,6 +11,8 @@ import PollPopUp from '../../components/adminPollings/PollPopup';
 import Logout from '../Logout';
 import MenuBarDrawer from '../shared/MenuBarDrawer';
 import SideBar from '../shared/SideBar';
+import UserHeader from './UserHeader';
+import { Channel_Type_Enum } from '../../api/generated/graphql';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -21,14 +23,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
     paddingBottom: theme.spacing(2),
-    zIndex: 1000,
-    [theme.breakpoints.up('md')]: {
-      position: 'fixed',
-      width: '75vw',
-    },
-    [theme.breakpoints.down('md')]: {
-      position: 'fixed',
-    },
   },
   menuButton: {
     width: 50,
@@ -47,9 +41,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface MobileHeaderMenuProps {
   channelName: string;
+  user?: string;
 }
 
-const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
+const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
+  channelName,
+  user,
+}) => {
   const classes = useStyles();
   const [currentChannel] = useRecoilState<any>(currentChannelState);
   const matches = useMediaQuery(theme.breakpoints.up('md'));
@@ -64,14 +62,14 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
   };
 
   return (
-    <>
+    <Box component="article">
       <Box
         display="flex"
         alignItems="center"
         flexDirection="row"
         width={1}
         className={classes.root}
-        component="header"
+        component="article"
       >
         {matches === false && (
           <IconButton
@@ -83,22 +81,28 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({ channelName }) => {
             <ArrowBackIosIcon />
           </IconButton>
         )}
-        <Chip
-          size="small"
-          variant="outlined"
-          color="primary"
-          label={channelName}
-          icon={<PeopleIcon />}
-          className={classes.title}
-          aria-label={`channel: ${channelName}`}
-        />
+        {matches === false &&
+          currentChannel.channel_type === Channel_Type_Enum.DirectMessage &&
+          user && <UserHeader channelId={currentChannel.id} user={user} />}
+        {matches === false &&
+          currentChannel.channel_type === Channel_Type_Enum.ChatMessage && (
+            <Chip
+              size="small"
+              variant="outlined"
+              color="primary"
+              label={channelName}
+              icon={<PeopleIcon />}
+              className={classes.title}
+              aria-label={`channel: ${channelName}`}
+            />
+          )}
         <PollPopUp channelId={currentChannel?.id} />
         <Logout />
       </Box>
       <MenuBarDrawer open={open}>
         <SideBar handleDrawerClose={handleDrawerClose} open={open} />
       </MenuBarDrawer>
-    </>
+    </Box>
   );
 };
 

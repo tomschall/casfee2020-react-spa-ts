@@ -20,18 +20,18 @@ const useStyles = makeStyles((theme) => ({
   messageContainer: {
     [theme.breakpoints.up('lg')]: {
       padding: theme.spacing(10),
-      paddingTop: theme.spacing(12),
-      paddingBottom: theme.spacing(0),
+      paddingTop: theme.spacing(4),
+      paddingBottom: theme.spacing(8),
     },
     [theme.breakpoints.down('md')]: {
       padding: theme.spacing(2),
-      paddingTop: theme.spacing(12),
-      paddingBottom: theme.spacing(0),
+      paddingTop: theme.spacing(4),
+      paddingBottom: theme.spacing(8),
     },
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(2),
-      paddingTop: theme.spacing(12),
-      paddingBottom: theme.spacing(0),
+      paddingTop: theme.spacing(4),
+      paddingBottom: theme.spacing(4),
     },
   },
 }));
