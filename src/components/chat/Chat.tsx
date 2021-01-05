@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'flex-end',
+    alignItems: 'inherit',
     justifyContent: 'flex-end',
     height: '80vh',
     maxHeight: '80vh',
