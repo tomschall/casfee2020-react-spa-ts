@@ -28,11 +28,6 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: '80vh',
     height: '80vh',
   },
-  flexBoxWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    overflow: 'auto',
-  },
   messageInput: {
     position: 'fixed',
     bottom: 0,
@@ -140,7 +135,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   };
 
   return (
-    <Box className={classes.flexBoxWrapper}>
+    <Box>
       <MobileHeaderMenu
         channelName={channelName}
         user={user.sub}
