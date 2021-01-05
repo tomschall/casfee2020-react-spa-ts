@@ -22,7 +22,6 @@ import { useRecoilValue } from 'recoil';
 import { deletedMessageState } from '../../atom';
 import { useParams } from 'react-router';
 import { ChatParams } from '../../interfaces/param.interface';
-import { spacing } from '@material-ui/system';
 
 const useStyles = makeStyles((theme) => ({
   root: {},

@@ -3,10 +3,9 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useWatchChannelThreadMessagesSubscription } from '../../../api/generated/graphql';
 import { ThreadMessage } from '../../../interfaces/message.interface';
 import { Alert } from '@material-ui/lab';
-import { Box, List } from '@material-ui/core';
+import { List } from '@material-ui/core';
 import ThreadListInputContainer from './ThreadListInputContainer';
 import ThreadMessageList from './ThreadMessageList';
-import Loader from '../../shared/Loader';
 
 interface ThreadListProps {
   channelThread: any;

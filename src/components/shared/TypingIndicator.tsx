@@ -4,15 +4,6 @@ import { Alert } from '@material-ui/lab';
 import { useGetUserIsTypingSubscription } from '../../api/generated/graphql';
 import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../atom';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme) => ({
-  indicator: {
-    color: '#f9cd8b',
-    fontSize: '10px',
-    fontWeight: 700,
-  },
-}));
 
 const TypingIndicator: React.FC = () => {
   const { user } = useAuth0();

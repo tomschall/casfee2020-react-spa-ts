@@ -3,15 +3,12 @@ import { useAuth0 } from '@auth0/auth0-react';
 import {
   Button,
   Box,
-  Chip,
-  Container,
   Grid,
   InputAdornment,
   IconButton,
   TextField,
 } from '@material-ui/core';
 import { theme } from '../../../theme/theme';
-import Icon from '@material-ui/core/Icon';
 import SendIcon from '@material-ui/icons/Send';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {

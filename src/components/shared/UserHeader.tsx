@@ -1,10 +1,9 @@
 import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { useRecoilState } from 'recoil';
 import { Chip } from '@material-ui/core';
-import { currentChannelState } from '../../atom';
 import PeopleIcon from '@material-ui/icons/People';
 import { useWatchUsersWhoHaveSubscribedToChannelSubscription } from '../../api/generated/graphql';
+import Loader from './Loader';
 
 const useStyles = makeStyles((theme: Theme) => ({
   title: {
@@ -21,16 +20,16 @@ interface UserHeaderProps {
 const UserHeader: React.FC<UserHeaderProps> = ({ user, channelId }) => {
   const classes = useStyles();
 
-  const {
-    data,
-    loading,
-    error,
-  } = useWatchUsersWhoHaveSubscribedToChannelSubscription({
-    variables: {
-      channel_id: channelId,
-      user_id: user,
+  const { data, loading } = useWatchUsersWhoHaveSubscribedToChannelSubscription(
+    {
+      variables: {
+        channel_id: channelId,
+        user_id: user,
+      },
     },
-  });
+  );
+
+  if (loading) return <Loader />;
 
   return (
     <Chip

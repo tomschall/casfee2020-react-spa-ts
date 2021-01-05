@@ -11,7 +11,7 @@ import PollPopUp from '../../components/adminPollings/PollPopup';
 import Logout from '../Logout';
 import MenuBarDrawer from '../shared/MenuBarDrawer';
 import SideBar from '../shared/SideBar';
-import UserHeader from './UserHeader';
+import UserHeader from '../shared/UserHeader';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -82,10 +82,10 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
           </IconButton>
         )}
         {matches === false &&
-          currentChannel.channel_type === Channel_Type_Enum.DirectMessage &&
+          currentChannel?.channel_type === Channel_Type_Enum.DirectMessage &&
           user && <UserHeader channelId={currentChannel.id} user={user} />}
         {matches === false &&
-          currentChannel.channel_type === Channel_Type_Enum.ChatMessage && (
+          currentChannel?.channel_type === Channel_Type_Enum.ChatMessage && (
             <Chip
               size="small"
               variant="outlined"
