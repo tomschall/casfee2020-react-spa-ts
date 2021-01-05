@@ -162,14 +162,12 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
 
   return (
     <>
-      {showThreadInfo && (
-        <ThreadInfo
-          messages={messages}
-          channelThread={channelThread}
-          currentChannel={currentChannel}
-        />
-      )}
-
+      <ThreadInfo
+        messages={messages}
+        channelThread={channelThread}
+        currentChannel={currentChannel}
+        showThreadInfo={showThreadInfo}
+      />
       <Box className={classes.loadMoreButton}>
         {messages?.length === limit && (
           <Button

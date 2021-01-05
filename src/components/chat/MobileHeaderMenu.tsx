@@ -42,12 +42,16 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface MobileHeaderMenuProps {
   channelName: string;
+  channel?: string;
   user?: string;
+  showAddUserButton?: boolean;
 }
 
 const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
   channelName,
   user,
+  showAddUserButton,
+  channel,
 }) => {
   const classes = useStyles();
   const [currentChannel] = useRecoilState<any>(currentChannelState);
@@ -56,6 +60,10 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
   let history = useHistory();
 
   const handleDrawerOpen = () => {
+    if (channel) {
+      history.push(`/channel/${channel}`);
+      return;
+    }
     setOpen(true);
   };
 
@@ -77,18 +85,16 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
         className={classes.root}
         component="nav"
       >
-        <Box>
-          {matches === false && (
-            <IconButton
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="open menu"
-              onClick={handleDrawerOpen}
-            >
-              <ArrowBackIosIcon />
-            </IconButton>
-          )}
-        </Box>
+        {matches === false && (
+          <IconButton
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="open menu"
+            onClick={handleDrawerOpen}
+          >
+            <ArrowBackIosIcon />
+          </IconButton>
+        )}
         {currentChannel?.channel_type === Channel_Type_Enum.DirectMessage &&
           user && <UserHeader channelId={currentChannel.id} user={user} />}
         {currentChannel?.channel_type === Channel_Type_Enum.ChatMessage &&
@@ -104,7 +110,21 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
             />
           )}
         {currentChannel?.channel_type === Channel_Type_Enum.ChatMessage &&
-          currentChannel?.is_private === true && (
+          currentChannel?.is_private === true &&
+          !showAddUserButton && (
+            <Chip
+              size="small"
+              variant="outlined"
+              color="primary"
+              label={channelName}
+              icon={<PeopleIcon />}
+              className={classes.title}
+              aria-label={`channel: ${channelName}`}
+            />
+          )}
+        {currentChannel?.channel_type === Channel_Type_Enum.ChatMessage &&
+          currentChannel?.is_private === true &&
+          showAddUserButton && (
             <Box display="flex" justifyContent="center" component="article">
               <Button
                 color="secondary"

@@ -76,26 +76,30 @@ interface ThreadInfoProps {
   messages: ThreadMessage[];
   channelThread: any;
   currentChannel: any;
+  showThreadInfo?: boolean;
 }
 
 const ThreadInfo: React.FC<ThreadInfoProps> = ({
   messages,
   channelThread,
   currentChannel,
+  showThreadInfo,
 }) => {
   const classes = useStyles();
 
   const renderThreadInfo = (channelThread: any) => {
     return (
       <>
-        <Box display="flex" justifyContent="center" alignItems="center">
-          <Chip
-            variant="outlined"
-            size="small"
-            color="primary"
-            label={<strong>Thread - {currentChannel.name} </strong>}
-          />
-        </Box>
+        {showThreadInfo && (
+          <Box display="flex" justifyContent="center" alignItems="center">
+            <Chip
+              variant="outlined"
+              size="small"
+              color="primary"
+              label={<strong>Thread - {currentChannel.name} </strong>}
+            />
+          </Box>
+        )}
         <Divider className={classes.vspaceTop} />
         <ListItem
           key={channelThread.message.id}

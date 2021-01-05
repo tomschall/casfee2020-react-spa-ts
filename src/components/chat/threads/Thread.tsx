@@ -113,6 +113,7 @@ const Thread: React.FC = () => {
             currentChannel={currentChannel}
             handleIncreaseLimit={handleIncreaseLimit}
             limit={limit}
+            showThreadInfo={false}
           />
         </List>
         <div ref={messagesEndRef} />
