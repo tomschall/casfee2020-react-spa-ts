@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Icon } from '@material-ui/core';
+import { TextField, Icon, InputAdornment, IconButton } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { Message } from '../../interfaces/message.interface';
 import { makeStyles } from '@material-ui/core/styles';
 import { useUpdateMessageMutation } from '../../api/generated/graphql';
+import SendIcon from '@material-ui/icons/Send';
 import Loader from '../shared/Loader';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,18 +19,13 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     flexGrow: 1,
   },
-  messageButton: {
+  messageInput: {
     [theme.breakpoints.down('md')]: {
-      width: '100%',
-      size: 'small',
+      fontSize: '1rem',
     },
-    [theme.breakpoints.up('md')]: {
-      size: 'large',
-      width: '25%',
+    '&.MuiFormLabel-root.Mui-focused': {
+      color: theme.palette.secondary.main,
     },
-    marginTop: theme.spacing(2),
-    marginLeft: theme.spacing(0),
-    backgroundColor: theme.palette.primary.dark,
   },
 }));
 
@@ -97,19 +93,27 @@ const UpdateMessage: React.FC<UpdateMessageProps> = ({ message }) => {
           rowsMax={4}
           id="update-chat-message-input"
           label={'Update message...'}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  id="message_submit"
+                  onClick={(e) => handleUpdate(e)}
+                  color="secondary"
+                  aria-label="Send message"
+                >
+                  <SendIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+            classes: {
+              input: classes.messageInput,
+            },
+          }}
+          InputLabelProps={{
+            className: classes.messageInput,
+          }}
         />
-
-        <Button
-          id="update-chat-message-button"
-          variant="contained"
-          endIcon={<Icon>send</Icon>}
-          className={classes.messageButton}
-          onClick={(e) => handleUpdate(e)}
-          type="button"
-          aria-label="update message"
-        >
-          Save
-        </Button>
       </form>
     </div>
   );
