@@ -23,10 +23,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'inherit',
-    justifyContent: 'flex-end',
-    height: '80vh',
-    maxHeight: '80vh',
+    flexBasis: '100%',
+    flex: '1',
+    overflowY: 'scroll',
+    maxHeight: '90vh',
+    height: '90vh',
   },
   messageInput: {
     position: 'fixed',
