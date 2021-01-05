@@ -10,7 +10,6 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Logout from '../Logout';
 import MenuBarDrawer from '../shared/MenuBarDrawer';
 import SideBar from '../shared/SideBar';
-import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {

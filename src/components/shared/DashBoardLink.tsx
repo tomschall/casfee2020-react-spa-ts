@@ -5,20 +5,23 @@ import {
   ListItemText,
   Typography,
 } from '@material-ui/core';
-import ForumOutlinedIcon from '@material-ui/icons/ForumOutlined';
+import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import { Link } from 'react-router-dom';
 
 const DashboardLink: React.FC = () => {
   return (
     <>
-      <ListItem button>
+      <ListItem
+        button
+        component={Link}
+        to="/dashboard"
+        aria-label="Open Dashboard"
+      >
         <ListItemIcon>
-          <ForumOutlinedIcon />
+          <HowToVoteIcon />
         </ListItemIcon>
         <ListItemText>
-          <Link to="/dashboard" aria-label="Open Dashboard">
-            <Typography variant="h6">Dashboard</Typography>
-          </Link>
+          <Typography variant="h6">Polling</Typography>
         </ListItemText>
       </ListItem>
     </>
