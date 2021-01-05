@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingBottom: theme.spacing(2),
   },
   menuButton: {
-    width: 50,
-    height: 50,
+    width: theme.spacing(5),
+    height: theme.spacing(5),
     backgroundColor: theme.palette.secondary.main,
     marginLeft: theme.spacing(0),
     '& .MuiIconButton-label': {
@@ -69,7 +69,7 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
         flexDirection="row"
         width={1}
         className={classes.root}
-        component="article"
+        component="nav"
       >
         {matches === false && (
           <IconButton

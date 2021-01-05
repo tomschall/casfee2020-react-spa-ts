@@ -40,12 +40,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   menuButton: {
-    width: 50,
-    height: 50,
+    width: theme.spacing(5),
+    height: theme.spacing(5),
     backgroundColor: theme.palette.secondary.main,
-    marginLeft: theme.spacing(2),
+    marginLeft: 4,
     '& .MuiIconButton-label': {
-      marginRight: theme.spacing(1),
+      marginRight: 4,
     },
     justifyContent: 'flex-end',
     marginTop: theme.spacing(2),
@@ -105,6 +105,7 @@ const SideBar: React.FC<SidebarProps> = ({ handleDrawerClose, open }) => {
               alignItems="center"
               style={{
                 marginTop: theme.spacing(0),
+                marginLeft: theme.spacing(1),
               }}
             >
               <IconButton
