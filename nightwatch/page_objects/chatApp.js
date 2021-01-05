@@ -23,7 +23,7 @@ module.exports = {
     },
     channelListContainer: {
       selector:
-        '//div[contains(@aria-label, "open channel")]/following-sibling::node()',
+        '//div[contains(@aria-label, "open channel list")]/following-sibling::node()',
       locateStrategy: 'xpath',
     },
     addChannelDropdown: {
@@ -120,7 +120,7 @@ module.exports = {
           .pause(3000)
           .useXpath()
           .click('@addChannelSubmit')
-          .pause(3000)
+          .pause(5000)
           .assert.containsText(
             '@channelListContainer',
             `${channelName}${channelNumber}`,
@@ -139,7 +139,7 @@ module.exports = {
           .click('@checkPrivateChannel')
           .pause(1000)
           .click('@addChannelSubmit')
-          .pause(3000)
+          .pause(5000)
           .assert.containsText(
             '@channelListContainer',
             `${channelName}${channelNumber}`,

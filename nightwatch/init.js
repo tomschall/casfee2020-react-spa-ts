@@ -45,12 +45,6 @@ module.exports = Object.assign(
       page.selectChannel(channel).checkRedirect(channel);
     });
 
-    test('channel dropdown', (browser) => {
-      const page = browser.page.chatApp();
-
-      page.closeChannelListDropdown().ariaChannelListDropdown();
-    });
-
     test('aria - channellist dropdown', (browser) => {
       const page = browser.page.chatApp();
 
@@ -73,6 +67,12 @@ module.exports = Object.assign(
       browser.pause(3000);
 
       page.addChannelPrivate(channelName);
+    });
+
+    test('channel dropdown', (browser) => {
+      const page = browser.page.chatApp();
+
+      page.closeChannelListDropdown().ariaChannelListDropdown();
     });
   }),
 
