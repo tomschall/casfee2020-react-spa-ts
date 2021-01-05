@@ -134,7 +134,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                         id="answer_update"
                         type="submit"
                         color="secondary"
-                        aria-label="Send message"
+                        aria-label="update_answer_text"
                         onClick={() => {
                           handleUpdateAnswerText(answer.id);
                         }}

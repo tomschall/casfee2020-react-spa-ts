@@ -85,13 +85,10 @@ describe('PollAnswerList', () => {
     expect(getByText('Total answers: 3')).toBeInTheDocument();
     expect(getByText('Das fragt man sich immer!')).toBeInTheDocument();
     expect(getAllByText('Delete Answer')[0]).toBeInTheDocument();
-    expect(getAllByText('Update')[0]).toBeInTheDocument();
     expect(getByText('Das weiss ich immer. Isso!')).toBeInTheDocument();
     expect(getAllByText('Delete Answer')[1]).toBeInTheDocument();
-    expect(getAllByText('Update')[1]).toBeInTheDocument();
     expect(getByText('Ja, an was hat es gelegen?')).toBeInTheDocument();
     expect(getAllByText('Delete Answer')[2]).toBeInTheDocument();
-    expect(getAllByText('Update')[2]).toBeInTheDocument();
   });
 
   it('renders PollAnswerList component loader', async () => {
