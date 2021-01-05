@@ -85,8 +85,6 @@ const ThreadInfo: React.FC<ThreadInfoProps> = ({
 }) => {
   const classes = useStyles();
 
-  console.log('channelThread', channelThread);
-
   const renderThreadInfo = (channelThread: any) => {
     return (
       <>

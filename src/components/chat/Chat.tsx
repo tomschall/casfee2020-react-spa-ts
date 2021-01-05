@@ -8,12 +8,11 @@ import {
   Channel_Type_Enum,
   useUpsertMessageCursorMutation,
 } from '../../api/generated/graphql';
-
 import Alert from '@material-ui/lab/Alert';
 import MenuBar from '../shared/MenuBar';
 import Logo from '../shared/Logo';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
 import MobileHeaderMenu from './MobileHeaderMenu';
@@ -63,7 +62,6 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   const [limit, setLimit] = useState<number>(20);
   const [lastMessage, setLastMessage] = useState<Message | null>(null);
   const { user } = useAuth0();
-  let history = useHistory();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   let preLastMessageId: number = 0;
   const { channel: channelName } = useParams<ChatParams>();
@@ -136,26 +134,9 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
     setLastMessage(lastMessage);
   };
 
-  const navigateToAddChannelMembers = () => {
-    history.push(`/addChannelMembers`);
-  };
-
   return (
     <>
       <MobileHeaderMenu channelName={channelName} user={user.sub} />
-      {isPrivate && channelType !== Channel_Type_Enum.DirectMessage && (
-        <Box display="flex" justifyContent="center" component="article">
-          <Button
-            color="secondary"
-            variant="contained"
-            type="button"
-            onClick={navigateToAddChannelMembers}
-            aria-label="add user to channel"
-          >
-            Add users to channel
-          </Button>
-        </Box>
-      )}
       <Box className={classes.root} component="article">
         <MessageList
           messages={data?.messages as Message[]}

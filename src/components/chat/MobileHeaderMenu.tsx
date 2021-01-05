@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { theme } from '../../theme/theme';
 import { useRecoilState } from 'recoil';
-import { Box, Chip, IconButton } from '@material-ui/core';
+import { Box, Button, Chip, IconButton } from '@material-ui/core';
 import { currentChannelState } from '../../atom';
 import PeopleIcon from '@material-ui/icons/People';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -13,6 +13,7 @@ import MenuBarDrawer from '../shared/MenuBarDrawer';
 import SideBar from '../shared/SideBar';
 import UserHeader from '../shared/UserHeader';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -52,6 +53,7 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
   const [currentChannel] = useRecoilState<any>(currentChannelState);
   const matches = useMediaQuery(theme.breakpoints.up('md'));
   const [open, setOpen] = React.useState(false);
+  let history = useHistory();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -59,6 +61,10 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const navigateToAddChannelMembers = () => {
+    history.push(`/addChannelMembers`);
   };
 
   return (
@@ -81,11 +87,10 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
             <ArrowBackIosIcon />
           </IconButton>
         )}
-        {matches === false &&
-          currentChannel?.channel_type === Channel_Type_Enum.DirectMessage &&
+        {currentChannel?.channel_type === Channel_Type_Enum.DirectMessage &&
           user && <UserHeader channelId={currentChannel.id} user={user} />}
-        {matches === false &&
-          currentChannel?.channel_type === Channel_Type_Enum.ChatMessage && (
+        {currentChannel?.channel_type === Channel_Type_Enum.ChatMessage &&
+          currentChannel?.is_private === false && (
             <Chip
               size="small"
               variant="outlined"
@@ -95,6 +100,20 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
               className={classes.title}
               aria-label={`channel: ${channelName}`}
             />
+          )}
+        {currentChannel?.channel_type === Channel_Type_Enum.ChatMessage &&
+          currentChannel?.is_private === true && (
+            <Box display="flex" justifyContent="center" component="article">
+              <Button
+                color="secondary"
+                variant="contained"
+                type="button"
+                onClick={navigateToAddChannelMembers}
+                aria-label="add user to channel"
+              >
+                Add users to channel
+              </Button>
+            </Box>
           )}
         <PollPopUp channelId={currentChannel?.id} />
         <Logout />
