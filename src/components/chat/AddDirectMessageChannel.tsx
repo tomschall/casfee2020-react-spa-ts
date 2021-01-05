@@ -54,8 +54,6 @@ const AddDirectMessageChannel: React.FC = () => {
     },
   });
 
-  console.log('data', data);
-
   const [
     upsertMessageCursorMutation,
     { error: upsertMessageError },

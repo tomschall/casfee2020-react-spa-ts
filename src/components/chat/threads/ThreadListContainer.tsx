@@ -3,7 +3,6 @@ import { useWatchThreadsSubscription } from '../../../api/generated/graphql';
 import ThreadList from './ThreadList';
 import { Alert } from '@material-ui/lab';
 import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import Loader from '../../shared/Loader';
 
 const useStyles = makeStyles((theme) => ({

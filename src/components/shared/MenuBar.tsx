@@ -1,15 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useRecoilState } from 'recoil';
-import { currentChannelState } from '../../atom';
 import { Box, Button } from '@material-ui/core';
 import GiphyCarousel from './GiphyCarousel';
 import AddGif from '@material-ui/icons/Gif';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import MenuBarDrawer from './MenuBarDrawer';
 import SideBar from './SideBar';
-
-const drawerWidth = '100%';
 
 const useStyles = makeStyles((theme) => ({
   giphyImage: {
