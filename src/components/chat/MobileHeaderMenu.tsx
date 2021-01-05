@@ -38,6 +38,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: 180,
     maxWidth: theme.spacing(22),
   },
+  sticky: {
+    position: 'sticky',
+    top: '0',
+    alignSelf: 'flexStart',
+  },
 }));
 
 interface MobileHeaderMenuProps {
@@ -76,7 +81,7 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
   };
 
   return (
-    <Box component="article">
+    <Box component="article" className={classes.sticky}>
       <Box
         display="flex"
         alignItems="center"
