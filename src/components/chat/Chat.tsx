@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box } from '@material-ui/core';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
