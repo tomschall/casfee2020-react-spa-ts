@@ -123,9 +123,17 @@ npm run api:client:generate
 ### Complete reinstall
 
 If your docker containers are running, and you have to reinstall the whole project, stop
-them, the execute ./clean.sh script in the root folder of the project.
+them, then execute ./clean.sh script in the root folder of the project.
 
 ## Tests
+
+### Unit tests
+
+For running unit tests, use following command in the project root.
+
+```
+yarn test
+```
 
 ### E2E-Tests with nightwatch
 
