@@ -40,7 +40,7 @@ const DeleteQuestion: React.FC<DeleteAnswerProps> = ({
     <>
       {tobeDeleted ? (
         <Button variant="outlined" size="small" color="secondary" disabled>
-          Active poll
+          Poll locked
         </Button>
       ) : (
         <Button
