@@ -7,7 +7,6 @@ import Loader from '../../shared/Loader';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    overflowY: 'scroll',
     height: '100vh',
     marginTop: theme.spacing(0),
     paddingTop: theme.spacing(0),

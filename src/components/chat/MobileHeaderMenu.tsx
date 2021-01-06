@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   outerContainer: {
-    paddingBottom: '65px',
+    paddingBottom: '75px',
   },
   menuButton: {
     width: theme.spacing(5),
@@ -56,6 +56,7 @@ interface MobileHeaderMenuProps {
   channel?: string;
   user?: string;
   showAddUserButton?: boolean;
+  isThreadList?: boolean;
 }
 
 const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
@@ -63,6 +64,7 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
   user,
   showAddUserButton,
   channel,
+  isThreadList,
 }) => {
   const classes = useStyles();
   const [currentChannel] = useRecoilState<any>(currentChannelState);
@@ -133,6 +135,17 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
               aria-label={`channel: ${channelName}`}
             />
           )}
+        {isThreadList && (
+          <Chip
+            size="small"
+            variant="outlined"
+            color="primary"
+            label={channelName}
+            icon={<PeopleIcon />}
+            className={classes.title}
+            aria-label={`channel: ${channelName}`}
+          />
+        )}
         {currentChannel?.channel_type === Channel_Type_Enum.ChatMessage &&
           currentChannel?.is_private === true &&
           showAddUserButton && (

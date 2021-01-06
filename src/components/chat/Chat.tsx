@@ -135,7 +135,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   };
 
   return (
-    <>
+    <Box display="flex" flexDirection="column">
       <MobileHeaderMenu
         channelName={channelName}
         user={user.sub}
@@ -162,7 +162,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
           />
         </MenuBar>
       </Box>
-    </>
+    </Box>
   );
 };
 
