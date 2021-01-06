@@ -279,9 +279,7 @@ const MessageList: React.FC<MessageProps> = ({
           ? renderMessage(lastMessage)
           : ''}
 
-        <ListItem>
-          <div ref={messagesEndRef}></div>
-        </ListItem>
+        <div ref={messagesEndRef}></div>
       </List>
     </>
   );
