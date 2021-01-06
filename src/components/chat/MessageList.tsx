@@ -90,7 +90,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: theme.spacing(2),
+    paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(2),
   },
   divider: {
