@@ -24,6 +24,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
     paddingBottom: theme.spacing(2),
+    zIndex: 1000,
+    [theme.breakpoints.up('md')]: {
+      position: 'fixed',
+      width: '75vw',
+    },
+    [theme.breakpoints.down('md')]: {
+      position: 'fixed',
+    },
+  },
+  outerContainer: {
+    paddingBottom: '75px',
   },
   menuButton: {
     width: theme.spacing(5),
@@ -38,11 +49,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: 180,
     maxWidth: theme.spacing(22),
   },
-  sticky: {
-    position: 'sticky',
-    top: '0',
-    alignSelf: 'flexStart',
-  },
 }));
 
 interface MobileHeaderMenuProps {
@@ -50,6 +56,7 @@ interface MobileHeaderMenuProps {
   channel?: string;
   user?: string;
   showAddUserButton?: boolean;
+  isThreadList?: boolean;
 }
 
 const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
@@ -57,6 +64,7 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
   user,
   showAddUserButton,
   channel,
+  isThreadList,
 }) => {
   const classes = useStyles();
   const [currentChannel] = useRecoilState<any>(currentChannelState);
@@ -81,7 +89,7 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
   };
 
   return (
-    <Box component="article" className={classes.sticky}>
+    <Box component="article" className={classes.outerContainer}>
       <Box
         display="flex"
         alignItems="center"
@@ -103,7 +111,8 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
         {currentChannel?.channel_type === Channel_Type_Enum.DirectMessage &&
           user && <UserHeader channelId={currentChannel.id} user={user} />}
         {currentChannel?.channel_type === Channel_Type_Enum.ChatMessage &&
-          currentChannel?.is_private === false && (
+          currentChannel?.is_private === false &&
+          !isThreadList && (
             <Chip
               size="small"
               variant="outlined"
@@ -116,6 +125,7 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
           )}
         {currentChannel?.channel_type === Channel_Type_Enum.ChatMessage &&
           currentChannel?.is_private === true &&
+          !isThreadList &&
           !showAddUserButton && (
             <Chip
               size="small"
@@ -127,6 +137,17 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
               aria-label={`channel: ${channelName}`}
             />
           )}
+        {isThreadList && (
+          <Chip
+            size="small"
+            variant="outlined"
+            color="primary"
+            label={channelName}
+            icon={<PeopleIcon />}
+            className={classes.title}
+            aria-label={`channel: ${channelName}`}
+          />
+        )}
         {currentChannel?.channel_type === Channel_Type_Enum.ChatMessage &&
           currentChannel?.is_private === true &&
           showAddUserButton && (

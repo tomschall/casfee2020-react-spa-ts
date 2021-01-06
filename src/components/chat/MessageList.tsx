@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import moment from 'moment';
 import { Message } from '../../interfaces/message.interface';
 import ThreadReply from './threads/ThreadReply';
@@ -24,7 +24,10 @@ import { useParams } from 'react-router';
 import { ChatParams } from '../../interfaces/param.interface';
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    marginBottom: '90px',
+    overflowY: 'scroll',
+  },
   listItem: {
     display: 'flex',
     justifyContent: 'flex-start',
@@ -32,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     overflowWrap: 'break-word',
     hyphens: 'auto',
-    // wordBreak: 'break-all',
+    textOverflow: 'ellipsis',
 
     [theme.breakpoints.down('md')]: {
       paddingTop: theme.spacing(2),
@@ -88,8 +91,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(1),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(3),
   },
   divider: {
     flex: 1,
@@ -103,6 +106,7 @@ interface MessageProps {
   user: any;
   handleIncreaseLimit: any;
   limit: number;
+  setRef: any;
 }
 
 const MessageList: React.FC<MessageProps> = ({
@@ -112,6 +116,7 @@ const MessageList: React.FC<MessageProps> = ({
   user,
   handleIncreaseLimit,
   limit,
+  setRef,
 }) => {
   const classes = useStyles();
   const [showUpdate, setShowUpdate] = useState<boolean>(false);
@@ -120,12 +125,17 @@ const MessageList: React.FC<MessageProps> = ({
   );
   const { channel: channelName } = useParams<ChatParams>();
   const deletedMessage = useRecoilValue<boolean>(deletedMessageState);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const handleShowUpdate = (message: Message) => {
     if (message.user.auth0_user_id !== user.sub) return;
     setShowUpdateMessageId(message.id);
     setShowUpdate(!showUpdate);
   };
+
+  useEffect(() => {
+    setRef(messagesEndRef);
+  }, []);
 
   const renderMessage = (message: Message) => {
     return (
@@ -268,6 +278,10 @@ const MessageList: React.FC<MessageProps> = ({
         preLastMessageId < lastMessage.id
           ? renderMessage(lastMessage)
           : ''}
+
+        <ListItem>
+          <div ref={messagesEndRef}></div>
+        </ListItem>
       </List>
     </>
   );

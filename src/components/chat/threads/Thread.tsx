@@ -19,11 +19,10 @@ import ThreadMessageInput from './ThreadMessageInput';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    overflowY: 'scroll',
     height: '100vh',
     marginTop: theme.spacing(0),
     padding: theme.spacing(2),
-    paddingBottom: theme.spacing(5),
+    paddingBottom: theme.spacing(0),
   },
   messageInput: {
     position: 'fixed',
@@ -103,7 +102,7 @@ const Thread: React.FC = () => {
   }
 
   return (
-    <>
+    <Box display="flex" flexDirection="column">
       <Box className={classes.root}>
         <List id="message-list" component="div">
           <ThreadMessageList
@@ -126,7 +125,7 @@ const Thread: React.FC = () => {
           />
         </MenuBar>
       </Box>
-    </>
+    </Box>
   );
 };
 

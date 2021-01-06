@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, Button } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 import { Message } from '../../interfaces/message.interface';
@@ -24,14 +24,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     flexBasis: '100%',
     flex: '1',
-    overflowY: 'scroll',
-    maxHeight: '80vh',
-    height: '80vh',
-  },
-  flexBoxWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    overflow: 'auto',
+    maxHeight: '90vh',
+    height: '90vh',
   },
   messageInput: {
     position: 'fixed',
@@ -66,8 +60,9 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   const classes = useStyles();
   const [limit, setLimit] = useState<number>(20);
   const [lastMessage, setLastMessage] = useState<Message | null>(null);
+  const [ref, setRef] = useState<any>(null);
   const { user } = useAuth0();
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+
   let preLastMessageId: number = 0;
   const { channel: channelName } = useParams<ChatParams>();
 
@@ -82,9 +77,9 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   const [upsertMessageCursorMutation] = useUpsertMessageCursorMutation();
 
   const scrollToBottom = () => {
-    if (typeof messagesEndRef === 'object') {
+    if (typeof ref === 'object') {
       setTimeout(() => {
-        messagesEndRef?.current?.scrollIntoView();
+        ref?.current?.scrollIntoView();
       }, 100);
     }
   };
@@ -104,7 +99,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
     setTimeout(() => {
       scrollToBottom();
     }, 1000);
-  }, []);
+  }, [ref]);
 
   if (error) {
     return <Alert severity="error">Messages could not be loaded.</Alert>;
@@ -140,7 +135,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   };
 
   return (
-    <Box className={classes.flexBoxWrapper}>
+    <Box display="flex" flexDirection="column">
       <MobileHeaderMenu
         channelName={channelName}
         user={user.sub}
@@ -154,8 +149,8 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
           user={user}
           handleIncreaseLimit={handleIncreaseLimit}
           limit={limit}
+          setRef={setRef}
         />
-        <div ref={messagesEndRef}></div>
       </Box>
       <Box className={classes.messageInput} component="footer">
         <MenuBar channelId={channelId}>

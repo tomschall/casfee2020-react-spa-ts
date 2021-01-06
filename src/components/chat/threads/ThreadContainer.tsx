@@ -30,11 +30,24 @@ const ThreadContainer: React.FC = () => {
   return (
     <Grid item xs={12} md={9} className={classes.chatApp}>
       <Box className={classes.root} component="article">
-        <MobileHeaderMenu
-          channelName={`${channel ? `Thread - ${channel}` : 'Threadlist'}`}
-          channel={channel}
-        />
-        {channel ? <Thread /> : <ThreadListContainer />}
+        {channel ? (
+          <>
+            <MobileHeaderMenu
+              channelName={`${channel ? `Thread - ${channel}` : 'Threadlist'}`}
+              channel={channel}
+            />
+            <Thread />
+          </>
+        ) : (
+          <>
+            <MobileHeaderMenu
+              channelName={`${channel ? `Thread - ${channel}` : 'Threadlist'}`}
+              channel={channel}
+              isThreadList={true}
+            />
+            <ThreadListContainer />
+          </>
+        )}
       </Box>
     </Grid>
   );
