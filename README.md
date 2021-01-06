@@ -34,7 +34,13 @@ cd casfee2020-react-spa-ts
 git clone https://github.com/tomschall/casfee2020-nestjs.git nestjs
 ```
 
-### Usage
+If you just want to test the react app with an external API, go to [Development with external API](#development-with-external-api).
+
+For development with local docker containers go to [Development with local API](#development-with-local-api).
+
+For testing the rendered react app with local docker containers, follow next steps.
+
+### Start docker containers
 
 ```shell script
 # Start API inside Docker
@@ -45,33 +51,49 @@ cd hasura
 yarn api:hasura:migrations:apply
 ```
 
-#### Users for testing
+### Users for login
 
-For login take the following users
+For login take the following users, when you want to develop on local environment.
 
-- email: michael@michael.ch (admin)
-- email: silvan1@silvan.ch (admin)
+- email: webrooster@webrooster.ch (admin)
 - email: kimi@gmail.com
-- email: webrooster@webrooster.ch
 - pw for all users: admin1234.$
 
 * [Frontend](http://localhost)
 * [Backend](http://localhost:8080/console)
 
-### Usage development
+## Usage development
+
+### (#development-with-external-api)
+
+If you want to use an external API, set all variables for your external API in your .env file.
+Then start your react app. You don't need the docker containers. If they run, you can stop them.
 
 ```shell script
-# Start API inside Docker
-docker-compose up -d
-# apply latest migrations and finally start app.
+# install dependencies
+yarn
+# apply latest migrations and metadata and finally start app.
 yarn dev:start
 ```
 
 - [Frontend](http://localhost:3000)
 
-#### Development
+### (#development-with-local-api)
 
-##### Start Hasura Console
+If you want to use independent docker containers for development, start the docker containers.
+
+```shell script
+# Start API inside Docker
+docker-compose up -d
+# install dependencies
+yarn
+# apply latest migrations and metadata and finally start app.
+yarn dev:start
+```
+
+- [Frontend](http://localhost:3000)
+
+### Start Hasura Console
 
 If you want to add tables or metadata, please use hasura console, changes will be tracked automatically:
 
@@ -79,7 +101,7 @@ If you want to add tables or metadata, please use hasura console, changes will b
 yarn api:hasura:console
 ```
 
-#### Export metadata and migrations manually
+### Export metadata and migrations manually
 
 In the project root folder delete hasura folder, the run following commands
 
@@ -90,7 +112,7 @@ hasura migrate create casfee2020-react-spa-ts --from-server --endpoint http://lo
 hasura metadata export --endpoint http://localhost:8080 --admin-secret supersecret
 ```
 
-##### Generate TS types and React hooks
+### Generate TS types and React hooks
 
 ```shell script
 npm run api:client:generate
