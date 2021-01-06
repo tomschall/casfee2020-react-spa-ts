@@ -161,9 +161,6 @@ npx nightwatch nightwatch --env production
 - Add giphy's to your chat and direct messages
 - Add default message to your channel on creation
 - Show number of new messages in sidebar - for this feature the user must have visited the channel at least once, thread messages are not counted at the moment
-- Generate a thread on each message.
-- Listing all generated threads in one list.
-- Admin dashboard to generate user pollings. Publish a poll on one or more public channels. The User has to be administrator to administrate pollings.
 
 ## Demo Chatapp
 
