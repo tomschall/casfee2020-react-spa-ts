@@ -24,6 +24,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
     paddingBottom: theme.spacing(2),
+    zIndex: 1000,
+    [theme.breakpoints.up('md')]: {
+      position: 'fixed',
+      width: '75vw',
+    },
+    [theme.breakpoints.down('md')]: {
+      position: 'fixed',
+    },
+  },
+  outerContainer: {
+    paddingBottom: '65px',
   },
   menuButton: {
     width: theme.spacing(5),
@@ -76,7 +87,7 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
   };
 
   return (
-    <Box component="article">
+    <Box component="article" className={classes.outerContainer}>
       <Box
         display="flex"
         alignItems="center"

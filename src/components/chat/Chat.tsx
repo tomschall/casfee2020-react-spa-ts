@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, Button } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 import { Message } from '../../interfaces/message.interface';
@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
     flexBasis: '100%',
     flex: '1',
     overflowY: 'scroll',
-    maxHeight: '80vh',
-    height: '80vh',
+    maxHeight: '90vh',
+    height: '90vh',
   },
   messageInput: {
     position: 'fixed',

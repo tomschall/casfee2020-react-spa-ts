@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
     marginTop: theme.spacing(0),
     paddingTop: theme.spacing(0),
-    paddingBottom: theme.spacing(3),
+    paddingBottom: theme.spacing(0),
   },
   end: {
     marginBottom: '2rem',
