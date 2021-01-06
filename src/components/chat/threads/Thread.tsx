@@ -104,7 +104,11 @@ const Thread: React.FC = () => {
   return (
     <Box display="flex" flexDirection="column">
       <Box className={classes.root}>
-        <List id="message-list" component="div">
+        <List
+          id="message-list"
+          component="div"
+          style={{ paddingBottom: '50px' }}
+        >
           <ThreadMessageList
             messages={data?.channel_thread_message as ThreadMessage[]}
             user={user}

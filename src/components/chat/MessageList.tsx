@@ -24,7 +24,9 @@ import { useParams } from 'react-router';
 import { ChatParams } from '../../interfaces/param.interface';
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    marginBottom: '130px',
+  },
   listItem: {
     display: 'flex',
     justifyContent: 'flex-start',
@@ -32,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     overflowWrap: 'break-word',
     hyphens: 'auto',
-    // wordBreak: 'break-all',
 
     [theme.breakpoints.down('md')]: {
       paddingTop: theme.spacing(2),
