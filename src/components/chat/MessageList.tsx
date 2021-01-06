@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     overflowWrap: 'break-word',
     hyphens: 'auto',
+    textOverflow: 'ellipsis',
 
     [theme.breakpoints.down('md')]: {
       paddingTop: theme.spacing(2),
