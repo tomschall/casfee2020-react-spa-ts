@@ -8,7 +8,6 @@ import {
   Badge,
   Box,
   Divider,
-  FormHelperText,
   ListItem,
   ListItemAvatar,
   ListItemIcon,
