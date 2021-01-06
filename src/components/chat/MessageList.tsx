@@ -26,6 +26,7 @@ import { ChatParams } from '../../interfaces/param.interface';
 const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: '90px',
+    overflowY: 'scroll',
   },
   listItem: {
     display: 'flex',

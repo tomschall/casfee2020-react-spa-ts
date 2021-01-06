@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     flexBasis: '100%',
     flex: '1',
-    overflowY: 'scroll',
     maxHeight: '90vh',
     height: '90vh',
   },
