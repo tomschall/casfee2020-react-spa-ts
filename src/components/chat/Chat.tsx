@@ -60,8 +60,9 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   const classes = useStyles();
   const [limit, setLimit] = useState<number>(20);
   const [lastMessage, setLastMessage] = useState<Message | null>(null);
+  const [ref, setRef] = useState<any>(null);
   const { user } = useAuth0();
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+
   let preLastMessageId: number = 0;
   const { channel: channelName } = useParams<ChatParams>();
 
@@ -76,9 +77,9 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   const [upsertMessageCursorMutation] = useUpsertMessageCursorMutation();
 
   const scrollToBottom = () => {
-    if (typeof messagesEndRef === 'object') {
+    if (typeof ref === 'object') {
       setTimeout(() => {
-        messagesEndRef?.current?.scrollIntoView();
+        ref?.current?.scrollIntoView();
       }, 100);
     }
   };
@@ -98,7 +99,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
     setTimeout(() => {
       scrollToBottom();
     }, 1000);
-  }, []);
+  }, [ref]);
 
   if (error) {
     return <Alert severity="error">Messages could not be loaded.</Alert>;
@@ -148,8 +149,8 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
           user={user}
           handleIncreaseLimit={handleIncreaseLimit}
           limit={limit}
+          setRef={setRef}
         />
-        <div ref={messagesEndRef}></div>
       </Box>
       <Box className={classes.messageInput} component="footer">
         <MenuBar channelId={channelId}>

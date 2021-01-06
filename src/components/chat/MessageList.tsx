@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import moment from 'moment';
 import { Message } from '../../interfaces/message.interface';
 import ThreadReply from './threads/ThreadReply';
@@ -106,6 +106,7 @@ interface MessageProps {
   user: any;
   handleIncreaseLimit: any;
   limit: number;
+  setRef: any;
 }
 
 const MessageList: React.FC<MessageProps> = ({
@@ -115,6 +116,7 @@ const MessageList: React.FC<MessageProps> = ({
   user,
   handleIncreaseLimit,
   limit,
+  setRef,
 }) => {
   const classes = useStyles();
   const [showUpdate, setShowUpdate] = useState<boolean>(false);
@@ -123,12 +125,17 @@ const MessageList: React.FC<MessageProps> = ({
   );
   const { channel: channelName } = useParams<ChatParams>();
   const deletedMessage = useRecoilValue<boolean>(deletedMessageState);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const handleShowUpdate = (message: Message) => {
     if (message.user.auth0_user_id !== user.sub) return;
     setShowUpdateMessageId(message.id);
     setShowUpdate(!showUpdate);
   };
+
+  useEffect(() => {
+    setRef(messagesEndRef);
+  }, []);
 
   const renderMessage = (message: Message) => {
     return (
@@ -271,6 +278,10 @@ const MessageList: React.FC<MessageProps> = ({
         preLastMessageId < lastMessage.id
           ? renderMessage(lastMessage)
           : ''}
+
+        <ListItem>
+          <div ref={messagesEndRef}></div>
+        </ListItem>
       </List>
     </>
   );
