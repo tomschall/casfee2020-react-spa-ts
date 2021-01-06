@@ -110,6 +110,7 @@ describe('MessageList', () => {
               user={user}
               handleIncreaseLimit={3}
               limit={3}
+              setRef={() => {}}
             />
           </ThemeProvider>
         </MockedProvider>
@@ -160,6 +161,7 @@ describe('MessageList', () => {
               user={user}
               handleIncreaseLimit={3}
               limit={3}
+              setRef={() => {}}
             />
           </ThemeProvider>
         </MockedProvider>
