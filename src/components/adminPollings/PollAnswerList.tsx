@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     floatingLabelFocusStyle: {
       color: theme.palette.secondary.dark,
     },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 14,
+    },
   },
 }));
 
