@@ -139,6 +139,10 @@ export default {
   MuiAccordionSummary: {
     expandIcon: {
       background: '#f57c00',
+
+      '&:hover': {
+        backgroundColor: 'rgba(255, 255, 255, .1)',
+      },
     },
   },
 };
