@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     flexBasis: '100%',
     flex: '1',
+    maxHeight: '90vh',
     height: '90vh',
   },
   messageInput: {
