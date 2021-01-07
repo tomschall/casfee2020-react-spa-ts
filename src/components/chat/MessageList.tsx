@@ -91,7 +91,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: theme.spacing(1),
+    marginTop: theme.spacing(2),
+    paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(3),
   },
   divider: {
