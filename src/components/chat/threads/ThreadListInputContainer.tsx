@@ -71,14 +71,14 @@ const ThreadListInputContainer: React.FC<ThreadListInputContainerProps> = (
   props,
 ) => {
   const classes = useStyles();
-  const matches = useMediaQuery(theme.breakpoints.up('md'));
+  const matches = useMediaQuery(theme.breakpoints.down('md'));
   const [openGiphy, setOpenGiphy] = React.useState<boolean>(false);
 
   const setTextFieldSize = () => {
     switch (matches) {
-      case true:
-        return 'medium';
       case false:
+        return 'medium';
+      case true:
         return 'small';
 
       default:
