@@ -61,6 +61,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
   const [limit, setLimit] = useState<number>(20);
   const [lastMessage, setLastMessage] = useState<Message | null>(null);
   const [ref, setRef] = useState<any>(null);
+  const [scrollIsInit, setScrollIsInit] = useState<boolean>(true);
   const { user } = useAuth0();
 
   let preLastMessageId: number = 0;
@@ -97,8 +98,11 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      scrollToBottom();
-    }, 1000);
+      if (scrollIsInit) {
+        scrollToBottom();
+        setScrollIsInit(false);
+      }
+    }, 800);
   }, [ref]);
 
   if (error) {
