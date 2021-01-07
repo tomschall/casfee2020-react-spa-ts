@@ -86,11 +86,11 @@ const Thread: React.FC = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      if (isIOS && data && data.channel_thread_message.length > 6) {
+      if (!isIOS) {
         scrollToBottom();
-        return;
+      } else if (isIOS && data && data.channel_thread_message.length > 6) {
+        scrollToBottom();
       }
-      scrollToBottom();
     }, 200);
   }, [data]);
 
