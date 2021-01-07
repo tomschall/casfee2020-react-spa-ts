@@ -68,8 +68,8 @@ const SetPollQuestionLockState: React.FC<SetPollQuestionLockStateProps> = ({
   return (
     <>
       <Button
-        variant={readyToPublish ? 'outlined' : 'contained'}
-        color="secondary"
+        variant={readyToPublish === true ? 'outlined' : 'contained'}
+        color={readyToPublish ? 'primary' : 'secondary'}
         disabled={readyToPublish}
         endIcon={
           setActiveState ? (
@@ -79,7 +79,6 @@ const SetPollQuestionLockState: React.FC<SetPollQuestionLockStateProps> = ({
           )
         }
         onClick={handleSetPollQuestionPublishState}
-        style={{ minWidth: 150 }}
       >
         {setActiveState ? 'locked' : 'unlocked'}
       </Button>

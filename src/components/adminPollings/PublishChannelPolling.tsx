@@ -109,8 +109,6 @@ const PublishChannelPolling: React.FC = () => {
 
     if (selectedPollAnswerId === null) return;
 
-    console.log('inside', selectedPollAnswerId);
-
     let currentPollAnswerVotes = getPollAnswerVotes?.pollAnswerVotes[0].votes;
 
     if (currentPollAnswerVotes !== undefined) {

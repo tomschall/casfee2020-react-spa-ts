@@ -123,9 +123,17 @@ npm run api:client:generate
 ### Complete reinstall
 
 If your docker containers are running, and you have to reinstall the whole project, stop
-them, the execute ./clean.sh script in the root folder of the project.
+them, then execute ./clean.sh script in the root folder of the project.
 
 ## Tests
+
+### Unit tests
+
+For running unit tests, use following command in the project root.
+
+```
+yarn test
+```
 
 ### E2E-Tests with nightwatch
 
@@ -143,7 +151,7 @@ npx nightwatch nightwatch
 npx nightwatch nightwatch --env production
 ```
 
-## Additional features
+## Extras
 
 - Typing indicator
 - Number of users are online
@@ -156,6 +164,10 @@ npx nightwatch nightwatch --env production
 - Generate a thread on each message.
 - Listing all generated threads in one list.
 - Admin dashboard to generate user pollings. Publish a poll on one or more public channels. The User has to be administrator to administrate pollings.
+- Unit Tests with react-tesing-library
+- End To End Tests with nightwatch
+- Usability Tests
+- We also tested the app with browserstack emulator and on real smartphones with iOS and Android
 
 ## Demo Chatapp
 

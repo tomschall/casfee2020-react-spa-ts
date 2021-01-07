@@ -13,7 +13,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Loader from '../shared/Loader';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { useWatchDirectMessageChannelsSubscription } from '../../api/generated/graphql';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
 import UnreadMessageCounter from './UnreadMessageCounter';
@@ -54,6 +54,7 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
   const [open, setOpen] = React.useState(true);
   let history = useHistory();
   const [currentChannel] = useRecoilState<any>(currentChannelState);
+  const match = useRouteMatch(`/channel/${currentChannel?.name}`);
 
   const { data, loading, error } = useWatchDirectMessageChannelsSubscription({
     variables: {
@@ -72,6 +73,10 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
   if (loading) {
     return <Loader />;
   }
+
+  const activeLink = () => {
+    return match ? 'secondary' : 'primary';
+  };
 
   const handleClick = () => {
     setOpen(!open);
@@ -114,7 +119,7 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
                 {data?.id === currentChannel?.id ? (
                   <>
                     <ListItemText>
-                      <Typography variant="h6" color="secondary">
+                      <Typography variant="h6" color={activeLink()}>
                         {data.user_channels[0]?.user.username}
                       </Typography>
                     </ListItemText>

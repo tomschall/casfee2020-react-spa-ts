@@ -18,11 +18,15 @@ import Alert from '@material-ui/lab/Alert';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import NotFound from '../shared/NotFound';
-import { useWatchGetPollQuestionsSubscription } from '../../api/generated/graphql';
+import {
+  useWatchGetPollQuestionsSubscription,
+  useWatchGetChannelsSubscription,
+} from '../../api/generated/graphql';
 import { getPollQuestionAnswers } from '../../atom';
 import DeleteQuestion from './DeleteQuestion';
 import GetChannels from './GetChannels';
 import Loader from '../shared/Loader';
+import SetPollQuestionLockState from './SetPollQuestionLockState';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -33,12 +37,14 @@ const useStyles = makeStyles((theme) => ({
   stop: {
     color: theme.palette.success.main,
   },
-
+  text: {
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 14,
+      lineHeight: '15px',
+    },
+  },
   details: {
     alignItems: 'flex-start',
-  },
-  column: {
-    // flexBasis: '100%',
   },
   voteIcon: {
     marginRight: theme.spacing(1),
@@ -54,13 +60,16 @@ const GetPollQuestions: React.FC = () => {
     getPollQuestionAnswers,
   );
 
+  const {
+    data: getChannel,
+    loading: loadingGetChannel,
+  } = useWatchGetChannelsSubscription();
+
   const handleClick = (questionId: number) => {
     setPollQuestion(questionId);
   };
 
-  useEffect(() => {}, [data]);
-
-  if (loading) {
+  if (loading || loadingGetChannel) {
     return <Loader />;
   }
 
@@ -119,29 +128,39 @@ const GetPollQuestions: React.FC = () => {
                       '/dashboard/pollings/edit/question/' + question.id,
                     state: { fromDashboard: true },
                   }}
+                  className={classes.text}
                 >
                   {question.text}
                 </Typography>
               </AccordionSummary>
               <AccordionDetails className={classes.details}>
                 <div
-                  className={clsx(classes.column)}
                   onMouseEnter={() => {
                     handleClick(question.id);
                   }}
                 >
-                  <Typography variant="caption">
-                    Where you want to publish this poll? Orange colored channels
-                    has an active poll.
-                  </Typography>
-                  <GetChannels questionId={question.id} />
+                  <>
+                    <Typography variant="caption">
+                      Where you want to publish this poll? Orange colored
+                      channels has an active poll.
+                    </Typography>
+                    <GetChannels
+                      questionId={question.id}
+                      questionLocked={question.is_active}
+                    />
+                  </>
                 </div>
               </AccordionDetails>
               <AccordionActions>
+                <SetPollQuestionLockState
+                  pollQuestionId={question.id}
+                  setActiveState={question.is_active}
+                />
                 <Button
                   variant="contained"
                   color="secondary"
-                  href={`/dashboard/pollings/edit/question/${question.id}`}
+                  component={Link}
+                  to={`/dashboard/pollings/edit/question/${question.id}`}
                   aria-label="Poll Question"
                   size="small"
                 >

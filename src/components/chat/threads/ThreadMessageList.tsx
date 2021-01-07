@@ -8,7 +8,6 @@ import {
   Badge,
   Box,
   Divider,
-  FormHelperText,
   ListItem,
   ListItemAvatar,
   ListItemIcon,
@@ -38,7 +37,6 @@ export const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.down('md')]: {
     messageText: {
-      fontSize: 14,
       paddingBottom: '1rem',
     },
     reply: {
@@ -49,7 +47,6 @@ export const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.down('sm')]: {
     messageText: {
-      fontSize: 12,
       paddingBottom: '1rem',
     },
     reply: {
@@ -72,8 +69,13 @@ export const useStyles = makeStyles((theme) => ({
     paddingBottom: '0.5rem',
   },
   avatar: {
-    backgroundColor: '#f57c00',
-    color: '#000000',
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+    backgroundColor: '#000000',
+    color: '#ffffff',
+    fontSize: 11,
+    fontWeight: 'bold',
+    border: '2px solid #f57c00',
   },
   loadMoreButton: {
     display: 'flex',

@@ -13,9 +13,13 @@ import Loader from '../../components/shared/Loader';
 
 interface GetChannelsProps {
   questionId: number;
+  questionLocked: boolean;
 }
 
-const GetChannels: React.FC<GetChannelsProps> = ({ questionId }) => {
+const GetChannels: React.FC<GetChannelsProps> = ({
+  questionId,
+  questionLocked,
+}) => {
   const [questionIdState, setQuestionIdState] = React.useState(questionId);
   const getPollQuestionId = useRecoilValue<number>(getPollQuestionAnswers);
   const [channelId, setChannelID] = useState<string>('');
@@ -113,10 +117,12 @@ const GetChannels: React.FC<GetChannelsProps> = ({ questionId }) => {
                       questionIdState &&
                     chn.channel_polls[0]?.poll_question?.id !== undefined
                       ? true
-                      : false
+                      : false || !questionLocked
                   }
                   onClick={() => handlePublishOnChannel(chn.id)}
-                  onDelete={() => handleDeleteQuestionFromChannel(chn.id)}
+                  onDelete={() => {
+                    handleDeleteQuestionFromChannel(chn.id);
+                  }}
                   style={{
                     marginTop: theme.spacing(1),
                     marginRight: theme.spacing(1),

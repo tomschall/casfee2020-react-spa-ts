@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     floatingLabelFocusStyle: {
       color: theme.palette.secondary.dark,
     },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 14,
+    },
   },
 }));
 
@@ -148,7 +151,12 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                       </IconButton>
                       <DeleteAnswer
                         answerId={answer.id}
-                        setActiveState={answer.votes === 0 ? false : true}
+                        setActiveState={
+                          getPollQuestion?.data?.poll_question[0].is_active ||
+                          answer.votes !== 0
+                            ? true
+                            : false
+                        }
                       />
                       <Badge
                         badgeContent={answer.votes ? answer.votes : 0}

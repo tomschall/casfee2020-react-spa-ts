@@ -17,10 +17,6 @@ const useStyles = makeStyles(() => ({
     maxHeight: '90vh',
     height: '90vh',
   },
-  chatApp: {
-    height: '100vh',
-    overflowY: 'hidden',
-  },
 }));
 
 const ThreadContainer: React.FC = () => {
@@ -28,23 +24,19 @@ const ThreadContainer: React.FC = () => {
   const { channel } = useParams<ThreadParams>();
 
   return (
-    <Grid item xs={12} md={9} className={classes.chatApp}>
+    <Grid item xs={12} md={9}>
       <Box className={classes.root} component="article">
         {channel ? (
           <>
             <MobileHeaderMenu
-              channelName={`${channel ? `Thread - ${channel}` : 'Threadlist'}`}
+              channelName={`Thread - ${channel}`}
               channel={channel}
             />
             <Thread />
           </>
         ) : (
           <>
-            <MobileHeaderMenu
-              channelName={`${channel ? `Thread - ${channel}` : 'Threadlist'}`}
-              channel={channel}
-              isThreadList={true}
-            />
+            <MobileHeaderMenu channelName={'Threadlist'} isThreadList={true} />
             <ThreadListContainer />
           </>
         )}

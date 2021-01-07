@@ -13,14 +13,11 @@ const DeleteQuestion: React.FC<DeleteAnswerProps> = ({
   setActiveState,
   channelPollState,
 }) => {
-  const [tobeDeleted, setToBeDeleted] = React.useState(setActiveState);
   const [deleteQuestion, { error }] = useDeletePollQuestionMutation({
     variables: {
       pollQuestionId: questionId,
     },
   });
-
-  useEffect(() => {}, [tobeDeleted]);
 
   const handleQuestionDelete = async (questionId: number) => {
     if (!questionId) return;
@@ -38,9 +35,9 @@ const DeleteQuestion: React.FC<DeleteAnswerProps> = ({
 
   return (
     <>
-      {tobeDeleted ? (
+      {setActiveState === true ? (
         <Button variant="outlined" size="small" color="secondary" disabled>
-          Active poll
+          Poll locked
         </Button>
       ) : (
         <Button

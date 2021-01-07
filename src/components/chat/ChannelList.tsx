@@ -20,7 +20,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptionOutlined';
 import UnreadMessageCounter from './UnreadMessageCounter';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +35,11 @@ const Channels: React.FC<any> = () => {
   const classes = useStyles();
   const [currentChannel] = useRecoilState<any>(currentChannelState);
   const [open, setOpen] = useState(true);
+  const match = useRouteMatch(`/channel/${currentChannel?.name}`);
+
+  const activeLink = () => {
+    return match ? 'secondary' : 'primary';
+  };
 
   const handleClick = () => {
     setOpen(!open);
@@ -80,13 +85,13 @@ const Channels: React.FC<any> = () => {
                   <>
                     <ListItemIcon>
                       {data.is_private === true ? (
-                        <EnhancedEncryptionOutlinedIcon color="secondary" />
+                        <EnhancedEncryptionOutlinedIcon color={activeLink()} />
                       ) : (
-                        <PeopleIcon color="secondary" />
+                        <PeopleIcon color={activeLink()} />
                       )}
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="h6" color="secondary">
+                      <Typography variant="h6" color={activeLink()}>
                         {data.name}
                       </Typography>
                     </ListItemText>

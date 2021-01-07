@@ -91,7 +91,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: theme.spacing(1),
+    marginTop: theme.spacing(2),
+    paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(3),
   },
   divider: {
@@ -251,24 +252,26 @@ const MessageList: React.FC<MessageProps> = ({
 
   return (
     <>
-      {messages?.length === limit && (
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          className={classes.loadMoreButton}
-        >
-          <Divider className={classes.divider} />
-          <Button
-            onClick={() => handleIncreaseLimit()}
-            aria-label="load more messages"
-          >
-            load more (+{limit})
-          </Button>
-          <Divider className={classes.divider} />
-        </Box>
-      )}
       <List id="message-list" component="div" className={classes.root}>
+        {messages?.length === limit && (
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            className={classes.loadMoreButton}
+            component="div"
+          >
+            <Divider className={classes.divider} />
+            <Button
+              onClick={() => handleIncreaseLimit()}
+              aria-label="load more messages"
+            >
+              load more (+{limit})
+            </Button>
+            <Divider className={classes.divider} />
+          </Box>
+        )}
+
         {[...messages]?.reverse()?.map((message, i) => renderMessage(message))}
 
         {!deletedMessage &&
@@ -279,9 +282,7 @@ const MessageList: React.FC<MessageProps> = ({
           ? renderMessage(lastMessage)
           : ''}
 
-        <ListItem>
-          <div ref={messagesEndRef}></div>
-        </ListItem>
+        <div ref={messagesEndRef}></div>
       </List>
     </>
   );
