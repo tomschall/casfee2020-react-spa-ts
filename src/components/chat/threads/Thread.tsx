@@ -16,7 +16,6 @@ import { ThreadMessage } from '../../../interfaces/message.interface';
 import { ThreadParams } from '../../../interfaces/param.interface';
 import MenuBar from '../../shared/MenuBar';
 import ThreadMessageInput from './ThreadMessageInput';
-import { isIOS } from 'react-device-detect';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -86,11 +85,7 @@ const Thread: React.FC = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      if (!isIOS) {
-        scrollToBottom();
-      } else if (isIOS && data && data.channel_thread_message.length > 6) {
-        scrollToBottom();
-      }
+      scrollToBottom();
     }, 200);
   }, [data]);
 
