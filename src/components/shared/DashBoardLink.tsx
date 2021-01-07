@@ -6,9 +6,15 @@ import {
   Typography,
 } from '@material-ui/core';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 const DashboardLink: React.FC = () => {
+  const match = useRouteMatch('/dashboard');
+
+  const ActiveLink = () => {
+    return match ? 'secondary' : 'primary';
+  };
+
   return (
     <>
       <ListItem
@@ -21,7 +27,9 @@ const DashboardLink: React.FC = () => {
           <HowToVoteIcon />
         </ListItemIcon>
         <ListItemText>
-          <Typography variant="h6">Polling</Typography>
+          <Typography variant="h6" color={ActiveLink()}>
+            Polling
+          </Typography>
         </ListItemText>
       </ListItem>
     </>

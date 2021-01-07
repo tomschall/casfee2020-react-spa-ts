@@ -6,9 +6,15 @@ import {
   Typography,
 } from '@material-ui/core';
 import ForumOutlinedIcon from '@material-ui/icons/ForumOutlined';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 const ThreadsLink: React.FC<any> = () => {
+  const match = useRouteMatch('/channel/threads');
+
+  const ActiveLink = () => {
+    return match ? 'secondary' : 'primary';
+  };
+
   return (
     <>
       <ListItem
@@ -21,7 +27,7 @@ const ThreadsLink: React.FC<any> = () => {
           <ForumOutlinedIcon />
         </ListItemIcon>
         <ListItemText>
-          <Typography variant="h6" color="primary">
+          <Typography variant="h6" color={ActiveLink()}>
             Threads
           </Typography>
         </ListItemText>
