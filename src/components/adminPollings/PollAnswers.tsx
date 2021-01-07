@@ -115,12 +115,6 @@ const PollAnswers: React.FC = () => {
               ? getPollQuestion?.data?.poll_question[0]?.text
               : 'no value'}
           </Typography>
-          <SetPollQuestionLockState
-            pollQuestionId={parseInt(pollQuestionId)}
-            setActiveState={
-              getPollQuestion?.data?.poll_question[0]?.is_active ? true : false
-            }
-          />
         </Box>
         <form
           className={classes.form}
@@ -179,6 +173,13 @@ const PollAnswers: React.FC = () => {
         </form>
         <Divider className={classes.divider} />
         <PollAnswerList pollQuestionId={parseInt(pollQuestionId)} />
+        <Divider className={classes.divider} />
+        <SetPollQuestionLockState
+          pollQuestionId={parseInt(pollQuestionId)}
+          setActiveState={
+            getPollQuestion?.data?.poll_question[0]?.is_active ? true : false
+          }
+        />
       </Box>
     </>
   );

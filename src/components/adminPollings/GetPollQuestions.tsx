@@ -26,6 +26,7 @@ import { getPollQuestionAnswers } from '../../atom';
 import DeleteQuestion from './DeleteQuestion';
 import GetChannels from './GetChannels';
 import Loader from '../shared/Loader';
+import SetPollQuestionLockState from './SetPollQuestionLockState';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -151,6 +152,10 @@ const GetPollQuestions: React.FC = () => {
                 </div>
               </AccordionDetails>
               <AccordionActions>
+                <SetPollQuestionLockState
+                  pollQuestionId={question.id}
+                  setActiveState={question.is_active}
+                />
                 <Button
                   variant="contained"
                   color="secondary"
@@ -164,7 +169,7 @@ const GetPollQuestions: React.FC = () => {
 
                 <DeleteQuestion
                   questionId={question.id}
-                  setActiveState={question.is_active ? true : false}
+                  setActiveState={question.is_active}
                 />
               </AccordionActions>
             </Accordion>
