@@ -33,8 +33,6 @@ const DeleteQuestion: React.FC<DeleteAnswerProps> = ({
     console.log(`Error on delete question ${questionId}`);
   }
 
-  console.log(setActiveState);
-
   return (
     <>
       {setActiveState === true ? (
