@@ -52,7 +52,7 @@ module.exports = {
     },
     deleteMessageButton: {
       selector:
-        '//*[@id="message-list"]/div[last()]/div[2]/div[1]/div[2]/div/span/button',
+        '//*[@id="message-list"]/div[last()-1]/div[2]/div[1]/div[2]/div/span/button',
       locateStrategy: 'xpath',
     },
   },
