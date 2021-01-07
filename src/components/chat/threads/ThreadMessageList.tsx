@@ -71,8 +71,13 @@ export const useStyles = makeStyles((theme) => ({
     paddingBottom: '0.5rem',
   },
   avatar: {
-    backgroundColor: '#f57c00',
-    color: '#000000',
+    width: theme.spacing(5),
+    height: theme.spacing(5),
+    backgroundColor: '#000000',
+    color: '#ffffff',
+    fontSize: 11,
+    fontWeight: 'bold',
+    border: '2px solid #f57c00',
   },
   loadMoreButton: {
     display: 'flex',
