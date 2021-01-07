@@ -218,6 +218,11 @@ mutation setPublishPollQuestionState(
       is_active
     }
   }
+  delete_channel_poll(
+    where: { poll_question: { id: { _eq: $pollQuestionId } } }
+  ) {
+    affected_rows
+  }
 }
 
 mutation deletePollQuestion($pollQuestionId: Int!) {
