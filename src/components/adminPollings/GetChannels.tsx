@@ -86,8 +86,6 @@ const GetChannels: React.FC<GetChannelsProps> = ({
     }
   };
 
-  console.log(questionLocked);
-
   return (
     <>
       <Box

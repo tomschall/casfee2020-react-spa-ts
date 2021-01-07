@@ -50,8 +50,6 @@ const App: React.FC = () => {
   const classes = useStyles();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
 
-  console.log('user', user?.sub);
-
   if (isLoading) {
     return (
       <>

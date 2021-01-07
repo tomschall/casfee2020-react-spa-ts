@@ -65,8 +65,6 @@ const GetPollQuestions: React.FC = () => {
     setPollQuestion(questionId);
   };
 
-  console.log(getChannel?.channel.map((chn) => chn.channel_polls.length));
-
   if (loading) {
     return <Loader />;
   }

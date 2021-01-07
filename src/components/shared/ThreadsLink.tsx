@@ -11,7 +11,7 @@ import { Link, useRouteMatch } from 'react-router-dom';
 const ThreadsLink: React.FC<any> = () => {
   const match = useRouteMatch('/channel/threads');
 
-  const ActiveLink = () => {
+  const activeLink = () => {
     return match ? 'secondary' : 'primary';
   };
 
@@ -27,7 +27,7 @@ const ThreadsLink: React.FC<any> = () => {
           <ForumOutlinedIcon />
         </ListItemIcon>
         <ListItemText>
-          <Typography variant="h6" color={ActiveLink()}>
+          <Typography variant="h6" color={activeLink()}>
             Threads
           </Typography>
         </ListItemText>

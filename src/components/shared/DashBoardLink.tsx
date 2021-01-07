@@ -11,7 +11,7 @@ import { Link, useRouteMatch } from 'react-router-dom';
 const DashboardLink: React.FC = () => {
   const match = useRouteMatch('/dashboard');
 
-  const ActiveLink = () => {
+  const activeLink = () => {
     return match ? 'secondary' : 'primary';
   };
 
@@ -27,7 +27,7 @@ const DashboardLink: React.FC = () => {
           <HowToVoteIcon />
         </ListItemIcon>
         <ListItemText>
-          <Typography variant="h6" color={ActiveLink()}>
+          <Typography variant="h6" color={activeLink()}>
             Polling
           </Typography>
         </ListItemText>

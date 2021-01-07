@@ -115,7 +115,6 @@ const PollAnswers: React.FC = () => {
               ? getPollQuestion?.data?.poll_question[0]?.text
               : 'no value'}
           </Typography>
-
           <SetPollQuestionLockState
             pollQuestionId={parseInt(pollQuestionId)}
             setActiveState={
