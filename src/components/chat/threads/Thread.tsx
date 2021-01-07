@@ -85,7 +85,9 @@ const Thread: React.FC = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      scrollToBottom();
+      if (data && data?.channel_thread_message?.length > 3) {
+        scrollToBottom();
+      }
     }, 200);
   }, [data]);
 
