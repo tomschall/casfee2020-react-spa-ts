@@ -41,7 +41,6 @@ export default {
     },
     primary: {
       color: '#fff',
-      // backgroundColor: 'rgba(255, 255, 255, .1)',
       boxShadow: 'none',
     },
     label: {},
@@ -135,6 +134,11 @@ export default {
   MuiIconButton: {
     root: {
       padding: '3px',
+    },
+  },
+  MuiAccordionSummary: {
+    expandIcon: {
+      background: '#f57c00',
     },
   },
 };
