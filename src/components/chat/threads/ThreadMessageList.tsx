@@ -37,7 +37,6 @@ export const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.down('md')]: {
     messageText: {
-      fontSize: 14,
       paddingBottom: '1rem',
     },
     reply: {
@@ -48,7 +47,6 @@ export const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.down('sm')]: {
     messageText: {
-      fontSize: 12,
       paddingBottom: '1rem',
     },
     reply: {
@@ -71,8 +69,8 @@ export const useStyles = makeStyles((theme) => ({
     paddingBottom: '0.5rem',
   },
   avatar: {
-    width: theme.spacing(5),
-    height: theme.spacing(5),
+    width: theme.spacing(4),
+    height: theme.spacing(4),
     backgroundColor: '#000000',
     color: '#ffffff',
     fontSize: 11,

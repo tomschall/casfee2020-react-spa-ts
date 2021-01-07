@@ -1,5 +1,4 @@
 import React from 'react';
-import { theme } from '../../theme/theme';
 import { Box, Chip, LinearProgress, Typography } from '@material-ui/core';
 import FaceIcon from '@material-ui/icons/Face';
 import GroupIcon from '@material-ui/icons/Group';

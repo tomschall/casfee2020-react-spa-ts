@@ -24,33 +24,19 @@ const useStyles = makeStyles((theme) => ({
   [theme.breakpoints.up('md')]: {
     messageText: {
       paddingBottom: '1rem',
-    },
-    reply: {
-      fontSize: 11,
-      paddingBottom: '1rem',
-      color: '#ffffff',
+      color: 'rgba(255, 255, 255, 0.7)',
     },
   },
   [theme.breakpoints.down('md')]: {
     messageText: {
-      fontSize: 14,
       paddingBottom: '1rem',
-    },
-    reply: {
-      fontSize: 11,
-      paddingBottom: '1rem',
-      color: '#ffffff',
+      color: 'rgba(255, 255, 255, 0.7)',
     },
   },
   [theme.breakpoints.down('sm')]: {
     messageText: {
-      fontSize: 12,
       paddingBottom: '1rem',
-    },
-    reply: {
-      fontSize: 11,
-      paddingBottom: '1rem',
-      color: '#ffffff',
+      color: 'rgba(255, 255, 255, 0.7)',
     },
   },
   vspace: {
@@ -67,8 +53,8 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: '0.5rem',
   },
   avatar: {
-    width: theme.spacing(5),
-    height: theme.spacing(5),
+    width: theme.spacing(4),
+    height: theme.spacing(4),
     backgroundColor: '#000000',
     color: '#ffffff',
     fontSize: 11,
@@ -146,15 +132,21 @@ const ThreadInfo: React.FC<ThreadInfoProps> = ({
                 justifyContent="flex-start"
                 alignItems="flex-start"
               >
-                <Typography variant="caption">
+                <Typography color="secondary" variant="caption">
                   {!channelThread.message.deleted ? (
                     <>
                       <strong>{channelThread.message.user.username} </strong>
-                      <i>{moment(channelThread.message.timestamp).fromNow()}</i>
                     </>
                   ) : (
                     <strong>Oh sorry it seems...</strong>
                   )}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  color="primary"
+                  style={{ marginLeft: '8px' }}
+                >
+                  <i>{moment(channelThread.message.timestamp).fromNow()}</i>
                 </Typography>
                 <Divider className={classes.vspace} />
               </Box>
