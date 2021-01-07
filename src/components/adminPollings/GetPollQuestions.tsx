@@ -59,13 +59,16 @@ const GetPollQuestions: React.FC = () => {
     getPollQuestionAnswers,
   );
 
-  const { data: getChannel } = useWatchGetChannelsSubscription();
+  const {
+    data: getChannel,
+    loading: loadingGetChannel,
+  } = useWatchGetChannelsSubscription();
 
   const handleClick = (questionId: number) => {
     setPollQuestion(questionId);
   };
 
-  if (loading) {
+  if (loading || loadingGetChannel) {
     return <Loader />;
   }
 
@@ -161,7 +164,7 @@ const GetPollQuestions: React.FC = () => {
 
                 <DeleteQuestion
                   questionId={question.id}
-                  setActiveState={question.is_active}
+                  setActiveState={question.is_active ? true : false}
                 />
               </AccordionActions>
             </Accordion>
