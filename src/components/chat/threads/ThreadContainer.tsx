@@ -33,18 +33,14 @@ const ThreadContainer: React.FC = () => {
         {channel ? (
           <>
             <MobileHeaderMenu
-              channelName={`${channel ? `Thread - ${channel}` : 'Threadlist'}`}
+              channelName={`Thread - ${channel}`}
               channel={channel}
             />
             <Thread />
           </>
         ) : (
           <>
-            <MobileHeaderMenu
-              channelName={`${channel ? `Thread - ${channel}` : 'Threadlist'}`}
-              channel={channel}
-              isThreadList={true}
-            />
+            <MobileHeaderMenu channelName={'Threadlist'} isThreadList={true} />
             <ThreadListContainer />
           </>
         )}
