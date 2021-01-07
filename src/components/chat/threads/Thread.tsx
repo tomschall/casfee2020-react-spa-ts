@@ -19,7 +19,6 @@ import ThreadMessageInput from './ThreadMessageInput';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '80vh',
     marginTop: theme.spacing(0),
     padding: theme.spacing(2),
     paddingBottom: theme.spacing(0),

@@ -14,12 +14,7 @@ const useStyles = makeStyles(() => ({
     flexBasis: '100%',
     flex: '1',
     overflowY: 'scroll',
-    maxHeight: '90vh',
     height: '90vh',
-  },
-  chatApp: {
-    height: '100vh',
-    overflowY: 'hidden',
   },
 }));
 
@@ -28,7 +23,7 @@ const ThreadContainer: React.FC = () => {
   const { channel } = useParams<ThreadParams>();
 
   return (
-    <Grid item xs={12} md={9} className={classes.chatApp}>
+    <Grid item xs={12} md={9}>
       <Box className={classes.root} component="article">
         {channel ? (
           <>
