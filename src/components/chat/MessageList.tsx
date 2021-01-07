@@ -79,8 +79,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   avatar: {
-    width: theme.spacing(5),
-    height: theme.spacing(5),
+    width: theme.spacing(4),
+    height: theme.spacing(4),
     backgroundColor: '#000000',
     color: '#ffffff',
     fontSize: 11,
