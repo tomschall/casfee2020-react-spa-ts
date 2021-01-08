@@ -124,7 +124,7 @@ const GetPollQuestions: React.FC = () => {
         <Alert severity="info">Please add a new question.</Alert>
       ) : (
         data?.questions
-          .sort((a, b) => a.id + b.id)
+          .sort((a, b) => b.id - a.id)
           .map((question, index) => (
             <Accordion key={index} defaultExpanded={false}>
               <AccordionSummary
@@ -132,12 +132,17 @@ const GetPollQuestions: React.FC = () => {
                 aria-controls={question.text}
               >
                 {question?.channel_polls.length > 0 ? (
-                  <Badge variant="dot" classes={{ badge: classes.badge }}>
+                  <Badge
+                    variant="dot"
+                    badgeContent={question.id}
+                    classes={{ badge: classes.badge }}
+                  >
                     <HowToVoteIcon className={classes.voteIconPublished} />
                   </Badge>
                 ) : (
                   <HowToVoteIcon className={classes.voteIcon} />
                 )}
+
                 <Typography
                   color={
                     question?.channel_polls.length > 0 ? 'secondary' : 'primary'
