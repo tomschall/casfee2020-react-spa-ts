@@ -61,6 +61,15 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     border: '2px solid #f57c00',
   },
+  avatarDeleted: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+    backgroundColor: '#000000',
+    color: '#ffffff',
+    fontSize: 11,
+    fontWeight: 'bold',
+    border: '2px solid #f57c00',
+  },
 }));
 
 interface ThreadInfoProps {
@@ -113,9 +122,11 @@ const ThreadInfo: React.FC<ThreadInfoProps> = ({
                     </Avatar>
                   ) : (
                     <Avatar
+                      className={classes.avatarDeleted}
                       alt="Message has been removed"
-                      src={`${window.location.origin}/deleted.png`}
-                    />
+                    >
+                      !!!
+                    </Avatar>
                   )}
                 </Badge>
               </ListItemIcon>
