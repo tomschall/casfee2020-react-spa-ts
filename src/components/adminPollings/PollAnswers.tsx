@@ -1,12 +1,13 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import {
   Box,
+  Button,
+  ButtonGroup,
   IconButton,
-  InputAdornment,
   Divider,
   FormGroup,
-  Grid,
+  InputAdornment,
   TextField,
   Typography,
 } from '@material-ui/core';
@@ -15,7 +16,7 @@ import {
   useWatchGetPollQuestionSubscription,
   useAddAnswerToQuestionMutation,
 } from '../../api/generated/graphql';
-import GetChannels from './GetChannels';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import GetPollAnswerId from './GetPollAnswerId';
 import PollAnswerList from './PollAnswerList';
 import SetPollQuestionLockState from './SetPollQuestionLockState';
@@ -174,12 +175,23 @@ const PollAnswers: React.FC = () => {
         <Divider className={classes.divider} />
         <PollAnswerList pollQuestionId={parseInt(pollQuestionId)} />
         <Divider className={classes.divider} />
-        <SetPollQuestionLockState
-          pollQuestionId={parseInt(pollQuestionId)}
-          setActiveState={
-            getPollQuestion?.data?.poll_question[0]?.is_active ? true : false
-          }
-        />
+        <ButtonGroup disableElevation variant="outlined">
+          <Button
+            color="secondary"
+            component={Link}
+            to={'/dashboard'}
+            aria-label={`back to dashboard`}
+            startIcon={<ArrowBackIosIcon />}
+          >
+            Back
+          </Button>
+          <SetPollQuestionLockState
+            pollQuestionId={parseInt(pollQuestionId)}
+            setActiveState={
+              getPollQuestion?.data?.poll_question[0]?.is_active ? true : false
+            }
+          />
+        </ButtonGroup>
       </Box>
     </>
   );

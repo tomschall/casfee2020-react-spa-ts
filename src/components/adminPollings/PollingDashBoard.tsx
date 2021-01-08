@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Divider, Grid } from '@material-ui/core';
+import { Divider } from '@material-ui/core';
 
 import GetPollQuestions from './GetPollQuestions';
 import AddPollQuestion from './AddPollQuestion';
