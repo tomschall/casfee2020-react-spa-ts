@@ -36,6 +36,12 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     color: theme.palette.primary.main,
     transform: 'scale(.8)',
+    transition: `${theme.transitions.create(['scale', 'transform'], {
+      duration: 300,
+    })}`,
+    '&:hover': {
+      transform: 'scale(1)',
+    },
   },
 }));
 
