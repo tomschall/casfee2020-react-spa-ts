@@ -18,18 +18,17 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 11,
     [theme.breakpoints.up('md')]: {
       paddingLeft: theme.spacing(2),
-      paddingBottom: theme.spacing(1),
-      paddingTop: theme.spacing(2),
+      paddingBottom: theme.spacing(0),
+      paddingTop: theme.spacing(1),
     },
     [theme.breakpoints.down('md')]: {
-      paddingLeft: theme.spacing(0),
+      paddingLeft: theme.spacing(2),
       paddingBottom: theme.spacing(0),
       paddingTop: theme.spacing(1),
     },
     [theme.breakpoints.down('sm')]: {
-      messageText: {
-        paddingBottom: theme.spacing(0),
-      },
+      paddingLeft: theme.spacing(0),
+      paddingBottom: theme.spacing(0),
     },
   },
 
