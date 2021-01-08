@@ -125,12 +125,11 @@ const GetPollQuestions: React.FC = () => {
       ) : (
         data?.questions
           .sort((a, b) => a.id + b.id)
-          .map((question) => (
-            <Accordion key={question.id} defaultExpanded={false}>
+          .map((question, index) => (
+            <Accordion key={index} defaultExpanded={false}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls={question.text}
-                id={question.text}
               >
                 {question?.channel_polls.length > 0 ? (
                   <Badge variant="dot" classes={{ badge: classes.badge }}>
