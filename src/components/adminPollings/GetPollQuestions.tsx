@@ -132,11 +132,7 @@ const GetPollQuestions: React.FC = () => {
                 aria-controls={question.text}
               >
                 {question?.channel_polls.length > 0 ? (
-                  <Badge
-                    variant="dot"
-                    badgeContent={question.id}
-                    classes={{ badge: classes.badge }}
-                  >
+                  <Badge variant="dot" classes={{ badge: classes.badge }}>
                     <HowToVoteIcon className={classes.voteIconPublished} />
                   </Badge>
                 ) : (
