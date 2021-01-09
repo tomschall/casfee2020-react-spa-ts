@@ -21,6 +21,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import OnlineUserStatus from '../shared/OnlineUserStatus';
 import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../atom';
+import { Channel } from '../../interfaces/channel.interface';
 
 const useStyles = makeStyles((theme) => ({
   nested: {
@@ -53,7 +54,7 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   let history = useHistory();
-  const [currentChannel] = useRecoilState<any>(currentChannelState);
+  const [currentChannel] = useRecoilState<Channel>(currentChannelState);
   const match = useRouteMatch(`/channel/${currentChannel?.name}`);
 
   const { data, loading, error } = useWatchDirectMessageChannelsSubscription({

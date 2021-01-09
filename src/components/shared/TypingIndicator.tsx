@@ -4,11 +4,12 @@ import { Alert } from '@material-ui/lab';
 import { useGetUserIsTypingSubscription } from '../../api/generated/graphql';
 import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../atom';
+import { Channel } from '../../interfaces/channel.interface';
 
 const TypingIndicator: React.FC = () => {
   const { user } = useAuth0();
 
-  const [currentChannel, setCurrentChannel] = useRecoilState<any>(
+  const [currentChannel, setCurrentChannel] = useRecoilState<Channel>(
     currentChannelState,
   );
 

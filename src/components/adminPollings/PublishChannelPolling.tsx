@@ -23,6 +23,7 @@ import {
   useSetUserVotePollQuestionMutation,
 } from '../../api/generated/graphql';
 import { makeStyles } from '@material-ui/core/styles';
+import { Channel } from '../../interfaces/channel.interface';
 
 const useStyles = makeStyles((theme) => ({
   pollCard: {
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 const PublishChannelPolling: React.FC = () => {
   const classes = useStyles();
   const { user } = useAuth0();
-  const [currentChannel, setCurrentChannelState] = useRecoilState<any>(
+  const [currentChannel, setCurrentChannelState] = useRecoilState<Channel>(
     currentChannelState,
   );
   const [selectedPollAnswerId, setSelectedPollAnswerId] = React.useState<

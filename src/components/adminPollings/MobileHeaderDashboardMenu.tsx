@@ -1,9 +1,7 @@
 import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { theme } from '../../theme/theme';
-import { useRecoilState } from 'recoil';
 import { Box, Chip, IconButton } from '@material-ui/core';
-import { currentChannelState } from '../../atom';
 import PeopleIcon from '@material-ui/icons/People';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -52,7 +50,6 @@ const MobileHeaderDashboardMenu: React.FC<MobileHeaderMenuProps> = ({
   channelName,
 }) => {
   const classes = useStyles();
-  const [currentChannel] = useRecoilState<any>(currentChannelState);
   const matches = useMediaQuery(theme.breakpoints.up('md'));
   const [open, setOpen] = React.useState(false);
 

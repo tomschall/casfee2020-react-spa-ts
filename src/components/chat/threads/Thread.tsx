@@ -16,6 +16,7 @@ import { ThreadMessage } from '../../../interfaces/message.interface';
 import { ThreadParams } from '../../../interfaces/param.interface';
 import MenuBar from '../../shared/MenuBar';
 import ThreadMessageInput from './ThreadMessageInput';
+import { Channel } from '../../../interfaces/channel.interface';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,7 +50,7 @@ const Thread: React.FC = () => {
   const [limit, setLimit] = useState(20);
   const { user, error: auth0Error } = useAuth0();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [currentChannel, setCurrentChannel] = useRecoilState<any>(
+  const [currentChannel, setCurrentChannel] = useRecoilState<Channel>(
     currentChannelState,
   );
   let history = useHistory();
