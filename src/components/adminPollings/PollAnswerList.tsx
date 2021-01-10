@@ -121,9 +121,9 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                   handleAnswerChange(answer?.id, e);
                   setAnswerTextUpdateId(answer.id);
                 }}
-                onFocus={() => {
+                onFocus={(e) => {
                   setFieldError(false);
-                  answer.text = '';
+                  e.target.value = '';
                 }}
                 onBlur={() => {
                   setFieldError(false);

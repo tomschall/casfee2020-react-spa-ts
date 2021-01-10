@@ -112,7 +112,7 @@ const UpdatePollQuestion: React.FC<UpdatePollQuestionLProps> = ({
           variant="outlined"
           color="secondary"
           autoComplete="off"
-          placeholder={pollQuestion}
+          placeholder={pollQuestionText === 'no value' ? '' : pollQuestionText}
           disabled={pollQuestionDisabled}
           fullWidth
           onChange={(e) => {
