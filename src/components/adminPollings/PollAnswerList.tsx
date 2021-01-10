@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   useWatchGetPollAnswersSubscription,
   useUpdatePollAnswerTextMutation,
@@ -40,6 +40,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
   const classes = useStyles();
   const [updateEnabled, setUpdateEnabled] = React.useState(true);
   const [answerTextUpdateId, setAnswerTextUpdateId] = React.useState<number>(0);
+  const [fieldError, setFieldError] = useState<boolean>(false);
   const [answerText, setAnswerText] = React.useState({
     text: '',
   });
@@ -61,16 +62,20 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
   });
 
   const handleAnswerChange = (index?: number, e?: any) => {
-    setAnswerText({ text: e.target.value });
+    setAnswerText({ text: e.target.value.trim() });
     setUpdateEnabled(false);
   };
 
   const handleUpdateAnswerText = async (answerId: number) => {
     setAnswerTextUpdateId(answerId);
 
-    if (answerId === undefined || answerText.text === '') {
-      setUpdateEnabled(true);
+    if (answerText.text === '' || !answerText.text.trim()) {
+      setUpdateEnabled(false);
+      setFieldError(true);
+      answerText.text = '';
       return;
+    } else {
+      setFieldError(false);
     }
 
     await updatePollAnswerTextMutation({
@@ -107,6 +112,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
           .map((answer) => (
             <FormGroup row key={answer.id}>
               <TextField
+                error={fieldError}
                 key={answer.id}
                 name={answer.text + answer.id}
                 required
@@ -114,6 +120,16 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                 onChange={(e) => {
                   handleAnswerChange(answer?.id, e);
                   setAnswerTextUpdateId(answer.id);
+                }}
+                onFocus={() => {
+                  console.log('is focus');
+                  answer.text = '';
+                }}
+                onBlur={() => {
+                  setFieldError(false);
+                }}
+                onMouseOut={() => {
+                  setFieldError(false);
                 }}
                 multiline
                 rows={1}
@@ -123,7 +139,9 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                 color="secondary"
                 autoComplete="off"
                 placeholder={answer.text}
-                label={answer.text}
+                label={
+                  fieldError === true ? 'Error update answer text' : answer.text
+                }
                 fullWidth
                 margin="dense"
                 inputProps={{

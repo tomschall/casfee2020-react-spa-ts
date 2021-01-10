@@ -82,7 +82,7 @@ const PollAnswers: React.FC = () => {
   const [addPollQuestionMutation] = useAddAnswerToQuestionMutation();
 
   const handleNewAnswerChange = (index?: number, e?: any) => {
-    setAnswerNewText({ text: e.target.value });
+    setAnswerNewText({ text: e.target.value.trim() });
     setCurrentAnswerId(e.target.id);
   };
 
@@ -91,6 +91,7 @@ const PollAnswers: React.FC = () => {
 
     if (!answerNewText.text.trim() || answerNewText.text === '') {
       setFieldError(true);
+      setAnswerNewText({ text: '' });
       return;
     } else {
       setFieldError(false);
@@ -132,7 +133,7 @@ const PollAnswers: React.FC = () => {
               error={fieldError}
               key={getPollQuestion?.data?.poll_question[0]?.id}
               name="poll_answer"
-              value={answerNewText.text}
+              value={fieldError === true ? '' : answerNewText.text}
               required
               id="outlined-multiline-static"
               label={
