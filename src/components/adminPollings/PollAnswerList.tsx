@@ -105,7 +105,9 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
         />
       </Box>
       {data?.poll_answers.length === 0 ? (
-        <Alert severity="info">Please add an answer to the poll.</Alert>
+        <Alert severity="info">
+          Please add at least two answers to the poll.
+        </Alert>
       ) : (
         data?.poll_answers
           .sort((a, b) => a.id - b.id)
