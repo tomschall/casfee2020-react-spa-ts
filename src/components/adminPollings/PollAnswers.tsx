@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import {
   Box,
@@ -71,6 +71,7 @@ const PollAnswers: React.FC = () => {
   const [currentAnswerId, setCurrentAnswerId] = React.useState<number>(0);
   const { question: pollQuestionId } = useParams<ParamType>();
   const [pollQuestionActiveState] = React.useState<boolean>();
+  const [fieldError, setFieldError] = useState<boolean>(false);
 
   const getPollQuestion = useWatchGetPollQuestionSubscription({
     variables: {
@@ -88,7 +89,12 @@ const PollAnswers: React.FC = () => {
   const handleAddAnswer = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (answerNewText.text === '') return;
+    if (!answerNewText.text.trim() || answerNewText.text === '') {
+      setFieldError(true);
+      return;
+    } else {
+      setFieldError(false);
+    }
     await addPollQuestionMutation({
       variables: {
         text: answerNewText.text,
@@ -123,12 +129,17 @@ const PollAnswers: React.FC = () => {
         >
           <FormGroup row>
             <TextField
+              error={fieldError}
               key={getPollQuestion?.data?.poll_question[0]?.id}
               name="poll_answer"
               value={answerNewText.text}
               required
               id="outlined-multiline-static"
-              label="Add an answer to these question"
+              label={
+                fieldError === true
+                  ? 'Error adding answer'
+                  : 'Add an answer to these question'
+              }
               multiline
               rows={1}
               size="small"
@@ -137,6 +148,12 @@ const PollAnswers: React.FC = () => {
               autoComplete="off"
               placeholder="Type your answers here ..."
               disabled={getPollQuestion?.data?.poll_question[0]?.is_active}
+              onBlur={() => {
+                setFieldError(false);
+              }}
+              onMouseOut={() => {
+                setFieldError(false);
+              }}
               onChange={(e) =>
                 handleNewAnswerChange(
                   getPollQuestion?.data?.poll_question[0]?.id,

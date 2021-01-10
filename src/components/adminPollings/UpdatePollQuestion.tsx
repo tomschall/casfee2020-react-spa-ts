@@ -61,7 +61,6 @@ const UpdatePollQuestion: React.FC<UpdatePollQuestionLProps> = ({
   const handlePollQuestionChange = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
-    console.log(e?.target.value);
     setPollQuestionText(e?.target.value);
     setUpdateEnabled(false);
   };
@@ -69,7 +68,7 @@ const UpdatePollQuestion: React.FC<UpdatePollQuestionLProps> = ({
   const handleUpdatePollQuestion = async () => {
     if (!pollQuestionText.trim() || pollQuestionText === 'no value') {
       setFieldError(true);
-
+      setPollQuestionText('');
       return;
     } else {
       setFieldError(false);
@@ -81,6 +80,7 @@ const UpdatePollQuestion: React.FC<UpdatePollQuestionLProps> = ({
         text: pollQuestionText,
       },
     });
+    setPollQuestionText('');
   };
 
   if (loading || error) {
@@ -98,6 +98,7 @@ const UpdatePollQuestion: React.FC<UpdatePollQuestionLProps> = ({
           error={fieldError}
           key={pollQuestionId}
           name="poll_answer"
+          value={pollQuestionText === 'no value' ? '' : pollQuestionText}
           required
           id="outlined-multiline-static"
           label={
