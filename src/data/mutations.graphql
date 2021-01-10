@@ -285,3 +285,12 @@ mutation setUserVotePollQuestion(
     affected_rows
   }
 }
+
+mutation updatePollQuestion($pollQuestionId: Int!, $text: String!) {
+  update_poll_questions(
+    where: { id: { _eq: $pollQuestionId } }
+    _set: { text: $text }
+  ) {
+    affected_rows
+  }
+}

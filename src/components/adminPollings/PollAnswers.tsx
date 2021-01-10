@@ -9,7 +9,6 @@ import {
   FormGroup,
   InputAdornment,
   TextField,
-  Typography,
 } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import {
@@ -20,6 +19,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import GetPollAnswerId from './GetPollAnswerId';
 import PollAnswerList from './PollAnswerList';
 import SetPollQuestionLockState from './SetPollQuestionLockState';
+import UpdatePollQuestion from './UpdatePollQuestion';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -103,20 +103,18 @@ const PollAnswers: React.FC = () => {
     <>
       <Box className={classes.root}>
         <GetPollAnswerId pollQuestionId={parseInt(pollQuestionId)} />
-
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="flex-end"
-          mb={3}
-          mt={0}
-        >
-          <Typography variant="h2">
-            {getPollQuestion?.data?.poll_question[0]?.text
+        <UpdatePollQuestion
+          pollQuestion={
+            getPollQuestion?.data?.poll_question[0]?.text
               ? getPollQuestion?.data?.poll_question[0]?.text
-              : 'no value'}
-          </Typography>
-        </Box>
+              : 'no value'
+          }
+          pollQuestionId={parseInt(pollQuestionId)}
+          pollQuestionDisabled={
+            getPollQuestion?.data?.poll_question[0]?.is_active ? true : false
+          }
+        />
+
         <form
           className={classes.form}
           noValidate
@@ -157,6 +155,9 @@ const PollAnswers: React.FC = () => {
                       type="submit"
                       color="secondary"
                       aria-label="Send message"
+                      disabled={
+                        getPollQuestion?.data?.poll_question[0]?.is_active
+                      }
                     >
                       <SendIcon />
                     </IconButton>
