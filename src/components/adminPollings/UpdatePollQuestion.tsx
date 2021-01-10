@@ -54,7 +54,7 @@ const UpdatePollQuestion: React.FC<UpdatePollQuestionLProps> = ({
   ] = useUpdatePollQuestionMutation({
     variables: {
       pollQuestionId: pollQuestionId,
-      text: pollQuestionText,
+      text: pollQuestionText.trim(),
     },
   });
 

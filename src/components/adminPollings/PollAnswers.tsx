@@ -82,7 +82,7 @@ const PollAnswers: React.FC = () => {
   const [addPollQuestionMutation] = useAddAnswerToQuestionMutation();
 
   const handleNewAnswerChange = (index?: number, e?: any) => {
-    setAnswerNewText({ text: e.target.value.trim() });
+    setAnswerNewText({ text: e.target.value });
     setCurrentAnswerId(e.target.id);
   };
 
@@ -91,19 +91,19 @@ const PollAnswers: React.FC = () => {
 
     if (!answerNewText.text.trim() || answerNewText.text === '') {
       setFieldError(true);
-      setAnswerNewText({ text: '' });
+      answerNewText.text = '';
       return;
     } else {
       setFieldError(false);
     }
     await addPollQuestionMutation({
       variables: {
-        text: answerNewText.text,
+        text: answerNewText.text.trim(),
         pollQuestionId: parseInt(pollQuestionId),
       },
     });
 
-    setAnswerNewText({ text: '' });
+    answerNewText.text = '';
   };
 
   return (
@@ -131,9 +131,9 @@ const PollAnswers: React.FC = () => {
           <FormGroup row>
             <TextField
               error={fieldError}
+              value={answerNewText.text}
               key={getPollQuestion?.data?.poll_question[0]?.id}
               name="poll_answer"
-              value={fieldError === true ? '' : answerNewText.text}
               required
               id="outlined-multiline-static"
               label={
@@ -149,6 +149,10 @@ const PollAnswers: React.FC = () => {
               autoComplete="off"
               placeholder="Type your answers here ..."
               disabled={getPollQuestion?.data?.poll_question[0]?.is_active}
+              onFocus={() => {
+                setFieldError(false);
+                answerNewText.text = '';
+              }}
               onBlur={() => {
                 setFieldError(false);
               }}

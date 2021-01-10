@@ -122,7 +122,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                   setAnswerTextUpdateId(answer.id);
                 }}
                 onFocus={() => {
-                  console.log('is focus');
+                  setFieldError(false);
                   answer.text = '';
                 }}
                 onBlur={() => {
@@ -139,9 +139,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                 color="secondary"
                 autoComplete="off"
                 placeholder={answer.text}
-                label={
-                  fieldError === true ? 'Error update answer text' : answer.text
-                }
+                label={answer.text}
                 fullWidth
                 margin="dense"
                 inputProps={{
