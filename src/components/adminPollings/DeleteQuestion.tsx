@@ -6,7 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 interface DeleteAnswerProps {
   questionId: number;
   setActiveState: boolean;
-  channelPollState?: Array<any>;
+  channelPollState?: Array<number>;
 }
 
 const DeleteQuestion: React.FC<DeleteAnswerProps> = ({

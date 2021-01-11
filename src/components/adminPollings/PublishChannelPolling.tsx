@@ -70,9 +70,9 @@ const PublishChannelPolling: React.FC = () => {
   const [setPollAnswerVoteMutation] = useSetPollAnswerVoteMutation();
 
   const totalVotes = () => {
-    let numbers: Array<any> = data?.getChannelPoll[0]?.poll_question
-      ?.poll_anwers!;
-    const count: any = [];
+    let numbers: { __typename?: string | undefined }[];
+    numbers = data?.getChannelPoll[0]?.poll_question?.poll_anwers!;
+    let count: Array<any> = [];
     if (numbers !== undefined) {
       numbers.map((num: any) => count.push(num.votes));
       const result = count.reduce((a: number, b: number) => a + b);

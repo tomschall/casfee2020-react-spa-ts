@@ -81,7 +81,7 @@ const GetPollQuestions: React.FC = () => {
   const { data, loading, error } = useWatchGetPollQuestionsSubscription({
     variables: {},
   });
-  const [pollQuestion, setPollQuestion] = useRecoilState<any>(
+  const [pollQuestion, setPollQuestion] = useRecoilState(
     getPollQuestionAnswers,
   );
 
