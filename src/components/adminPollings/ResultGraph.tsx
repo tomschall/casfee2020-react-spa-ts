@@ -17,7 +17,7 @@ interface ResultGraphProps {
   userVote: number | undefined;
   pollVotes: number;
   text: string;
-  totalVotes: any;
+  totalVotes: number;
 }
 
 const ResultGraph: React.FC<ResultGraphProps> = ({

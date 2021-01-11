@@ -1,24 +1,25 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import {
   Box,
+  Button,
+  ButtonGroup,
   IconButton,
-  InputAdornment,
   Divider,
   FormGroup,
-  Grid,
+  InputAdornment,
   TextField,
-  Typography,
 } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import {
   useWatchGetPollQuestionSubscription,
   useAddAnswerToQuestionMutation,
 } from '../../api/generated/graphql';
-import GetChannels from './GetChannels';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import GetPollAnswerId from './GetPollAnswerId';
 import PollAnswerList from './PollAnswerList';
 import SetPollQuestionLockState from './SetPollQuestionLockState';
+import UpdatePollQuestion from './UpdatePollQuestion';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -70,6 +71,7 @@ const PollAnswers: React.FC = () => {
   const [currentAnswerId, setCurrentAnswerId] = React.useState<number>(0);
   const { question: pollQuestionId } = useParams<ParamType>();
   const [pollQuestionActiveState] = React.useState<boolean>();
+  const [fieldError, setFieldError] = useState<boolean>(false);
 
   const getPollQuestion = useWatchGetPollQuestionSubscription({
     variables: {
@@ -87,35 +89,39 @@ const PollAnswers: React.FC = () => {
   const handleAddAnswer = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (answerNewText.text === '') return;
+    if (!answerNewText.text.trim() || answerNewText.text === '') {
+      setFieldError(true);
+      answerNewText.text = '';
+      return;
+    } else {
+      setFieldError(false);
+    }
     await addPollQuestionMutation({
       variables: {
-        text: answerNewText.text,
+        text: answerNewText.text.trim(),
         pollQuestionId: parseInt(pollQuestionId),
       },
     });
 
-    setAnswerNewText({ text: '' });
+    answerNewText.text = '';
   };
 
   return (
     <>
       <Box className={classes.root}>
         <GetPollAnswerId pollQuestionId={parseInt(pollQuestionId)} />
-
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="flex-end"
-          mb={3}
-          mt={0}
-        >
-          <Typography variant="h2">
-            {getPollQuestion?.data?.poll_question[0]?.text
+        <UpdatePollQuestion
+          pollQuestion={
+            getPollQuestion?.data?.poll_question[0]?.text
               ? getPollQuestion?.data?.poll_question[0]?.text
-              : 'no value'}
-          </Typography>
-        </Box>
+              : 'no value'
+          }
+          pollQuestionId={parseInt(pollQuestionId)}
+          pollQuestionDisabled={
+            getPollQuestion?.data?.poll_question[0]?.is_active ? true : false
+          }
+        />
+
         <form
           className={classes.form}
           noValidate
@@ -124,12 +130,17 @@ const PollAnswers: React.FC = () => {
         >
           <FormGroup row>
             <TextField
+              error={fieldError}
+              value={answerNewText.text}
               key={getPollQuestion?.data?.poll_question[0]?.id}
               name="poll_answer"
-              value={answerNewText.text}
               required
               id="outlined-multiline-static"
-              label="Add an answer to these question"
+              label={
+                fieldError === true
+                  ? 'Error adding answer'
+                  : 'Add an answer to these question'
+              }
               multiline
               rows={1}
               size="small"
@@ -138,6 +149,16 @@ const PollAnswers: React.FC = () => {
               autoComplete="off"
               placeholder="Type your answers here ..."
               disabled={getPollQuestion?.data?.poll_question[0]?.is_active}
+              onFocus={() => {
+                setFieldError(false);
+                answerNewText.text = '';
+              }}
+              onBlur={() => {
+                setFieldError(false);
+              }}
+              onMouseOut={() => {
+                setFieldError(false);
+              }}
               onChange={(e) =>
                 handleNewAnswerChange(
                   getPollQuestion?.data?.poll_question[0]?.id,
@@ -156,6 +177,9 @@ const PollAnswers: React.FC = () => {
                       type="submit"
                       color="secondary"
                       aria-label="Send message"
+                      disabled={
+                        getPollQuestion?.data?.poll_question[0]?.is_active
+                      }
                     >
                       <SendIcon />
                     </IconButton>
@@ -174,12 +198,23 @@ const PollAnswers: React.FC = () => {
         <Divider className={classes.divider} />
         <PollAnswerList pollQuestionId={parseInt(pollQuestionId)} />
         <Divider className={classes.divider} />
-        <SetPollQuestionLockState
-          pollQuestionId={parseInt(pollQuestionId)}
-          setActiveState={
-            getPollQuestion?.data?.poll_question[0]?.is_active ? true : false
-          }
-        />
+        <ButtonGroup disableElevation variant="outlined">
+          <Button
+            color="secondary"
+            component={Link}
+            to={'/dashboard'}
+            aria-label={`back to dashboard`}
+            startIcon={<ArrowBackIosIcon />}
+          >
+            Back
+          </Button>
+          <SetPollQuestionLockState
+            pollQuestionId={parseInt(pollQuestionId)}
+            setActiveState={
+              getPollQuestion?.data?.poll_question[0]?.is_active ? true : false
+            }
+          />
+        </ButtonGroup>
       </Box>
     </>
   );

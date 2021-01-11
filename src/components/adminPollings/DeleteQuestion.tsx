@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDeletePollQuestionMutation } from '../../api/generated/graphql';
 import { Button } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 interface DeleteAnswerProps {
   questionId: number;
@@ -36,18 +37,23 @@ const DeleteQuestion: React.FC<DeleteAnswerProps> = ({
   return (
     <>
       {setActiveState === true ? (
-        <Button variant="outlined" size="small" color="secondary" disabled>
-          Poll locked
+        <Button
+          size="small"
+          color="secondary"
+          disabled
+          startIcon={<DeleteIcon />}
+        >
+          Delete
         </Button>
       ) : (
         <Button
-          variant="contained"
           size="small"
           color="secondary"
           onClick={() => {
             handleQuestionDelete(questionId);
           }}
           aria-label="Delete Question"
+          startIcon={<DeleteIcon />}
         >
           Delete
         </Button>

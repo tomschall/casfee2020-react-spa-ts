@@ -14,6 +14,7 @@ import SideBar from '../shared/SideBar';
 import UserHeader from '../shared/UserHeader';
 import { Channel_Type_Enum } from '../../api/generated/graphql';
 import { useHistory } from 'react-router';
+import { Channel } from '../../interfaces/channel.interface';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -67,7 +68,7 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
   isThreadList,
 }) => {
   const classes = useStyles();
-  const [currentChannel] = useRecoilState<any>(currentChannelState);
+  const [currentChannel] = useRecoilState<Channel>(currentChannelState);
   const matches = useMediaQuery(theme.breakpoints.up('md'));
   const [open, setOpen] = React.useState(false);
   let history = useHistory();

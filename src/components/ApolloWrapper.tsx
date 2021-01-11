@@ -34,7 +34,7 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
     return headers;
   };
 
-  const parseTokenAndSetRoles = async (token: any) => {
+  const parseTokenAndSetRoles = async (token: string) => {
     const user: any = jwt_decode(token);
     if (
       user &&

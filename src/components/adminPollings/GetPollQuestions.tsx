@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import moment from 'moment';
 import { theme } from '../../theme/theme';
-import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import {
@@ -9,14 +8,17 @@ import {
   AccordionActions,
   AccordionDetails,
   AccordionSummary,
+  Badge,
   Box,
   Button,
+  ButtonGroup,
   Chip,
   Typography,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Edit from '@material-ui/icons/Edit';
 import NotFound from '../shared/NotFound';
 import {
   useWatchGetPollQuestionsSubscription,
@@ -30,14 +32,34 @@ import SetPollQuestionLockState from './SetPollQuestionLockState';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
-  play: {
-    color: theme.palette.error.main,
+  badge: {
+    backgroundColor: theme.palette.error.light,
+    color: theme.palette.error.light,
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+    '&::after': {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      borderRadius: '50%',
+      animation: '$ripple 1.2s infinite ease-in-out',
+      border: '1px solid currentColor',
+      content: '""',
+    },
   },
-  stop: {
-    color: theme.palette.success.main,
+  '@keyframes ripple': {
+    '0%': {
+      transform: 'scale(.8)',
+      opacity: 1,
+    },
+    '100%': {
+      transform: 'scale(2.4)',
+      opacity: 0,
+    },
   },
   text: {
+    marginLeft: theme.spacing(2),
     [theme.breakpoints.down('sm')]: {
       fontSize: 14,
       lineHeight: '15px',
@@ -47,7 +69,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-start',
   },
   voteIcon: {
-    marginRight: theme.spacing(1),
+    color: 'grey',
+  },
+  voteIconPublished: {
+    color: theme.palette.primary.main,
   },
 }));
 
@@ -99,22 +124,25 @@ const GetPollQuestions: React.FC = () => {
         <Alert severity="info">Please add a new question.</Alert>
       ) : (
         data?.questions
-          .sort((a, b) => a.id + b.id)
-          .map((question) => (
-            <Accordion key={question.id} defaultExpanded={false}>
+          .sort((a, b) => b.id - a.id)
+          .map((question, index) => (
+            <Accordion key={index} defaultExpanded={false}>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls={question.text}
-                id={question.text}
               >
                 {question?.channel_polls.length > 0 ? (
-                  <HowToVoteIcon
-                    color="secondary"
-                    className={classes.voteIcon}
-                  />
+                  <Badge
+                    variant="dot"
+                    badgeContent={question.id}
+                    classes={{ badge: classes.badge }}
+                  >
+                    <HowToVoteIcon className={classes.voteIconPublished} />
+                  </Badge>
                 ) : (
                   <HowToVoteIcon className={classes.voteIcon} />
                 )}
+
                 <Typography
                   color={
                     question?.channel_polls.length > 0 ? 'secondary' : 'primary'
@@ -152,25 +180,26 @@ const GetPollQuestions: React.FC = () => {
                 </div>
               </AccordionDetails>
               <AccordionActions>
-                <SetPollQuestionLockState
-                  pollQuestionId={question.id}
-                  setActiveState={question.is_active}
-                />
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  component={Link}
-                  to={`/dashboard/pollings/edit/question/${question.id}`}
-                  aria-label="Poll Question"
-                  size="small"
-                >
-                  Edit
-                </Button>
-
-                <DeleteQuestion
-                  questionId={question.id}
-                  setActiveState={question.is_active}
-                />
+                <ButtonGroup disableElevation variant="outlined">
+                  <Button
+                    color="secondary"
+                    component={Link}
+                    to={`/dashboard/pollings/edit/question/${question.id}`}
+                    aria-label="Poll Question"
+                    size="small"
+                    startIcon={<Edit />}
+                  >
+                    Edit
+                  </Button>
+                  <SetPollQuestionLockState
+                    pollQuestionId={question.id}
+                    setActiveState={question.is_active}
+                  />
+                  <DeleteQuestion
+                    questionId={question.id}
+                    setActiveState={question.is_active}
+                  />
+                </ButtonGroup>
               </AccordionActions>
             </Accordion>
           ))

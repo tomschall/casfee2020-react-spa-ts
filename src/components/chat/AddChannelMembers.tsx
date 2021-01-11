@@ -22,6 +22,7 @@ import Logo from '../shared/Logo';
 import { makeStyles } from '@material-ui/core/';
 import OnlineUserStatus from '../shared/OnlineUserStatus';
 import MobileHeaderMenu from './MobileHeaderMenu';
+import { Channel } from '../../interfaces/channel.interface';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,7 +39,7 @@ const AddChannelMembers: React.FC = () => {
   let history = useHistory();
   const { isLoading: loadingAuth0 } = useAuth0();
 
-  const [currentChannel, setCurrentChannel] = useRecoilState<any>(
+  const [currentChannel, setCurrentChannel] = useRecoilState<Channel>(
     currentChannelState,
   );
 
@@ -67,10 +68,6 @@ const AddChannelMembers: React.FC = () => {
         user_id,
       },
     });
-  };
-
-  const handleClick = () => {
-    history.push(`/channel/${currentChannel?.name}`);
   };
 
   if (error || addChannelUserError)

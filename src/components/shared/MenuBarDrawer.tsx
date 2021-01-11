@@ -42,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface MenuBarDrawerProps {
-  children: any;
   open: boolean;
 }
 

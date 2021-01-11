@@ -98,12 +98,12 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      if (scrollIsInit) {
+      if (scrollIsInit && data && data?.messages?.length > 5) {
         scrollToBottom();
         setScrollIsInit(false);
       }
     }, 1000);
-  }, [ref]);
+  }, [ref, data]);
 
   if (error) {
     return <Alert severity="error">Messages could not be loaded.</Alert>;

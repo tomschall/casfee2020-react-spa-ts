@@ -7,11 +7,13 @@ import { currentChannelState } from '../../atom';
 import Chat from './Chat';
 import Loader from '../shared/Loader';
 import { ChatParams } from '../../interfaces/param.interface';
+import { Channel } from '../../interfaces/channel.interface';
 
 const ChatApp: React.FC = () => {
-  const [currentChannel, setCurrentChannel] = useRecoilState<any>(
-    currentChannelState,
-  );
+  const [currentChannel, setCurrentChannel] = useRecoilState<
+    Channel | undefined
+  >(currentChannelState);
+
   const { isAuthenticated, isLoading: isLoadingAuth0, error } = useAuth0();
   const { channel: channelName } = useParams<ChatParams>();
 
@@ -42,7 +44,7 @@ const ChatApp: React.FC = () => {
 
   return (
     <>
-      {isAuthenticated && (
+      {isAuthenticated && currentChannel && (
         <Chat
           channelId={currentChannel?.id}
           isPrivate={currentChannel?.is_private}

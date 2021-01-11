@@ -21,6 +21,7 @@ import EnhancedEncryptionOutlinedIcon from '@material-ui/icons/EnhancedEncryptio
 import UnreadMessageCounter from './UnreadMessageCounter';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link, useRouteMatch } from 'react-router-dom';
+import { Channel } from '../../interfaces/channel.interface';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Channels: React.FC<any> = () => {
   const classes = useStyles();
-  const [currentChannel] = useRecoilState<any>(currentChannelState);
+  const [currentChannel] = useRecoilState<Channel>(currentChannelState);
   const [open, setOpen] = useState(true);
   const match = useRouteMatch(`/channel/${currentChannel?.name}`);
 
