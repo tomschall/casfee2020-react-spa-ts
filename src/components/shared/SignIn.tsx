@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     flexDirection: 'column',
     height: '100vh',
+    alignContent: 'center',
   },
   title: {
     fontSize: '2rem',
@@ -17,30 +18,35 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'uppercase',
     paddingTop: theme.spacing(5),
   },
+  text: {
+    justifyContent: 'center',
+    marginBottom: '30px',
+  },
 }));
 
 const SignIn: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <Container maxWidth="lg">
-      <Grid container className={classes.root}>
-        <Grid item>
-          <Box display="flex" justifyContent="center" alignItems="center">
-            <img src="/logo-chicken-chat.png" alt="Chicken Chat" />
-          </Box>
-          <Typography className={classes.title} variant="h2">
-            Welcome to Chicken Chat
-          </Typography>
-          <Typography color="textPrimary" variant="body1">
-            Please register or login. Lets go an cackle your nonsense!
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Login />
-        </Grid>
-      </Grid>
-    </Container>
+    <Box className={classes.root}>
+      <Box>
+        <img src="/logo-chicken-chat.png" alt="Chicken Chat" />
+      </Box>
+      <Box>
+        <Typography className={classes.title} variant="h2" align="center">
+          Welcome to Chicken Chat
+        </Typography>
+        <Typography
+          className={classes.text}
+          color="textPrimary"
+          variant="body1"
+          align="center"
+        >
+          Please register or login. Let's go an crackle your nonsense!
+        </Typography>
+      </Box>
+      <Login />
+    </Box>
   );
 };
 

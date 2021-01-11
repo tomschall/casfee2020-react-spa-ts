@@ -75,26 +75,26 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container
-        component="main"
-        disableGutters
-        maxWidth="xl"
-        className={classes.container}
-      >
-        {matches === true && (
-          <Grid
-            item
-            xs={5}
-            sm={4}
-            md={3}
-            className={classes.sidebar}
-            component="nav"
-          >
-            <SideBar handleDrawerClose={() => false} open={false} />
-          </Grid>
-        )}
-        <>
-          {isAuthenticated ? (
+      {isAuthenticated ? (
+        <Container
+          component="main"
+          disableGutters
+          maxWidth="xl"
+          className={classes.container}
+        >
+          <>
+            {matches === true && (
+              <Grid
+                item
+                xs={5}
+                sm={4}
+                md={3}
+                className={classes.sidebar}
+                component="nav"
+              >
+                <SideBar handleDrawerClose={() => false} open={false} />
+              </Grid>
+            )}
             <Switch>
               <Redirect exact from="/" to="/channel/general" />
               <Redirect exact from="/channel" to="/channel/general" />
@@ -119,23 +119,15 @@ const App: React.FC = () => {
               <Route exact path="/404-not-found" component={NotFound} />
               <Redirect to="/404-not-found" />
             </Switch>
-          ) : (
-            <Switch>
-              <Redirect exact from="/" to="/channel/general" />
-              <Route path="/home" component={SignIn} />
-              <PrivateRoute
-                path="/channel/:channel/thread/:messageId"
-                component={ThreadBoard}
-              />
-              <PrivateRoute path="/channel/threads" component={ThreadBoard} />
-              <PrivateRoute path="/channel/:channel" component={ChatBoard} />
-              <PrivateRoute path="/dashboard" component={AdminBoard} />
-              <Route exact path="/404-not-found" component={NotFound} />
-              <Redirect to="/404-not-found" />
-            </Switch>
-          )}
-        </>
-      </Container>
+            )
+          </>
+        </Container>
+      ) : (
+        <Switch>
+          <Route path="/" component={SignIn} />
+          <Redirect to="/" />
+        </Switch>
+      )}
     </ThemeProvider>
   );
 };
