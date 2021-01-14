@@ -24,13 +24,8 @@ const GetChannels: React.FC<GetChannelsProps> = ({
   const getPollQuestionId = useRecoilValue<number>(getPollQuestionAnswers);
   const [channelId] = useState<string>('');
   const { data, loading, error } = useWatchGetChannelsSubscription();
-  const {
-    data: checkActiveChannelState,
-  } = useWatchChannelPollActiveStateSubscription({
-    variables: {},
-  });
-
   const [pollQuestionToChannel] = useAddPublishPollQuestionToChannelMutation();
+
   const [
     deletePollQuestionFromChannelMutation,
     { error: deleteError },

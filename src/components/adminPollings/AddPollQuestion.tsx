@@ -10,7 +10,6 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import SendIcon from '@material-ui/icons/Send';
 import { makeStyles } from '@material-ui/core/styles';
 

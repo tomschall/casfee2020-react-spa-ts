@@ -50,10 +50,7 @@ const PublishChannelPolling: React.FC = () => {
     number | null
   >(null);
 
-  const {
-    data: getPollAnswerVotes,
-    loading: getPollAnswerVotesLoading,
-  } = useWatchPollAnswerVotesSubscription({
+  const { data: getPollAnswerVotes } = useWatchPollAnswerVotesSubscription({
     variables: {
       pollAnswerId: selectedPollAnswerId ?? 0,
     },
