@@ -3,7 +3,7 @@ import { theme } from '../../theme/theme';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Route, Switch } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
-import { Box, Grid, Typography } from '@material-ui/core/';
+import { Box, Grid } from '@material-ui/core/';
 import AdminUserList from './AdminUserList';
 import PollingDashBoard from '../adminPollings/PollingDashBoard';
 import PollAnswers from '../adminPollings/PollAnswers';
@@ -71,9 +71,9 @@ const AdminContainer: React.FC = () => {
             display="flex"
             justifyContent="center"
             alignItems="center"
-            style={{ height: '100vh', padding: theme.spacing(5) }}
+            style={{ height: '100vh', padding: theme.spacing(3) }}
           >
-            <Alert severity="info">
+            <Alert severity="warning">
               You have no permission to access this page! If you still need
               access, contact our administrator.
             </Alert>
