@@ -19,7 +19,7 @@ const ChatBoard: React.FC = () => {
     return function cleanup() {
       clearInterval(interval);
     };
-  }, []);
+  }, [sendUserIsOnline, user]);
 
   return <ThreadContainer />;
 };

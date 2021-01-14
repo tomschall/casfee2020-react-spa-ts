@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const App: React.FC = () => {
-  const { isAuthenticated, isLoading, user } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
   const classes = useStyles();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
 

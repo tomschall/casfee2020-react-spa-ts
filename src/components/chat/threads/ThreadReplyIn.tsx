@@ -40,11 +40,7 @@ const ThreadReplyIn: React.FC<ThreadReplyInProps> = ({
 }) => {
   const classes = useStyles();
 
-  const {
-    data: channelThreadData,
-    loading: channelThreadLoading,
-    error: channelThreadError,
-  } = useWatchChannelThreadSubscription({
+  const { data: channelThreadData } = useWatchChannelThreadSubscription({
     variables: {
       message_id: message?.id,
     },

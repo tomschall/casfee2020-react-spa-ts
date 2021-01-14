@@ -4,7 +4,6 @@ import { useRecoilValue } from 'recoil';
 import { getPollQuestionAnswers } from '../../atom';
 import {
   useWatchGetChannelsSubscription,
-  useWatchChannelPollActiveStateSubscription,
   useAddPublishPollQuestionToChannelMutation,
   useDeletePollQuestionFromChannelMutation,
 } from '../../api/generated/graphql';

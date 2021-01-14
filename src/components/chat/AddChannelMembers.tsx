@@ -40,9 +40,7 @@ const AddChannelMembers: React.FC = () => {
   let history = useHistory();
   const { isLoading: loadingAuth0 } = useAuth0();
 
-  const [currentChannel, setCurrentChannel] = useRecoilState<Channel>(
-    currentChannelState,
-  );
+  const [currentChannel] = useRecoilState<Channel>(currentChannelState);
 
   if (!currentChannel) history.push('/channel/general');
 

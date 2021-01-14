@@ -147,7 +147,7 @@ const MessageList: React.FC<MessageProps> = ({
 
   useEffect(() => {
     setRef(messagesEndRef);
-  }, []);
+  }, [setRef]);
 
   const renderMessage = (message: Message) => {
     return (
@@ -246,7 +246,7 @@ const MessageList: React.FC<MessageProps> = ({
           {message?.image ? (
             <Box className={classes.image}>
               <img
-                alt="Giphy Image"
+                alt={message.image}
                 src={message.image}
                 className={classes.giphy}
               />

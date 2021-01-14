@@ -89,16 +89,11 @@ const ThreadListInputContainer: React.FC<ThreadListInputContainerProps> = (
   const { user } = useAuth0();
   const [text, setText] = useState('');
   const [gif, setGif] = useRecoilState<IGif | null>(giphyState);
-  const [deletedMessage, setdeletedMessage] = useRecoilState<boolean>(
-    deletedMessageState,
-  );
+  const [, setdeletedMessage] = useRecoilState<boolean>(deletedMessageState);
   const [showGiphyCarousel, setShowGiphyCarousel] = React.useState(false);
   const channelId = props.channelId;
 
-  const [
-    sendTypingEventMutation,
-    { data, loading, error },
-  ] = useSendTypingEventMutation({
+  const [sendTypingEventMutation] = useSendTypingEventMutation({
     variables: {
       user_id: user.sub,
       channel_id: channelId,
@@ -113,10 +108,7 @@ const ThreadListInputContainer: React.FC<ThreadListInputContainerProps> = (
     setText(text);
   };
 
-  const [
-    sendMessage,
-    { data: sendUpdateMessageData },
-  ] = useInsertChannelThreadMessageMutation();
+  const [sendMessage] = useInsertChannelThreadMessageMutation();
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();

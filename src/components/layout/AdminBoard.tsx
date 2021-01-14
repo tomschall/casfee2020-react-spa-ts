@@ -19,7 +19,7 @@ const AdminBoard: React.FC = () => {
     return function cleanup() {
       clearInterval(interval);
     };
-  }, []);
+  }, [sendUserIsOnline, user]);
 
   return <AdminContainer />;
 };

@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import {
-  InputAdornment,
-  IconButton,
-  TextField,
-  Button,
-  Box,
-} from '@material-ui/core';
+import { InputAdornment, IconButton, TextField, Box } from '@material-ui/core';
 import { theme } from '../../../theme/theme';
 import SendIcon from '@material-ui/icons/Send';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -95,31 +89,14 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
     }
   };
 
-  const setButtonSize = () => {
-    switch (matches) {
-      case true:
-        return 'large';
-      case false:
-        return 'small';
-
-      default:
-        return 'small';
-    }
-  };
-
   const { user } = useAuth0();
   const [text, setText] = useState('');
   const [gif, setGif] = useRecoilState<IGif | null>(giphyState);
-  const [deletedMessage, setdeletedMessage] = useRecoilState<boolean>(
-    deletedMessageState,
-  );
+  const [, setdeletedMessage] = useRecoilState<boolean>(deletedMessageState);
 
   const channelId = props.channelId;
 
-  const [
-    sendTypingEventMutation,
-    { data, loading, error },
-  ] = useSendTypingEventMutation({
+  const [sendTypingEventMutation] = useSendTypingEventMutation({
     variables: {
       user_id: user.sub,
       channel_id: channelId,
@@ -134,10 +111,7 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
     setText(text);
   };
 
-  const [
-    sendMessage,
-    { data: sendUpdateMessageData },
-  ] = useInsertChannelThreadMessageMutation();
+  const [sendMessage] = useInsertChannelThreadMessageMutation();
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -180,7 +154,7 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
         {gif && (
           <img
             className={classes.image}
-            alt="Giphy Image"
+            alt={gif?.images?.fixed_width?.url}
             src={gif?.images?.fixed_width?.url}
             onClick={() => setGif(null)}
           />

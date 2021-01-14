@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 const Thread: React.FC = () => {
   const classes = useStyles();
   const [limit, setLimit] = useState(20);
-  const { user, error: auth0Error } = useAuth0();
+  const { user } = useAuth0();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [currentChannel] = useRecoilState<Channel>(currentChannelState);
   let history = useHistory();
@@ -92,7 +92,7 @@ const Thread: React.FC = () => {
 
   useEffect(() => {
     if (currentChannel?.id === undefined) history.push(`/channel/${channel}`);
-  }, []);
+  });
 
   if (loading || getChannelThreadLoading) return <Loader />;
 

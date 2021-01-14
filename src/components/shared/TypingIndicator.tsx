@@ -9,9 +9,7 @@ import { Channel } from '../../interfaces/channel.interface';
 const TypingIndicator: React.FC = () => {
   const { user } = useAuth0();
 
-  const [currentChannel, setCurrentChannel] = useRecoilState<Channel>(
-    currentChannelState,
-  );
+  const [currentChannel] = useRecoilState<Channel>(currentChannelState);
 
   const { data, loading, error } = useGetUserIsTypingSubscription({
     variables: {
