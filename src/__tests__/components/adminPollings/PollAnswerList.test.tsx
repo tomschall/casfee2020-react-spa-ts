@@ -71,7 +71,7 @@ describe('PollAnswerList', () => {
       error: false,
     });
 
-    const { debug, getByText, getAllByText } = render(
+    const { getByText, getAllByText } = render(
       <RecoilRoot>
         <MockedProvider>
           <ThemeProvider theme={theme}>
@@ -98,7 +98,7 @@ describe('PollAnswerList', () => {
       error: false,
     });
 
-    const { debug, getByText, getAllByText } = render(
+    const { getByText } = render(
       <RecoilRoot>
         <MockedProvider>
           <ThemeProvider theme={theme}>

@@ -65,7 +65,7 @@ describe('Chatapp loading', () => {
       error: false,
     });
 
-    const { debug, getByText } = render(
+    const { getByText } = render(
       <RecoilRoot>
         <MockedProvider>
           <ThemeProvider theme={theme}>
@@ -105,7 +105,7 @@ describe('Chatapp loading', () => {
       error: false,
     });
 
-    const { container, getByTestId, debug, getByText } = render(
+    const { getByText } = render(
       <RecoilRoot>
         <MockedProvider>
           <ThemeProvider theme={theme}>
@@ -145,7 +145,7 @@ describe('Chatapp loading', () => {
       error: true,
     });
 
-    const { debug, getByText } = render(
+    const { getByText } = render(
       <RecoilRoot>
         <MockedProvider>
           <ThemeProvider theme={theme}>

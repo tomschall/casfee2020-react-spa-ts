@@ -99,7 +99,7 @@ describe('MessageList', () => {
   });
 
   it('renders MessageList component with some messages', async () => {
-    const { debug, getByText, getAllByText } = render(
+    const { getByText, getAllByText } = render(
       <RecoilRoot>
         <MockedProvider>
           <ThemeProvider theme={theme}>
@@ -150,7 +150,7 @@ describe('MessageList', () => {
   });
 
   it('renders deleted message in MessageList component', async () => {
-    const { debug, getByText, getByAltText } = render(
+    const { getByText } = render(
       <RecoilRoot>
         <MockedProvider>
           <ThemeProvider theme={theme}>
