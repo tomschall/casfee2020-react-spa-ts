@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AdminSidebar: React.FC<any> = () => {
+const AdminSidebar: React.FC = () => {
   const classes = useStyles();
   const { user } = useAuth0();
 

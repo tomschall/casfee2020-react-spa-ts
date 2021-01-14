@@ -24,6 +24,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import OnlineUserStatus from '../shared/OnlineUserStatus';
 import MobileHeaderMenu from './MobileHeaderMenu';
 
+interface Users {
+  auth0_user_id?: string;
+  user_channels?: any[];
+  username?: string;
+}
+
 const useStyles = makeStyles((theme) => ({
   root: {
     overflowY: 'scroll',
@@ -36,9 +42,9 @@ const useStyles = makeStyles((theme) => ({
 
 const AddDirectMessageChannel: React.FC = () => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [, setAnchorEl] = useState(null);
   const { user } = useAuth0();
-  const [users, setUsers] = useState<any>(null);
+  const [users, setUsers] = useState<Users[] | null>(null);
   const user_id = user.sub;
   let history = useHistory();
 
@@ -75,7 +81,7 @@ const AddDirectMessageChannel: React.FC = () => {
             return user_channel.channel.user_channels.length === 1;
           }).length === 0
         );
-      });
+      }) as Users[];
     };
     const check = async () => {
       const users = await checkUserSubscriptions();
@@ -126,10 +132,6 @@ const AddDirectMessageChannel: React.FC = () => {
       });
 
     history.push(`/channel/${data?.validateAndAddDirectMessageChannel?.name}`);
-  };
-
-  const handleClick = () => {
-    history.push(`/channel/general`);
   };
 
   return (

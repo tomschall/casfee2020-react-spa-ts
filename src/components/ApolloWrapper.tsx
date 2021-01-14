@@ -17,19 +17,21 @@ interface Definition {
   operation?: string;
 }
 
-export type ApolloHeaders = {
-  Authorization: string;
-};
-
-export type ApolloWrapperProps = {};
-
-export type ParsedTokenUser = JwtPayload & {
+interface Claims {
   'https://hasura.io/jwt/claims'?: {
     'x-hasura-allowed-roles'?: string;
     'x-hasura-default-role'?: string;
     'x-hasura-user-id'?: string;
   };
-};
+}
+
+type ParsedTokenUser = JwtPayload & Claims;
+
+interface ApolloHeaders {
+  Authorization: string;
+}
+
+interface ApolloWrapperProps {}
 
 const ApolloWrapper: React.FC<ApolloWrapperProps> = ({ children }) => {
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
