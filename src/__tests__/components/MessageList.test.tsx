@@ -56,7 +56,7 @@ const deletedMessage: Message[] = [
     id: 4,
     user_id: 'auth0|ddd',
     image: null,
-    text: 'fourth message',
+    text: '...this message was deleted.',
     timestamp: moment().subtract(14400, 'seconds'),
     user: { username: 'kimi', auth0_user_id: 'auth0|aaa' },
     channel: { name: 'general' },
@@ -169,6 +169,7 @@ describe('MessageList', () => {
     );
 
     expect(getByText('Oh sorry it seems...')).toBeInTheDocument();
-    expect(getByAltText('Message has been removed')).toBeInTheDocument();
+    expect(getByText('...this message was deleted.')).toBeInTheDocument();
+    expect(getByText('!!!')).toBeInTheDocument();
   });
 });
