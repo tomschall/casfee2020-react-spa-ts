@@ -119,7 +119,6 @@ const App: React.FC = () => {
               <Route exact path="/404-not-found" component={NotFound} />
               <Redirect to="/404-not-found" />
             </Switch>
-            )
           </>
         </Container>
       ) : (

@@ -5,17 +5,13 @@ import Button from '@material-ui/core/Button';
 const Login: React.FC<any> = () => {
   const { loginWithRedirect } = useAuth0();
 
-  const checkAndLogin = () => {
-    loginWithRedirect();
-  };
-
   return (
     <>
       <Button
         size="large"
         variant="contained"
         color="secondary"
-        onClick={checkAndLogin}
+        onClick={loginWithRedirect}
         aria-label="Login To Chat"
       >
         Login

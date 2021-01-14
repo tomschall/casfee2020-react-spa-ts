@@ -1,9 +1,17 @@
 import React from 'react';
-import { Box, Container, Grid, Typography } from '@material-ui/core';
+import {
+  Box,
+  Container,
+  Grid,
+  LinearProgress,
+  Typography,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Login from '../Login';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useHistory } from 'react-router';
+import { theme } from '../../theme/theme';
+import Logo from './Logo';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,8 +36,30 @@ const useStyles = makeStyles((theme) => ({
 
 const SignIn: React.FC = () => {
   const classes = useStyles();
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
   let history = useHistory();
+
+  if (isLoading) {
+    return (
+      <>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          flexDirection="column"
+          style={{
+            height: '100vh',
+            backgroundColor: theme.palette.error.dark,
+          }}
+        >
+          <Box>
+            <Logo />
+            <LinearProgress color="primary" style={{ marginTop: '16px' }} />
+          </Box>
+        </Box>
+      </>
+    );
+  }
 
   if (isAuthenticated) history.push(`/channel/general`);
 

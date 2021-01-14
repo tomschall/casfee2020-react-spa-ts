@@ -68,7 +68,7 @@ const PollAnswers: React.FC = () => {
     text: '',
   });
   const [answerTextUpdateId, setAnswerTextUpdateId] = React.useState<number>(0);
-  const [currentAnswerId, setCurrentAnswerId] = React.useState<number>(0);
+  const [, setCurrentAnswerId] = React.useState<number>(0);
   const { question: pollQuestionId } = useParams<ParamType>();
   const [pollQuestionActiveState] = React.useState<boolean>();
   const [fieldError, setFieldError] = useState<boolean>(false);
