@@ -13,6 +13,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { Channel } from '../../../interfaces/channel.interface';
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -73,14 +74,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface ThreadInfoProps {
-  messages: ThreadMessage[];
   channelThread: any;
-  currentChannel: any;
+  currentChannel: Channel;
   showThreadInfo?: boolean;
 }
 
 const ThreadInfo: React.FC<ThreadInfoProps> = ({
-  messages,
   channelThread,
   currentChannel,
   showThreadInfo,

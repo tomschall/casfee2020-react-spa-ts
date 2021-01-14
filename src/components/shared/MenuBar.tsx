@@ -18,12 +18,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface MenuBarProps {
-  children: any;
-  channelId: number;
-}
+interface MenuBarProps {}
 
-const MenuBar: React.FC<MenuBarProps> = ({ children, channelId }) => {
+const MenuBar: React.FC<MenuBarProps> = ({ children }) => {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);

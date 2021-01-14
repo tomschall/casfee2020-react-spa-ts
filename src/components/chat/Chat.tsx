@@ -5,7 +5,6 @@ import MessageInput from './MessageInput';
 import { Message } from '../../interfaces/message.interface';
 import {
   useWatchMessagesSubscription,
-  Channel_Type_Enum,
   useUpsertMessageCursorMutation,
 } from '../../api/generated/graphql';
 import Alert from '@material-ui/lab/Alert';
@@ -52,15 +51,13 @@ const useStyles = makeStyles((theme) => ({
 
 interface ChatProps {
   channelId: number;
-  isPrivate: boolean;
-  channelType: Channel_Type_Enum;
 }
 
-const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
+const Chat: React.FC<ChatProps> = ({ channelId }) => {
   const classes = useStyles();
   const [limit, setLimit] = useState<number>(20);
   const [lastMessage, setLastMessage] = useState<Message | null>(null);
-  const [ref, setRef] = useState<any>(null);
+  const [ref, setRef] = useState<React.RefObject<HTMLDivElement> | null>(null);
   const [scrollIsInit, setScrollIsInit] = useState<boolean>(true);
   const { user } = useAuth0();
 
@@ -157,7 +154,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
         />
       </Box>
       <Box className={classes.messageInput} component="footer">
-        <MenuBar channelId={channelId}>
+        <MenuBar>
           <MessageInput
             channelId={channelId}
             handleSetLastMessage={handleSetLastMessage}

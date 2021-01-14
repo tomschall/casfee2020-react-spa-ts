@@ -108,7 +108,7 @@ describe('MessageList', () => {
               lastMessage={null}
               preLastMessageId={null}
               user={user}
-              handleIncreaseLimit={3}
+              handleIncreaseLimit={() => {}}
               limit={3}
               setRef={() => {}}
             />
@@ -159,7 +159,7 @@ describe('MessageList', () => {
               lastMessage={null}
               preLastMessageId={null}
               user={user}
-              handleIncreaseLimit={3}
+              handleIncreaseLimit={() => {}}
               limit={3}
               setRef={() => {}}
             />

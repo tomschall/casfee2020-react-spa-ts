@@ -45,11 +45,7 @@ const ChatApp: React.FC = () => {
   return (
     <>
       {isAuthenticated && currentChannel && (
-        <Chat
-          channelId={currentChannel?.id}
-          isPrivate={currentChannel?.is_private}
-          channelType={currentChannel?.channel_type}
-        />
+        <Chat channelId={currentChannel?.id} />
       )}
     </>
   );

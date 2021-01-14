@@ -43,7 +43,9 @@ const GiphyCarousel: React.FC<GiphyCarouselProps> = ({ hideGiphyCarousel }) => {
     hideGiphyCarousel();
   };
 
-  const handleOnChange = (ev: any) => {
+  const handleOnChange = (
+    ev: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
     setGiphySearchString(ev.target.value);
   };
 

@@ -13,6 +13,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import {
   useWatchUsersWhoHaveNotSubscribedToChannelSubscription,
   useAddChannelUserMutation,
+  User,
 } from '../../api/generated/graphql';
 import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../atom';
@@ -61,13 +62,14 @@ const AddChannelMembers: React.FC = () => {
     { error: addChannelUserError },
   ] = useAddChannelUserMutation();
 
-  const handleUsersToggle = async (user_id: string) => {
-    await addChannelUserMutation({
-      variables: {
-        channel_id: currentChannel?.id,
-        user_id,
-      },
-    });
+  const handleUsersToggle = async (user_id: string | undefined | null) => {
+    if (user_id)
+      await addChannelUserMutation({
+        variables: {
+          channel_id: currentChannel?.id,
+          user_id,
+        },
+      });
   };
 
   if (error || addChannelUserError)
@@ -119,18 +121,20 @@ const AddChannelMembers: React.FC = () => {
                 className={classes.spacer}
               >
                 {users &&
-                  users.user.map((u: any, index) => {
-                    return (
-                      <ListItem
-                        button
-                        key={index}
-                        onClick={() => handleUsersToggle(u.auth0_user_id)}
-                      >
-                        <OnlineUserStatus user={u} />
-                        <ListItemText primary={u.username} />
-                      </ListItem>
-                    );
-                  })}
+                  users.user.map(
+                    (u: Pick<User, 'auth0_user_id' | 'username'>, index) => {
+                      return (
+                        <ListItem
+                          button
+                          key={index}
+                          onClick={() => handleUsersToggle(u.auth0_user_id)}
+                        >
+                          <OnlineUserStatus user={u} />
+                          <ListItemText primary={u.username} />
+                        </ListItem>
+                      );
+                    },
+                  )}
               </List>
               <Divider className={classes.spacer} />
             </>

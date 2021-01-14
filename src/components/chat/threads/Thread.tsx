@@ -50,9 +50,7 @@ const Thread: React.FC = () => {
   const [limit, setLimit] = useState(20);
   const { user, error: auth0Error } = useAuth0();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [currentChannel, setCurrentChannel] = useRecoilState<Channel>(
-    currentChannelState,
-  );
+  const [currentChannel] = useRecoilState<Channel>(currentChannelState);
   let history = useHistory();
   const { messageId, channel } = useParams<ThreadParams>();
 
@@ -120,7 +118,7 @@ const Thread: React.FC = () => {
         <div ref={messagesEndRef} />
       </Box>
       <Box className={classes.messageInput}>
-        <MenuBar channelId={currentChannel?.id}>
+        <MenuBar>
           <ThreadMessageInput
             channelId={currentChannel?.id}
             channelThreadId={getChannelThreadData?.channel_thread[0]?.id}

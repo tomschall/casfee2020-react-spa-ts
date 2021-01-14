@@ -114,9 +114,11 @@ interface MessageProps {
   lastMessage: Message | null;
   preLastMessageId: number | null;
   user: any;
-  handleIncreaseLimit: any;
+  handleIncreaseLimit: () => void;
   limit: number;
-  setRef: any;
+  setRef: React.Dispatch<
+    React.SetStateAction<React.RefObject<HTMLDivElement> | null>
+  >;
 }
 
 const MessageList: React.FC<MessageProps> = ({

@@ -74,44 +74,51 @@ const Channels: React.FC = () => {
         </ListItem>
         <Collapse in={open} timeout="auto">
           <List component="div">
-            {data?.channels?.map((data: any, index) => (
-              <ListItem
-                key={index}
-                button
-                component={Link}
-                to={'/channel/' + data.name}
-                aria-label={`go to channel ${data.name}`}
-              >
-                {data?.id === currentChannel?.id ? (
-                  <>
-                    <ListItemIcon>
-                      {data.is_private === true ? (
-                        <EnhancedEncryptionOutlinedIcon color={activeLink()} />
-                      ) : (
-                        <PeopleIcon color={activeLink()} />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText>
-                      <Typography variant="h6" color={activeLink()}>
-                        {data.name}
-                      </Typography>
-                    </ListItemText>
-                  </>
-                ) : (
-                  <>
-                    <ListItemIcon>
-                      {data.is_private === true ? (
-                        <EnhancedEncryptionOutlinedIcon />
-                      ) : (
-                        <PeopleIcon />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText primary={data?.name} />
-                    <UnreadMessageCounter channelId={data.id} />
-                  </>
-                )}
-              </ListItem>
-            ))}
+            {data?.channels?.map(
+              (
+                data: Pick<Channel, 'name' | 'id' | 'is_private' | 'owner_id'>,
+                index: number,
+              ) => (
+                <ListItem
+                  key={index}
+                  button
+                  component={Link}
+                  to={'/channel/' + data.name}
+                  aria-label={`go to channel ${data.name}`}
+                >
+                  {data?.id === currentChannel?.id ? (
+                    <>
+                      <ListItemIcon>
+                        {data.is_private === true ? (
+                          <EnhancedEncryptionOutlinedIcon
+                            color={activeLink()}
+                          />
+                        ) : (
+                          <PeopleIcon color={activeLink()} />
+                        )}
+                      </ListItemIcon>
+                      <ListItemText>
+                        <Typography variant="h6" color={activeLink()}>
+                          {data.name}
+                        </Typography>
+                      </ListItemText>
+                    </>
+                  ) : (
+                    <>
+                      <ListItemIcon>
+                        {data.is_private === true ? (
+                          <EnhancedEncryptionOutlinedIcon />
+                        ) : (
+                          <PeopleIcon />
+                        )}
+                      </ListItemIcon>
+                      <ListItemText primary={data?.name} />
+                      <UnreadMessageCounter channelId={data.id} />
+                    </>
+                  )}
+                </ListItem>
+              ),
+            )}
           </List>
         </Collapse>
       </List>

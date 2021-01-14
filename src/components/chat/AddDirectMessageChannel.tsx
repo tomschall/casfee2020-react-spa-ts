@@ -24,7 +24,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import OnlineUserStatus from '../shared/OnlineUserStatus';
 import MobileHeaderMenu from './MobileHeaderMenu';
 
-interface Users {
+interface User {
   auth0_user_id?: string;
   user_channels?: any[];
   username?: string;
@@ -44,7 +44,7 @@ const AddDirectMessageChannel: React.FC = () => {
   const classes = useStyles();
   const [, setAnchorEl] = useState(null);
   const { user } = useAuth0();
-  const [users, setUsers] = useState<Users[] | null>(null);
+  const [users, setUsers] = useState<User[] | null>(null);
   const user_id = user.sub;
   let history = useHistory();
 
@@ -81,7 +81,7 @@ const AddDirectMessageChannel: React.FC = () => {
             return user_channel.channel.user_channels.length === 1;
           }).length === 0
         );
-      }) as Users[];
+      }) as User[];
     };
     const check = async () => {
       const users = await checkUserSubscriptions();
@@ -99,39 +99,43 @@ const AddDirectMessageChannel: React.FC = () => {
     return <Loader />;
   }
 
-  const handleAddUser = async (user_id: string, dm_user: string) => {
-    setAnchorEl(null);
-    const { data } = await validateAndAddDirectMessageChannelMutation({
-      variables: {
-        name: uuidv4(),
-        user_id1: user_id,
-        user_id2: dm_user,
-      },
-    });
-
-    await sendMessage({
-      variables: {
-        message: {
-          user_id: 'admin',
-          text: `Welcome to your new direct message channel`,
-          channel_id: data?.validateAndAddDirectMessageChannel?.id,
-        },
-      },
-    });
-
-    if (
-      data?.validateAndAddDirectMessageChannel?.id &&
-      data?.validateAndAddDirectMessageChannel?.id > 0
-    )
-      upsertMessageCursorMutation({
+  const handleAddUser = async (user_id?: string, dm_user?: string) => {
+    if (user_id && dm_user) {
+      setAnchorEl(null);
+      const { data } = await validateAndAddDirectMessageChannelMutation({
         variables: {
-          channel_id: data?.validateAndAddDirectMessageChannel?.id,
-          message_id: 1,
-          user_id: dm_user,
+          name: uuidv4(),
+          user_id1: user_id,
+          user_id2: dm_user,
         },
       });
 
-    history.push(`/channel/${data?.validateAndAddDirectMessageChannel?.name}`);
+      await sendMessage({
+        variables: {
+          message: {
+            user_id: 'admin',
+            text: `Welcome to your new direct message channel`,
+            channel_id: data?.validateAndAddDirectMessageChannel?.id,
+          },
+        },
+      });
+
+      if (
+        data?.validateAndAddDirectMessageChannel?.id &&
+        data?.validateAndAddDirectMessageChannel?.id > 0
+      )
+        upsertMessageCursorMutation({
+          variables: {
+            channel_id: data?.validateAndAddDirectMessageChannel?.id,
+            message_id: 1,
+            user_id: dm_user,
+          },
+        });
+
+      history.push(
+        `/channel/${data?.validateAndAddDirectMessageChannel?.name}`,
+      );
+    }
   };
 
   return (
@@ -163,7 +167,7 @@ const AddDirectMessageChannel: React.FC = () => {
           <Divider className={classes.spacer} />
           {users?.length && (
             <List className={classes.spacer}>
-              {users?.map((dm_user: any, index: any) => {
+              {users?.map((dm_user: User, index: number) => {
                 return (
                   <ListItem
                     button

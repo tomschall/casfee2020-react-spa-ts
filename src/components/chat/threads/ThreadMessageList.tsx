@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { ThreadMessage } from '../../../interfaces/message.interface';
+import { Channel } from '../../../interfaces/channel.interface';
 import ThreadInfo from './ThreadInfo';
 import ThreadDeleteMessage from './ThreadDeleteMessage';
 import {
@@ -89,8 +90,8 @@ interface ThreadMessageListProps {
   messages: ThreadMessage[];
   user: any;
   channelThread: any;
-  currentChannel: any;
-  handleIncreaseLimit: any;
+  currentChannel: Channel;
+  handleIncreaseLimit: () => void;
   limit: number;
   showThreadInfo?: boolean;
 }
@@ -165,7 +166,6 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
   return (
     <>
       <ThreadInfo
-        messages={messages}
         channelThread={channelThread}
         currentChannel={currentChannel}
         showThreadInfo={showThreadInfo}
