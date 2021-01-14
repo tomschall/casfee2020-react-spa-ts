@@ -24,7 +24,11 @@ export type ApolloHeaders = {
 export type ApolloWrapperProps = {};
 
 export type ParsedTokenUser = JwtPayload & {
-  'https://hasura.io/jwt/claims'?: any;
+  'https://hasura.io/jwt/claims'?: {
+    'x-hasura-allowed-roles'?: string;
+    'x-hasura-default-role'?: string;
+    'x-hasura-user-id'?: string;
+  };
 };
 
 const ApolloWrapper: React.FC<ApolloWrapperProps> = ({ children }) => {
@@ -42,7 +46,16 @@ const ApolloWrapper: React.FC<ApolloWrapperProps> = ({ children }) => {
 
   const parseTokenAndSetRoles = async (token: string) => {
     const user: ParsedTokenUser = jwt_decode<JwtPayload>(token);
-    if (user.sub === undefined) return;
+
+    if (
+      user.sub === undefined ||
+      user['https://hasura.io/jwt/claims'] === undefined ||
+      user['https://hasura.io/jwt/claims']['x-hasura-allowed-roles'] ===
+        undefined
+    ) {
+      return;
+    }
+
     sessionStorage.setItem(
       user.sub,
       user['https://hasura.io/jwt/claims']['x-hasura-allowed-roles'],
