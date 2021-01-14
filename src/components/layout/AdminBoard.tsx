@@ -15,7 +15,7 @@ const AdminBoard: React.FC = () => {
       if (user?.sub !== undefined) {
         sendUserIsOnline();
       }
-    }, 9000);
+    }, 7000);
     return function cleanup() {
       clearInterval(interval);
     };
