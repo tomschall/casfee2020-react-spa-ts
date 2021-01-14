@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
 import {
   Divider,
   FormGroup,
@@ -50,7 +49,7 @@ const UpdatePollQuestion: React.FC<UpdatePollQuestionLProps> = ({
 
   const [
     updatePollQuestionMutation,
-    { data, loading, error },
+    { loading, error },
   ] = useUpdatePollQuestionMutation({
     variables: {
       pollQuestionId: pollQuestionId,

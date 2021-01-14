@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Channels: React.FC<any> = () => {
+const Channels: React.FC = () => {
   const classes = useStyles();
   const [currentChannel] = useRecoilState<Channel>(currentChannelState);
   const [open, setOpen] = useState(true);

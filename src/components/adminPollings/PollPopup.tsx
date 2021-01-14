@@ -1,5 +1,4 @@
 import React from 'react';
-import { theme } from '../../theme/theme';
 import { Badge, Box, Button, Popover } from '@material-ui/core';
 import { useWatchChannelHasActivePollSubscription } from '../../api/generated/graphql';
 import PopupState, { bindPopover } from 'material-ui-popup-state';

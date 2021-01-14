@@ -54,7 +54,7 @@ const AddPollQuestion: React.FC = () => {
     setPollTitle({ ...pollTitle, [e.target.id]: e.target.value });
   };
 
-  const handleAddTitle = async (e: any) => {
+  const handleAddTitle = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (pollTitle.title === '' || !pollTitle.title.trim()) {

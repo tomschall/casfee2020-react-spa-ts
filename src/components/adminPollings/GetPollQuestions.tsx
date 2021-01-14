@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import moment from 'moment';
+import React from 'react';
 import { theme } from '../../theme/theme';
 import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -81,14 +80,9 @@ const GetPollQuestions: React.FC = () => {
   const { data, loading, error } = useWatchGetPollQuestionsSubscription({
     variables: {},
   });
-  const [pollQuestion, setPollQuestion] = useRecoilState<any>(
-    getPollQuestionAnswers,
-  );
+  const [, setPollQuestion] = useRecoilState<number>(getPollQuestionAnswers);
 
-  const {
-    data: getChannel,
-    loading: loadingGetChannel,
-  } = useWatchGetChannelsSubscription();
+  const { loading: loadingGetChannel } = useWatchGetChannelsSubscription();
 
   const handleClick = (questionId: number) => {
     setPollQuestion(questionId);
