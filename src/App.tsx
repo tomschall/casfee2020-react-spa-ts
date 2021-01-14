@@ -123,6 +123,8 @@ const App: React.FC = () => {
         </Container>
       ) : (
         <Switch>
+          <Redirect exact from="/channel" to="/channel/general" />
+          <PrivateRoute path="/channel/:channel" component={ChatBoard} />
           <Route path="/" component={SignIn} />
           <Redirect to="/" />
         </Switch>
