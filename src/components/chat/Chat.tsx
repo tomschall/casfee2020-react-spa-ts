@@ -91,7 +91,7 @@ const Chat: React.FC<ChatProps> = ({ channelId }) => {
           user_id: user.sub,
         },
       });
-  }, [data]);
+  });
 
   useEffect(() => {
     setTimeout(() => {
@@ -100,7 +100,7 @@ const Chat: React.FC<ChatProps> = ({ channelId }) => {
         setScrollIsInit(false);
       }
     }, 1000);
-  }, [ref, data]);
+  });
 
   if (error) {
     return <Alert severity="error">Messages could not be loaded.</Alert>;

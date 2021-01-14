@@ -8,7 +8,7 @@ const Login: React.FC = () => {
   return (
     <>
       <Button
-        size="large"
+        size="medium"
         variant="contained"
         color="secondary"
         onClick={loginWithRedirect}
