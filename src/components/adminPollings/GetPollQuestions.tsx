@@ -32,8 +32,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   badge: {
-    backgroundColor: theme.palette.error.light,
-    color: theme.palette.error.light,
+    backgroundColor: '#44b700',
+    color: '#44b700',
     boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
     '&::after': {
       position: 'absolute',
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
       opacity: 1,
     },
     '100%': {
-      transform: 'scale(2.4)',
+      transform: 'scale(3)',
       opacity: 0,
     },
   },
