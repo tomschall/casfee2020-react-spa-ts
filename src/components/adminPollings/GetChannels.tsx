@@ -22,15 +22,10 @@ const GetChannels: React.FC<GetChannelsProps> = ({
 }) => {
   const [questionIdState, setQuestionIdState] = React.useState(questionId);
   const getPollQuestionId = useRecoilValue<number>(getPollQuestionAnswers);
-  const [channelId, setChannelID] = useState<string>('');
+  const [channelId] = useState<string>('');
   const { data, loading, error } = useWatchGetChannelsSubscription();
-  const {
-    data: checkActiveChannelState,
-  } = useWatchChannelPollActiveStateSubscription({
-    variables: {},
-  });
-
   const [pollQuestionToChannel] = useAddPublishPollQuestionToChannelMutation();
+
   const [
     deletePollQuestionFromChannelMutation,
     { error: deleteError },
@@ -62,22 +57,22 @@ const GetChannels: React.FC<GetChannelsProps> = ({
     return <p>Error loading.</p>;
   }
 
-  const handlePublishOnChannel = async (kanalId: number) => {
+  const handlePublishOnChannel = async (chnId: number) => {
     await pollQuestionToChannel({
       variables: {
-        channelID: kanalId,
+        channelID: chnId,
         pollQuestionID: getPollQuestionId,
       },
     });
   };
 
-  const handleDeleteQuestionFromChannel = async (kanalId: number) => {
-    if (kanalId === undefined) return;
+  const handleDeleteQuestionFromChannel = async (chnId: number) => {
+    if (chnId === undefined) return;
 
     await deletePollQuestionFromChannelMutation({
       variables: {
         pollQuestionId: getPollQuestionId,
-        channelId: kanalId,
+        channelId: chnId,
       },
     });
 

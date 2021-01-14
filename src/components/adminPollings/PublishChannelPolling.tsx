@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRecoilState } from 'recoil';
 import { useAuth0 } from '@auth0/auth0-react';
 import { currentChannelState } from '../../atom.js';
@@ -45,17 +45,12 @@ const useStyles = makeStyles((theme) => ({
 const PublishChannelPolling: React.FC = () => {
   const classes = useStyles();
   const { user } = useAuth0();
-  const [currentChannel, setCurrentChannelState] = useRecoilState<Channel>(
-    currentChannelState,
-  );
+  const [currentChannel] = useRecoilState<Channel>(currentChannelState);
   const [selectedPollAnswerId, setSelectedPollAnswerId] = React.useState<
     number | null
   >(null);
 
-  const {
-    data: getPollAnswerVotes,
-    loading: getPollAnswerVotesLoading,
-  } = useWatchPollAnswerVotesSubscription({
+  const { data: getPollAnswerVotes } = useWatchPollAnswerVotesSubscription({
     variables: {
       pollAnswerId: selectedPollAnswerId ?? 0,
     },

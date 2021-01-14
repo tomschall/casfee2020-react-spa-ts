@@ -64,13 +64,8 @@ const PollAnswers: React.FC = () => {
   const [answerNewText, setAnswerNewText] = React.useState({
     text: '',
   });
-  const [answerText, setAnswerText] = React.useState({
-    text: '',
-  });
-  const [answerTextUpdateId, setAnswerTextUpdateId] = React.useState<number>(0);
   const [, setCurrentAnswerId] = React.useState<number>(0);
   const { question: pollQuestionId } = useParams<ParamType>();
-  const [pollQuestionActiveState] = React.useState<boolean>();
   const [fieldError, setFieldError] = useState<boolean>(false);
 
   const getPollQuestion = useWatchGetPollQuestionSubscription({
@@ -81,9 +76,16 @@ const PollAnswers: React.FC = () => {
 
   const [addPollQuestionMutation] = useAddAnswerToQuestionMutation();
 
-  const handleNewAnswerChange = (index?: number, e?: any) => {
-    setAnswerNewText({ text: e.target.value });
-    setCurrentAnswerId(e.target.id);
+  const handleNewAnswerChange = (
+    index?: number,
+    e?: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const text: string = e?.target.value || '';
+    const id: string = e?.target.id || '';
+    if (id !== undefined && text !== undefined) {
+      setCurrentAnswerId(parseInt(id));
+      setAnswerNewText({ text: text });
+    }
   };
 
   const handleAddAnswer = async (e: React.FormEvent<HTMLFormElement>) => {

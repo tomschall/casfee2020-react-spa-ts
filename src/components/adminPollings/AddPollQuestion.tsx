@@ -10,7 +10,6 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import SendIcon from '@material-ui/icons/Send';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -54,7 +53,7 @@ const AddPollQuestion: React.FC = () => {
     setPollTitle({ ...pollTitle, [e.target.id]: e.target.value });
   };
 
-  const handleAddTitle = async (e: any) => {
+  const handleAddTitle = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (pollTitle.title === '' || !pollTitle.title.trim()) {

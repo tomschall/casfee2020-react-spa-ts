@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, Chip } from '@material-ui/core';
+import { Badge } from '@material-ui/core';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 
 interface ShowTotalVotesProps {
