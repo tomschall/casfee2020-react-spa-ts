@@ -22,6 +22,7 @@ import { useRecoilValue } from 'recoil';
 import { deletedMessageState } from '../../atom';
 import { useParams } from 'react-router';
 import { ChatParams } from '../../interfaces/param.interface';
+import { Auth0User } from '../../interfaces/user.interface';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -113,10 +114,12 @@ interface MessageProps {
   messages: Message[];
   lastMessage: Message | null;
   preLastMessageId: number | null;
-  user: any;
-  handleIncreaseLimit: any;
+  user: Auth0User;
+  handleIncreaseLimit: () => void;
   limit: number;
-  setRef: any;
+  setRef: React.Dispatch<
+    React.SetStateAction<React.RefObject<HTMLDivElement> | null>
+  >;
 }
 
 const MessageList: React.FC<MessageProps> = ({
@@ -138,26 +141,26 @@ const MessageList: React.FC<MessageProps> = ({
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const handleShowUpdate = (message: Message) => {
-    if (message.user.auth0_user_id !== user.sub) return;
+    if (message?.user?.auth0_user_id !== user.sub) return;
     setShowUpdateMessageId(message.id);
     setShowUpdate(!showUpdate);
   };
 
   useEffect(() => {
     setRef(messagesEndRef);
-  }, []);
+  }, [setRef]);
 
   const renderMessage = (message: Message) => {
     return (
       <ListItem key={message.id} component="div" className={classes.listItem}>
         <ListItemAvatar>
           <ListItemIcon
-            aria-label={message.user.username.substring(0, 2).toUpperCase()}
+            aria-label={message?.user?.username.substring(0, 2).toUpperCase()}
           >
             <Badge variant="dot">
               {!message.deleted ? (
                 <Avatar className={classes.avatar}>
-                  {message.user.username.substring(0, 2).toUpperCase()}
+                  {message?.user?.username.substring(0, 2).toUpperCase()}
                 </Avatar>
               ) : (
                 <Avatar
@@ -187,7 +190,7 @@ const MessageList: React.FC<MessageProps> = ({
               <Typography color="secondary" variant="caption">
                 {!message.deleted ? (
                   <>
-                    <strong>{message.user.username} </strong>
+                    <strong>{message?.user?.username} </strong>
                   </>
                 ) : (
                   <strong>Oh sorry it seems...</strong>
@@ -211,7 +214,7 @@ const MessageList: React.FC<MessageProps> = ({
 
                 {!message.deleted ? (
                   <React.Fragment>
-                    {user.sub === message.user.auth0_user_id && (
+                    {user.sub === message?.user?.auth0_user_id && (
                       <Typography variant="caption">
                         {!(
                           showUpdate && showUpdateMessageId === message.id
@@ -234,7 +237,7 @@ const MessageList: React.FC<MessageProps> = ({
           >
             {showUpdate &&
             showUpdateMessageId === message.id &&
-            user.sub === message.user.auth0_user_id &&
+            user.sub === message?.user?.auth0_user_id &&
             message.deleted === false ? (
               <UpdateMessage message={message} />
             ) : (
@@ -244,7 +247,7 @@ const MessageList: React.FC<MessageProps> = ({
           {message?.image ? (
             <Box className={classes.image}>
               <img
-                alt="Giphy Image"
+                alt={message.image}
                 src={message.image}
                 className={classes.giphy}
               />

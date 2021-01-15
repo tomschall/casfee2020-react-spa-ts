@@ -1,4 +1,5 @@
 import { Moment } from 'moment';
+import { Channel, User } from '../api/generated/graphql';
 
 export interface Message {
   id: number;
@@ -7,9 +8,8 @@ export interface Message {
   image: string | null;
   timestamp: Date | Moment;
   deleted?: boolean;
-  user?: any;
-  channel?: any;
-  channel_thread?: any;
+  user?: Pick<User, 'auth0_user_id' | 'username'>;
+  channel?: { name: string };
 }
 
 export interface ThreadMessage {
@@ -19,6 +19,6 @@ export interface ThreadMessage {
   message: string;
   image: string | null;
   timestamp: Date;
-  user?: any;
+  user?: Pick<User, 'auth0_user_id' | 'username'>;
   limit: number;
 }

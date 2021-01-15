@@ -10,9 +10,9 @@ import { ChatParams } from '../../interfaces/param.interface';
 import { Channel } from '../../interfaces/channel.interface';
 
 const ChatApp: React.FC = () => {
-  const [currentChannel, setCurrentChannel] = useRecoilState<
-    Channel | undefined
-  >(currentChannelState);
+  const [currentChannel, setCurrentChannel] = useRecoilState<Channel>(
+    currentChannelState,
+  );
 
   const { isAuthenticated, isLoading: isLoadingAuth0, error } = useAuth0();
   const { channel: channelName } = useParams<ChatParams>();
@@ -32,8 +32,10 @@ const ChatApp: React.FC = () => {
   }
 
   if (
-    !currentChannel ||
-    (currentChannel && currentChannel.name !== channelName)
+    (!currentChannel && data?.channel[0] !== undefined) ||
+    (currentChannel &&
+      currentChannel.name !== channelName &&
+      data?.channel[0] !== undefined)
   ) {
     setCurrentChannel(data?.channel[0]);
   }
@@ -45,11 +47,7 @@ const ChatApp: React.FC = () => {
   return (
     <>
       {isAuthenticated && currentChannel && (
-        <Chat
-          channelId={currentChannel?.id}
-          isPrivate={currentChannel?.is_private}
-          channelType={currentChannel?.channel_type}
-        />
+        <Chat channelId={currentChannel?.id} />
       )}
     </>
   );

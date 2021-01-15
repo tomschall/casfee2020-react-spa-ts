@@ -1,6 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import { ThreadMessage } from '../../../interfaces/message.interface';
+import { Channel } from '../../../interfaces/channel.interface';
+import { Auth0User } from '../../../interfaces/user.interface';
 import ThreadInfo from './ThreadInfo';
 import ThreadDeleteMessage from './ThreadDeleteMessage';
 import {
@@ -15,6 +17,8 @@ import {
   Button,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { ChannelThread } from '../../../interfaces/thread.interface';
+import Loader from '../../shared/Loader';
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,10 +91,10 @@ export const useStyles = makeStyles((theme) => ({
 
 interface ThreadMessageListProps {
   messages: ThreadMessage[];
-  user: any;
-  channelThread: any;
-  currentChannel: any;
-  handleIncreaseLimit: any;
+  user: Auth0User;
+  channelThread: ChannelThread;
+  currentChannel: Channel | { id: number; name: string };
+  handleIncreaseLimit: () => void;
   limit: number;
   showThreadInfo?: boolean;
 }
@@ -113,7 +117,7 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
           <ListItemIcon>
             <Badge variant="dot">
               <Avatar className={classes.avatar}>
-                {message.user.username.substring(0, 2).toUpperCase()}
+                {message?.user?.username.substring(0, 2).toUpperCase()}
               </Avatar>
             </Badge>
           </ListItemIcon>
@@ -131,14 +135,14 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
               alignItems="flex-start"
             >
               <Typography variant="caption">
-                <strong>{message.user.username} </strong>
+                <strong>{message?.user?.username} </strong>
                 <i>{moment(message.timestamp).fromNow()}</i>
               </Typography>
               <Divider className={classes.vspace} />
             </Box>
             <Box>
               <Typography variant="caption">
-                {user.sub === message.user.auth0_user_id ? (
+                {user.sub === message?.user?.auth0_user_id ? (
                   <ThreadDeleteMessage messageId={message.id} />
                 ) : (
                   ''
@@ -151,7 +155,7 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
           </Typography>
           {message.image ? (
             <Box className={classes.image}>
-              <img alt="Giphy Image" src={message.image} />
+              <img alt={message.image} src={message.image} />
             </Box>
           ) : (
             ''
@@ -165,7 +169,6 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
   return (
     <>
       <ThreadInfo
-        messages={messages}
         channelThread={channelThread}
         currentChannel={currentChannel}
         showThreadInfo={showThreadInfo}
@@ -181,11 +184,13 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
         )}
       </Box>
 
-      {messages
-        ? [...messages]
-            ?.reverse()
-            ?.map((message: ThreadMessage) => renderMessage(message))
-        : ''}
+      {messages ? (
+        [...messages]
+          ?.reverse()
+          ?.map((message: ThreadMessage) => renderMessage(message))
+      ) : (
+        <Loader />
+      )}
     </>
   );
 };

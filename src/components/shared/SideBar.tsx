@@ -72,7 +72,7 @@ const SideBar: React.FC<SidebarProps> = ({ handleDrawerClose, open }) => {
   const { user } = useAuth0();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
   const { isAuthenticated } = useAuth0();
-  const role = localStorage.getItem(user.sub);
+  const role = sessionStorage.getItem(user.sub);
 
   return (
     <>

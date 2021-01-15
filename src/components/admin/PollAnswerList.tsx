@@ -61,8 +61,12 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
     },
   });
 
-  const handleAnswerChange = (index?: number, e?: any) => {
-    setAnswerText({ text: e.target.value.trim() });
+  const handleAnswerChange = (
+    index?: number,
+    e?: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
+    let text = e?.target.value.trim() || '';
+    setAnswerText({ text: text });
     setUpdateEnabled(false);
   };
 

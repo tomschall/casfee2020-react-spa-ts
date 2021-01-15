@@ -20,6 +20,11 @@ interface ResultGraphProps {
   totalVotes: number;
 }
 
+interface LinearProgressProps {
+  value: number;
+  answerid: number;
+}
+
 const ResultGraph: React.FC<ResultGraphProps> = ({
   answerId,
   userVote,
@@ -28,7 +33,7 @@ const ResultGraph: React.FC<ResultGraphProps> = ({
   totalVotes,
 }) => {
   const classes = useStyles();
-  const LinearProgressWithLabel = (props: any) => {
+  const LinearProgressWithLabel = (props: LinearProgressProps) => {
     return (
       <Box
         width="100%"
@@ -39,7 +44,7 @@ const ResultGraph: React.FC<ResultGraphProps> = ({
       >
         <Box width="100%" mr={1}>
           <LinearProgress
-            id={answerId}
+            id={String(answerId)}
             color={userVote === answerId ? 'secondary' : 'primary'}
             variant="determinate"
             {...props}

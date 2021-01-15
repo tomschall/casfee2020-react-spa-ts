@@ -1,11 +1,10 @@
 import React from 'react';
-import { theme } from '../../theme/theme';
 import { Badge, Box, Button, Popover } from '@material-ui/core';
 import { useWatchChannelHasActivePollSubscription } from '../../api/generated/graphql';
 import PopupState, { bindPopover } from 'material-ui-popup-state';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import Loader from '../shared/Loader';
-import PublishChannelPolling from '../adminPollings/PublishChannelPolling';
+import PublishChannelPolling from './PublishChannelPolling';
 import { makeStyles } from '@material-ui/core/styles';
 import { bindTrigger } from 'material-ui-popup-state/hooks';
 import Logo from '../shared/Logo';

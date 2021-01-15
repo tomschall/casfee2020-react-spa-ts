@@ -10,22 +10,34 @@ import {
 } from '@apollo/client';
 import { WebSocketLink, WebSocketParams } from '@apollo/client/link/ws';
 import { setContext } from '@apollo/client/link/context';
-import jwt_decode from 'jwt-decode';
+import jwt_decode, { JwtPayload } from 'jwt-decode';
 
 interface Definition {
   kind: string;
   operation?: string;
 }
 
-export type ApolloHeadersType = {
-  Authorization: string;
-};
+interface Claims {
+  'https://hasura.io/jwt/claims'?: {
+    'x-hasura-allowed-roles'?: string;
+    'x-hasura-default-role'?: string;
+    'x-hasura-user-id'?: string;
+  };
+}
 
-const ApolloWrapper: React.FC<any> = ({ children }) => {
+type ParsedTokenUser = JwtPayload & Claims;
+
+interface ApolloHeaders {
+  Authorization: string;
+}
+
+interface ApolloWrapperProps {}
+
+const ApolloWrapper: React.FC<ApolloWrapperProps> = ({ children }) => {
   const { isAuthenticated, getAccessTokenSilently } = useAuth0();
 
   const getHeaders = async () => {
-    const headers = {} as ApolloHeadersType;
+    const headers = {} as ApolloHeaders;
     if (isAuthenticated) {
       const token: string = await getAccessTokenSilently();
       parseTokenAndSetRoles(token);
@@ -35,16 +47,21 @@ const ApolloWrapper: React.FC<any> = ({ children }) => {
   };
 
   const parseTokenAndSetRoles = async (token: string) => {
-    const user: any = jwt_decode(token);
+    const user: ParsedTokenUser = jwt_decode<JwtPayload>(token);
+
     if (
-      user &&
-      user['https://hasura.io/jwt/claims'] &&
-      user['https://hasura.io/jwt/claims']['x-hasura-allowed-roles']
-    )
-      localStorage.setItem(
-        user.sub,
-        user['https://hasura.io/jwt/claims']['x-hasura-allowed-roles'],
-      );
+      user.sub === undefined ||
+      user['https://hasura.io/jwt/claims'] === undefined ||
+      user['https://hasura.io/jwt/claims']['x-hasura-allowed-roles'] ===
+        undefined
+    ) {
+      return;
+    }
+
+    sessionStorage.setItem(
+      user.sub,
+      user['https://hasura.io/jwt/claims']['x-hasura-allowed-roles'],
+    );
   };
 
   const authMiddleware = setContext(async (operation, { originalHeaders }) => {

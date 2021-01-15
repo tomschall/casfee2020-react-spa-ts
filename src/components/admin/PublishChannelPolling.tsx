@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRecoilState } from 'recoil';
 import { useAuth0 } from '@auth0/auth0-react';
 import { currentChannelState } from '../../atom.js';
@@ -21,6 +21,7 @@ import {
   useWatchCheckUserHasVotedSubscription,
   useSetPollAnswerVoteMutation,
   useSetUserVotePollQuestionMutation,
+  Poll_Anwers,
 } from '../../api/generated/graphql';
 import { makeStyles } from '@material-ui/core/styles';
 import { Channel } from '../../interfaces/channel.interface';
@@ -45,19 +46,15 @@ const useStyles = makeStyles((theme) => ({
 const PublishChannelPolling: React.FC = () => {
   const classes = useStyles();
   const { user } = useAuth0();
-  const [currentChannel, setCurrentChannelState] = useRecoilState<Channel>(
-    currentChannelState,
-  );
-  const [selectedPollAnswerId, setSelectedPollAnswerId] = React.useState<
-    number | null
-  >(null);
+  const [currentChannel] = useRecoilState<Channel>(currentChannelState);
+  const [
+    selectedPollAnswerId,
+    setSelectedPollAnswerId,
+  ] = React.useState<number>(0);
 
-  const {
-    data: getPollAnswerVotes,
-    loading: getPollAnswerVotesLoading,
-  } = useWatchPollAnswerVotesSubscription({
+  const { data: getPollAnswerVotes } = useWatchPollAnswerVotesSubscription({
     variables: {
-      pollAnswerId: selectedPollAnswerId ?? 0,
+      pollAnswerId: selectedPollAnswerId,
     },
   });
 
@@ -70,16 +67,17 @@ const PublishChannelPolling: React.FC = () => {
   const [setPollAnswerVoteMutation] = useSetPollAnswerVoteMutation();
 
   const totalVotes = () => {
-    let numbers: Array<any> = data?.getChannelPoll[0]?.poll_question
-      ?.poll_anwers!;
-    const count: any = [];
+    let numbers: Array<Pick<Poll_Anwers, 'text' | 'id' | 'votes'>> = data
+      ?.getChannelPoll[0]?.poll_question?.poll_anwers!;
+    const count: number[] = [];
     if (numbers !== undefined) {
-      numbers.map((num: any) => count.push(num.votes));
+      numbers.map((num: Pick<Poll_Anwers, 'text' | 'id' | 'votes'>) =>
+        count.push(num.votes),
+      );
       const result = count.reduce((a: number, b: number) => a + b);
       return result;
-    } else {
-      return <Loader />;
     }
+    return 0;
   };
 
   const {

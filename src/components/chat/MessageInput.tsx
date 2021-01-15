@@ -72,7 +72,7 @@ interface MessageInputProps {
   channelId: number;
   handleSetLastMessage: Function;
   preLastMessageId: number;
-  scrollToBottom: any;
+  scrollToBottom: () => void;
 }
 
 const MessageInput: React.FC<MessageInputProps> = (props) => {
@@ -96,17 +96,12 @@ const MessageInput: React.FC<MessageInputProps> = (props) => {
   const [text, setText] = useState<string>('');
   const [gif, setGif] = useRecoilState<IGif | null>(giphyState);
 
-  const [deletedMessage, setdeletedMessage] = useRecoilState<boolean>(
-    deletedMessageState,
-  );
+  const [, setdeletedMessage] = useRecoilState<boolean>(deletedMessageState);
 
   let textInput = useRef<HTMLDivElement>(null);
   const channelId = props.channelId;
 
-  const [
-    sendTypingEventMutation,
-    { data, loading, error },
-  ] = useSendTypingEventMutation({
+  const [sendTypingEventMutation] = useSendTypingEventMutation({
     variables: {
       user_id: user.sub,
       channel_id: channelId,
@@ -115,6 +110,7 @@ const MessageInput: React.FC<MessageInputProps> = (props) => {
 
   const handleTyping = (text: string) => {
     const textLength = text.length;
+
     if ((textLength !== 0 && textLength % 5 === 0) || textLength === 1) {
       sendTypingEventMutation();
     }
@@ -146,7 +142,7 @@ const MessageInput: React.FC<MessageInputProps> = (props) => {
       channel_id: channelId,
     });
 
-    props.scrollToBottom(true);
+    props.scrollToBottom();
 
     await sendMessage({
       variables: {
@@ -204,6 +200,11 @@ const MessageInput: React.FC<MessageInputProps> = (props) => {
           autoComplete="off"
           id="chat-message-input"
           label={<TypingIndicator />}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              handleSubmit(e);
+            }
+          }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">

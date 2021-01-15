@@ -54,14 +54,9 @@ const AddChannel: React.FC = () => {
   const [openAlert, setOpenAlert] = React.useState(true);
   const [channelName, setChannelName] = useState('');
   const [channelIsPrivate, setChannelIsPrivate] = useState(false);
-  const { user } = useAuth0();
-
   const [addChannel, { data, loading, error }] = useAddChannelMutation();
 
-  const [
-    sendMessage,
-    { data: sendUpdateMessageData },
-  ] = useInsertMessageMutation();
+  const [sendMessage] = useInsertMessageMutation();
 
   const { user: userAuth0, isLoading: loadingAuth0 } = useAuth0();
   let history = useHistory();

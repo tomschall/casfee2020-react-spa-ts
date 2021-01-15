@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Chip, ListItemIcon } from '@material-ui/core';
+import { Chip } from '@material-ui/core';
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { makeStyles } from '@material-ui/core/styles';

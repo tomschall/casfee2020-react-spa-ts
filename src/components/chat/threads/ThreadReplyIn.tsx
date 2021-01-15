@@ -6,26 +6,33 @@ import { Message } from '../../../interfaces/message.interface';
 import { useWatchChannelThreadSubscription } from '../../../api/generated/graphql';
 
 const useStyles = makeStyles((theme) => ({
+  messageText: {
+    marginLeft: theme.spacing(2),
+    paddingBottom: '1rem',
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  },
   [theme.breakpoints.up('md')]: {
     messageText: {
-      fontSize: 11,
-      paddingBottom: '1rem',
+      fontSize: 12,
     },
   },
   [theme.breakpoints.down('md')]: {
     messageText: {
       fontSize: 11,
-      paddingBottom: '1rem',
     },
   },
   [theme.breakpoints.down('sm')]: {
     messageText: {
-      fontSize: 11,
-      paddingBottom: '1rem',
+      marginLeft: theme.spacing(0),
+      paddingBottom: '.8rem',
     },
   },
-  link: {
-    color: '#ffffff',
+  lastReply: {
+    color: theme.palette.primary.main,
+    fontStyle: 'italic',
+    paddingLeft: theme.spacing(1),
   },
 }));
 
@@ -40,11 +47,7 @@ const ThreadReplyIn: React.FC<ThreadReplyInProps> = ({
 }) => {
   const classes = useStyles();
 
-  const {
-    data: channelThreadData,
-    loading: channelThreadLoading,
-    error: channelThreadError,
-  } = useWatchChannelThreadSubscription({
+  const { data: channelThreadData } = useWatchChannelThreadSubscription({
     variables: {
       message_id: message?.id,
     },
@@ -53,9 +56,12 @@ const ThreadReplyIn: React.FC<ThreadReplyInProps> = ({
   return (
     <>
       {channelThreadData?.channel_thread[0]?.channel_thread_messages?.length ? (
-        <Typography component="div" className={classes.messageText}>
-          <Link
-            className={classes.link}
+        <>
+          <Typography
+            variant="caption"
+            color="textPrimary"
+            component={Link}
+            className={classes.messageText}
             to={{
               pathname: `/channel/${channelName}/thread/${message?.id}`,
             }}
@@ -69,15 +75,19 @@ const ThreadReplyIn: React.FC<ThreadReplyInProps> = ({
                 ?.length === 1
                 ? 'reply'
                 : 'replies'
-            } `}
-          </Link>
-          <i className={classes.lastReply}>
+            }`}
+          </Typography>
+          <Typography
+            variant="caption"
+            color="textSecondary"
+            className={classes.lastReply}
+          >
             {`Last reply ${moment(
               channelThreadData?.channel_thread[0]?.channel_thread_messages[0]
                 ?.timestamp,
             ).fromNow()}`}
-          </i>
-        </Typography>
+          </Typography>
+        </>
       ) : (
         ''
       )}

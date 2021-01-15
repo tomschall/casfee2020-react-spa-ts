@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Box } from '@material-ui/core';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
 import { Message } from '../../interfaces/message.interface';
 import {
   useWatchMessagesSubscription,
-  Channel_Type_Enum,
   useUpsertMessageCursorMutation,
 } from '../../api/generated/graphql';
 import Alert from '@material-ui/lab/Alert';
@@ -52,15 +51,13 @@ const useStyles = makeStyles((theme) => ({
 
 interface ChatProps {
   channelId: number;
-  isPrivate: boolean;
-  channelType: Channel_Type_Enum;
 }
 
-const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
+const Chat: React.FC<ChatProps> = ({ channelId }) => {
   const classes = useStyles();
   const [limit, setLimit] = useState<number>(20);
   const [lastMessage, setLastMessage] = useState<Message | null>(null);
-  const [ref, setRef] = useState<any>(null);
+  const [ref, setRef] = useState<React.RefObject<HTMLDivElement> | null>(null);
   const [scrollIsInit, setScrollIsInit] = useState<boolean>(true);
   const { user } = useAuth0();
 
@@ -77,13 +74,13 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
 
   const [upsertMessageCursorMutation] = useUpsertMessageCursorMutation();
 
-  const scrollToBottom = () => {
+  const scrollToBottom = useCallback(() => {
     if (typeof ref === 'object') {
       setTimeout(() => {
         ref?.current?.scrollIntoView();
-      }, 100);
+      }, 200);
     }
-  };
+  }, [ref]);
 
   useEffect(() => {
     if (data?.messages[0]?.id)
@@ -94,16 +91,22 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
           user_id: user.sub,
         },
       });
-  }, [data]);
 
-  useEffect(() => {
     setTimeout(() => {
       if (scrollIsInit && data && data?.messages?.length > 5) {
         scrollToBottom();
         setScrollIsInit(false);
       }
     }, 1000);
-  }, [ref, data]);
+  }, [
+    ref,
+    data,
+    channelId,
+    user.sub,
+    scrollIsInit,
+    scrollToBottom,
+    upsertMessageCursorMutation,
+  ]);
 
   if (error) {
     return <Alert severity="error">Messages could not be loaded.</Alert>;
@@ -157,7 +160,7 @@ const Chat: React.FC<ChatProps> = ({ channelId, isPrivate, channelType }) => {
         />
       </Box>
       <Box className={classes.messageInput} component="footer">
-        <MenuBar channelId={channelId}>
+        <MenuBar>
           <MessageInput
             channelId={channelId}
             handleSetLastMessage={handleSetLastMessage}

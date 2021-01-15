@@ -8,7 +8,7 @@ import {
 import ForumOutlinedIcon from '@material-ui/icons/ForumOutlined';
 import { Link, useRouteMatch } from 'react-router-dom';
 
-const ThreadsLink: React.FC<any> = () => {
+const ThreadsLink: React.FC = () => {
   const match = useRouteMatch('/channel/threads');
 
   const activeLink = () => {

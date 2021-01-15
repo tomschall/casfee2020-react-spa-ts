@@ -31,7 +31,7 @@ interface GiphyCarouselProps {
 
 const GiphyCarousel: React.FC<GiphyCarouselProps> = ({ hideGiphyCarousel }) => {
   const classes = useStyles();
-  const [gif, setGif] = useRecoilState<IGif | null>(giphyState);
+  const [, setGif] = useRecoilState<IGif | null>(giphyState);
   const [giphySearchString, setGiphySearchString] = useState('');
 
   const onGifClick = (
@@ -43,7 +43,9 @@ const GiphyCarousel: React.FC<GiphyCarouselProps> = ({ hideGiphyCarousel }) => {
     hideGiphyCarousel();
   };
 
-  const handleOnChange = (ev: any) => {
+  const handleOnChange = (
+    ev: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
     setGiphySearchString(ev.target.value);
   };
 

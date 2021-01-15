@@ -13,6 +13,7 @@ import {
   useWatchUsersWhoHaveSubscribedToDirectMessageChannelSubscription,
   useUpsertMessageCursorMutation,
   useInsertMessageMutation,
+  User,
 } from '../../api/generated/graphql';
 import { Alert } from '@material-ui/lab';
 import { v4 as uuidv4 } from 'uuid';
@@ -36,9 +37,11 @@ const useStyles = makeStyles((theme) => ({
 
 const AddDirectMessageChannel: React.FC = () => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [, setAnchorEl] = useState(null);
   const { user } = useAuth0();
-  const [users, setUsers] = useState<any>(null);
+  const [users, setUsers] = useState<
+    Pick<User, 'auth0_user_id' | 'username'>[] | null
+  >(null);
   const user_id = user.sub;
   let history = useHistory();
 
@@ -75,7 +78,7 @@ const AddDirectMessageChannel: React.FC = () => {
             return user_channel.channel.user_channels.length === 1;
           }).length === 0
         );
-      });
+      }) as Pick<User, 'auth0_user_id' | 'username'>[];
     };
     const check = async () => {
       const users = await checkUserSubscriptions();
@@ -93,43 +96,46 @@ const AddDirectMessageChannel: React.FC = () => {
     return <Loader />;
   }
 
-  const handleAddUser = async (user_id: string, dm_user: string) => {
-    setAnchorEl(null);
-    const { data } = await validateAndAddDirectMessageChannelMutation({
-      variables: {
-        name: uuidv4(),
-        user_id1: user_id,
-        user_id2: dm_user,
-      },
-    });
-
-    await sendMessage({
-      variables: {
-        message: {
-          user_id: 'admin',
-          text: `Welcome to your new direct message channel`,
-          channel_id: data?.validateAndAddDirectMessageChannel?.id,
-        },
-      },
-    });
-
-    if (
-      data?.validateAndAddDirectMessageChannel?.id &&
-      data?.validateAndAddDirectMessageChannel?.id > 0
-    )
-      upsertMessageCursorMutation({
+  const handleAddUser = async (
+    user_id?: string | null | undefined,
+    dm_user?: string | null | undefined,
+  ) => {
+    if (user_id && dm_user) {
+      setAnchorEl(null);
+      const { data } = await validateAndAddDirectMessageChannelMutation({
         variables: {
-          channel_id: data?.validateAndAddDirectMessageChannel?.id,
-          message_id: 1,
-          user_id: dm_user,
+          name: uuidv4(),
+          user_id1: user_id,
+          user_id2: dm_user,
         },
       });
 
-    history.push(`/channel/${data?.validateAndAddDirectMessageChannel?.name}`);
-  };
+      await sendMessage({
+        variables: {
+          message: {
+            user_id: 'admin',
+            text: `Welcome to your new direct message channel`,
+            channel_id: data?.validateAndAddDirectMessageChannel?.id,
+          },
+        },
+      });
 
-  const handleClick = () => {
-    history.push(`/channel/general`);
+      if (
+        data?.validateAndAddDirectMessageChannel?.id &&
+        data?.validateAndAddDirectMessageChannel?.id > 0
+      )
+        upsertMessageCursorMutation({
+          variables: {
+            channel_id: data?.validateAndAddDirectMessageChannel?.id,
+            message_id: 1,
+            user_id: dm_user,
+          },
+        });
+
+      history.push(
+        `/channel/${data?.validateAndAddDirectMessageChannel?.name}`,
+      );
+    }
   };
 
   return (
@@ -161,20 +167,25 @@ const AddDirectMessageChannel: React.FC = () => {
           <Divider className={classes.spacer} />
           {users?.length && (
             <List className={classes.spacer}>
-              {users?.map((dm_user: any, index: any) => {
-                return (
-                  <ListItem
-                    button
-                    key={index}
-                    onClick={() =>
-                      handleAddUser(user_id, dm_user.auth0_user_id)
-                    }
-                  >
-                    <OnlineUserStatus user={dm_user} />
-                    <ListItemText primary={dm_user.username} />
-                  </ListItem>
-                );
-              })}
+              {users?.map(
+                (
+                  dm_user: Pick<User, 'auth0_user_id' | 'username'>,
+                  index: number,
+                ) => {
+                  return (
+                    <ListItem
+                      button
+                      key={index}
+                      onClick={() =>
+                        handleAddUser(user_id, dm_user.auth0_user_id)
+                      }
+                    >
+                      <OnlineUserStatus user={dm_user} />
+                      <ListItemText primary={dm_user.username} />
+                    </ListItem>
+                  );
+                },
+              )}
             </List>
           )}
           {users?.length === 0 && (

@@ -8,7 +8,7 @@ import { IGif } from '@giphy/js-types';
 
 const giphyFetch = new GiphyFetch('gNDqYmKTip2mgTRqQbS5BwslaLM8Jdq0');
 
-const GiphyGrid: React.FC<any> = () => {
+const GiphyGrid: React.FC = () => {
   const history = useHistory();
 
   const fetchGifs = (offset: number) =>
@@ -44,7 +44,7 @@ const GiphyGrid: React.FC<any> = () => {
         gutter={6}
       />
       <ResizeObserver
-        onResize={({ width }: any) => {
+        onResize={({ width }) => {
           setWidth(width);
         }}
       />

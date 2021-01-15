@@ -6,9 +6,10 @@ import { Alert } from '@material-ui/lab';
 import { List } from '@material-ui/core';
 import ThreadListInputContainer from './ThreadListInputContainer';
 import ThreadMessageList from './ThreadMessageList';
+import { ChannelThreadList } from '../../../interfaces/thread.interface';
 
 interface ThreadListProps {
-  channelThread: any;
+  channelThread: ChannelThreadList;
 }
 
 const ThreadList: React.FC<ThreadListProps> = ({ channelThread }) => {
@@ -38,7 +39,7 @@ const ThreadList: React.FC<ThreadListProps> = ({ channelThread }) => {
           messages={data?.channel_thread_message as ThreadMessage[]}
           user={user}
           channelThread={channelThread}
-          currentChannel={channelThread.message.channel}
+          currentChannel={channelThread?.message?.channel}
           handleIncreaseLimit={handleIncreaseLimit}
           limit={limit}
           showThreadInfo={true}

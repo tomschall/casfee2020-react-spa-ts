@@ -15,7 +15,7 @@ const Logout: React.FC = () => {
           logout({
             returnTo: process.env.REACT_APP_AUTH0_LOGOUT_URL,
           });
-          window.localStorage.clear();
+          window.sessionStorage.clear();
         }}
         aria-label="Logout"
       >

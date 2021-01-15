@@ -1,5 +1,5 @@
 module.exports = {
-  url: 'http://localhost:3000/channel/general',
+  url: 'http://localhost:3000',
   elements: {
     email: {
       selector: 'input[name=email]',
@@ -8,6 +8,10 @@ module.exports = {
     password: {
       selector: 'input[name=password]',
       locateStrategy: 'css',
+    },
+    loginButton: {
+      selector: '//button[contains(@aria-label, "Login To Chat")]',
+      locateStrategy: 'xpath',
     },
     messageList: {
       selector: '#message-list',
@@ -59,6 +63,13 @@ module.exports = {
 
   commands: [
     {
+      clickLoginButton(text) {
+        return this.assert
+          .containsText('body', text)
+          .pause(3000)
+          .click('@loginButton')
+          .pause(3000);
+      },
       login(user, password) {
         return this.click('@email')
           .setValue('@email', user)
@@ -68,7 +79,8 @@ module.exports = {
           .expect.element('body').to.be.visible;
       },
       sendMessage(message) {
-        return this.setValue('@messageInput', message)
+        return this.pause(3000)
+          .setValue('@messageInput', message)
           .pause(1000)
           .assert.valueContains('@messageInput', message)
           .click('@messageSubmit');

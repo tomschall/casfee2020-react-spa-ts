@@ -1,5 +1,5 @@
 import React from 'react';
-import PollAnswerList from '../../../components/adminPollings/PollAnswerList';
+import PollAnswerList from '../../../components/admin/PollAnswerList';
 import { RecoilRoot } from 'recoil';
 import { MockedProvider } from '@apollo/client/testing';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -47,7 +47,7 @@ jest.mock('../../../components/shared/Loader', () => () => (
   <div data-testid="loader">Loader...</div>
 ));
 
-jest.mock('../../../components/adminPollings/DeleteAnswer', () => () => (
+jest.mock('../../../components/admin/DeleteAnswer', () => () => (
   <div data-testid="delete_answer">Delete Answer</div>
 ));
 
@@ -71,7 +71,7 @@ describe('PollAnswerList', () => {
       error: false,
     });
 
-    const { debug, getByText, getAllByText } = render(
+    const { getByText, getAllByText } = render(
       <RecoilRoot>
         <MockedProvider>
           <ThemeProvider theme={theme}>
@@ -98,7 +98,7 @@ describe('PollAnswerList', () => {
       error: false,
     });
 
-    const { debug, getByText, getAllByText } = render(
+    const { getByText } = render(
       <RecoilRoot>
         <MockedProvider>
           <ThemeProvider theme={theme}>

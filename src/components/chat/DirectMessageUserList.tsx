@@ -107,7 +107,7 @@ const DirectMessageUserList: React.FC<DirectMessageUserListProps> = ({
         </ListItem>
         <Collapse in={open} timeout="auto">
           <List component="div">
-            {data?.channels.map((data: any) => (
+            {data?.channels?.map((data) => (
               <ListItem
                 button
                 component={Link}

@@ -7,7 +7,6 @@ import { MockedProvider } from '@apollo/client/testing';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { theme } from '../../theme/theme';
-import { act } from 'react-dom/test-utils';
 
 jest.mock('../../api/generated/graphql');
 const mockedApiCall = useWatchChannelsSubscription as jest.Mock;
@@ -61,7 +60,7 @@ describe('ChannelList', () => {
       error: false,
     });
 
-    const { debug, getByText, getAllByText } = render(
+    const { getByText } = render(
       <BrowserRouter>
         <RecoilRoot>
           <MockedProvider>
@@ -114,7 +113,7 @@ describe('ChannelList', () => {
       error: false,
     });
 
-    const { container, debug, getByText, getByTestId, getAllByRole } = render(
+    const { getByText } = render(
       <BrowserRouter>
         <RecoilRoot>
           <MockedProvider>
@@ -129,13 +128,6 @@ describe('ChannelList', () => {
     const element = await waitFor(() => getByText('Channels'));
 
     fireEvent.click(element);
-
-    // await waitFor(
-    //   () => {
-    //     screen.debug();
-    //   },
-    //   { timeout: 3000 },
-    // );
 
     expect(getByText('ExpandMore')).toBeInTheDocument();
 

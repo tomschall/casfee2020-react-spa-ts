@@ -13,6 +13,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import {
   useWatchUsersWhoHaveNotSubscribedToChannelSubscription,
   useAddChannelUserMutation,
+  User,
 } from '../../api/generated/graphql';
 import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../atom';
@@ -39,9 +40,7 @@ const AddChannelMembers: React.FC = () => {
   let history = useHistory();
   const { isLoading: loadingAuth0 } = useAuth0();
 
-  const [currentChannel, setCurrentChannel] = useRecoilState<Channel>(
-    currentChannelState,
-  );
+  const [currentChannel] = useRecoilState<Channel>(currentChannelState);
 
   if (!currentChannel) history.push('/channel/general');
 
@@ -51,7 +50,7 @@ const AddChannelMembers: React.FC = () => {
     error,
   } = useWatchUsersWhoHaveNotSubscribedToChannelSubscription({
     variables: {
-      user_id: currentChannel?.owner_id,
+      user_id: currentChannel?.owner_id ?? '',
       channel_id: currentChannel?.id,
     },
   });
@@ -61,7 +60,7 @@ const AddChannelMembers: React.FC = () => {
     { error: addChannelUserError },
   ] = useAddChannelUserMutation();
 
-  const handleUsersToggle = async (event: any, user_id: string) => {
+  const handleUsersToggle = async (user_id: string) => {
     await addChannelUserMutation({
       variables: {
         channel_id: currentChannel?.id,
@@ -119,20 +118,23 @@ const AddChannelMembers: React.FC = () => {
                 className={classes.spacer}
               >
                 {users &&
-                  users.user.map((u: any, index) => {
-                    return (
-                      <ListItem
-                        button
-                        key={index}
-                        onClick={(event) =>
-                          handleUsersToggle(event, u.auth0_user_id)
-                        }
-                      >
-                        <OnlineUserStatus user={u} />
-                        <ListItemText primary={u.username} />
-                      </ListItem>
-                    );
-                  })}
+                  users.user.map(
+                    (u: Pick<User, 'auth0_user_id' | 'username'>, index) => {
+                      return (
+                        <ListItem
+                          button
+                          key={index}
+                          onClick={() => {
+                            if (u.auth0_user_id)
+                              handleUsersToggle(u.auth0_user_id);
+                          }}
+                        >
+                          {u && <OnlineUserStatus user={u ?? ''} />}
+                          <ListItemText primary={u.username} />
+                        </ListItem>
+                      );
+                    },
+                  )}
               </List>
               <Divider className={classes.spacer} />
             </>

@@ -17,6 +17,7 @@ import { ThreadParams } from '../../../interfaces/param.interface';
 import MenuBar from '../../shared/MenuBar';
 import ThreadMessageInput from './ThreadMessageInput';
 import { Channel } from '../../../interfaces/channel.interface';
+import { ChannelThread } from '../../../interfaces/thread.interface';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,11 +49,9 @@ const useStyles = makeStyles((theme) => ({
 const Thread: React.FC = () => {
   const classes = useStyles();
   const [limit, setLimit] = useState(20);
-  const { user, error: auth0Error } = useAuth0();
+  const { user } = useAuth0();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [currentChannel, setCurrentChannel] = useRecoilState<Channel>(
-    currentChannelState,
-  );
+  const [currentChannel] = useRecoilState<Channel>(currentChannelState);
   let history = useHistory();
   const { messageId, channel } = useParams<ThreadParams>();
 
@@ -90,11 +89,8 @@ const Thread: React.FC = () => {
         scrollToBottom();
       }
     }, 200);
-  }, [data]);
-
-  useEffect(() => {
     if (currentChannel?.id === undefined) history.push(`/channel/${channel}`);
-  }, []);
+  }, [data, channel, currentChannel, history]);
 
   if (loading || getChannelThreadLoading) return <Loader />;
 
@@ -110,7 +106,9 @@ const Thread: React.FC = () => {
           <ThreadMessageList
             messages={data?.channel_thread_message as ThreadMessage[]}
             user={user}
-            channelThread={getChannelThreadData?.channel_thread[0]}
+            channelThread={
+              getChannelThreadData?.channel_thread[0] as ChannelThread
+            }
             currentChannel={currentChannel}
             handleIncreaseLimit={handleIncreaseLimit}
             limit={limit}
@@ -120,7 +118,7 @@ const Thread: React.FC = () => {
         <div ref={messagesEndRef} />
       </Box>
       <Box className={classes.messageInput}>
-        <MenuBar channelId={currentChannel?.id}>
+        <MenuBar>
           <ThreadMessageInput
             channelId={currentChannel?.id}
             channelThreadId={getChannelThreadData?.channel_thread[0]?.id}

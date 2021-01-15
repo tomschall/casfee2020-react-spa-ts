@@ -5,5 +5,5 @@ export interface Channel {
   id: number;
   is_private: boolean;
   name: string;
-  owner_id?: any;
+  owner_id?: string | null;
 }

@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Channels: React.FC<any> = () => {
+const Channels: React.FC = () => {
   const classes = useStyles();
   const [currentChannel] = useRecoilState<Channel>(currentChannelState);
   const [open, setOpen] = useState(true);
@@ -74,7 +74,7 @@ const Channels: React.FC<any> = () => {
         </ListItem>
         <Collapse in={open} timeout="auto">
           <List component="div">
-            {data?.channels?.map((data: any, index) => (
+            {data?.channels?.map((data, index) => (
               <ListItem
                 key={index}
                 button
