@@ -70,7 +70,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
     setUpdateEnabled(false);
   };
 
-  const handleUpdateAnswerText = async (answerId: number) => {
+  const handleUpdateAnswerText = (answerId: number) => {
     setAnswerTextUpdateId(answerId);
 
     if (answerText.text === '' || !answerText.text.trim()) {
@@ -82,7 +82,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
       setFieldError(false);
     }
 
-    await updatePollAnswerTextMutation({
+    updatePollAnswerTextMutation({
       variables: {
         text: Object.values(answerText)[0],
         pollAnswerId: answerId,
@@ -123,6 +123,12 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                 name={answer.text + answer.id}
                 required
                 disabled={getPollQuestion?.data?.poll_question[0].is_active}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    console.log('poll answer list');
+                    handleUpdateAnswerText(answer.id);
+                  }
+                }}
                 onChange={(e) => {
                   handleAnswerChange(answer?.id, e);
                   setAnswerTextUpdateId(answer.id);
@@ -139,7 +145,6 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                 }}
                 multiline
                 rows={1}
-                rowsMax={4}
                 size="small"
                 variant="outlined"
                 color="secondary"

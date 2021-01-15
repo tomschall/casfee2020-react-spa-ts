@@ -106,7 +106,7 @@ const UpdatePollQuestion: React.FC<UpdatePollQuestionLProps> = ({
               : 'Update poll question'
           }
           multiline
-          rowsMax={4}
+          rows={1}
           size="small"
           variant="outlined"
           color="secondary"
@@ -114,6 +114,11 @@ const UpdatePollQuestion: React.FC<UpdatePollQuestionLProps> = ({
           placeholder={pollQuestionText === 'no value' ? '' : pollQuestionText}
           disabled={pollQuestionDisabled}
           fullWidth
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              handleUpdatePollQuestion();
+            }
+          }}
           onChange={(e) => {
             handlePollQuestionChange(e);
           }}

@@ -88,7 +88,9 @@ const PollAnswers: React.FC = () => {
     }
   };
 
-  const handleAddAnswer = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAddAnswer = (
+    e: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLDivElement>,
+  ) => {
     e.preventDefault();
 
     if (!answerNewText.text.trim() || answerNewText.text === '') {
@@ -98,14 +100,14 @@ const PollAnswers: React.FC = () => {
     } else {
       setFieldError(false);
     }
-    await addPollQuestionMutation({
+    addPollQuestionMutation({
       variables: {
         text: answerNewText.text.trim(),
         pollQuestionId: parseInt(pollQuestionId),
       },
     });
 
-    answerNewText.text = '';
+    setAnswerNewText({ text: '' });
   };
 
   return (
@@ -151,6 +153,11 @@ const PollAnswers: React.FC = () => {
               autoComplete="off"
               placeholder="Type your answers here ..."
               disabled={getPollQuestion?.data?.poll_question[0]?.is_active}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleAddAnswer(e);
+                }
+              }}
               onFocus={() => {
                 setFieldError(false);
                 answerNewText.text = '';
