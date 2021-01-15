@@ -55,19 +55,20 @@ const AddChannelMembers: React.FC = () => {
     },
   });
 
+  console.log('users', users);
+
   const [
     addChannelUserMutation,
     { error: addChannelUserError },
   ] = useAddChannelUserMutation();
 
-  const handleUsersToggle = async (user_id: string | undefined | null) => {
-    if (user_id)
-      await addChannelUserMutation({
-        variables: {
-          channel_id: currentChannel?.id,
-          user_id,
-        },
-      });
+  const handleUsersToggle = async (user_id: string) => {
+    await addChannelUserMutation({
+      variables: {
+        channel_id: currentChannel?.id,
+        user_id,
+      },
+    });
   };
 
   if (error || addChannelUserError)
@@ -125,9 +126,12 @@ const AddChannelMembers: React.FC = () => {
                         <ListItem
                           button
                           key={index}
-                          onClick={() => handleUsersToggle(u.auth0_user_id)}
+                          onClick={() => {
+                            if (u.auth0_user_id)
+                              handleUsersToggle(u.auth0_user_id);
+                          }}
                         >
-                          <OnlineUserStatus user={u} />
+                          {u && <OnlineUserStatus user={u ?? ''} />}
                           <ListItemText primary={u.username} />
                         </ListItem>
                       );

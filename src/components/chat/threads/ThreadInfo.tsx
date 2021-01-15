@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Channel } from '../../../interfaces/channel.interface';
+import { ChannelThread } from '../../../interfaces/thread.interface';
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -73,8 +74,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface ThreadInfoProps {
-  channelThread: any;
-  currentChannel: Channel;
+  channelThread: ChannelThread;
+  currentChannel: Channel | { id: number; name: string };
   showThreadInfo?: boolean;
 }
 
@@ -85,7 +86,7 @@ const ThreadInfo: React.FC<ThreadInfoProps> = ({
 }) => {
   const classes = useStyles();
 
-  const renderThreadInfo = (channelThread: any) => {
+  const renderThreadInfo = (channelThread: ChannelThread) => {
     return (
       <>
         {showThreadInfo && (

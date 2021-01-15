@@ -22,6 +22,7 @@ import { useRecoilValue } from 'recoil';
 import { deletedMessageState } from '../../atom';
 import { useParams } from 'react-router';
 import { ChatParams } from '../../interfaces/param.interface';
+import { Auth0User } from '../../interfaces/user.interface';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -113,7 +114,7 @@ interface MessageProps {
   messages: Message[];
   lastMessage: Message | null;
   preLastMessageId: number | null;
-  user: any;
+  user: Auth0User;
   handleIncreaseLimit: () => void;
   limit: number;
   setRef: React.Dispatch<

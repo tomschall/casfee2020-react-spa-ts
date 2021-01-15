@@ -1,7 +1,10 @@
 import React from 'react';
 import { Avatar, Badge, ListItemIcon } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useWatchOnlineUsersSubscription } from '../../api/generated/graphql';
+import {
+  useWatchOnlineUsersSubscription,
+  User,
+} from '../../api/generated/graphql';
 import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface OnlineUserStatusProps {
-  user: any;
+  user: Pick<User, 'auth0_user_id' | 'username'>;
 }
 
 const OnlineUserStatus: React.FC<OnlineUserStatusProps> = ({ user }) => {
@@ -65,8 +68,9 @@ const OnlineUserStatus: React.FC<OnlineUserStatusProps> = ({ user }) => {
     return <Alert severity="error">A OnlineUserStatusError occured.</Alert>;
   }
 
-  const setOnlineUsersStatus = (user_id: string) => {
-    if (user_id === undefined) return { badge: classes.badgeOffline };
+  const setOnlineUsersStatus = (user_id: string | null | undefined) => {
+    if (user_id === undefined || user_id === null)
+      return { badge: classes.badgeOffline };
 
     const onlineUser = onlineUsers?.users.filter((u) => {
       return user_id === u.auth0_user_id ? true : false;
@@ -78,13 +82,20 @@ const OnlineUserStatus: React.FC<OnlineUserStatusProps> = ({ user }) => {
   };
 
   return (
-    <ListItemIcon>
-      <Badge classes={setOnlineUsersStatus(user.auth0_user_id)} variant="dot">
-        <Avatar className={classes.avatar}>
-          {user.username.substring(0, 2).toUpperCase()}
-        </Avatar>
-      </Badge>
-    </ListItemIcon>
+    <>
+      {user && user.username && (
+        <ListItemIcon>
+          <Badge
+            classes={setOnlineUsersStatus(user.auth0_user_id)}
+            variant="dot"
+          >
+            <Avatar className={classes.avatar}>
+              {user.username.substring(0, 2).toUpperCase()}
+            </Avatar>
+          </Badge>
+        </ListItemIcon>
+      )}
+    </>
   );
 };
 

@@ -3,15 +3,17 @@ import { Badge } from '@material-ui/core';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 
 interface ShowTotalVotesProps {
-  totalVotes: number;
+  totalVotes: number | null;
 }
 
 const ShowTotalVotes: React.FC<ShowTotalVotesProps> = ({ totalVotes }) => {
   return (
     <>
-      <Badge color="secondary" badgeContent={totalVotes}>
-        <HowToVoteIcon color="primary" />
-      </Badge>
+      {totalVotes && (
+        <Badge color="secondary" badgeContent={totalVotes}>
+          <HowToVoteIcon color="primary" />
+        </Badge>
+      )}
     </>
   );
 };

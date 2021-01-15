@@ -1,5 +1,6 @@
 import React from 'react';
 import { useWatchThreadsSubscription } from '../../../api/generated/graphql';
+import { ChannelThreadList } from '../../../interfaces/thread.interface';
 import ThreadList from './ThreadList';
 import { Alert } from '@material-ui/lab';
 import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
@@ -81,7 +82,9 @@ const ThreadListContainer: React.FC = () => {
                   xs={12}
                   className={classes.messageContainer}
                 >
-                  <ThreadList channelThread={channelThread} />
+                  <ThreadList
+                    channelThread={channelThread as ChannelThreadList}
+                  />
                 </Grid>
               );
           })}

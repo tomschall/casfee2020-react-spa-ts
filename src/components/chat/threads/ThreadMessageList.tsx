@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { ThreadMessage } from '../../../interfaces/message.interface';
 import { Channel } from '../../../interfaces/channel.interface';
+import { Auth0User } from '../../../interfaces/user.interface';
 import ThreadInfo from './ThreadInfo';
 import ThreadDeleteMessage from './ThreadDeleteMessage';
 import {
@@ -16,6 +17,7 @@ import {
   Button,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { ChannelThread } from '../../../interfaces/thread.interface';
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -88,9 +90,9 @@ export const useStyles = makeStyles((theme) => ({
 
 interface ThreadMessageListProps {
   messages: ThreadMessage[];
-  user: any;
-  channelThread: any;
-  currentChannel: Channel;
+  user: Auth0User;
+  channelThread: ChannelThread;
+  currentChannel: Channel | { id: number; name: string };
   handleIncreaseLimit: () => void;
   limit: number;
   showThreadInfo?: boolean;
