@@ -15,20 +15,19 @@ module.exports = Object.assign(
   describe('Testing chat app', function () {
     test('Click login button & login', (browser) => {
       const page = browser.page.chatApp();
+      const text = 'Welcome to Chicken Chat';
 
       browser
         .url(browser.globals.url)
         .waitForElementVisible('body')
         .pause(3000);
 
-      page.clickLoginButton().login(`${user}`, `${pw}`);
+      page.clickLoginButton(text).login(`${user}`, `${pw}`);
     });
 
     test('send message', (browser) => {
       const message = 'nightwatch sending a message';
       const page = browser.page.chatApp();
-
-      browser.pause(3000);
 
       page.sendMessage(message);
     });

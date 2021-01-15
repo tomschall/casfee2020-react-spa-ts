@@ -63,9 +63,9 @@ module.exports = {
 
   commands: [
     {
-      clickLoginButton() {
+      clickLoginButton(text) {
         return this.assert
-          .containsText('body', 'Welcome to Chicken Chat')
+          .containsText('body', text)
           .pause(3000)
           .click('@loginButton')
           .pause(3000);
@@ -79,7 +79,8 @@ module.exports = {
           .expect.element('body').to.be.visible;
       },
       sendMessage(message) {
-        return this.setValue('@messageInput', message)
+        return this.pause(3000)
+          .setValue('@messageInput', message)
           .pause(1000)
           .assert.valueContains('@messageInput', message)
           .click('@messageSubmit');
