@@ -4,7 +4,7 @@ import { withAuthenticationRequired } from '@auth0/auth0-react';
 import Loader from './shared/Loader';
 
 interface PrivateRouteProps {
-  component: FunctionComponent<any>;
+  component: FunctionComponent;
   path: string;
 }
 
@@ -12,11 +12,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ component, ...args }) => {
   return (
     <Route
       component={withAuthenticationRequired(component, {
-        onRedirecting: () => (
-          <>
-            <Loader />
-          </>
-        ),
+        onRedirecting: () => <Loader />,
       })}
       {...args}
     />

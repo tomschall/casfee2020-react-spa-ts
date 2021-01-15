@@ -47,13 +47,14 @@ const PublishChannelPolling: React.FC = () => {
   const classes = useStyles();
   const { user } = useAuth0();
   const [currentChannel] = useRecoilState<Channel>(currentChannelState);
-  const [selectedPollAnswerId, setSelectedPollAnswerId] = React.useState<
-    number | null
-  >(null);
+  const [
+    selectedPollAnswerId,
+    setSelectedPollAnswerId,
+  ] = React.useState<number>(0);
 
   const { data: getPollAnswerVotes } = useWatchPollAnswerVotesSubscription({
     variables: {
-      pollAnswerId: selectedPollAnswerId ?? 0,
+      pollAnswerId: selectedPollAnswerId,
     },
   });
 
