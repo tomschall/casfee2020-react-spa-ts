@@ -50,9 +50,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(0),
   },
-  image: {
-    paddingBottom: '0.5rem',
-  },
   avatar: {
     width: theme.spacing(4),
     height: theme.spacing(4),
@@ -70,6 +67,17 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 11,
     fontWeight: 'bold',
     border: '2px solid #f57c00',
+  },
+  image: {
+    paddingBottom: '0.5rem',
+  },
+  giphy: {
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+    [theme.breakpoints.up('md')]: {
+      width: '25%',
+    },
   },
 }));
 
@@ -164,6 +172,17 @@ const ThreadInfo: React.FC<ThreadInfoProps> = ({
             <Typography component="div" className={classes.messageText}>
               {channelThread.message.text}
             </Typography>
+            {channelThread.message?.image ? (
+              <Box className={classes.image}>
+                <img
+                  alt={channelThread.message.image}
+                  src={channelThread.message.image}
+                  className={classes.giphy}
+                />
+              </Box>
+            ) : (
+              ''
+            )}
           </Box>
         </ListItem>
       </>

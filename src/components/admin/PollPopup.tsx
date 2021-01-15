@@ -4,7 +4,7 @@ import { useWatchChannelHasActivePollSubscription } from '../../api/generated/gr
 import PopupState, { bindPopover } from 'material-ui-popup-state';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import Loader from '../shared/Loader';
-import PublishChannelPolling from '../adminPollings/PublishChannelPolling';
+import PublishChannelPolling from './PublishChannelPolling';
 import { makeStyles } from '@material-ui/core/styles';
 import { bindTrigger } from 'material-ui-popup-state/hooks';
 import Logo from '../shared/Logo';
