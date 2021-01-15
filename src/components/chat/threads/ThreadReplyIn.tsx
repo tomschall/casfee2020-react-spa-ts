@@ -75,7 +75,7 @@ const ThreadReplyIn: React.FC<ThreadReplyInProps> = ({
                 ?.length === 1
                 ? 'reply'
                 : 'replies'
-            } `}
+            }`}
           </Typography>
           <Typography
             variant="caption"
