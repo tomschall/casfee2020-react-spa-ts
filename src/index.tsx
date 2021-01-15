@@ -6,10 +6,11 @@ import { Auth0Provider } from '@auth0/auth0-react';
 import ApolloWrapper from './components/ApolloWrapper';
 import './index.css';
 import App from './App';
+import { AppState } from '@auth0/auth0-react/dist/auth0-provider';
 
 // A function that routes the user to the right place
 // after login
-const onRedirectCallback = (appState: any) => {
+const onRedirectCallback = (appState: AppState) => {
   window.history.replaceState(
     {},
     document.title,
