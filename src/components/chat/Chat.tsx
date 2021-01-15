@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Box } from '@material-ui/core';
 import MessageList from './MessageList';
 import MessageInput from './MessageInput';
@@ -74,13 +74,13 @@ const Chat: React.FC<ChatProps> = ({ channelId }) => {
 
   const [upsertMessageCursorMutation] = useUpsertMessageCursorMutation();
 
-  const scrollToBottom = () => {
+  const scrollToBottom = useCallback(() => {
     if (typeof ref === 'object') {
       setTimeout(() => {
         ref?.current?.scrollIntoView();
-      }, 100);
+      }, 200);
     }
-  };
+  }, [ref]);
 
   useEffect(() => {
     if (data?.messages[0]?.id)
@@ -91,16 +91,22 @@ const Chat: React.FC<ChatProps> = ({ channelId }) => {
           user_id: user.sub,
         },
       });
-  });
 
-  useEffect(() => {
     setTimeout(() => {
       if (scrollIsInit && data && data?.messages?.length > 5) {
         scrollToBottom();
         setScrollIsInit(false);
       }
     }, 1000);
-  });
+  }, [
+    ref,
+    data,
+    channelId,
+    user.sub,
+    scrollIsInit,
+    scrollToBottom,
+    upsertMessageCursorMutation,
+  ]);
 
   if (error) {
     return <Alert severity="error">Messages could not be loaded.</Alert>;

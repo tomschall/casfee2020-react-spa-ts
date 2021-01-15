@@ -88,11 +88,8 @@ const Thread: React.FC = () => {
         scrollToBottom();
       }
     }, 200);
-  }, [data]);
-
-  useEffect(() => {
     if (currentChannel?.id === undefined) history.push(`/channel/${channel}`);
-  });
+  }, [data, channel, currentChannel, history]);
 
   if (loading || getChannelThreadLoading) return <Loader />;
 
