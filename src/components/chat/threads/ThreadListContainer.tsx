@@ -74,21 +74,23 @@ const ThreadListContainer: React.FC = () => {
       <div className={classes.root}>
         <Grid container>
           {data?.channel_thread?.map((channelThread, index) => {
-            if (channelThread.channel_thread_messages.length)
+            if (channelThread && channelThread.channel_thread_messages.length)
               return (
-                <Grid
-                  key={index}
-                  item
-                  xs={12}
-                  className={classes.messageContainer}
-                >
-                  <ThreadList
-                    channelThread={channelThread as ChannelThreadList}
-                  />
-                </Grid>
+                <>
+                  <Grid
+                    key={index}
+                    item
+                    xs={12}
+                    className={classes.messageContainer}
+                  >
+                    <ThreadList
+                      channelThread={channelThread as ChannelThreadList}
+                    />
+                  </Grid>
+                  <Box className={classes.end}>&nbsp;</Box>
+                </>
               );
           })}
-          <Box className={classes.end}>&nbsp;</Box>
         </Grid>
       </div>
     </>

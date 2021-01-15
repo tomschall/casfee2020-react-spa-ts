@@ -18,6 +18,7 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { ChannelThread } from '../../../interfaces/thread.interface';
+import Loader from '../../shared/Loader';
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -183,11 +184,13 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
         )}
       </Box>
 
-      {messages
-        ? [...messages]
-            ?.reverse()
-            ?.map((message: ThreadMessage) => renderMessage(message))
-        : ''}
+      {messages ? (
+        [...messages]
+          ?.reverse()
+          ?.map((message: ThreadMessage) => renderMessage(message))
+      ) : (
+        <Loader />
+      )}
     </>
   );
 };

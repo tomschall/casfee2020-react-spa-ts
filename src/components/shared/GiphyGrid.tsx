@@ -44,7 +44,7 @@ const GiphyGrid: React.FC = () => {
         gutter={6}
       />
       <ResizeObserver
-        onResize={({ width }: any) => {
+        onResize={({ width }) => {
           setWidth(width);
         }}
       />

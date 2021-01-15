@@ -19,7 +19,7 @@ const ThreadList: React.FC<ThreadListProps> = ({ channelThread }) => {
   const { data, error } = useWatchChannelThreadMessagesSubscription({
     variables: {
       limit,
-      message_id: channelThread.message_id ?? 0,
+      message_id: channelThread.message_id,
     },
   });
 
