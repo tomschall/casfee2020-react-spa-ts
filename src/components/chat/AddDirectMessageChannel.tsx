@@ -172,7 +172,6 @@ const AddDirectMessageChannel: React.FC = () => {
                   dm_user: Pick<User, 'auth0_user_id' | 'username'>,
                   index: number,
                 ) => {
-                  console.log('dm_user', dm_user);
                   return (
                     <ListItem
                       button
