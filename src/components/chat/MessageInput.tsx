@@ -110,6 +110,7 @@ const MessageInput: React.FC<MessageInputProps> = (props) => {
 
   const handleTyping = (text: string) => {
     const textLength = text.length;
+
     if ((textLength !== 0 && textLength % 5 === 0) || textLength === 1) {
       sendTypingEventMutation();
     }
@@ -199,6 +200,11 @@ const MessageInput: React.FC<MessageInputProps> = (props) => {
           autoComplete="off"
           id="chat-message-input"
           label={<TypingIndicator />}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              handleSubmit(e);
+            }
+          }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">

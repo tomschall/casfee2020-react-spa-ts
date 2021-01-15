@@ -113,7 +113,9 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
 
   const [sendMessage] = useInsertChannelThreadMessageMutation();
 
-  const handleSubmit = async (e: React.SyntheticEvent) => {
+  const handleSubmit = async (
+    e: React.SyntheticEvent | React.KeyboardEvent<HTMLDivElement>,
+  ) => {
     e.preventDefault();
 
     if (text === '' && gif === null) {
@@ -171,6 +173,11 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
           autoFocus={false}
           onChange={(e) => {
             handleTyping(e.target.value);
+          }}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              handleSubmit(e);
+            }
           }}
           focused
           size={setTextFieldSize()}

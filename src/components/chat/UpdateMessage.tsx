@@ -86,6 +86,11 @@ const UpdateMessage: React.FC<UpdateMessageProps> = ({ message }) => {
           onChange={(e) => {
             handleTyping(e.target.value);
           }}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              handleUpdate(e);
+            }
+          }}
           variant="outlined"
           color="secondary"
           autoComplete="off"

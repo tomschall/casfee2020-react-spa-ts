@@ -53,7 +53,9 @@ const AddPollQuestion: React.FC = () => {
     setPollTitle({ ...pollTitle, [e.target.id]: e.target.value });
   };
 
-  const handleAddTitle = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAddTitle = async (
+    e: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLDivElement>,
+  ) => {
     e.preventDefault();
 
     if (pollTitle.title === '' || !pollTitle.title.trim()) {
@@ -101,6 +103,11 @@ const AddPollQuestion: React.FC = () => {
               color="secondary"
               autoComplete="off"
               placeholder="Type your question here ..."
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleAddTitle(e);
+                }
+              }}
               onFocus={() => {
                 setFieldError(false);
               }}
