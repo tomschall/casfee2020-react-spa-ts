@@ -123,9 +123,9 @@ const App: React.FC = () => {
         </Container>
       ) : (
         <Switch>
-          <PrivateRoute path="/dashboard" component={AdminBoard} />
           <Redirect exact from="/channel" to="/channel/general" />
           <PrivateRoute path="/channel/:channel" component={ChatBoard} />
+          <PrivateRoute path="/dashboard" component={AdminBoard} />
           <Route path="/" component={SignIn} />
           <Redirect to="/" />
         </Switch>
