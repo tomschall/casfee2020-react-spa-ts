@@ -8,7 +8,7 @@ import {
   useDeletePollQuestionFromChannelMutation,
 } from '../../api/generated/graphql';
 import { Box, Chip } from '@material-ui/core';
-import Loader from '../../components/shared/Loader';
+import Loader from '../shared/Loader';
 
 interface GetChannelsProps {
   questionId: number;

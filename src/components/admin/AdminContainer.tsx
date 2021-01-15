@@ -5,10 +5,10 @@ import { Route, Switch } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
 import { Box, Grid } from '@material-ui/core/';
 import AdminUserList from './AdminUserList';
-import PollingDashBoard from '../adminPollings/PollingDashBoard';
-import PollAnswers from '../adminPollings/PollAnswers';
+import PollingDashBoard from './PollingDashBoard';
+import PollAnswers from './PollAnswers';
 import NotFound from '../shared/NotFound';
-import MobileHeaderDashboardMenu from '../adminPollings/MobileHeaderDashboardMenu';
+import MobileHeaderDashboardMenu from './MobileHeaderDashboardMenu';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
