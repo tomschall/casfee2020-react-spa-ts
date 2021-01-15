@@ -13,7 +13,7 @@ module.exports = Object.assign(
   },
 
   describe('Testing chat app', function () {
-    test('auth0 login', (browser) => {
+    test('Click login button & login', (browser) => {
       const page = browser.page.chatApp();
 
       browser
@@ -21,12 +21,14 @@ module.exports = Object.assign(
         .waitForElementVisible('body')
         .pause(3000);
 
-      page.login(`${user}`, `${pw}`);
+      page.clickLoginButton().login(`${user}`, `${pw}`);
     });
 
     test('send message', (browser) => {
       const message = 'nightwatch sending a message';
       const page = browser.page.chatApp();
+
+      browser.pause(3000);
 
       page.sendMessage(message);
     });
@@ -51,7 +53,7 @@ module.exports = Object.assign(
       page.ariaChannelListDropdown();
     });
 
-    test('add channel (public)', (browser) => {
+    xtest('add channel (public)', (browser) => {
       const channelName = 'nightwatch';
       const page = browser.page.chatApp();
 
@@ -60,10 +62,9 @@ module.exports = Object.assign(
       page.addChannelPublic(channelName);
     });
 
-    test('add channel (private)', (browser) => {
+    xtest('add channel (private)', (browser) => {
       const channelName = 'nightwatch private';
       const page = browser.page.chatApp();
-
       browser.pause(3000);
 
       page.addChannelPrivate(channelName);
