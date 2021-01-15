@@ -7,9 +7,3 @@ export interface Auth0User {
   sub?: string;
   updated_at?: string;
 }
-
-export interface User {
-  auth0_user_id: string;
-  user_channels?: any[];
-  username: string;
-}

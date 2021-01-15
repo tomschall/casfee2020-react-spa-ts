@@ -50,12 +50,10 @@ const AddChannelMembers: React.FC = () => {
     error,
   } = useWatchUsersWhoHaveNotSubscribedToChannelSubscription({
     variables: {
-      user_id: currentChannel?.owner_id,
+      user_id: currentChannel?.owner_id ?? '',
       channel_id: currentChannel?.id,
     },
   });
-
-  console.log('users', users);
 
   const [
     addChannelUserMutation,

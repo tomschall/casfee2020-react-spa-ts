@@ -117,7 +117,7 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
           <ListItemIcon>
             <Badge variant="dot">
               <Avatar className={classes.avatar}>
-                {message.user.username.substring(0, 2).toUpperCase()}
+                {message?.user?.username.substring(0, 2).toUpperCase()}
               </Avatar>
             </Badge>
           </ListItemIcon>
@@ -135,14 +135,14 @@ const ThreadMessageList: React.FC<ThreadMessageListProps> = ({
               alignItems="flex-start"
             >
               <Typography variant="caption">
-                <strong>{message.user.username} </strong>
+                <strong>{message?.user?.username} </strong>
                 <i>{moment(message.timestamp).fromNow()}</i>
               </Typography>
               <Divider className={classes.vspace} />
             </Box>
             <Box>
               <Typography variant="caption">
-                {user.sub === message.user.auth0_user_id ? (
+                {user.sub === message?.user?.auth0_user_id ? (
                   <ThreadDeleteMessage messageId={message.id} />
                 ) : (
                   ''

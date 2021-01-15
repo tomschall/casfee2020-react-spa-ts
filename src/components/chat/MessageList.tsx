@@ -141,7 +141,7 @@ const MessageList: React.FC<MessageProps> = ({
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const handleShowUpdate = (message: Message) => {
-    if (message.user.auth0_user_id !== user.sub) return;
+    if (message?.user?.auth0_user_id !== user.sub) return;
     setShowUpdateMessageId(message.id);
     setShowUpdate(!showUpdate);
   };
@@ -155,12 +155,12 @@ const MessageList: React.FC<MessageProps> = ({
       <ListItem key={message.id} component="div" className={classes.listItem}>
         <ListItemAvatar>
           <ListItemIcon
-            aria-label={message.user.username.substring(0, 2).toUpperCase()}
+            aria-label={message?.user?.username.substring(0, 2).toUpperCase()}
           >
             <Badge variant="dot">
               {!message.deleted ? (
                 <Avatar className={classes.avatar}>
-                  {message.user.username.substring(0, 2).toUpperCase()}
+                  {message?.user?.username.substring(0, 2).toUpperCase()}
                 </Avatar>
               ) : (
                 <Avatar
@@ -190,7 +190,7 @@ const MessageList: React.FC<MessageProps> = ({
               <Typography color="secondary" variant="caption">
                 {!message.deleted ? (
                   <>
-                    <strong>{message.user.username} </strong>
+                    <strong>{message?.user?.username} </strong>
                   </>
                 ) : (
                   <strong>Oh sorry it seems...</strong>
@@ -214,7 +214,7 @@ const MessageList: React.FC<MessageProps> = ({
 
                 {!message.deleted ? (
                   <React.Fragment>
-                    {user.sub === message.user.auth0_user_id && (
+                    {user.sub === message?.user?.auth0_user_id && (
                       <Typography variant="caption">
                         {!(
                           showUpdate && showUpdateMessageId === message.id
@@ -237,7 +237,7 @@ const MessageList: React.FC<MessageProps> = ({
           >
             {showUpdate &&
             showUpdateMessageId === message.id &&
-            user.sub === message.user.auth0_user_id &&
+            user.sub === message?.user?.auth0_user_id &&
             message.deleted === false ? (
               <UpdateMessage message={message} />
             ) : (

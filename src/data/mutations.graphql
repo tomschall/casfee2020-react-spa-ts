@@ -17,7 +17,7 @@ mutation insertMessage($message: message_insert_input!) {
 mutation updateMessage($_eq: Int!, $text: String!, $deleted: Boolean = false) {
   update_message(
     where: { id: { _eq: $_eq } }
-    _set: { text: $text, deleted: $deleted }
+    _set: { text: $text, deleted: $deleted, image: null }
   ) {
     affected_rows
   }
