@@ -4,9 +4,9 @@ import { RecoilRoot } from 'recoil';
 import { BrowserRouter } from 'react-router-dom';
 import { Auth0Provider } from '@auth0/auth0-react';
 import ApolloWrapper from './components/ApolloWrapper';
+import { AppState } from '@auth0/auth0-react/dist/auth0-provider';
 import './index.css';
 import App from './App';
-import { AppState } from '@auth0/auth0-react/dist/auth0-provider';
 
 // A function that routes the user to the right place
 // after login
