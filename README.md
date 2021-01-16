@@ -169,6 +169,20 @@ npx nightwatch nightwatch --env production
 - Usability Tests
 - We also tested the app with browserstack emulator and on real smartphones with iOS and Android
 
+## Browserstack Android Testings
+
+<p align="center">
+  <img src="public/browserstack-android.jpg" alt="Browserstack Android">
+  <img src="public/browserstack-tablet.jpg" alt="Browserstack Android Tablet">
+</p>
+
+## Browserstack iPhone Testings
+
+<p align="center">
+  <img src="public/browserstack-iphone.jpg" alt="Browserstack iOS">
+  <img src="public/browserstack-ios-tablet.jpg" alt="Browserstack iOS Tablet">
+</p>
+
 ## Demo Chatapp
 
 URL: https://chickenfest.ch
