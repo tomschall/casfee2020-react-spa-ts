@@ -142,13 +142,13 @@ Update your nightwatch test user in nightwatch.conf.js accordingly.
 ### E2E-Tests (local)
 
 ```
-npx nightwatch nightwatch
+yarn nightwatch
 ```
 
 ### E2E-Tests (https://chickenfest.ch)
 
 ```
-npx nightwatch nightwatch --env production
+yarn nightwatch --env production
 ```
 
 ## Extras

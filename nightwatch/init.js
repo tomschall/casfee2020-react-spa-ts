@@ -52,7 +52,7 @@ module.exports = Object.assign(
       page.ariaChannelListDropdown();
     });
 
-    xtest('add channel (public)', (browser) => {
+    test('add channel (public)', (browser) => {
       const channelName = 'nightwatch';
       const page = browser.page.chatApp();
 
@@ -61,7 +61,7 @@ module.exports = Object.assign(
       page.addChannelPublic(channelName);
     });
 
-    xtest('add channel (private)', (browser) => {
+    test('add channel (private)', (browser) => {
       const channelName = 'nightwatch private';
       const page = browser.page.chatApp();
       browser.pause(3000);
