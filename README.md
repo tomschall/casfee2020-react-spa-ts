@@ -176,7 +176,7 @@ npx nightwatch nightwatch --env production
   <img src="public/browserstack-tablet.jpg" alt="Browserstack Android Tablet">
 </p>
 
-## Browserstack iPhone Testings (Mobile/Tablet)
+## Browserstack iOS Testings (Mobile/Tablet)
 
 <p align="center">
   <img src="public/browserstack-iphone.jpg" alt="Browserstack iOS">
