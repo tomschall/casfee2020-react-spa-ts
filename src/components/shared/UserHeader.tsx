@@ -36,7 +36,7 @@ const UserHeader: React.FC<UserHeaderProps> = ({ channelId }) => {
   return (
     <OnlineUserStatus
       user={data?.channel[0]?.user_channels[0]?.user}
-      showBadgeOnly={true}
+      showBadgeInChildren={true}
     >
       <Chip
         size="small"

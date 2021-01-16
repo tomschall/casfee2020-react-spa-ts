@@ -122,12 +122,7 @@ const MessageInput: React.FC<MessageInputProps> = (props) => {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    if (text === '' && gif === null) {
-      return;
-    }
-
-    if (text.length > 2000) {
-      alert('Your text limit has reached the limit of 2000 characters');
+    if (!text && !gif) {
       return;
     }
 
@@ -192,6 +187,7 @@ const MessageInput: React.FC<MessageInputProps> = (props) => {
           }}
           focused={true}
           inputRef={textInput}
+          inputProps={{ maxLength: 2000 }}
           size={setTextFieldSize()}
           variant="outlined"
           multiline

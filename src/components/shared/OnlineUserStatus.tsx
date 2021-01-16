@@ -53,13 +53,13 @@ const useStyles = makeStyles((theme) => ({
 
 interface OnlineUserStatusProps {
   user?: Pick<User, 'auth0_user_id' | 'username'>;
-  showBadgeOnly?: boolean;
+  showBadgeInChildren?: boolean;
 }
 
 const OnlineUserStatus: React.FC<OnlineUserStatusProps> = ({
   user,
   children,
-  showBadgeOnly = false,
+  showBadgeInChildren = false,
 }) => {
   const classes = useStyles();
 
@@ -88,25 +88,20 @@ const OnlineUserStatus: React.FC<OnlineUserStatusProps> = ({
 
   return (
     <>
-      {!showBadgeOnly && user && user.username && (
+      {user && user.username && (
         <ListItemIcon>
           <Badge
             classes={setOnlineUsersStatus(user.auth0_user_id)}
             variant="dot"
           >
-            <Avatar className={classes.avatar}>
-              {user.username.substring(0, 2).toUpperCase()}
-            </Avatar>
-          </Badge>
-        </ListItemIcon>
-      )}
-      {showBadgeOnly && user && user.username && (
-        <ListItemIcon>
-          <Badge
-            classes={setOnlineUsersStatus(user.auth0_user_id)}
-            variant="dot"
-          >
-            <>{children}</>
+            {showBadgeInChildren && <>{children}</>}
+            {!showBadgeInChildren && (
+              <>
+                <Avatar className={classes.avatar}>
+                  {user.username.substring(0, 2).toUpperCase()}
+                </Avatar>
+              </>
+            )}
           </Badge>
         </ListItemIcon>
       )}

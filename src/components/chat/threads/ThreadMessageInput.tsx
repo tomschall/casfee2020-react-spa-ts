@@ -118,16 +118,7 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
   ) => {
     e.preventDefault();
 
-    if (text === '' && gif === null) {
-      return;
-    }
-
-    if (text.length > 2000) {
-      alert('Your text limit has reached the limit of 2000 characters');
-      return;
-    }
-
-    if (props.channelThreadId === undefined) {
+    if ((!text && !gif) || !props.channelThreadId) {
       return;
     }
 
@@ -179,6 +170,7 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
               handleSubmit(e);
             }
           }}
+          inputProps={{ maxLength: 2000 }}
           focused
           size={setTextFieldSize()}
           variant="outlined"
