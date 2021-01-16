@@ -110,7 +110,7 @@ const MobileHeaderMenu: React.FC<MobileHeaderMenuProps> = ({
           </IconButton>
         )}
         {currentChannel?.channel_type === Channel_Type_Enum.DirectMessage &&
-          user && <UserHeader channelId={currentChannel.id} user={user} />}
+          user && <UserHeader channelId={currentChannel.id} />}
         {currentChannel?.channel_type === Channel_Type_Enum.ChatMessage &&
           currentChannel?.is_private === false &&
           !isThreadList && (

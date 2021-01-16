@@ -14,6 +14,8 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { Channel } from '../../../interfaces/channel.interface';
 import { ChannelThread } from '../../../interfaces/thread.interface';
+import { Channel_Type_Enum } from '../../../api/generated/graphql';
+import UserHeader from '../../shared/UserHeader';
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -97,16 +99,25 @@ const ThreadInfo: React.FC<ThreadInfoProps> = ({
   const renderThreadInfo = (channelThread: ChannelThread) => {
     return (
       <>
-        {showThreadInfo && (
-          <Box display="flex" justifyContent="center" alignItems="center">
-            <Chip
-              variant="outlined"
-              size="small"
-              color="primary"
-              label={<strong>Thread - {currentChannel.name} </strong>}
-            />
-          </Box>
-        )}
+        {showThreadInfo &&
+          channelThread?.message?.channel?.channel_type ===
+            Channel_Type_Enum.ChatMessage && (
+            <Box display="flex" justifyContent="center" alignItems="center">
+              <Chip
+                variant="outlined"
+                size="small"
+                color="primary"
+                label={<strong>Thread - {currentChannel?.name} </strong>}
+              />
+            </Box>
+          )}
+        {showThreadInfo &&
+          channelThread?.message?.channel?.channel_type ===
+            Channel_Type_Enum.DirectMessage && (
+            <Box display="flex" justifyContent="center" alignItems="center">
+              <UserHeader channelId={channelThread?.message?.channel?.id} />
+            </Box>
+          )}
         <Divider className={classes.vspaceTop} />
         <ListItem
           key={channelThread.message.id}
