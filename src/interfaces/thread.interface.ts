@@ -1,11 +1,14 @@
-import { Message } from './message.interface';
+import { Channel_Type_Enum } from '../api/generated/graphql';
 
 export interface ChannelThread {
+  channel_thread_messages?: ChannelThreadThreadMessages[];
   id: number;
   message: MessageChannelThread;
+  message_id?: number;
 }
 
 export interface MessageChannelThread {
+  channel?: { id: number; name: string; channel_type: Channel_Type_Enum };
   deleted: false;
   id: number;
   image: string | null;
@@ -15,7 +18,7 @@ export interface MessageChannelThread {
 }
 
 export interface MessageChannelThreadList {
-  channel: { id: number; name: string };
+  channel: { id: number; name: string; channel_type: Channel_Type_Enum };
   deleted: false;
   id: number;
   image: string | null;

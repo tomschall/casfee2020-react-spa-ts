@@ -70,6 +70,7 @@ subscription watchThreads {
       channel {
         id
         name
+        channel_type
       }
     }
     channel_thread_messages {
