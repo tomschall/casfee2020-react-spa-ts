@@ -122,7 +122,7 @@ const MessageInput: React.FC<MessageInputProps> = (props) => {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    if (!text && !gif) {
+    if (!text.trim() && !gif) {
       return;
     }
 

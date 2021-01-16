@@ -118,7 +118,7 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
   ) => {
     e.preventDefault();
 
-    if ((!text && !gif) || !props.channelThreadId) {
+    if ((!text.trim() && !gif) || !props.channelThreadId) {
       return;
     }
 
