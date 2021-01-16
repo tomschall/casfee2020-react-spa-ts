@@ -13,25 +13,21 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(0),
     paddingBottom: theme.spacing(0),
   },
-  end: {
-    marginBottom: '2rem',
-  },
   messageContainer: {
     [theme.breakpoints.up('lg')]: {
       padding: theme.spacing(10),
-      paddingTop: theme.spacing(4),
       paddingBottom: theme.spacing(8),
     },
     [theme.breakpoints.down('md')]: {
       padding: theme.spacing(2),
-      paddingTop: theme.spacing(4),
       paddingBottom: theme.spacing(8),
     },
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(2),
-      paddingTop: theme.spacing(4),
       paddingBottom: theme.spacing(4),
     },
+    paddingTop: theme.spacing(4),
+    marginBottom: theme.spacing(2),
   },
 }));
 
@@ -87,7 +83,6 @@ const ThreadListContainer: React.FC = () => {
                       channelThread={channelThread as ChannelThreadList}
                     />
                   </Grid>
-                  <Box className={classes.end}>&nbsp;</Box>
                 </>
               );
           })}
