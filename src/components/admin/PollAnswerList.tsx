@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   useWatchGetPollAnswersSubscription,
   useUpdatePollAnswerTextMutation,
@@ -32,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+interface FieldError {
+  [x: number]: boolean;
+}
+
 interface PollAnswerListProps {
   pollQuestionId: number;
 }
@@ -40,7 +44,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
   const classes = useStyles();
   const [updateEnabled, setUpdateEnabled] = React.useState(true);
   const [answerTextUpdateId, setAnswerTextUpdateId] = React.useState<number>(0);
-  const [fieldError, setFieldError] = useState<boolean>(false);
+  const [fieldError, setFieldError] = useState<FieldError>({});
   const [answerText, setAnswerText] = React.useState({
     text: '',
   });
@@ -61,15 +65,6 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
     },
   });
 
-  useEffect(() => {
-    if (fieldError === true) {
-      setTimeout(() => {
-        setAnswerText({ text: '' });
-        setFieldError(false);
-      }, 1000);
-    }
-  }, [fieldError, answerText]);
-
   const handleAnswerChange = (
     index?: number,
     e?: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -79,16 +74,16 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
     setUpdateEnabled(false);
   };
 
-  const handleUpdateAnswerText = (answerId: number) => {
+  const handleUpdateAnswerText = (e: any, answerId: number) => {
     setAnswerTextUpdateId(answerId);
 
     if (answerText.text === '' || !answerText.text.trim()) {
       setUpdateEnabled(false);
-      setFieldError(true);
+      setFieldError({ [answerId]: true });
       answerText.text = '';
       return;
     } else {
-      setFieldError(false);
+      setFieldError({ [answerId]: false });
     }
 
     updatePollAnswerTextMutation({
@@ -127,14 +122,15 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
           .map((answer) => (
             <FormGroup row key={answer.id}>
               <TextField
-                error={fieldError}
+                id={String(answer.id)}
+                error={fieldError[answer.id]}
                 key={answer.id}
                 name={answer.text + answer.id}
                 required
                 disabled={getPollQuestion?.data?.poll_question[0].is_active}
                 onKeyPress={(e) => {
                   if (e.key === 'Enter') {
-                    handleUpdateAnswerText(answer.id);
+                    handleUpdateAnswerText(e, answer.id);
                     answerText.text = '';
                   }
                 }}
@@ -143,14 +139,14 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                   setAnswerTextUpdateId(answer.id);
                 }}
                 onFocus={(e) => {
-                  setFieldError(false);
+                  setFieldError({ [answer.id]: false });
                   answerText.text = '';
                 }}
                 onBlur={() => {
-                  setFieldError(false);
+                  setFieldError({ [answer.id]: false });
                 }}
                 onMouseOut={() => {
-                  setFieldError(false);
+                  setFieldError({ [answer.id]: false });
                 }}
                 rows={1}
                 size="small"
@@ -168,12 +164,11 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                     <InputAdornment position="end">
                       <IconButton
                         key={answer.id}
-                        id="answer_update"
                         type="submit"
                         color="secondary"
                         aria-label="update_answer_text"
-                        onClick={() => {
-                          handleUpdateAnswerText(answer.id);
+                        onClick={(e) => {
+                          handleUpdateAnswerText(e, answer.id);
                         }}
                         disabled={
                           answer.id !== answerTextUpdateId
