@@ -122,18 +122,20 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
       return;
     }
 
-    await sendMessage({
+    const msg = {
       variables: {
         channel_thread_id: props.channelThreadId,
         message: text,
         image: gif?.images?.fixed_width?.url,
         user_id: user.sub,
       },
-    });
+    };
 
     setText('');
     setGif(null);
     setdeletedMessage(false);
+
+    await sendMessage(msg);
   };
 
   return (

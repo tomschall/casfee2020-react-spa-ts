@@ -27,11 +27,13 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-start',
     padding: theme.spacing(2),
     overflowWrap: 'break-word',
-    wordBreak: 'break-all',
+    hyphens: 'auto',
+    textOverflow: 'ellipsis',
   },
   [theme.breakpoints.up('md')]: {
     messageText: {
-      paddingBottom: '1rem',
+      padding: '1rem',
+      paddingLeft: '0rem',
     },
     reply: {
       fontSize: 11,
@@ -41,7 +43,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.down('md')]: {
     messageText: {
-      paddingBottom: '1rem',
+      padding: '1rem',
+      paddingLeft: '0rem',
     },
     reply: {
       fontSize: 11,
@@ -51,7 +54,8 @@ export const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.down('sm')]: {
     messageText: {
-      paddingBottom: '1rem',
+      padding: '1rem',
+      paddingLeft: '0rem',
     },
     reply: {
       fontSize: 11,

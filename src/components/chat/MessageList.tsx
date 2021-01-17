@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
   [theme.breakpoints.up('md')]: {
     messageText: {
       padding: '1rem',
+      paddingLeft: '0rem',
       '&:hover': {
         backgroundColor: '#0f1448',
         cursor: 'pointer',
@@ -56,6 +57,8 @@ const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.down('md')]: {
     messageText: {
+      padding: '1rem',
+      paddingLeft: '0rem',
       paddingBottom: '.3rem',
     },
   },
