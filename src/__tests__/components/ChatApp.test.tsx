@@ -155,6 +155,6 @@ describe('Chatapp loading', () => {
       </RecoilRoot>,
     );
 
-    expect(getByText('Error:')).toBeInTheDocument();
+    expect(getByText('Error in ChatApp component')).toBeInTheDocument();
   });
 });
