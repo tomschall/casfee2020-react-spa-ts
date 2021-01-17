@@ -7,7 +7,6 @@ import { useWatchChannelThreadSubscription } from '../../../api/generated/graphq
 
 const useStyles = makeStyles((theme) => ({
   messageText: {
-    marginLeft: theme.spacing(2),
     paddingBottom: '1rem',
     '&:hover': {
       textDecoration: 'underline',
@@ -25,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.down('sm')]: {
     messageText: {
-      marginLeft: theme.spacing(0),
       paddingBottom: '.8rem',
     },
   },
