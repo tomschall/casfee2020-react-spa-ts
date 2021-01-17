@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useAddPollQuestionMutation } from '../../api/generated/graphql';
 import { theme } from '../../theme/theme';
@@ -47,9 +47,19 @@ const AddPollQuestion: React.FC = () => {
   });
   const [fieldError, setFieldError] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (fieldError === true) {
+      setTimeout(() => {
+        pollTitle.title = '';
+        setFieldError(false);
+      }, 1000);
+    }
+  }, [fieldError, pollTitle]);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
+    setFieldError(false);
     setPollTitle({ ...pollTitle, [e.target.id]: e.target.value });
   };
 
@@ -100,7 +110,6 @@ const AddPollQuestion: React.FC = () => {
               variant="outlined"
               multiline
               rows={1}
-              color="secondary"
               autoComplete="off"
               placeholder="Type your question here ..."
               onKeyPress={(e) => {

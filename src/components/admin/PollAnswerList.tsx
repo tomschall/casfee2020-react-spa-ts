@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   useWatchGetPollAnswersSubscription,
   useUpdatePollAnswerTextMutation,
@@ -60,6 +60,15 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
       pollAnswerId: answerTextUpdateId,
     },
   });
+
+  useEffect(() => {
+    if (fieldError === true) {
+      setTimeout(() => {
+        setAnswerText({ text: '' });
+        setFieldError(false);
+      }, 1000);
+    }
+  }, [fieldError, answerText]);
 
   const handleAnswerChange = (
     index?: number,
@@ -134,7 +143,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                 }}
                 onFocus={(e) => {
                   setFieldError(false);
-                  e.target.value = '';
+                  setAnswerText({ text: '' });
                 }}
                 onBlur={() => {
                   setFieldError(false);
@@ -146,7 +155,6 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                 rows={1}
                 size="small"
                 variant="outlined"
-                color="secondary"
                 autoComplete="off"
                 placeholder={answer.text}
                 label={answer.text}

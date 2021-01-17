@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Divider,
   FormGroup,
@@ -46,6 +46,15 @@ const UpdatePollQuestion: React.FC<UpdatePollQuestionLProps> = ({
   const [pollQuestionText, setPollQuestionText] = useState(pollQuestion);
   const [updateDisabled, setUpdateEnabled] = useState<boolean>(true);
   const [fieldError, setFieldError] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (fieldError === true) {
+      setTimeout(() => {
+        setPollQuestionText('');
+        setFieldError(false);
+      }, 1000);
+    }
+  }, [fieldError, pollQuestionText]);
 
   const [
     updatePollQuestionMutation,
@@ -109,7 +118,6 @@ const UpdatePollQuestion: React.FC<UpdatePollQuestionLProps> = ({
           rows={1}
           size="small"
           variant="outlined"
-          color="secondary"
           autoComplete="off"
           placeholder={pollQuestionText === 'no value' ? '' : pollQuestionText}
           disabled={pollQuestionDisabled}

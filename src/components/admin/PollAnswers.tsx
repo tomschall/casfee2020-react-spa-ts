@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import {
   Box,
@@ -76,6 +76,15 @@ const PollAnswers: React.FC = () => {
 
   const [addPollQuestionMutation] = useAddAnswerToQuestionMutation();
 
+  useEffect(() => {
+    if (fieldError === true) {
+      setTimeout(() => {
+        setAnswerNewText({ text: '' });
+        setFieldError(false);
+      }, 1000);
+    }
+  }, [fieldError, answerNewText]);
+
   const handleNewAnswerChange = (
     index?: number,
     e?: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -149,7 +158,7 @@ const PollAnswers: React.FC = () => {
               rows={1}
               size="small"
               variant="outlined"
-              color="secondary"
+              // color={fieldError === false ? 'primary' : 'primary'}
               autoComplete="off"
               placeholder="Type your answers here ..."
               disabled={getPollQuestion?.data?.poll_question[0]?.is_active}
@@ -160,7 +169,6 @@ const PollAnswers: React.FC = () => {
               }}
               onFocus={() => {
                 setFieldError(false);
-                answerNewText.text = '';
               }}
               onBlur={() => {
                 setFieldError(false);
