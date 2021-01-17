@@ -9,6 +9,7 @@ import {
 } from '../../api/generated/graphql';
 import { Box, Chip } from '@material-ui/core';
 import Loader from '../shared/Loader';
+import { logToConsole } from '../../helpers/helpers';
 
 interface GetChannelsProps {
   questionId: number;
@@ -52,8 +53,8 @@ const GetChannels: React.FC<GetChannelsProps> = ({
     );
   }
 
-  if (error) {
-    return <p>Error loading.</p>;
+  if (error || deleteError) {
+    logToConsole('error on delete question from channel', error, deleteError);
   }
 
   const handlePublishOnChannel = async (chnId: number) => {
@@ -74,10 +75,6 @@ const GetChannels: React.FC<GetChannelsProps> = ({
         channelId: chnId,
       },
     });
-
-    if (deleteError) {
-      console.log('error on delete question from channel');
-    }
   };
 
   return (

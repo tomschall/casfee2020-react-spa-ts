@@ -18,6 +18,7 @@ import MenuBar from '../../shared/MenuBar';
 import ThreadMessageInput from './ThreadMessageInput';
 import { Channel } from '../../../interfaces/channel.interface';
 import { ChannelThread } from '../../../interfaces/thread.interface';
+import { logToConsole } from '../../../helpers/helpers';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -95,7 +96,7 @@ const Thread: React.FC = () => {
   if (loading || getChannelThreadLoading) return <Loader />;
 
   if (error || getChannelThreadError) {
-    console.log('error', error);
+    logToConsole('Thread Error', error, getChannelThreadError);
     return <Alert severity="error">Thread Error</Alert>;
   }
 

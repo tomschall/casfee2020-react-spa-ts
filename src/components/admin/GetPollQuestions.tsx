@@ -18,7 +18,6 @@ import Alert from '@material-ui/lab/Alert';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Edit from '@material-ui/icons/Edit';
-import NotFound from '../shared/NotFound';
 import {
   useWatchGetPollQuestionsSubscription,
   useWatchGetChannelsSubscription,
@@ -29,6 +28,7 @@ import GetChannels from './GetChannels';
 import Loader from '../shared/Loader';
 import SetPollQuestionLockState from './SetPollQuestionLockState';
 import { makeStyles } from '@material-ui/core/styles';
+import { logToConsole } from '../../helpers/helpers';
 
 const useStyles = makeStyles((theme) => ({
   badge: {
@@ -93,7 +93,7 @@ const GetPollQuestions: React.FC = () => {
   }
 
   if (error) {
-    return <NotFound />;
+    logToConsole('GetPollQuestions Error', error);
   }
 
   return (

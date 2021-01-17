@@ -2,6 +2,7 @@ import React from 'react';
 import { useDeletePollQuestionMutation } from '../../api/generated/graphql';
 import { Button } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { logToConsole } from '../../helpers/helpers';
 
 interface DeleteAnswerProps {
   questionId: number;
@@ -29,7 +30,7 @@ const DeleteQuestion: React.FC<DeleteAnswerProps> = ({
   };
 
   if (error) {
-    console.log(`Error on delete question ${questionId}`);
+    logToConsole('Error on delete question', error);
   }
 
   return (

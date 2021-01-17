@@ -6,6 +6,7 @@ import {
 import { useAuth0 } from '@auth0/auth0-react';
 import { Chip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { logToConsole } from '../../helpers/helpers';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,8 +64,8 @@ const UnreadMessageCounter: React.FC<UnreadMessageCounterProps> = ({
   }, [data, useWatchMessageCursorData]);
 
   if (error || useWatchMessageCursorError || auth0Error) {
-    console.log(
-      'Error in MessageCounter Component',
+    logToConsole(
+      'Error in UnreadMessageCounter component',
       error,
       useWatchMessageCursorError,
       auth0Error,

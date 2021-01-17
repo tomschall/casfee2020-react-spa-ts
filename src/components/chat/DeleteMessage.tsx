@@ -2,9 +2,9 @@ import React from 'react';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { IconButton } from '@material-ui/core';
 import { useDeleteMessageMutation } from '../../api/generated/graphql';
-import { Alert } from '@material-ui/lab';
 import { deletedMessageState } from '../../atom';
 import { useSetRecoilState } from 'recoil';
+import { logToConsole } from '../../helpers/helpers';
 
 interface DeleteMessageProps {
   messageId: number;
@@ -29,7 +29,7 @@ const DeleteMessage: React.FC<DeleteMessageProps> = ({ messageId }) => {
     (data?.delete_message?.affected_rows !== undefined &&
       data?.delete_message?.affected_rows === 0)
   ) {
-    return <Alert severity="error">Message could not get deleted...</Alert>;
+    logToConsole('Message could not get deleted...', error);
   }
 
   return (

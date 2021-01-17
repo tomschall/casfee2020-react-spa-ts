@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { Message } from '../../../interfaces/message.interface';
 import { useWatchChannelThreadSubscription } from '../../../api/generated/graphql';
+import { logToConsole } from '../../../helpers/helpers';
 
 const useStyles = makeStyles((theme) => ({
   messageText: {
@@ -45,11 +46,15 @@ const ThreadReplyIn: React.FC<ThreadReplyInProps> = ({
 }) => {
   const classes = useStyles();
 
-  const { data: channelThreadData } = useWatchChannelThreadSubscription({
+  const { data: channelThreadData, error } = useWatchChannelThreadSubscription({
     variables: {
       message_id: message?.id,
     },
   });
+
+  if (error) {
+    logToConsole('Error in ThreadReplyIn', error);
+  }
 
   return (
     <>

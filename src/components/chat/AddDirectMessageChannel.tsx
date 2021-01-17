@@ -24,6 +24,7 @@ import Logo from '../shared/Logo';
 import { makeStyles } from '@material-ui/core/styles';
 import OnlineUserStatus from '../shared/OnlineUserStatus';
 import MobileHeaderMenu from './MobileHeaderMenu';
+import { logToConsole } from '../../helpers/helpers';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -88,7 +89,13 @@ const AddDirectMessageChannel: React.FC = () => {
   }, [data]);
 
   if (error || addDMError || upsertMessageError || sendUpdateMessageError) {
-    console.log('error', addDMError);
+    logToConsole(
+      'AddDirectMessageChannel error',
+      error,
+      addDMError,
+      upsertMessageError,
+      sendUpdateMessageError,
+    );
     return <Alert severity="error">Fetching users error...</Alert>;
   }
 

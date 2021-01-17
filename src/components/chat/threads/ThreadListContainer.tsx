@@ -5,6 +5,7 @@ import ThreadList from './ThreadList';
 import { Alert } from '@material-ui/lab';
 import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import Loader from '../../shared/Loader';
+import { logToConsole } from '../../../helpers/helpers';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +37,7 @@ const ThreadListContainer: React.FC = () => {
   const { data, error, loading } = useWatchThreadsSubscription();
 
   if (error) {
-    console.log('error', error);
+    logToConsole('Thread Error', error);
     return <Alert severity="error">Thread Error</Alert>;
   }
 

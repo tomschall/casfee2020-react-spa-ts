@@ -1,10 +1,10 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Alert } from '@material-ui/lab';
 import { useGetUserIsTypingSubscription } from '../../api/generated/graphql';
 import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../atom';
 import { Channel } from '../../interfaces/channel.interface';
+import { logToConsole } from '../../helpers/helpers';
 
 const TypingIndicator: React.FC = () => {
   const { user } = useAuth0();
@@ -19,7 +19,7 @@ const TypingIndicator: React.FC = () => {
   });
 
   if (error) {
-    return <Alert severity="error">Typing Indicator Error...</Alert>;
+    logToConsole('Typing Indicator Error...', error);
   }
 
   return (

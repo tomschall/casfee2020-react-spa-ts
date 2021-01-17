@@ -7,6 +7,7 @@ import { List } from '@material-ui/core';
 import ThreadListInputContainer from './ThreadListInputContainer';
 import ThreadMessageList from './ThreadMessageList';
 import { ChannelThreadList } from '../../../interfaces/thread.interface';
+import { logToConsole } from '../../../helpers/helpers';
 
 interface ThreadListProps {
   channelThread: ChannelThreadList;
@@ -28,7 +29,7 @@ const ThreadList: React.FC<ThreadListProps> = ({ channelThread }) => {
   };
 
   if (error || auth0Error) {
-    console.log('error', error);
+    logToConsole('Thread Error', error, auth0Error);
     return <Alert severity="error">Thread Error</Alert>;
   }
 

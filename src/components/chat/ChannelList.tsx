@@ -22,6 +22,7 @@ import UnreadMessageCounter from './UnreadMessageCounter';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { Channel } from '../../interfaces/channel.interface';
+import { logToConsole } from '../../helpers/helpers';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,6 +54,7 @@ const Channels: React.FC = () => {
   });
 
   if (error) {
+    logToConsole('Channels could not be loaded', error);
     return <Alert severity="error">Channels could not be loaded.</Alert>;
   }
 

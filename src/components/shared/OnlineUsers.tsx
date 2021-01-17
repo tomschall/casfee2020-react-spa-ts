@@ -12,6 +12,7 @@ import {
 import Alert from '@material-ui/lab/Alert';
 import { useWatchOnlineUsersSubscription } from '../../api/generated/graphql';
 import { useSetUserOnlineMutation } from '../../api/generated/graphql';
+import { logToConsole } from '../../helpers/helpers';
 
 interface OnlineUsersProps {
   user_id: string;
@@ -31,7 +32,7 @@ const OnlineUsers: React.FC<OnlineUsersProps> = ({ user_id }) => {
   }, []);
 
   if (error) {
-    return <Alert severity="error">Online users could not be loaded.</Alert>;
+    logToConsole('Online users could not be loaded', error);
   }
 
   if (loading) {

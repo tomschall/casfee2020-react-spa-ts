@@ -6,6 +6,7 @@ import {
   User,
 } from '../../api/generated/graphql';
 import Alert from '@material-ui/lab/Alert';
+import { logToConsole } from '../../helpers/helpers';
 
 const useStyles = makeStyles((theme) => ({
   badgeOnline: {
@@ -69,7 +70,7 @@ const OnlineUserStatus: React.FC<OnlineUserStatusProps> = ({
   } = useWatchOnlineUsersSubscription();
 
   if (onlineUsersError) {
-    console.log('OnlineUserStatusError', onlineUsersError);
+    logToConsole('OnlineUserStatusError', onlineUsersError);
     return <Alert severity="error">A OnlineUserStatusError occured.</Alert>;
   }
 

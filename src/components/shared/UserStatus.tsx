@@ -2,11 +2,11 @@ import React from 'react';
 import { theme } from '../../theme/theme';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Badge, Box, Chip, Tooltip } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
 import PeopleIcon from '@material-ui/icons/People';
 import FaceIcon from '@material-ui/icons/Face';
 import Loader from './Loader';
 import { useWatchOnlineUsersSubscription } from '../../api/generated/graphql';
+import { logToConsole } from '../../helpers/helpers';
 
 interface OnlineUsersProps {
   user_id: string;
@@ -18,7 +18,7 @@ const UserStatus: React.FC<OnlineUsersProps> = ({ user_id }) => {
   const usersOnline = data?.users.length ?? 0;
 
   if (error) {
-    return <Alert severity="error">Online users could not be loaded.</Alert>;
+    logToConsole('UserStatus error', error);
   }
 
   if (loading) {

@@ -4,10 +4,10 @@ import {
   useInsertChannelThreadMutation,
   useWatchChannelThreadSubscription,
 } from '../../../api/generated/graphql';
-import { Alert } from '@material-ui/lab';
 import { IconButton } from '@material-ui/core';
 import { Message } from '../../../interfaces/message.interface';
 import ReplyIcon from '@material-ui/icons/Reply';
+import { logToConsole } from '../../../helpers/helpers';
 
 interface ThreadReplyProps {
   channelName: string;
@@ -47,7 +47,9 @@ const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
     navigateToThreadChannel(e);
   };
 
-  if (error || channelThreadError) return <Alert>Error in Thread Reply</Alert>;
+  if (error || channelThreadError) {
+    logToConsole('Error in Thread Reply', error, channelThreadError);
+  }
 
   if (channelThreadLoading)
     return (

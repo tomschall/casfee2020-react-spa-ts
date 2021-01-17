@@ -7,7 +7,6 @@ import {
   useWatchMessagesSubscription,
   useUpsertMessageCursorMutation,
 } from '../../api/generated/graphql';
-import Alert from '@material-ui/lab/Alert';
 import MenuBar from '../shared/MenuBar';
 import Logo from '../shared/Logo';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -16,6 +15,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { makeStyles } from '@material-ui/core/styles';
 import MobileHeaderMenu from './MobileHeaderMenu';
 import { ChatParams } from '../../interfaces/param.interface';
+import { logToConsole } from '../../helpers/helpers';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -109,7 +109,7 @@ const Chat: React.FC<ChatProps> = ({ channelId }) => {
   ]);
 
   if (error) {
-    return <Alert severity="error">Messages could not be loaded.</Alert>;
+    logToConsole('Messages could not be loaded.', error);
   }
 
   if (loading) {

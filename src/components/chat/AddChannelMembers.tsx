@@ -24,6 +24,7 @@ import { makeStyles } from '@material-ui/core/';
 import OnlineUserStatus from '../shared/OnlineUserStatus';
 import MobileHeaderMenu from './MobileHeaderMenu';
 import { Channel } from '../../interfaces/channel.interface';
+import { logToConsole } from '../../helpers/helpers';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,7 +71,11 @@ const AddChannelMembers: React.FC = () => {
   };
 
   if (error || addChannelUserError)
-    console.log('error on user subscription', error);
+    logToConsole(
+      'AddChannelMembers - error on user subscription',
+      error,
+      addChannelUserError,
+    );
 
   return (
     <>

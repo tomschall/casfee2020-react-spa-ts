@@ -2,7 +2,7 @@ import React from 'react';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { IconButton } from '@material-ui/core';
 import { useUpdateMessageMutation } from '../../api/generated/graphql';
-import { Alert } from '@material-ui/lab';
+import { logToConsole } from '../../helpers/helpers';
 
 interface ReplaceMessageProps {
   messageId: number;
@@ -28,7 +28,7 @@ const ReplaceMessage: React.FC<ReplaceMessageProps> = ({ messageId }) => {
     (data?.update_message?.affected_rows !== undefined &&
       data?.update_message?.affected_rows === 0)
   ) {
-    return <Alert severity="error">Message could not get updated...</Alert>;
+    logToConsole('Message could not get updated...', error);
   }
 
   return (

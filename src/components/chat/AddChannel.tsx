@@ -29,6 +29,7 @@ import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import { useHistory } from 'react-router';
 import { makeStyles } from '@material-ui/core/styles';
+import { logToConsole } from '../../helpers/helpers';
 
 const useStyles = makeStyles((theme) => ({
   nested: {
@@ -123,7 +124,7 @@ const AddChannel: React.FC = () => {
   };
 
   if (error) {
-    console.log('error mutation', error);
+    logToConsole('AddChannel error', error);
   }
 
   if (loading) {

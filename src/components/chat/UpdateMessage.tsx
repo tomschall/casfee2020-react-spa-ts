@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, InputAdornment, IconButton } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
 import { Message } from '../../interfaces/message.interface';
 import { makeStyles } from '@material-ui/core/styles';
 import { useUpdateMessageMutation } from '../../api/generated/graphql';
 import SendIcon from '@material-ui/icons/Send';
 import Loader from '../shared/Loader';
+import { logToConsole } from '../../helpers/helpers';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -74,7 +74,7 @@ const UpdateMessage: React.FC<UpdateMessageProps> = ({ message }) => {
     (data?.update_message?.affected_rows !== undefined &&
       data?.update_message?.affected_rows === 0)
   ) {
-    return <Alert severity="error">Message could not get deleted...</Alert>;
+    logToConsole('Message could not get deleted...', error);
   }
 
   return (

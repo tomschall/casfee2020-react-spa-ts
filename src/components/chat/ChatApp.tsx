@@ -8,13 +8,19 @@ import Chat from './Chat';
 import Loader from '../shared/Loader';
 import { ChatParams } from '../../interfaces/param.interface';
 import { Channel } from '../../interfaces/channel.interface';
+import { logToConsole } from '../../helpers/helpers';
+import { Alert } from '@material-ui/lab';
 
 const ChatApp: React.FC = () => {
   const [currentChannel, setCurrentChannel] = useRecoilState<Channel>(
     currentChannelState,
   );
 
-  const { isAuthenticated, isLoading: isLoadingAuth0, error } = useAuth0();
+  const {
+    isAuthenticated,
+    isLoading: isLoadingAuth0,
+    error: auth0Error,
+  } = useAuth0();
   const { channel: channelName } = useParams<ChatParams>();
 
   const {
@@ -40,8 +46,9 @@ const ChatApp: React.FC = () => {
     setCurrentChannel(data?.channel[0]);
   }
 
-  if (error || channelError) {
-    return <>Error: {error}</>;
+  if (auth0Error || channelError) {
+    logToConsole('Error in ChatApp component', auth0Error, channelError);
+    return <Alert severity="error">Error in ChatApp component</Alert>;
   }
 
   return (

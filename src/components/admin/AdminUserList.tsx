@@ -15,6 +15,7 @@ import {
 import { Alert } from '@material-ui/lab';
 import { useGetUserListQuery } from '../../api/generated/graphql';
 import { makeStyles } from '@material-ui/core/styles';
+import { logToConsole } from '../../helpers/helpers';
 
 const useStyles = makeStyles((theme) => ({
   root: { overflowY: 'scroll', height: '100vh' },
@@ -31,6 +32,7 @@ const AdminUserList: React.FC = () => {
   }
 
   if (error) {
+    logToConsole('Users could not be loaded.', error);
     return <Alert severity="error">Users could not be loaded.</Alert>;
   }
 
