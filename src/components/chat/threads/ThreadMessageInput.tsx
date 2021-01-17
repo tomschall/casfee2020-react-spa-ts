@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { InputAdornment, IconButton, TextField, Box } from '@material-ui/core';
 import { theme } from '../../../theme/theme';
@@ -75,6 +75,7 @@ interface ThreadMessageInputProps {
 const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
   const classes = useStyles();
   const matches = useMediaQuery(theme.breakpoints.up('md'));
+  let textInput = useRef<HTMLDivElement>(null);
 
   const setTextFieldSize = () => {
     switch (matches) {
@@ -132,6 +133,7 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
     };
 
     setText('');
+    textInput?.current?.focus();
     setGif(null);
     setdeletedMessage(false);
 
@@ -173,6 +175,7 @@ const ThreadMessageInput: React.FC<ThreadMessageInputProps> = (props) => {
             }
           }}
           inputProps={{ maxLength: 2000 }}
+          inputRef={textInput}
           focused
           size={setTextFieldSize()}
           variant="outlined"
