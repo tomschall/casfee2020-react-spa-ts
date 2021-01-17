@@ -74,7 +74,7 @@ const UpdatePollQuestion: React.FC<UpdatePollQuestionLProps> = ({
   };
 
   const handleUpdatePollQuestion = async () => {
-    if (!pollQuestionText.trim() || pollQuestionText === 'no value') {
+    if (!pollQuestionText.trim() || pollQuestionText === '') {
       setFieldError(true);
       setPollQuestionText('');
       return;
@@ -106,7 +106,7 @@ const UpdatePollQuestion: React.FC<UpdatePollQuestionLProps> = ({
           error={fieldError}
           key={pollQuestionId}
           name="poll_answer"
-          value={pollQuestionText === 'no value' ? '' : pollQuestionText}
+          value={pollQuestionText}
           required
           id="outlined-multiline-static"
           label={
@@ -119,7 +119,7 @@ const UpdatePollQuestion: React.FC<UpdatePollQuestionLProps> = ({
           size="small"
           variant="outlined"
           autoComplete="off"
-          placeholder={pollQuestionText === 'no value' ? '' : pollQuestionText}
+          placeholder={pollQuestionText}
           disabled={pollQuestionDisabled}
           fullWidth
           onKeyPress={(e) => {

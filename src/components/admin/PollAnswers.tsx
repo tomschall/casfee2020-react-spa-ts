@@ -127,7 +127,7 @@ const PollAnswers: React.FC = () => {
           pollQuestion={
             getPollQuestion?.data?.poll_question[0]?.text
               ? getPollQuestion?.data?.poll_question[0]?.text
-              : 'no value'
+              : ''
           }
           pollQuestionId={parseInt(pollQuestionId)}
           pollQuestionDisabled={
@@ -158,7 +158,6 @@ const PollAnswers: React.FC = () => {
               rows={1}
               size="small"
               variant="outlined"
-              // color={fieldError === false ? 'primary' : 'primary'}
               autoComplete="off"
               placeholder="Type your answers here ..."
               disabled={getPollQuestion?.data?.poll_question[0]?.is_active}

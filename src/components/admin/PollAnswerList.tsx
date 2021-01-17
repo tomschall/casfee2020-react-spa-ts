@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   useWatchGetPollAnswersSubscription,
   useUpdatePollAnswerTextMutation,
@@ -41,6 +41,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
   const [updateEnabled, setUpdateEnabled] = React.useState(true);
   const [answerTextUpdateId, setAnswerTextUpdateId] = React.useState<number>(0);
   const [fieldError, setFieldError] = useState<boolean>(false);
+  const textRef = useRef<HTMLInputElement | undefined>();
   const [answerText, setAnswerText] = React.useState({
     text: '',
   });
@@ -69,6 +70,8 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
       }, 1000);
     }
   }, [fieldError, answerText]);
+
+  console.log(textRef.current);
 
   const handleAnswerChange = (
     index?: number,
@@ -127,6 +130,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
           .map((answer) => (
             <FormGroup row key={answer.id}>
               <TextField
+                inputRef={textRef}
                 error={fieldError}
                 key={answer.id}
                 name={answer.text + answer.id}
@@ -135,6 +139,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                 onKeyPress={(e) => {
                   if (e.key === 'Enter') {
                     handleUpdateAnswerText(answer.id);
+                    answerText.text = '';
                   }
                 }}
                 onChange={(e) => {
@@ -143,7 +148,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                 }}
                 onFocus={(e) => {
                   setFieldError(false);
-                  setAnswerText({ text: '' });
+                  answerText.text = '';
                 }}
                 onBlur={() => {
                   setFieldError(false);
@@ -151,7 +156,6 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                 onMouseOut={() => {
                   setFieldError(false);
                 }}
-                multiline
                 rows={1}
                 size="small"
                 variant="outlined"
