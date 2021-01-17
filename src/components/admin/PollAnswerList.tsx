@@ -125,7 +125,6 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                 disabled={getPollQuestion?.data?.poll_question[0].is_active}
                 onKeyPress={(e) => {
                   if (e.key === 'Enter') {
-                    console.log('poll answer list');
                     handleUpdateAnswerText(answer.id);
                   }
                 }}
