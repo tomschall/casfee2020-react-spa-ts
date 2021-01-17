@@ -139,7 +139,7 @@ const MessageInput: React.FC<MessageInputProps> = (props) => {
 
     props.scrollToBottom();
 
-    await sendMessage({
+    const msg = {
       variables: {
         message: {
           user_id: user.sub,
@@ -148,12 +148,14 @@ const MessageInput: React.FC<MessageInputProps> = (props) => {
           channel_id: channelId,
         },
       },
-    });
+    };
 
     setText('');
+    textInput?.current?.focus();
     setGif(null);
     setdeletedMessage(false);
-    textInput?.current?.focus();
+
+    await sendMessage(msg);
   };
 
   return (
