@@ -74,7 +74,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
     setUpdateEnabled(false);
   };
 
-  const handleUpdateAnswerText = (e: any, answerId: number) => {
+  const handleUpdateAnswerText = (answerId: number) => {
     setAnswerTextUpdateId(answerId);
 
     if (answerText.text === '' || !answerText.text.trim()) {
@@ -130,7 +130,7 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                 disabled={getPollQuestion?.data?.poll_question[0].is_active}
                 onKeyPress={(e) => {
                   if (e.key === 'Enter') {
-                    handleUpdateAnswerText(e, answer.id);
+                    handleUpdateAnswerText(answer.id);
                     answerText.text = '';
                   }
                 }}
@@ -167,8 +167,8 @@ const PollAnswerList: React.FC<PollAnswerListProps> = ({ pollQuestionId }) => {
                         type="submit"
                         color="secondary"
                         aria-label="update_answer_text"
-                        onClick={(e) => {
-                          handleUpdateAnswerText(e, answer.id);
+                        onClick={() => {
+                          handleUpdateAnswerText(answer.id);
                         }}
                         disabled={
                           answer.id !== answerTextUpdateId
