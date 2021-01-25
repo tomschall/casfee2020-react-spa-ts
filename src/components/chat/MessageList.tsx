@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import { Message } from '../../interfaces/message.interface';
 import ThreadReply from './threads/ThreadReply';
 import ThreadReplyIn from './threads/ThreadReplyIn';
@@ -44,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: theme.spacing(2),
       paddingBottom: theme.spacing(0),
     },
+  },
+  messageText: {
+    color: '#fff',
   },
   [theme.breakpoints.up('md')]: {
     messageText: {
@@ -110,6 +113,15 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     flex: 1,
   },
+  date: {
+    marginRight: '5px',
+    color: '#ffffff',
+    fontWeight: 500,
+  },
+  time: {
+    color: '#ffffff',
+    fontWeight: 500,
+  },
 }));
 
 interface MessageProps {
@@ -151,6 +163,24 @@ const MessageList: React.FC<MessageProps> = ({
   useEffect(() => {
     setRef(messagesEndRef);
   }, [setRef]);
+
+  const formatDate = (timestamp: Date | Moment) => {
+    const now = moment();
+    const duration = moment.duration(now.diff(timestamp)).asHours();
+    if (duration > 12) {
+      return (
+        <>
+          <span className={classes.date}>
+            {moment(timestamp).format(`Do, MMM`)}
+          </span>
+          <span className={classes.time}>
+            {moment(timestamp).format(`h:mm`)}
+          </span>
+        </>
+      );
+    }
+    return <span className={classes.date}>{moment(timestamp).fromNow()}</span>;
+  };
 
   const renderMessage = (message: Message) => {
     return (
@@ -203,7 +233,7 @@ const MessageList: React.FC<MessageProps> = ({
                 color="primary"
                 style={{ marginLeft: '8px' }}
               >
-                {moment(message.timestamp).fromNow()}
+                {formatDate(message.timestamp)}
               </Typography>
             </Box>
             <Box>
@@ -233,7 +263,6 @@ const MessageList: React.FC<MessageProps> = ({
 
           <Typography
             component="p"
-            color="textSecondary"
             className={classes.messageText}
             onClick={() => handleShowUpdate(message)}
           >

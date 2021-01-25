@@ -73,18 +73,13 @@ const ThreadListContainer: React.FC = () => {
           {data?.channel_thread?.map((channelThread, index) => {
             if (channelThread && channelThread.channel_thread_messages.length)
               return (
-                <>
-                  <Grid
-                    key={index}
-                    item
-                    xs={12}
-                    className={classes.messageContainer}
-                  >
+                <React.Fragment key={index}>
+                  <Grid item xs={12} className={classes.messageContainer}>
                     <ThreadList
                       channelThread={channelThread as ChannelThreadList}
                     />
                   </Grid>
-                </>
+                </React.Fragment>
               );
           })}
         </Grid>

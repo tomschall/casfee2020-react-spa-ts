@@ -4,10 +4,17 @@ import {
   useInsertChannelThreadMutation,
   useWatchChannelThreadSubscription,
 } from '../../../api/generated/graphql';
-import { IconButton } from '@material-ui/core';
+import { IconButton, makeStyles } from '@material-ui/core';
 import { Message } from '../../../interfaces/message.interface';
 import ReplyIcon from '@material-ui/icons/Reply';
 import { logToConsole } from '../../../helpers/helpers';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(2),
+  },
+}));
 
 interface ThreadReplyProps {
   channelName: string;
@@ -16,6 +23,7 @@ interface ThreadReplyProps {
 
 const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
   const history = useHistory();
+  const classes = useStyles();
 
   const {
     data: channelThreadData,
@@ -54,7 +62,7 @@ const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
   if (channelThreadLoading)
     return (
       <>
-        <IconButton aria-label="reply to message">
+        <IconButton className={classes.root} aria-label="reply to message">
           <ReplyIcon
             color="primary"
             fontSize="small"
@@ -69,6 +77,7 @@ const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
     return (
       <>
         <IconButton
+          className={classes.root}
           onClick={(e) => navigateToThreadChannel(e)}
           aria-label="reply to message"
         >
@@ -85,7 +94,11 @@ const ThreadReply: React.FC<ThreadReplyProps> = (props) => {
 
   return (
     <>
-      <IconButton onClick={handleClick} aria-label="reply to message">
+      <IconButton
+        className={classes.root}
+        onClick={handleClick}
+        aria-label="reply to message"
+      >
         <ReplyIcon
           color="primary"
           fontSize="small"
