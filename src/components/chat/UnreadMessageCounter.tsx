@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  useWatchMessagesSubscription,
+  useWatchGetMessagesIdsSubscription,
   useWatchMessageCursorSubscription,
 } from '../../api/generated/graphql';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -22,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+interface MessageId {
+  id: number;
+}
+
 interface UnreadMessageCounterProps {
   channelId: number;
 }
@@ -33,7 +37,7 @@ const UnreadMessageCounter: React.FC<UnreadMessageCounterProps> = ({
   const { user, error: auth0Error } = useAuth0();
   const [count, setCount] = useState<number | undefined>(0);
 
-  const { data, loading, error } = useWatchMessagesSubscription({
+  const { data, loading, error } = useWatchGetMessagesIdsSubscription({
     variables: {
       channelId,
     },
@@ -53,10 +57,10 @@ const UnreadMessageCounter: React.FC<UnreadMessageCounterProps> = ({
 
   useEffect(() => {
     let messageId =
-      useWatchMessageCursorData?.message_cursor[0]?.message_id ?? undefined;
+      useWatchMessageCursorData?.message_cursor[0]?.message_id ?? null;
 
-    let messageCounterArray = data?.messages.filter((m) => {
-      if (messageId === undefined) return false;
+    let messageCounterArray = data?.messages.filter((m: MessageId) => {
+      if (messageId === null) return false;
       return m.id > messageId;
     });
 

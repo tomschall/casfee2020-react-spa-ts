@@ -19,6 +19,16 @@ subscription watchMessages($channelId: Int!, $limit: Int) {
   }
 }
 
+subscription watchGetMessagesIds($channelId: Int!, $limit: Int) {
+  messages: message(
+    order_by: { timestamp: desc }
+    limit: $limit
+    where: { channel: { id: { _eq: $channelId } } }
+  ) {
+    id
+  }
+}
+
 subscription watchChannelThreadMessages($limit: Int!, $message_id: Int!) {
   channel_thread_message(
     limit: $limit
