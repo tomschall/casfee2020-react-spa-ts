@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import moment, { Moment } from 'moment';
 import { Message } from '../../interfaces/message.interface';
 import ThreadReply from './threads/ThreadReply';
@@ -23,7 +23,6 @@ import { deletedMessageState } from '../../atom';
 import { useParams } from 'react-router';
 import { ChatParams } from '../../interfaces/param.interface';
 import { Auth0User } from '../../interfaces/user.interface';
-const _ = require('lodash');
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -135,7 +134,8 @@ interface MessageProps {
   setRef: React.Dispatch<
     React.SetStateAction<React.RefObject<HTMLDivElement> | null>
   >;
-  setDoScroll: any;
+  setDoScroll: React.Dispatch<React.SetStateAction<boolean>>;
+  delayAfterScrolling: () => void;
 }
 
 const MessageList: React.FC<MessageProps> = ({
@@ -147,6 +147,7 @@ const MessageList: React.FC<MessageProps> = ({
   limit,
   setRef,
   setDoScroll,
+  delayAfterScrolling,
 }) => {
   const classes = useStyles();
   const [showUpdate, setShowUpdate] = useState<boolean>(false);
@@ -163,9 +164,14 @@ const MessageList: React.FC<MessageProps> = ({
     setShowUpdate(!showUpdate);
   };
 
+  const handleScroll = () => {
+    setDoScroll(true);
+    delayAfterScrolling();
+  };
+
   useEffect(() => {
     setRef(messagesEndRef);
-  }, [setRef]);
+  }, [setRef, messagesEndRef]);
 
   const formatDate = (timestamp: Date | Moment) => {
     const now = moment();
@@ -296,21 +302,6 @@ const MessageList: React.FC<MessageProps> = ({
         </Box>
       </ListItem>
     );
-  };
-
-  const delayAfterScrolling = useCallback(
-    _.debounce(() => {
-      console.log('scrolling stopped');
-      setDoScroll(false);
-    }, 30000),
-    [],
-  );
-
-  const handleScroll = () => {
-    console.log('scroll yess');
-    setDoScroll(true);
-    delayAfterScrolling();
-    return delayAfterScrolling.cancel;
   };
 
   return (

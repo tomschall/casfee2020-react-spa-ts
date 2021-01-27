@@ -4,9 +4,9 @@ export default ({
   root = null,
   rootMargin = '200px 0px 0px 0px',
   threshold = 0,
-}): any => {
+}) => {
   const [entry, updateEntry] = useState({});
-  const [node, setNode] = useState<any>();
+  const [node, setNode] = useState<React.RefObject<HTMLDivElement> | null>();
 
   const observer = useRef(
     new window.IntersectionObserver(([entry]) => updateEntry(entry), {

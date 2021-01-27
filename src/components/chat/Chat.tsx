@@ -16,7 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import MobileHeaderMenu from './MobileHeaderMenu';
 import { ChatParams } from '../../interfaces/param.interface';
 import { logToConsole } from '../../helpers/helpers';
-import useIntersect from '../../hooks/useIntersect';
+const _ = require('lodash');
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -84,16 +84,14 @@ const Chat: React.FC<ChatProps> = ({ channelId }) => {
     }
   }, [ref]);
 
-  const [setIntersectionRef, entry] = useIntersect({
-    rootMargin: '200px 0px 0px 0px',
-  });
-
-  console.log('entry', entry.isIntersecting);
-  console.log('ref', ref);
+  const delayAfterScrolling = useCallback(
+    _.debounce(() => {
+      setDoScroll(false);
+    }, 10000),
+    [],
+  );
 
   useEffect(() => {
-    if (ref && data) setIntersectionRef(ref);
-
     if (data?.messages[0]?.id)
       upsertMessageCursorMutation({
         variables: {
@@ -106,10 +104,8 @@ const Chat: React.FC<ChatProps> = ({ channelId }) => {
     setTimeout(() => {
       if (
         (scrollIsInit && data && data?.messages?.length > 5) ||
-        (data && entry.isIntersecting && !doScroll) ||
         (data && !doScroll)
       ) {
-        console.log('scrolltobottom', doScroll);
         scrollToBottom();
         setScrollIsInit(false);
       }
@@ -121,8 +117,6 @@ const Chat: React.FC<ChatProps> = ({ channelId }) => {
     scrollIsInit,
     scrollToBottom,
     upsertMessageCursorMutation,
-    entry,
-    setIntersectionRef,
     doScroll,
     ref,
   ]);
@@ -154,6 +148,7 @@ const Chat: React.FC<ChatProps> = ({ channelId }) => {
 
   const handleIncreaseLimit = () => {
     setLimit(limit + 20);
+    delayAfterScrolling.cancel();
   };
 
   const handleSetLastMessage = (lastMessage: Message) => {
@@ -177,6 +172,7 @@ const Chat: React.FC<ChatProps> = ({ channelId }) => {
           limit={limit}
           setRef={setRef}
           setDoScroll={setDoScroll}
+          delayAfterScrolling={delayAfterScrolling}
         />
       </Box>
       <Box className={classes.messageInput} component="footer">
