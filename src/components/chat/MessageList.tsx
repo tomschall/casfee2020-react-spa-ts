@@ -302,7 +302,7 @@ const MessageList: React.FC<MessageProps> = ({
     _.debounce(() => {
       console.log('scrolling stopped');
       setDoScroll(false);
-    }, 5000),
+    }, 30000),
     [],
   );
 
@@ -310,6 +310,7 @@ const MessageList: React.FC<MessageProps> = ({
     console.log('scroll yess');
     setDoScroll(true);
     delayAfterScrolling();
+    return delayAfterScrolling.cancel;
   };
 
   return (
