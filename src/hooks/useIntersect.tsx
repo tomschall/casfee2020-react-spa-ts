@@ -6,7 +6,7 @@ export default ({
   threshold = 0,
 }) => {
   const [entry, updateEntry] = useState({});
-  const [node, setNode] = useState<React.RefObject<HTMLDivElement> | null>();
+  const [node, setNode] = useState<Element>();
 
   const observer = useRef(
     new window.IntersectionObserver(([entry]) => updateEntry(entry), {
