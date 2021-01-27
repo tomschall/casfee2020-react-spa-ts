@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import moment, { Moment } from 'moment';
 import { Message } from '../../interfaces/message.interface';
 import ThreadReply from './threads/ThreadReply';
@@ -23,6 +23,7 @@ import { deletedMessageState } from '../../atom';
 import { useParams } from 'react-router';
 import { ChatParams } from '../../interfaces/param.interface';
 import { Auth0User } from '../../interfaces/user.interface';
+const _ = require('lodash');
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -134,6 +135,7 @@ interface MessageProps {
   setRef: React.Dispatch<
     React.SetStateAction<React.RefObject<HTMLDivElement> | null>
   >;
+  setDoScroll: any;
 }
 
 const MessageList: React.FC<MessageProps> = ({
@@ -144,6 +146,7 @@ const MessageList: React.FC<MessageProps> = ({
   handleIncreaseLimit,
   limit,
   setRef,
+  setDoScroll,
 }) => {
   const classes = useStyles();
   const [showUpdate, setShowUpdate] = useState<boolean>(false);
@@ -295,9 +298,28 @@ const MessageList: React.FC<MessageProps> = ({
     );
   };
 
+  const delayAfterScrolling = useCallback(
+    _.debounce(() => {
+      console.log('scrolling stopped');
+      setDoScroll(false);
+    }, 5000),
+    [],
+  );
+
+  const handleScroll = () => {
+    console.log('scroll yess');
+    setDoScroll(true);
+    delayAfterScrolling();
+  };
+
   return (
     <>
-      <List id="message-list" component="div" className={classes.root}>
+      <List
+        id="message-list"
+        component="div"
+        className={classes.root}
+        onScroll={handleScroll}
+      >
         {messages?.length === limit && (
           <Box
             display="flex"
@@ -317,7 +339,7 @@ const MessageList: React.FC<MessageProps> = ({
           </Box>
         )}
 
-        {[...messages]?.reverse()?.map((message, i) => renderMessage(message))}
+        {[...messages]?.reverse()?.map((message) => renderMessage(message))}
 
         {!deletedMessage &&
         lastMessage &&

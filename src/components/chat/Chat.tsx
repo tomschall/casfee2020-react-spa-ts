@@ -16,6 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import MobileHeaderMenu from './MobileHeaderMenu';
 import { ChatParams } from '../../interfaces/param.interface';
 import { logToConsole } from '../../helpers/helpers';
+import useIntersect from '../../hooks/useIntersect';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,6 +60,7 @@ const Chat: React.FC<ChatProps> = ({ channelId }) => {
   const [lastMessage, setLastMessage] = useState<Message | null>(null);
   const [ref, setRef] = useState<React.RefObject<HTMLDivElement> | null>(null);
   const [scrollIsInit, setScrollIsInit] = useState<boolean>(true);
+  const [doScroll, setDoScroll] = useState<boolean>(false);
   const { user } = useAuth0();
 
   let preLastMessageId: number = 0;
@@ -82,7 +84,16 @@ const Chat: React.FC<ChatProps> = ({ channelId }) => {
     }
   }, [ref]);
 
+  const [setIntersectionRef, entry] = useIntersect({
+    rootMargin: '200px 0px 0px 0px',
+  });
+
+  console.log('entry', entry.isIntersecting);
+  console.log('ref', ref);
+
   useEffect(() => {
+    if (ref && data) setIntersectionRef(ref);
+
     if (data?.messages[0]?.id)
       upsertMessageCursorMutation({
         variables: {
@@ -93,19 +104,27 @@ const Chat: React.FC<ChatProps> = ({ channelId }) => {
       });
 
     setTimeout(() => {
-      if (scrollIsInit && data && data?.messages?.length > 5) {
+      if (
+        (scrollIsInit && data && data?.messages?.length > 5) ||
+        (data && entry.isIntersecting && !doScroll) ||
+        (data && !doScroll)
+      ) {
+        console.log('scrolltobottom', doScroll);
         scrollToBottom();
         setScrollIsInit(false);
       }
     }, 1000);
   }, [
-    ref,
     data,
     channelId,
     user.sub,
     scrollIsInit,
     scrollToBottom,
     upsertMessageCursorMutation,
+    entry,
+    setIntersectionRef,
+    doScroll,
+    ref,
   ]);
 
   if (error) {
@@ -157,6 +176,7 @@ const Chat: React.FC<ChatProps> = ({ channelId }) => {
           handleIncreaseLimit={handleIncreaseLimit}
           limit={limit}
           setRef={setRef}
+          setDoScroll={setDoScroll}
         />
       </Box>
       <Box className={classes.messageInput} component="footer">

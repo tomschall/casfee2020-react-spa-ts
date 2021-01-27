@@ -41,7 +41,6 @@ const UnreadMessageCounter: React.FC<UnreadMessageCounterProps> = ({
     variables: {
       channelId,
     },
-    fetchPolicy: 'network-only',
   });
 
   const {
