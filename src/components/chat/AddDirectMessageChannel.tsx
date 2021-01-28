@@ -20,7 +20,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useHistory } from 'react-router';
 import Loader from '../shared/Loader';
-import Logo from '../shared/Logo';
 import { makeStyles } from '@material-ui/core/styles';
 import OnlineUserStatus from '../shared/OnlineUserStatus';
 import MobileHeaderMenu from './MobileHeaderMenu';
@@ -149,15 +148,11 @@ const AddDirectMessageChannel: React.FC = () => {
     <>
       <Grid item xs={12} md={9} className={classes.root} component="section">
         <MobileHeaderMenu channelName={'general'} />
-        <Box display="flex" justifyContent="center" alignItems="center">
-          <Logo />
-        </Box>
         <Box
           display="flex"
           justifyContent="center"
           alignItems="center"
           flexDirection="column"
-          mb={5}
         >
           <Typography variant="h2">Add a user</Typography>
           <Typography
@@ -170,7 +165,13 @@ const AddDirectMessageChannel: React.FC = () => {
               : ''}
           </Typography>
         </Box>
-        <Box mb={5}>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          mt={0}
+          mb={5}
+        >
           <Divider className={classes.spacer} />
           {users?.length && (
             <List className={classes.spacer}>

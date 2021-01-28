@@ -19,7 +19,6 @@ import { useRecoilState } from 'recoil';
 import { currentChannelState } from '../../atom';
 import { useHistory } from 'react-router-dom';
 import Loader from '../shared/Loader';
-import Logo from '../shared/Logo';
 import { makeStyles } from '@material-ui/core/';
 import OnlineUserStatus from '../shared/OnlineUserStatus';
 import MobileHeaderMenu from './MobileHeaderMenu';
@@ -81,16 +80,11 @@ const AddChannelMembers: React.FC = () => {
     <>
       <Grid item xs={12} md={9} className={classes.root} component="section">
         <MobileHeaderMenu channelName={currentChannel?.name} />
-        <Box display="flex" justifyContent="center" alignItems="center">
-          <Logo />
-        </Box>
         <Box
           display="flex"
           justifyContent="center"
           alignItems="center"
           flexDirection="column"
-          mt={0}
-          mb={5}
         >
           <Typography id="simple-modal-title" variant="h2">
             Add users to {currentChannel?.name}
@@ -105,7 +99,13 @@ const AddChannelMembers: React.FC = () => {
               : 'All users have subscribed to this channel.'}
           </Typography>
         </Box>
-        <Box>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          mt={0}
+          mb={5}
+        >
           {error && (
             <Alert severity={'error'}>
               Error - something weird happened...
