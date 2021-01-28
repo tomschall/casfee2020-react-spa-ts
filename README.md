@@ -51,17 +51,6 @@ cd hasura
 yarn api:hasura:migrations:apply
 ```
 
-### Users for login
-
-For login take the following users, when you want to develop on local environment.
-
-- email: webrooster@webrooster.ch (admin)
-- email: kimi@gmail.com
-- pw for all users: admin1234.$
-
-* [Frontend](http://localhost)
-* [Backend](http://localhost:8080/console)
-
 ## Usage development
 
 ### (#development-with-external-api)
@@ -76,7 +65,8 @@ yarn
 yarn dev:start
 ```
 
-- [Frontend](http://localhost:3000)
+* [Frontend](http://localhost:3000)
+* [Backend](http://localhost:8080/console)
 
 ### (#development-with-local-api)
 
@@ -91,7 +81,8 @@ yarn
 yarn dev:start
 ```
 
-- [Frontend](http://localhost:3000)
+* [Frontend](http://localhost:3000)
+* [Backend](http://localhost:8080/console)
 
 ### Start Hasura Console
 
