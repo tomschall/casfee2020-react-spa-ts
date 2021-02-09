@@ -1,12 +1,13 @@
 import React from 'react';
-import { ApolloProvider, HttpOptions } from '@apollo/react-hooks';
-import { getMainDefinition } from 'apollo-utilities';
+import { getMainDefinition } from '@apollo/client/utilities';
 import { useAuth0 } from '@auth0/auth0-react';
 import {
-  ApolloClient,
   InMemoryCache,
   createHttpLink,
   split,
+  ApolloClient,
+  ApolloProvider,
+  HttpOptions,
 } from '@apollo/client';
 import { WebSocketLink, WebSocketParams } from '@apollo/client/link/ws';
 import { setContext } from '@apollo/client/link/context';
